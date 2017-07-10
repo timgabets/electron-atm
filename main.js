@@ -1,5 +1,5 @@
 const net = require('net');
-const trace = require('./trace.js');
+const trace = require('./src/trace.js');
 
 const electron = require('electron')
 // Module to control application life.

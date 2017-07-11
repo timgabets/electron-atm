@@ -13,7 +13,7 @@ client = new net.Socket();
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */
-function getMessageLength(data){
+function _getMessageLength(data){
   // TODO: message length > 4096
   return '\x00' + String.fromCharCode(data.length);
 };
@@ -23,11 +23,18 @@ function getMessageLength(data){
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */
-function send(data){
-  var binary_data = Buffer(getMessageLength(data) + data, 'binary');
+function _send(data){
+  var binary_data = Buffer(_getMessageLength(data) + data, 'binary');
   client.write(binary_data);
   trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
 };
+
+/*
+ Hadling incoming messages from the host
+ */
+client.on('data', function(data) {
+  trace.trace(data, '<< ' + data.length + ' bytes received:');
+});
 
 /**
  * [connect description]
@@ -44,11 +51,7 @@ exports.connect = function(host, port){
  * @return {[type]} [description]
  */
 exports.send = function(data){
-  //var data = '22\x1C000\x1C\x1C9'
-  send(data);
-  client.on('data', function(data) {
-    trace.trace(data, '<< ' + data.length + ' bytes received:');
-  });
+  _send(data);
 };
 
 /**

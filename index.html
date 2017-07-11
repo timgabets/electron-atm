@@ -2,13 +2,14 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css" />
     <title>ATM</title>
   </head>
   <body>
   <div>
     <form>
       <input type="text" id="host" value="127.0.0.1"></input>
-      <input type="text" id="port" value="11032"></input>
+      <input type="number" id="port" value="11032"></input>
     </form>
   </div>
 
@@ -21,14 +22,14 @@
     <button id="send-ready">Send ready</button>
   </div>
 
-  <div>
+  <footer>
     <small>
     <!-- All of the Node.js APIs are available in this renderer process. -->
     Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
     </small>
-  </div>
+  </footer>
   </body>
 
   <script>

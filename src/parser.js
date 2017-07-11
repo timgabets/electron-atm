@@ -20,10 +20,11 @@ function Parser(){
      */
     this.parse = function (message, length){
         var splitted = message.split('\x1c')
-        
         switch(splitted[0][0]){
             case '1':
                 return this.parseTerminalCommand(splitted);
+            case '3':
+                return this.parseDataCommand(splitted);
             case '4':
                 return this.parseTransactionReply(splitted);
             default:
@@ -33,7 +34,7 @@ function Parser(){
     };
 
     /**
-     * [parseTerminalCommand description]
+     * [parseTerminalCommand parse host command message class 1]
      * @param  {[type]} splitted [description]
      * @return {[type]}          [description]
      */
@@ -57,6 +58,33 @@ function Parser(){
         return parsed;
     }
 
+    this.parseDataCommand = function(splitted){
+        var parsed = {};
+        parsed.message_class = 'Data Command';
+        parsed.LUNO = splitted[1];
+        parsed.message_sequence_number = splitted[2];
+        parsed.message_identifier = splitted[3];
+
+        switch(parsed.message_identifier){
+            case '12':
+                parsed.states = [];
+                for(var i = 4; i < splitted.length; i++){
+                    parsed.states.push(splitted[i]);
+                }
+                break;
+            default:
+                break;
+        }
+
+        return parsed;
+    };
+
+
+    /**
+     * [parseTransactionReply parse host command message class 4]
+     * @param  {[type]} splitted [description]
+     * @return {[type]}          [description]
+     */
     this.parseTransactionReply = function(splitted){
         var parsed = {};
         parsed.message_class = 'Transaction Reply Command';

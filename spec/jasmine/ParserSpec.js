@@ -36,6 +36,13 @@ describe("Parser", function() {
       });
   });
 
+  describe("parse())", function(){
+      it("should be able to parse 'Go out of service message'", function() {
+        var parsed = { message_class: 'Terminal Command', LUNO: '000', message_sequence_number: '000', command_code: 'Go out-of-service' };
+        expect(p.parse('10\x1c000\x1c000\x1c2', 12)).toEqual(parsed);
+      });
+  });  
+
   describe("parseHostMessage()", function(){
       it("should be able to parse 'Go out of service message'", function() {
         expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c2')).toEqual(true);

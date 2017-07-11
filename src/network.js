@@ -3,79 +3,55 @@ const net = require('net');
 // trace routines
 const trace = require('./trace');
 
-let host = '127.0.0.1';
-let port = 11032;
-let client = new net.Socket()
-client = new net.Socket();
+function Network() {
+    this.getOutgoingMessageLength = function (data){
+      // TODO: message length > 4096
+      return '\x00' + String.fromCharCode(data.length);
+    };
 
-/**
- * [getMessageLength description]
- * @param  {[type]} data [description]
- * @return {[type]}      [description]
- */
-function _getOutgoingMessageLength(data){
-  // TODO: message length > 4096
-  return '\x00' + String.fromCharCode(data.length);
-};
+    this.send = function (data){
+      var binary_data = Buffer(this.getOutgoingMessageLength(data) + data, 'binary');
+      this.client.write(binary_data);
+      trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
+    };
 
-/**
- * [send description]
- * @param  {[type]} data [description]
- * @return {[type]}      [description]
- */
-function _send(data){
-  var binary_data = Buffer(_getOutgoingMessageLength(data) + data, 'binary');
-  client.write(binary_data);
-  trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
-};
+    this.client = new net.Socket();
 
-/**
- * [_process_host_message TODO: move to another module]
- * @param  {[type]} message [description]
- * @return {[type]}         [description]
- */
-function _process_host_message(message){
-	return true;
+    this.client.on('data', function(data) {
+      trace.trace(data, '<< ' + data.length + ' bytes received:');
+    });
 }
-
-/*
- Hadling incoming messages from the host
- */
-client.on('data', function(data) {
-  trace.trace(data, '<< ' + data.length + ' bytes received:');
-  _process_host_message(data);
-});
 
 /**
  * [connect description]
- * @return {[type]} [description]
+ * @param  {[type]} host [description]
+ * @param  {[type]} port [description]
+ * @return {[type]}      [description]
  */
-exports.connect = function(host, port){
-  client.connect(port, host, function() {
+Network.prototype.connect = function(host, port){
+  this.client.connect(port, host, function() {
     console.log('Connected to ' + host + ':' + port);
   });
 };
 
 /**
  * [send description]
- * @return {[type]} [description]
+ * @param  {[type]} message [description]
+ * @return {[type]}      [description]
  */
-exports.send = function(data){
-  _send(data);
+Network.prototype.send = function(message){
+  this.send(message);
 };
 
 /**
  * [disconnect description]
  * @return {[type]} [description]
  */
-exports.disconnect = function(){
-  client.destroy();
-  client.on('close', function() {
+Network.prototype.disconnect = function(){
+  this.client.destroy();
+  this.client.on('close', function() {
     console.log('Connection closed');
   });
 };
 
-exports.iddqd = function(){
-	return true;
-}
-
+module.exports = Network

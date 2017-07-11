@@ -6,7 +6,7 @@ const BrowserWindow = electron.BrowserWindow
 // Inter Process communication module
 const ipc = electron.ipcMain
 // 
-const network = require('./src/network');
+const Network = require('./src/network');
 
 const path = require('path')
 const url = require('url')
@@ -14,7 +14,7 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-let client
+let network 
 
 function createWindow () {
   // Create the browser window.
@@ -29,6 +29,8 @@ function createWindow () {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
+
+  network = new Network();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -63,19 +65,15 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-/*
-ipc.on('network-connect', _ => {
-  console.log('network-connect');
-  network.connect();
+ipc.on('network-connect', (event, host, port) => {
+  network.connect(host, port);
 })
 
-ipc.on('network-send', _ => {
-  console.log('network-send');
-  network.send();
+ipc.on('network-send', (event, message) => {
+  network.send(message);
 })
 
 ipc.on('network-disconnect', _ => {
   console.log('network-disconnect');
   network.disconnect();
 })
-*/

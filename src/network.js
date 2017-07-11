@@ -13,7 +13,7 @@ client = new net.Socket();
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */
-function _getMessageLength(data){
+function _getOutgoingMessageLength(data){
   // TODO: message length > 4096
   return '\x00' + String.fromCharCode(data.length);
 };
@@ -24,16 +24,26 @@ function _getMessageLength(data){
  * @return {[type]}      [description]
  */
 function _send(data){
-  var binary_data = Buffer(_getMessageLength(data) + data, 'binary');
+  var binary_data = Buffer(_getOutgoingMessageLength(data) + data, 'binary');
   client.write(binary_data);
   trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
 };
+
+/**
+ * [_process_host_message TODO: move to another module]
+ * @param  {[type]} message [description]
+ * @return {[type]}         [description]
+ */
+function _process_host_message(message){
+	
+}
 
 /*
  Hadling incoming messages from the host
  */
 client.on('data', function(data) {
   trace.trace(data, '<< ' + data.length + ' bytes received:');
+  _process_host_message(data);
 });
 
 /**

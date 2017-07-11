@@ -35,7 +35,7 @@ function _send(data){
  * @return {[type]}         [description]
  */
 function _process_host_message(message){
-	
+	return true;
 }
 
 /*
@@ -74,3 +74,8 @@ exports.disconnect = function(){
     console.log('Connection closed');
   });
 };
+
+exports.iddqd = function(){
+	return true;
+}
+

@@ -7,7 +7,7 @@ describe("States", function() {
   });
 
   describe("parseState()", function(){
-      it("should parse valid state properly", function() {
+      it("should parse state A properly", function() {
         var parsed = { 
           number: '000', 
           type: 'A', 
@@ -21,6 +21,19 @@ describe("States", function() {
           no_fit_match_next_state: '127' 
         };
         expect(s.parseState('000A870500128002002002001127')).toEqual(parsed);
+      });
+
+      it("should parse state K properly", function() {
+        var parsed = { 
+          number: '001', 
+          type: 'K', 
+          states: [ '003', '004', '004', '127', '127', '127', '127', '127' ] 
+        };
+        expect(s.parseState('001K003004004127127127127127')).toEqual(parsed);        
+      });
+
+      it("should throw error if state data is invalid", function() {
+        expect(s.parseState('000"8')).toEqual(null);
       });
   });
 
@@ -48,4 +61,13 @@ describe("States", function() {
 
       });
   });
+
+  /*
+  describe("addStates()", function(){
+      it("should add states", function() {
+        var states = ['000A870500128002002002001127', '001K003004004127127127127127', '002J132000132136132000081178', '003D024000128000000000000000', '004D024000000128000000000000'];
+        expect(s.addStates(states)).toEqual(true);
+      });
+  });
+  */
 });

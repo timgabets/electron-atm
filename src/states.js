@@ -39,6 +39,19 @@ function States(){
                 parsed.no_fit_match_next_state = this.getEntry(data, 9);
                 break;
 
+            // PIN Entry
+            case 'B':
+                parsed.screen_number = this.getEntry(data, 2);
+                parsed.timeout_next_state = this.getEntry(data, 3);
+                parsed.cancel_next_state = this.getEntry(data, 4);
+                parsed.local_pin_check_good_next_state = this.getEntry(data, 5);
+                parsed.local_pin_check_max_bad_pins_next_state = this.getEntry(data, 6);
+                parsed.local_pin_check_error_screen = this.getEntry(data, 7);
+                parsed.remote_pin_check_next_screen = this.getEntry(data, 8);
+                parsed.local_pin_check_max_retries = this.getEntry(data, 9);
+                break;
+
+            // PreSet Operation Code Buffer
             case 'D':
                 parsed.next_state = this.getEntry(data, 2);
                 parsed.clear_mask = this.getEntry(data, 3);

@@ -64,6 +64,22 @@ describe("States", function() {
         expect(s.parseState('000A870500128002002002001127')).toEqual(parsed);
       });
 
+      it("should parse state B properly", function() {
+        var parsed = { 
+          number: '024', 
+          type: 'B', 
+          screen_number: '024', 
+          timeout_next_state: '002', 
+          cancel_next_state: '131', 
+          local_pin_check_good_next_state: '026', 
+          local_pin_check_max_bad_pins_next_state: '026', 
+          local_pin_check_error_screen: '138', 
+          remote_pin_check_next_screen: '026', 
+          local_pin_check_max_retries: '003' 
+        };
+        expect(s.parseState('024B024002131026026138026003')).toEqual(parsed);
+      });
+
       it("should parse state D properly", function() {
         var parsed ={ 
           number: '003', 
@@ -134,12 +150,10 @@ describe("States", function() {
       });
   });
 
-  /*
   describe("addStates()", function(){
       it("should add states", function() {
         var states = ['000A870500128002002002001127', '001K003004004127127127127127', '002J132000132136132000081178', '003D024000128000000000000000', '004D024000000128000000000000'];
         expect(s.addStates(states)).toEqual(true);
       });
   });
-  */
 });

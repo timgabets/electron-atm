@@ -43,11 +43,9 @@ exports.connect = function(host, port){
  * [send description]
  * @return {[type]} [description]
  */
-exports.send = function(){
-  var data = '11\x1C000\x1C\x1C\x1C12\x1C;4575270595153145=20012211998522600001?\x1C\x1CFA  G  A\x1C00000000\x1C4;5=72;8:?=742?;\x1C00000000000000000000000000000000\x1C00000000000000000000000000000000\x1C\x1C2005210000000000000000000000000000000000000000000000';
+exports.send = function(data){
   //var data = '22\x1C000\x1C\x1C9'
   send(data);
-
   client.on('data', function(data) {
     trace.trace(data, '<< ' + data.length + ' bytes received:');
   });

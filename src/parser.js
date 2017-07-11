@@ -12,6 +12,12 @@ function Parser(){
             return 0;
     };
 
+    /**
+     * [parse parse the message from host]
+     * @param  {[type]} message [actual message without header length]
+     * @param  {[type]} length  [length of the message to parse]
+     * @return {[type]}         [parsed object]
+     */
     this.parse = function (message, length){
         var splitted = message.split('\x1c')
         var parsed = {};
@@ -43,7 +49,7 @@ function Parser(){
 };
 
 Parser.prototype.parseHostMessage = function(message){
-    return true;
+    return this.parse(message.substring(2), this.getIncomingMessageLength(message));
 };
 
 module.exports = Parser

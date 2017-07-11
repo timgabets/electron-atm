@@ -6,7 +6,17 @@ describe("Network", function() {
     n = new Network();
   });
 
-  it("should be able to get proper empty message length", function() {
-    expect(n.getOutgoingMessageLength('')).toEqual('\x00\x00');
+  describe("getOutgoingMessageLength()", function(){
+      it("should be able to get proper empty message length", function() {
+        expect(n.getOutgoingMessageLength('')).toEqual('\x00\x00');
+      });
+    
+      it("should return the length for message.len === 10", function() {
+        expect(n.getOutgoingMessageLength('0123456789')).toEqual('\x00\x0a');
+      });
+    
+      it("should return the length for message.len === 16", function() {
+        expect(n.getOutgoingMessageLength('0123456789abcdef')).toEqual('\x00\x10');
+      });
   });
 });

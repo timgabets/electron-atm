@@ -74,6 +74,5 @@ ipc.on('network-send', (event, message) => {
 })
 
 ipc.on('network-disconnect', _ => {
-  console.log('network-disconnect');
   network.disconnect();
 })

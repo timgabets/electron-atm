@@ -23,6 +23,21 @@ describe("States", function() {
         expect(s.parseState('000A870500128002002002001127')).toEqual(parsed);
       });
 
+      it("should parse state J properly", function() {
+        var parsed = { 
+          number: '002', 
+          type: 'J', 
+          receipt_delivered_screen: '132', 
+          next_state: '000', 
+          no_receipt_delivered_screen: '132', 
+          card_retained_screen_number: '136', 
+          statement_delivered_screen_number: '132', 
+          bna_notes_returned_screen: '081', 
+          extension_state: '178' 
+        };
+        expect(s.parseState('002J132000132136132000081178')).toEqual(parsed);        
+      });
+
       it("should parse state K properly", function() {
         var parsed = { 
           number: '001', 
@@ -31,6 +46,7 @@ describe("States", function() {
         };
         expect(s.parseState('001K003004004127127127127127')).toEqual(parsed);        
       });
+
 
       it("should throw error if state data is invalid", function() {
         expect(s.parseState('000"8')).toEqual(null);

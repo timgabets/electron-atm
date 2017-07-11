@@ -1,7 +1,7 @@
 // NodeJS net module
 const net = require('net');
 // trace routines
-const trace = require('./trace');
+const Trace = require('./trace');
 
 function Network() {
     this.getOutgoingMessageLength = function (data){
@@ -12,13 +12,14 @@ function Network() {
     this.send = function (data){
       var binary_data = Buffer(this.getOutgoingMessageLength(data) + data, 'binary');
       this.client.write(binary_data);
-      trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
+      this.trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
     };
 
+    this.trace = new Trace();
     this.client = new net.Socket();
 
     this.client.on('data', function(data) {
-      trace.trace(data, '<< ' + data.length + ' bytes received:');
+      this.trace.trace(data, '<< ' + data.length + ' bytes received:');
     });
 }
 

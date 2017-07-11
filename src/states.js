@@ -29,7 +29,7 @@ function States(){
         switch(parsed.type){
             // Card read state
             case 'A':
-                parsed.screen_number = this.getEntry(data, 2);    
+                parsed.screen_number = this.getEntry(data, 2);
                 parsed.good_read_next_state = this.getEntry(data, 3);
                 parsed.error_screen_number = this.getEntry(data, 4);
                 parsed.read_condition_1 = this.getEntry(data, 5);
@@ -37,6 +37,17 @@ function States(){
                 parsed.read_condition_3 = this.getEntry(data, 7);
                 parsed.card_return_flag = this.getEntry(data, 8);
                 parsed.no_fit_match_next_state = this.getEntry(data, 9);
+                break;
+
+            case 'D':
+                parsed.next_state = this.getEntry(data, 2);
+                parsed.clear_mask = this.getEntry(data, 3);
+                parsed.A_preset_mask = this.getEntry(data, 4);
+                parsed.B_preset_mask = this.getEntry(data, 5);
+                parsed.C_preset_mask = this.getEntry(data, 6);
+                parsed.D_preset_mask = this.getEntry(data, 7);
+
+                parsed.extension_state = this.getEntry(data, 9);
                 break;
 
             // Close state

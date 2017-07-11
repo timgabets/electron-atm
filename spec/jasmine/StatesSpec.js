@@ -64,6 +64,21 @@ describe("States", function() {
         expect(s.parseState('000A870500128002002002001127')).toEqual(parsed);
       });
 
+      it("should parse state D properly", function() {
+        var parsed ={ 
+          number: '003', 
+          type: 'D', 
+          next_state: '024', 
+          clear_mask: '000', 
+          A_preset_mask: '128', 
+          B_preset_mask: '000', 
+          C_preset_mask: '000', 
+          D_preset_mask: '000', 
+          extension_state: '000' 
+        };
+        expect(s.parseState('003D024000128000000000000000')).toEqual(parsed);
+      });
+
       it("should parse state J properly", function() {
         var parsed = { 
           number: '002', 

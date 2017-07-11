@@ -5,16 +5,23 @@
     <title>ATM</title>
   </head>
   <body>
-    <small>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-    </small>
+    <button id="connect">Connect</button>
+    <button id="send">Send</button>
+    <button id="disconnect">Disconnect</button>
+    
+    <div>
+      <small>
+      <!-- All of the Node.js APIs are available in this renderer process. -->
+      Node.js <script>document.write(process.versions.node)</script>,
+      Chromium <script>document.write(process.versions.chrome)</script>,
+      and Electron <script>document.write(process.versions.electron)</script>.
+      </small>
+    </div>
   </body>
 
   <script>
     // You can also require other files to run in this process
     require('./renderer.js')
+    require('./src/listener.js')
   </script>
 </html>

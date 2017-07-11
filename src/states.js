@@ -29,34 +29,36 @@ function States(){
         switch(parsed.type){
             // Card read state
             case 'A':
-                parsed.screen_number = data.substring(4, 7);    // 2
-                parsed.good_read_next_state = data.substring(7, 10) // 3
-                parsed.error_screen_number = data.substring(10, 13)  // 4
-                parsed.read_condition_1 = data.substring(13, 16) // 5
-                parsed.read_condition_2 = data.substring(16, 19) // 6
-                parsed.read_condition_3 = data.substring(19, 22)
-                parsed.card_return_flag = data.substring(22, 25)
-                parsed.no_fit_match_next_state = data.substring(25, 28)
+                parsed.screen_number = this.getEntry(data, 2);    
+                parsed.good_read_next_state = this.getEntry(data, 3);
+                parsed.error_screen_number = this.getEntry(data, 4);
+                parsed.read_condition_1 = this.getEntry(data, 5);
+                parsed.read_condition_2 = this.getEntry(data, 6);
+                parsed.read_condition_3 = this.getEntry(data, 7);
+                parsed.card_return_flag = this.getEntry(data, 8);
+                parsed.no_fit_match_next_state = this.getEntry(data, 9);
                 break;
 
             // Close state
             case 'J':
-                parsed.receipt_delivered_screen = data.substring(4, 7);
-                parsed.next_state = data.substring(7, 10)
-                parsed.no_receipt_delivered_screen = data.substring(10, 13);
-                parsed.card_retained_screen_number = data.substring(13, 16);
-                parsed.statement_delivered_screen_number = data.substring(16, 19);
+                parsed.receipt_delivered_screen = this.getEntry(data, 2);
+                parsed.next_state = this.getEntry(data, 3);
+                parsed.no_receipt_delivered_screen = this.getEntry(data, 4);
+                parsed.card_retained_screen_number = this.getEntry(data, 5);
+                parsed.statement_delivered_screen_number = this.getEntry(data, 6);
 
-                parsed.bna_notes_returned_screen = data.substring(22, 25)
-                parsed.extension_state = data.substring(25, 28)
+                parsed.bna_notes_returned_screen = this.getEntry(data, 8);
+                parsed.extension_state = this.getEntry(data, 9);
                 break;
 
             // FIT Switch state
             case 'K':
                 parsed.states = [];
-                for (var i = 4; i < data.length; i+=3){
-                    parsed.states.push(data.substring(i, i+3))
-                };
+                var i = 2;
+                while(i < 10){
+                    parsed.states.push(this.getEntry(data, i));
+                    i++;
+                }
                 break;
             default:
                 return null;

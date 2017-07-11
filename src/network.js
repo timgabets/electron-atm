@@ -3,10 +3,10 @@ const net = require('net');
 // trace routines
 const trace = require('./trace');
 
+let host = '127.0.0.1';
+let port = 11032;
 let client = new net.Socket()
 client = new net.Socket();
-var host = '127.0.0.1';
-var port = 11032;
 
 /**
  * [getMessageLength description]
@@ -33,7 +33,7 @@ function send(data){
  * [connect description]
  * @return {[type]} [description]
  */
-exports.connect = function(){
+exports.connect = function(host, port){
   client.connect(port, host, function() {
     console.log('Connected to ' + host + ':' + port);
   });

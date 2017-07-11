@@ -5,7 +5,10 @@ const ipc = electron.ipcRenderer
 
 document.getElementById('connect').addEventListener('click', _ => {
   //ipc.send('network-connect');
-  network.connect();
+  //
+  let host = document.getElementById('host').value;
+  let port = document.getElementById('port').value;
+  network.connect(host, port);
 });
 
 document.getElementById('send').addEventListener('click', _ => {

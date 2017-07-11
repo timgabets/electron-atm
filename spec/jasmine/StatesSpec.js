@@ -95,6 +95,22 @@ describe("States", function() {
         expect(s.parseState('003D024000128000000000000000')).toEqual(parsed);
       });
 
+      it("should parse state F properly", function() {
+        var parsed = { 
+          number: '219', 
+          type: 'F', 
+          screen_number: '069', 
+          timeout_next_state: '002', 
+          cancel_next_state: '131', 
+          FDK_A_next_state: '220', 
+          FDK_B_next_state: '255', 
+          FDK_C_next_state: '220', 
+          FDK_D_next_state: '219', 
+          amount_display_screen: '006' 
+        };
+        expect(s.parseState('219F069002131220255220219006')).toEqual(parsed);        
+      });
+
       it("should parse state I properly", function() {
         var parsed = {
           number: '027', 

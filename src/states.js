@@ -105,6 +105,25 @@ function States(){
                 });
                 break;
 
+            // Extension state
+            case 'Z':
+                parsed.entries = [];
+                for(var i = 2; i < 10; i++)
+                    parsed.entries.push(this.getEntry(data, i))
+                break;
+
+
+            // FDK information entry state
+            case 'X':
+                parsed.screen_number = this.getEntry(data, 2);
+                parsed.timeout_next_state = this.getEntry(data, 3);
+                parsed.cancel_next_state = this.getEntry(data, 4);
+                parsed.FDK_next_state = this.getEntry(data, 5);
+                parsed.extension_state = this.getEntry(data, 6);
+                parsed.buffer_id = this.getEntry(data, 7);
+                parsed.FDK_active_mask = this.getEntry(data, 8);
+                break;
+
             default:
                 return null;
         }

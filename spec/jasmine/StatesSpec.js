@@ -153,6 +153,20 @@ describe("States", function() {
         expect(s.parseState('035W181037255127031034250186')).toEqual(parsed);        
       });
 
+      it("should parse state X properly", function() {
+        var parsed = { 
+          number: '037', 
+          type: 'X', 
+          screen_number: '037', 
+          timeout_next_state: '002', 
+          cancel_next_state: '131', 
+          FDK_next_state: '038', 
+          extension_state: '039', 
+          buffer_id: '010', 
+          FDK_active_mask: '255' 
+        };
+        expect(s.parseState('037X037002131038039010255000')).toEqual(parsed);        
+      });
 
       it("should throw error if state data is invalid", function() {
         expect(s.parseState('000"8')).toEqual(null);

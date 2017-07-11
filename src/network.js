@@ -4,11 +4,20 @@ const net = require('net');
 const Trace = require('./trace');
 
 function Network() {
+    /**
+     * [getOutgoingMessageLength get the Message Header Length]
+     * @param  {[type]} data [binary data]
+     * @return {[type]}      [two-bytes length, e.g. '\x00\x0a' for 10-byte data]
+     */
     this.getOutgoingMessageLength = function (data){
-      // TODO: message length > 4096
-      return '\x00' + String.fromCharCode(data.length);
+      return String.fromCharCode(data.length / 256) + String.fromCharCode(data.length % 256);
     };
 
+    /**
+     * [send description]
+     * @param  {[type]} data [description]
+     * @return {[type]}      [description]
+     */
     this.send = function (data){
       var binary_data = Buffer(this.getOutgoingMessageLength(data) + data, 'binary');
       this.client.write(binary_data);

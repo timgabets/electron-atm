@@ -95,6 +95,22 @@ describe("States", function() {
         expect(s.parseState('003D024000128000000000000000')).toEqual(parsed);
       });
 
+      it("should parse state I properly", function() {
+        var parsed = {
+          number: '027', 
+          type: 'I', 
+          screen_number: '025', 
+          timeout_next_state: '146', 
+          send_track2: '001', 
+          send_track1_track3: '000', 
+          send_operation_code: '001', 
+          send_amount_data: '001', 
+          send_pin_buffer: '001', 
+          send_buffer_B_buffer_C: '003' 
+        };
+        expect(s.parseState('027I025146001000001001001003')).toEqual(parsed);        
+      });
+
       it("should parse state J properly", function() {
         var parsed = { 
           number: '002', 

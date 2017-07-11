@@ -63,6 +63,18 @@ function States(){
                 parsed.extension_state = this.getEntry(data, 9);
                 break;
 
+            // Transaction request
+            case 'I':
+                parsed.screen_number = this.getEntry(data, 2);
+                parsed.timeout_next_state = this.getEntry(data, 3);
+                parsed.send_track2 = this.getEntry(data, 4);
+                parsed.send_track1_track3 = this.getEntry(data, 5);
+                parsed.send_operation_code = this.getEntry(data, 6);
+                parsed.send_amount_data = this.getEntry(data, 7);
+                parsed.send_pin_buffer = this.getEntry(data, 8);
+                parsed.send_buffer_B_buffer_C = this.getEntry(data, 9);
+                break;
+
             // Close state
             case 'J':
                 parsed.receipt_delivered_screen = this.getEntry(data, 2);

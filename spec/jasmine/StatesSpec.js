@@ -235,6 +235,21 @@ describe("States", function() {
         expect(s.parseState('037Z1234567890ABCDEFGHIJKLMN')).toEqual(parsed);        
       });
 
+      it("should parse state > properly", function() {
+        var parsed = { 
+          number: '037', 
+          type: '>', 
+          cancel_key_mask: '701', 
+          deposit_key_mask: '928', 
+          add_more_key_mask: '362', 
+          refund_key_mask: '810', 
+          extension_state_1: '280', 
+          extension_state_2: '293', 
+          extension_state_3: '751' 
+        };
+        expect(s.parseState('037>701928362810280293751745')).toEqual(parsed);        
+      });
+
       it("should throw error if state data is invalid", function() {
         expect(s.parseState('000"8')).toEqual(null);
       });

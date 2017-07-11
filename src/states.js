@@ -167,6 +167,16 @@ function States(){
                 parsed.FDK_active_mask = this.getEntry(data, 8);
                 break;
 
+            case '>':
+                parsed.cancel_key_mask = this.getEntry(data, 2);
+                parsed.deposit_key_mask = this.getEntry(data, 3);
+                parsed.add_more_key_mask = this.getEntry(data, 4);
+                parsed.refund_key_mask = this.getEntry(data, 5);
+                parsed.extension_state_1 = this.getEntry(data, 6);
+                parsed.extension_state_2 = this.getEntry(data, 7);
+                parsed.extension_state_3 = this.getEntry(data, 8);
+                break;
+
             default:
                 return null;
         }

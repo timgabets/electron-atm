@@ -4,7 +4,11 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 // Inter Process communication module
-const IPC = electron.ipcMain
+const ipc = electron.ipcMain
+// NodeJS net module
+const net = require('net');
+// trace routines
+const trace = require('./src/trace');
 
 const path = require('path')
 const url = require('url')
@@ -62,3 +66,47 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+var client = new net.Socket();
+
+ipc.on('network-connect', _ => {
+  console.log('network-connect');
+  
+  var host = '127.0.0.1';
+  var port = 11032;
+
+    function getMessageLength(data){
+      // TODO: message length > 4096
+      return '\x00' + String.fromCharCode(data.length);
+    };
+
+    function send(data){
+      var binary_data = Buffer(getMessageLength(data) + data, 'binary');
+      client.write(binary_data);
+      trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
+    };
+
+    client.connect(port, host, function() {
+      console.log('Connected to ' + host + ':' + port);
+    });
+
+    var data = '11\x1C000\x1C\x1C\x1C12\x1C;4575270595153145=20012211998522600001?\x1C\x1CFA  G  A\x1C00000000\x1C4;5=72;8:?=742?;\x1C00000000000000000000000000000000\x1C00000000000000000000000000000000\x1C\x1C2005210000000000000000000000000000000000000000000000';
+    //var data = '22\x1C000\x1C\x1C9'
+    send(data);
+
+    client.on('data', function(data) {
+      trace.trace(data, '<< ' + data.length + ' bytes received:');
+      client.destroy();
+    });
+
+    client.on('close', function() {
+      console.log('Connection closed');
+    });
+})
+
+ipc.on('network-send', _ => {
+  console.log('network-send');
+})
+
+ipc.on('network-disconnect', _ => {
+  console.log('network-disconnect');
+})

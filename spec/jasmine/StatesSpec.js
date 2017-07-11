@@ -111,6 +111,37 @@ describe("States", function() {
         expect(s.parseState('219F069002131220255220219006')).toEqual(parsed);        
       });
 
+      it("should parse state G properly", function() {
+        var parsed = { 
+          number: '073', 
+          type: 'G', 
+          amount_check_condition_true: '074', 
+          amount_check_condition_false: '07T', 
+          buffer_to_check: 'YUG', 
+          integer_multiple_value: 'HJV', 
+          decimal_places: 'BN3', 
+          currency_type: 'QWE', 
+          amount_check_condition: 'ASD' 
+        };
+        expect(s.parseState('073G07407TYUGHJVBN3QWEASDZXC')).toEqual(parsed);        
+      });
+
+      it("should parse state H properly", function() {
+        var parsed = { 
+          number: '089', 
+          type: 'H', 
+          screen_number: '564', 
+          timeout_next_state: '002', 
+          cancel_next_state: '131', 
+          FDK_A_next_state: '090', 
+          FDK_B_next_state: '255', 
+          FDK_C_next_state: '090', 
+          FDK_D_next_state: '089', 
+          buffer_and_display_params: '003' 
+        };
+        expect(s.parseState('089H564002131090255090089003')).toEqual(parsed);        
+      });
+
       it("should parse state I properly", function() {
         var parsed = {
           number: '027', 

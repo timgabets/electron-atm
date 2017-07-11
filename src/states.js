@@ -75,6 +75,29 @@ function States(){
                 parsed.amount_display_screen = this.getEntry(data, 9);
                 break;
 
+            // Amount check state
+            case 'G':
+                parsed.amount_check_condition_true = this.getEntry(data, 2);
+                parsed.amount_check_condition_false = this.getEntry(data, 3);
+                parsed.buffer_to_check = this.getEntry(data, 4);
+                parsed.integer_multiple_value = this.getEntry(data, 5);
+                parsed.decimal_places = this.getEntry(data, 6);
+                parsed.currency_type = this.getEntry(data, 7);
+                parsed.amount_check_condition = this.getEntry(data, 8);
+                break;
+
+            // information Entry State
+            case 'H':
+                parsed.screen_number = this.getEntry(data, 2);
+                parsed.timeout_next_state = this.getEntry(data, 3);
+                parsed.cancel_next_state = this.getEntry(data, 4);
+                parsed.FDK_A_next_state = this.getEntry(data, 5);
+                parsed.FDK_B_next_state = this.getEntry(data, 6);
+                parsed.FDK_C_next_state = this.getEntry(data, 7);
+                parsed.FDK_D_next_state = this.getEntry(data, 8);
+                parsed.buffer_and_display_params = this.getEntry(data, 9);
+                break;
+
             // Transaction request
             case 'I':
                 parsed.screen_number = this.getEntry(data, 2);

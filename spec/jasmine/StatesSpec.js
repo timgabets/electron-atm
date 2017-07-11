@@ -168,6 +168,15 @@ describe("States", function() {
         expect(s.parseState('037X037002131038039010255000')).toEqual(parsed);        
       });
 
+      it("should parse state Z properly", function() {
+        var parsed = { 
+          number: '037', 
+          type: 'Z', 
+          entries: [ '123', '456', '789', '0AB', 'CDE', 'FGH', 'IJK', 'LMN' ] 
+        };
+        expect(s.parseState('037Z1234567890ABCDEFGHIJKLMN')).toEqual(parsed);        
+      });
+
       it("should throw error if state data is invalid", function() {
         expect(s.parseState('000"8')).toEqual(null);
       });

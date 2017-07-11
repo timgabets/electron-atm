@@ -2,6 +2,8 @@
 const net = require('net');
 // trace routines
 const Trace = require('./trace');
+// IPC 
+const ipc = electron.ipcRenderer;
 
 function Network() {
     /**
@@ -29,6 +31,7 @@ function Network() {
 
     this.client.on('data', function(data) {
       this.trace.trace(data, '<< ' + data.length + ' bytes received:');
+      //ipc.send('host-message-received', data);
     });
 }
 

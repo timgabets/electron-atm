@@ -5,10 +5,8 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 // Inter Process communication module
 const ipc = electron.ipcMain
-// NodeJS net module
-const net = require('net');
-// trace routines
-const trace = require('./src/trace');
+// 
+const network = require('./src/network');
 
 const path = require('path')
 const url = require('url')
@@ -68,40 +66,15 @@ app.on('activate', function () {
 
 ipc.on('network-connect', _ => {
   console.log('network-connect');
-  client = new net.Socket();
-  var host = '127.0.0.1';
-  var port = 11032;
-  client.connect(port, host, function() {
-    console.log('Connected to ' + host + ':' + port);
-  });
+  network.connect();
 })
 
 ipc.on('network-send', _ => {
   console.log('network-send');
-    function getMessageLength(data){
-    // TODO: message length > 4096
-    return '\x00' + String.fromCharCode(data.length);
-  };
-
-  function send(data){
-    var binary_data = Buffer(getMessageLength(data) + data, 'binary');
-    client.write(binary_data);
-    trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
-  };
-
-    var data = '11\x1C000\x1C\x1C\x1C12\x1C;4575270595153145=20012211998522600001?\x1C\x1CFA  G  A\x1C00000000\x1C4;5=72;8:?=742?;\x1C00000000000000000000000000000000\x1C00000000000000000000000000000000\x1C\x1C2005210000000000000000000000000000000000000000000000';
-    //var data = '22\x1C000\x1C\x1C9'
-    send(data);
-
-    client.on('data', function(data) {
-      trace.trace(data, '<< ' + data.length + ' bytes received:');
-    });
+  network.send();
 })
 
 ipc.on('network-disconnect', _ => {
   console.log('network-disconnect');
-  client.destroy();
-  client.on('close', function() {
-    console.log('Connection closed');
-  });
+  network.disconnect();
 })

@@ -142,6 +142,17 @@ describe("States", function() {
         expect(s.parseState('002J132000132136132000081178')).toEqual(parsed);        
       });
 
+      it("should parse state k properly", function() {
+        var parsed = { 
+          number: '515', 
+          type: 'k', 
+          good_read_next_state: '001', 
+          card_return_flag: '001', 
+          no_fit_match_next_state: '127' 
+        };
+        expect(s.parseState('515k000001000000000000001127')).toEqual(parsed);        
+      });
+
       it("should parse state K properly", function() {
         var parsed = { 
           number: '001', 

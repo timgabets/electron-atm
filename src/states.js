@@ -99,6 +99,14 @@ function States(){
                 parsed.extension_state = this.getEntry(data, 9);
                 break;
 
+
+            // Smart FIT check state
+            case 'k':
+                parsed.good_read_next_state = this.getEntry(data, 3);
+                parsed.card_return_flag = this.getEntry(data, 8);
+                parsed.no_fit_match_next_state = this.getEntry(data, 9);
+                break;
+
             // FIT Switch state
             case 'K':
                 parsed.states = [];

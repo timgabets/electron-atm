@@ -135,6 +135,24 @@ describe("States", function() {
         expect(s.parseState('001K003004004127127127127127')).toEqual(parsed);        
       });
 
+      it("should parse state W properly", function() {
+        var parsed = { 
+          number: '035', 
+          type: 'W', 
+          states: { 
+            A: '181', 
+            B: '037', 
+            C: '255', 
+            D: '127', 
+            E: '031', 
+            F: '034', 
+            G: '250', 
+            H: '186' 
+          },
+        }
+        expect(s.parseState('035W181037255127031034250186')).toEqual(parsed);        
+      });
+
 
       it("should throw error if state data is invalid", function() {
         expect(s.parseState('000"8')).toEqual(null);

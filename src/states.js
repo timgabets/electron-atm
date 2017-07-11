@@ -96,6 +96,15 @@ function States(){
                     i++;
                 }
                 break;
+
+            // FDK switch
+            case 'W':
+                parsed.states = {};
+                ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].forEach( (element, index) => {
+                    parsed.states[element] = this.getEntry(data, index + 2)
+                });
+                break;
+
             default:
                 return null;
         }

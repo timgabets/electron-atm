@@ -275,7 +275,7 @@ describe("States", function() {
         };
 
         expect(s.addState('000A870500128002002002001127')).toEqual(true);
-        expect(s.getState('000')).toEqual(parsed);
+        expect(s.get('000')).toEqual(parsed);
 
       });
   });

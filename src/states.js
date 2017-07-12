@@ -201,11 +201,11 @@ function States(){
 }
 
 /**
- * [getState description]
+ * [get description]
  * @param  {[type]} state_number [description]
  * @return {[type]}              [description]
  */
-States.prototype.getState = function(state_number){
+States.prototype.get = function(state_number){
     return this.states[state_number];
 };
 

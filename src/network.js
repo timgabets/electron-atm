@@ -23,14 +23,14 @@ function Network() {
     this.send = function (data){
       var binary_data = Buffer(this.getOutgoingMessageLength(data) + data, 'binary');
       this.client.write(binary_data);
-      this.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
+      this.trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
     };
 
     this.trace = new Trace();
     this.client = new net.Socket();
 
     this.client.on('data', data => {
-      this.trace(data, '<< ' + data.length + ' bytes received:');
+      this.trace.trace(data, '<< ' + data.length + ' bytes received:');
       //ipc.send('host-message-received', data);
     });
 }

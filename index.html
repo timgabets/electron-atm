@@ -9,20 +9,22 @@
     <form>
       <input type="text" id="host" value="127.0.0.1"></input>
       <input type="number" id="port" value="11032"></input>
+      <button id="connect">Connect</button>
     </form>
   </div>
-
-  <div>
-    <button id="connect">Connect</button>
-    <button id="disconnect">Disconnect</button>
-  </div>
+  
   <hr>
 
   <div>
-    <form>
+  <form>
+      <select id="selected-card">
+        <option value=";4575270595153145=20012211998522600001?">4575270595153145</option>
+        <option value=";4000000000000005=20012211998522600001?">4000000000000005</option>
+      </select>
+
       <input type="text" id="opcode-buffer" value="FA  G  A"></input>
+      <button id="send-transaction-request">Send request</button>
     </form>
-    <button id="send-transaction-request">Send request</button>
   </div>
 
   <hr>

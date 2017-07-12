@@ -8,43 +8,41 @@
   </head>
   
   <body>
-  <div class="page-header">
-  </div>
-  <div>
+  <div class="container theme-showcase">
+    <div>
+      <form>
+        <input type="text" id="host" value="127.0.0.1"></input>
+        <input type="number" id="port" value="11032"></input>
+        <button id="connect">Connect</button>
+      </form>
+    </div>
+    
+    <div>
     <form>
-      <input type="text" id="host" value="127.0.0.1"></input>
-      <input type="number" id="port" value="11032"></input>
-      <button id="connect">Connect</button>
-    </form>
+        <select id="selected-card">
+          <option value=";4575270595153145=20012211998522600001?">4575270595153145</option>
+          <option value=";4000000000000005=20012211998522600001?">4000000000000005</option>
+        </select>
+
+        <input type="text" id="opcode-buffer" value="FA  G  A"></input>
+        <button id="send-transaction-request">Send request</button>
+      </form>
+    </div>
+
+    <div>
+      <button id="send-ready">Send ready</button>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">
+        <!-- All of the Node.js APIs are available in this renderer process. -->
+        Node.js <script>document.write(process.versions.node)</script>,
+        Chromium <script>document.write(process.versions.chrome)</script>,
+        and Electron <script>document.write(process.versions.electron)</script>.
+        </p>
+      </div>
+    </footer>
   </div>
-  
-  <hr>
-
-  <div>
-  <form>
-      <select id="selected-card">
-        <option value=";4575270595153145=20012211998522600001?">4575270595153145</option>
-        <option value=";4000000000000005=20012211998522600001?">4000000000000005</option>
-      </select>
-
-      <input type="text" id="opcode-buffer" value="FA  G  A"></input>
-      <button id="send-transaction-request">Send request</button>
-    </form>
-  </div>
-
-  <hr>
-
-  <div>
-    <button id="send-ready">Send ready</button>
-  </div>
-  <footer>
-    <small>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-    </small>
-  </footer>
   </body>
 
   <script>

@@ -280,10 +280,10 @@ describe("States", function() {
       });
   });
 
-  describe("addStates()", function(){
+  describe("add()", function(){
       it("should add states", function() {
         var states = ['000A870500128002002002001127', '001K003004004127127127127127', '002J132000132136132000081178', '003D024000128000000000000000', '004D024000000128000000000000'];
-        expect(s.addStates(states)).toEqual(true);
+        expect(s.add(states)).toEqual(true);
       });
   });
 });

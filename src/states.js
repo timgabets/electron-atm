@@ -17,6 +17,21 @@ function States(){
     }
 
     /**
+     * [addState description]
+     * @param {[type]} state [description]
+     * @return {boolean}     [true if state was successfully added, false otherwise]
+     */
+    this.addState = function(state){
+        var parsed = this.parseState(state);
+        if(parsed){
+            this.states[parsed.number] = parsed;
+            return true;
+        }
+        else
+            return false;
+    };
+
+    /**
      * [parseState description]
      * @param  {[type]} data [description]
      * @return {[type]}      [description]
@@ -195,31 +210,20 @@ States.prototype.getState = function(state_number){
 };
 
 /**
- * [addState description]
- * @param {[type]} state [description]
- * @return {boolean}     [true if state was successfully added, false otherwise]
+ * [add description]
+ * @param {[type]} data [array of data to add]
+ * @return {boolean}     [true if data were successfully added, false otherwise]
  */
-States.prototype.addState = function(state){
-    var parsed = this.parseState(state);
-    if(parsed){
-        this.states[parsed.number] = parsed;
+States.prototype.add = function(data){
+    if(typeof data === 'object') {
+        for (var i = 0; i < data.length; i++){
+            if(!this.addState(data[i]))
+                return false;
+        }
         return true;
-    }
-    else
-        return false;
-};
-
-/**
- * [addStates description]
- * @param {[type]} states [array of states to add]
- * @return {boolean}     [true if states were successfully added, false otherwise]
- */
-States.prototype.addStates = function(states){
-    for (var i = 0; i < states.length; i++){
-        if(!this.addState(states[i]))
-            return false;
-    }
-    return true;
+    } else if (typeof data === 'string') {
+        return this.addState(data);
+    } 
 };
 
 module.exports = States

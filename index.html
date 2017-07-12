@@ -2,9 +2,14 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <title>ATM</title>
   </head>
+  
   <body>
+  <div class="page-header">
+  </div>
   <div>
     <form>
       <input type="text" id="host" value="127.0.0.1"></input>
@@ -47,5 +52,7 @@
     require('./renderer.js')
     require('./src/listener.js')
     require('./src/network.js')
+    
   </script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </html>

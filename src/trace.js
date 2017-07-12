@@ -62,9 +62,9 @@ function Trace(){
  */
 Trace.prototype.trace = function(data, title){
     if (title)
-        console.log(getTimestamp() + ' ' + title + '\n' + dump(data.toString('binary')));
+        console.log(this.getTimestamp() + ' ' + title + '\n' + this.dump(data.toString('binary')));
     else
-        console.log(getTimestamp() + '\n' + dump(data.toString('binary')));
+        console.log(this.getTimestamp() + '\n' + this.dump(data.toString('binary')));
 };
 
 module.exports = Trace

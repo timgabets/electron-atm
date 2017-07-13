@@ -9,33 +9,39 @@
   
   <body>
   <div class="container">
-      <form class="navbar-form navbar-center">
-        <div class="form-group">
-          <input type="text" class="form-control" id="host" value="127.0.0.1" placeholder="Host"></input>
-        </div>
-
-        <div class="form-group">
-          <input type="number" class="form-control" id="port" value="11032" placeholder="Port"></input>
-        </div>
-
-          <button id="connect" type="submit" class="btn btn-success">Connect</button>
-      </form>
+    <form class="navbar-form navbar-center">
+      <div class="form-group">
+        <input type="text" class="form-control" id="host" value="127.0.0.1" placeholder="Host"></input>
+      </div>
+      <div class="form-group">
+        <input type="number" class="form-control" id="port" value="11032" placeholder="Port"></input>
+      </div>
+      <button id="connect" type="submit" class="btn btn-success">Connect</button>
+    </form>
     
-    <div>
-    <form>
-        <select id="selected-card">
+    <form class="navbar-form navbar-center">
+      <div class="form-group">
+        <select id="selected-card" class="form-control .col-sm-3">
           <option value=";4575270595153145=20012211998522600001?">4575270595153145</option>
           <option value=";4000000000000005=20012211998522600001?">4000000000000005</option>
         </select>
+      </div>
+      <div class="form-group">
+        <select id="opcode-buffer" class="form-control .col-sm-3">
+          <option value="FA  G  A">Account 1 Enquiry</option>
+          <option value="FB  G  A">Account 2 Enquiry</option>
+          <option value="FI DG  A">Account to Account</option>
+        </select>
+      </div>
+      <button id="send-transaction-request" type="submit" class="btn btn-default">Send request</button>
+    </form>
 
-        <input type="text" id="opcode-buffer" value="FA  G  A"></input>
-        <button id="send-transaction-request">Send request</button>
-      </form>
-    </div>
+    <form class="navbar-form navbar-center">
+      <div>
+        <button id="send-ready" type="submit" class="btn btn-default">Send ready</button>
+      </div>
+    </form>
 
-    <div>
-      <button id="send-ready">Send ready</button>
-    </div>
     <footer class="footer">
       <div class="container">
         <p class="text-muted">
@@ -56,5 +62,6 @@
     require('./src/network.js')
     
   </script>
-  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/jquery/dist/jquery.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 </html>

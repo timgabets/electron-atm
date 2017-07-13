@@ -63,17 +63,32 @@ function Parser(){
         parsed.message_class = 'Data Command';
         parsed.LUNO = splitted[1];
         parsed.message_sequence_number = splitted[2];
-        parsed.message_identifier = splitted[3];
 
-        switch(parsed.message_identifier){
-            case '12':
-                parsed.states = [];
-                for(var i = 4; i < splitted.length; i++){
-                    parsed.states.push(splitted[i]);
+        switch(splitted[3][0]){
+            case '1':
+                parsed.message_subclass = 'Customization Command';
+                switch(splitted[3][1]){
+                    case '2':
+                        parsed.message_identifier = 'State table';
+                        parsed.states = [];
+                        for(var i = 4; i < splitted.length; i++){
+                            parsed.states.push(splitted[i]);
+                        }
+                        break;
+                    default:
+                        break;
                 }
                 break;
-            default:
+
+            case '2':
+                parsed.message_subclass = 'Interactive Transaction Response';
+                parsed.display_flag = splitted[3][1];
+                parsed.active_keys = splitted[3].substr(2);
+
+                parsed.screen_timer_field = splitted[4];
+                parsed.screen_data_field = splitted[5];
                 break;
+
         }
 
         return parsed;

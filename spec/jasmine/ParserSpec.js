@@ -64,6 +64,22 @@ describe("Parser", function() {
       });
   });  
 
+  describe("parseDataCommands - Load States", function(){
+    it("should be able to parse 'Interactive Transaction Response' message", function() {
+      var parsed = { 
+        message_class: 'Data Command', 
+        LUNO: '000', 
+        message_sequence_number: '000', 
+        message_subclass: 'Interactive Transaction Response', 
+        display_flag: '1', 
+        active_keys: '0110011000', 
+        screen_timer_field: '074', 
+        screen_data_field: 'SCREENDATA' 
+      }
+      expect(p.parse('30\x1c000\x1c000\x1c210110011000\x1c074\x1cSCREENDATA')).toEqual(parsed);
+    });
+  });
+
 
   /*
     02 6e 33 30 1c 30 30 30 1c 30 30 30 1c 31 32 1c         .n30.000.000.12.
@@ -112,7 +128,8 @@ describe("Parser", function() {
         message_class: 'Data Command', 
         LUNO: '000', 
         message_sequence_number: '000', 
-        message_identifier: '12', 
+        message_subclass: 'Customization Command',
+        message_identifier: 'State table', 
         states: [ '000A870500128002002002001127' ] 
       };
       expect(p.parse('30\x1C000\x1C000\x1C12\x1C000A870500128002002002001127')).toEqual(parsed);
@@ -123,7 +140,8 @@ describe("Parser", function() {
         message_class: 'Data Command', 
         LUNO: '000', 
         message_sequence_number: '000', 
-        message_identifier: '12', 
+        message_subclass: 'Customization Command',
+        message_identifier: 'State table',  
         states: [ 
           '000A870500128002002002001127', 
           '001K003004004127127127127127', 

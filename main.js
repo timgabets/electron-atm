@@ -73,6 +73,3 @@ ipc.on('network-send', (event, message) => {
   network.send(message);
 })
 
-ipc.on('network-disconnect', _ => {
-  network.disconnect();
-})

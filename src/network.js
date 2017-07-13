@@ -30,10 +30,25 @@ function Network() {
     this.parser = new Parser();
     this.client = new net.Socket();
 
+    /**
+     * [network receive listener]
+     * @param  {[type]} data [description]
+     * @return {[type]}      [description]
+     */
     this.client.on('data', data => {
       this.trace.trace(data, '<< ' + data.length + ' bytes received:');
       parsed = this.parser.parseHostMessage(data);
       console.log(this.trace.object(parsed));
+    });
+
+    /**
+     * [network disconnect listener]
+     * @param  {[type]} )  [description]
+     * @return {[type]}   [description]
+     */
+    this.client.on('close', function() {
+      //this.client.destroy();
+      console.log('Connection closed');        
     });
 }
 
@@ -56,17 +71,6 @@ Network.prototype.connect = function(host, port){
  */
 Network.prototype.send = function(message){
   this.send(message);
-};
-
-/**
- * [disconnect description]
- * @return {[type]} [description]
- */
-Network.prototype.disconnect = function(){
-  this.client.destroy();
-  this.client.on('close', function() {
-    console.log('Connection closed');
-  });
 };
 
 module.exports = Network

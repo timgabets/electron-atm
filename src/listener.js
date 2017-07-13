@@ -5,8 +5,8 @@ const ipc = electron.ipcRenderer
 
 document.getElementById('connect').addEventListener('click', _ => {
   ipc.send('network-connect', document.getElementById('host').value, document.getElementById('port').value);
-
 });
+
 
 document.getElementById('send-transaction-request').addEventListener('click', _ => {
   var opcode = document.getElementById('opcode-buffer').value;

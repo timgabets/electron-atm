@@ -30,8 +30,6 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  console.log(typeof jQuery);
-
   network = new Network();
 
   // Emitted when the window is closed.
@@ -77,9 +75,4 @@ ipc.on('network-send', (event, message) => {
 
 ipc.on('network-disconnect', _ => {
   network.disconnect();
-})
-
-ipc.on('host-message-received', (event, message) => {
-  console.log('Host message received');
-  // TODO: parsing message
 })

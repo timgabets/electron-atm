@@ -2,8 +2,8 @@
 const net = require('net');
 // trace routines
 const Trace = require('./trace');
-// IPC 
-//const ipc = electron.ipcRenderer;
+// parser
+const Parser = require('./parser.js');
 
 function Network() {
     /**
@@ -27,11 +27,13 @@ function Network() {
     };
 
     this.trace = new Trace();
+    this.parser = new Parser();
     this.client = new net.Socket();
 
     this.client.on('data', data => {
       this.trace.trace(data, '<< ' + data.length + ' bytes received:');
-      //ipc.send('host-message-received', data);
+      parsed = this.parser.parseHostMessage(data);
+      console.log(parsed);
     });
 }
 

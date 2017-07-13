@@ -106,7 +106,7 @@ function Parser(){
 };
 
 Parser.prototype.parseHostMessage = function(message){
-    return this.parse(message.substring(2), this.getIncomingMessageLength(message));
+    return this.parse(message.toString('utf8').substring(2), this.getIncomingMessageLength(message.toString('utf8')));
 };
 
 module.exports = Parser

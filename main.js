@@ -30,6 +30,8 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
+  console.log(typeof jQuery);
+
   network = new Network();
 
   // Emitted when the window is closed.

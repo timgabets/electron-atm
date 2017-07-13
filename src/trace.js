@@ -67,4 +67,26 @@ Trace.prototype.trace = function(data, title){
         console.log(this.getTimestamp() + '\n' + this.dump(data.toString('binary')));
 };
 
+/**
+ * [object display the fields of javascript object]
+ * @param  {[type]} data  [object to display]
+ * @return {[type]}       [description]
+ */
+Trace.prototype.object = function(data){
+    var dump = '\n';
+
+    var maxLen = 0;
+    for (var property in data)
+        if (property.length > maxLen)
+            maxLen = property.length
+
+    for (var property in data) {
+        var property_name = property;
+        while(property_name.length < maxLen)
+            property_name += ' ';
+        dump += '\t[' + property_name + ']: [' + data[property].replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
+    }
+    return dump;
+};
+
 module.exports = Trace

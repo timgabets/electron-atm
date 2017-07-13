@@ -33,7 +33,7 @@ function Network() {
     this.client.on('data', data => {
       this.trace.trace(data, '<< ' + data.length + ' bytes received:');
       parsed = this.parser.parseHostMessage(data);
-      console.log(parsed);
+      console.log(this.trace.object(parsed));
     });
 }
 

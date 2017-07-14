@@ -84,7 +84,7 @@ Trace.prototype.object = function(data){
         var property_name = property;
         while(property_name.length < maxLen)
             property_name += ' ';
-        dump += '\t[' + property_name + ']: [' + data[property].replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
+        dump += '\t[' + property_name + ']: [' + data[property].toString().replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
     }
     return dump;
 };

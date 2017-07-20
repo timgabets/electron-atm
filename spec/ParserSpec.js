@@ -129,7 +129,7 @@ describe("Parser", function() {
         LUNO: '000', 
         message_sequence_number: '000', 
         message_subclass: 'Customization Command',
-        message_identifier: 'State table', 
+        message_identifier: 'State Tables load', 
         states: [ '000A870500128002002002001127' ] 
       };
       expect(p.parse('30\x1C000\x1C000\x1C12\x1C000A870500128002002002001127')).toEqual(parsed);
@@ -141,7 +141,7 @@ describe("Parser", function() {
         LUNO: '000', 
         message_sequence_number: '000', 
         message_subclass: 'Customization Command',
-        message_identifier: 'State table',  
+        message_identifier: 'State Tables load',  
         states: [ 
           '000A870500128002002002001127', 
           '001K003004004127127127127127', 

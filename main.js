@@ -6,16 +6,12 @@ const BrowserWindow = electron.BrowserWindow
 // Inter Process communication module
 const ipc = electron.ipcMain
 
-// parser
-const Parser = require('./parser.js');
-
 const path = require('path')
 const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-let network 
 
 function createWindow () {
   // Create the browser window.
@@ -65,7 +61,7 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 ipc.on('FDK Pressed', (event, FDK) => {
-  console.log(FDK + ' button pressed')
+  mainWindow.webContents.send('atm-process-button-pressed', FDK)
 })
 
 ipc.on('connect-button-pressed', (event, host, port) => {
@@ -73,9 +69,10 @@ ipc.on('connect-button-pressed', (event, host, port) => {
 })
 
 ipc.on('network-data-received', (event, data) => {
-  // TODO:
-  mainWindow.webContents.send('parse-data', data)
+  mainWindow.webContents.send('parse-host-message', data)
 })
 
-
+ipc.on('host-message-parsed', (event, data) => {
+  mainWindow.webContents.send('atm-process-host-message', data)
+})
 

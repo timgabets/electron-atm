@@ -3,8 +3,8 @@
  */
 
 const electron = require('electron')
-const Network = require('../parser.js');
-const Network = require('../trace.js');
+const Parser = require('../parser.js');
+const Trace = require('../trace.js');
 const ipc = electron.ipcRenderer
 
 let parser = new Parser();

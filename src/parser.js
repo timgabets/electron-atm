@@ -68,13 +68,22 @@ function Parser(){
             case '1':
                 parsed.message_subclass = 'Customization Command';
                 switch(splitted[3][1]){
+                    case '1':
+                        parsed.message_identifier = 'Screen Data load';
+                        break;
+
                     case '2':
-                        parsed.message_identifier = 'State table';
+                        parsed.message_identifier = 'State Tables load';
                         parsed.states = [];
                         for(var i = 4; i < splitted.length; i++){
                             parsed.states.push(splitted[i]);
                         }
                         break;
+                    case '6':
+                        parsed.message_identifier = 'Configuration ID number load';
+                        parsed.config_id = splitted[4];
+                        break;
+
                     default:
                         break;
                 }

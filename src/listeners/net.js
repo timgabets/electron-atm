@@ -3,7 +3,7 @@
  */
 
 const electron = require('electron')
-const Network = require('./network');
+const Network = require('../network.js');
 const ipc = electron.ipcRenderer
 
 let network = new Network();

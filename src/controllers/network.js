@@ -1,7 +1,7 @@
 // NodeJS net module
 const net = require('net');
 // trace routines
-const Trace = require('./trace');
+const Trace = require('./trace.js');
 
 function Network() {
     /**

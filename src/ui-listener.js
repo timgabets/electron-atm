@@ -1,3 +1,7 @@
+/**
+ * Listening to User Interface Events
+ */
+
 const electron = require('electron')
 const network = require('./network.js')
 

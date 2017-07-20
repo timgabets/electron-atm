@@ -2,8 +2,6 @@
 const net = require('net');
 // trace routines
 const Trace = require('./trace');
-// parser
-const Parser = require('./parser.js');
 
 function Network() {
     /**
@@ -27,19 +25,7 @@ function Network() {
     };
 
     this.trace = new Trace();
-    this.parser = new Parser();
     this.client = new net.Socket();
-
-    /**
-     * [network receive listener]
-     * @param  {[type]} data [description]
-     * @return {[type]}      [description]
-     */
-    this.client.on('data', data => {
-      this.trace.trace(data, '<< ' + data.length + ' bytes received:');
-      parsed = this.parser.parseHostMessage(data);
-      console.log(this.trace.object(parsed));
-    });
 
     /**
      * [network disconnect listener]

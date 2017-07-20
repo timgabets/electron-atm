@@ -8,8 +8,19 @@ const ipc = electron.ipcRenderer
 
 let network = new Network();
 
-console.log('Hello from net listener');
+ipc.on('network-connect', (event, message) => {
+  network.connect('127.0.0.1', 11032);
 
-ipc.on('ping', (event, message) => {
-  console.log(message);
+  // Listening to socket
+  network.client.on('data', data => {
+    network.trace.trace(data, '<< ' + data.length + ' bytes received:');
+    ipc.send('network-data-received', data);
+
+    /*
+    parsed = this.parser.parseHostMessage(data);
+    console.log(this.trace.object(parsed));
+    */
+  });
 })
+
+

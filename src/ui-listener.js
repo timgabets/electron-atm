@@ -31,6 +31,6 @@ document.getElementById('FDK A').addEventListener('click', _ => {
 });
 
 document.getElementById('Connect').addEventListener('click', _ => {
-  ipc.send('Connect', '127.0.0.1', 11032);
+  ipc.send('connect-button-pressed', '127.0.0.1', 11032);
 });
 

@@ -1,5 +1,5 @@
 describe("Parser", function() {
-  var Parser = require('../../src/parser.js');
+  var Parser = require('../src/parser.js');
   var p;
 
   beforeEach(function() {

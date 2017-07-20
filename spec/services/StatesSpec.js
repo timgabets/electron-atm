@@ -1,5 +1,5 @@
 describe("States", function() {
-  var States = require('../../src/states.js');
+  var States = require('../../src/services/states.js');
   var s;
 
   beforeEach(function() {

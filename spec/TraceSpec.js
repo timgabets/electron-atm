@@ -1,5 +1,5 @@
 describe("Trace", function() {
-  var Trace = require('../../src/trace.js');
+  var Trace = require('../src/trace.js');
   var t;
 
   beforeEach(function() {

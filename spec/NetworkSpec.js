@@ -1,5 +1,5 @@
 describe("Network", function() {
-  var Network = require('../../src/network.js');
+  var Network = require('../src/network.js');
   var n;
 
   beforeEach(function() {

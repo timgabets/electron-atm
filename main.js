@@ -5,8 +5,9 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 // Inter Process communication module
 const ipc = electron.ipcMain
-// 
-//const Network = require('./src/network');
+
+// parser
+const Parser = require('./parser.js');
 
 const path = require('path')
 const url = require('url')
@@ -67,7 +68,14 @@ ipc.on('FDK Pressed', (event, FDK) => {
   console.log(FDK + ' button pressed')
 })
 
-ipc.on('Connect', (event, host, port) => {
-  console.log('Connecting to host')
-  mainWindow.webContents.send('ping', 'whoooooooh!')
+ipc.on('connect-button-pressed', (event, host, port) => {
+  mainWindow.webContents.send('network-connect')
 })
+
+ipc.on('network-data-received', (event, data) => {
+  // TODO:
+  mainWindow.webContents.send('parse-data', data)
+})
+
+
+

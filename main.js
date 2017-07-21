@@ -11,28 +11,41 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let window = null
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 600})
+  window = new BrowserWindow({
+    width: 1200, 
+    height: 600,
+    // Set the default background color of the window to match the CSS
+    // background color of the page, this prevents any white flickering
+    backgroundColor: "#D6D8DC",
+    // Don't show the window until it ready, this prevents any white flickering
+    show: false
+  })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
+  window.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }))
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  window.webContents.openDevTools()
+
+  // Show window when page is ready
+  window.once('ready-to-show', function () {
+    window.show()
+  })
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
+  window.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
+    window = null
   })
 }
 
@@ -53,7 +66,7 @@ app.on('window-all-closed', function () {
 app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
+  if (window === null) {
     createWindow()
   }
 })
@@ -61,29 +74,29 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 ipc.on('FDK Pressed', (event, FDK) => {
-  mainWindow.webContents.send('atm-process-button-pressed', FDK)
+  window.webContents.send('atm-process-button-pressed', FDK)
 })
 
 ipc.on('connect-button-pressed', (event, host, port) => {
-  mainWindow.webContents.send('network-connect')
+  window.webContents.send('network-connect')
 })
 
 ipc.on('network-data-received', (event, data) => {
-  mainWindow.webContents.send('parse-host-message', data)
+  window.webContents.send('parse-host-message', data)
 })
 
 ipc.on('host-message-parsed', (event, data) => {
-  mainWindow.webContents.send('atm-process-host-message', data)
+  window.webContents.send('atm-process-host-message', data)
 })
 
 ipc.on('build-atm-response', (event, data) => {
-  mainWindow.webContents.send('build-atm-response', data)
+  window.webContents.send('build-atm-response', data)
 })
 
 ipc.on('atm-message-built', (event, data) => {
-  mainWindow.webContents.send('network-send', data)
+  window.webContents.send('network-send', data)
 })
 
 ipc.on('ui-read-card', (event, data) => {
-  mainWindow.webContents.send('atm-read-card', data)
+  window.webContents.send('atm-read-card', data)
 })

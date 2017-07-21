@@ -70,5 +70,15 @@ describe("ATM", function() {
 
       expect(atm.processHostMessage(host_message)).toEqual(command_reject);
     }); 
+
+    it("should respond with 'Command Reject' message to invalid 'State Tables load' host message", function() {
+      var host_message = {
+        message_class: 'Data Command',
+        message_subclass: 'Customization Command',
+      };
+
+      expect(atm.processHostMessage(host_message)).toEqual(command_reject);
+    }); 
+
   });
 });

@@ -1,5 +1,5 @@
 /**
- * Parse listener, handling translations from network binary message to internal application message object (and vice versa)
+ * Parse listener handles translations from network binary message to internal application message object
  */
 
 const electron = require('electron')
@@ -11,6 +11,13 @@ let parser = new Parser();
 let trace = new Trace();
 
 ipc.on('parse-host-message', (event, data) => {
-  ipc.send('host-message-parsed', parser.parseHostMessage(data));
+  var parsed = parser.parseHostMessage(data);
+  console.log(trace.object(parsed));
+  ipc.send('host-message-parsed', parsed);
 })
 
+ipc.on('parse-atm-message', (event, data) => {
+  var parsed = parser.parseHostMessage(data);
+  console.log(trace.object(parsed));
+  ipc.send('host-message-parsed', parsed);
+})

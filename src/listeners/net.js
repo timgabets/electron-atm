@@ -3,7 +3,7 @@
  */
 
 const electron = require('electron')
-const Network = require('../network.js');
+const Network = require('../controllers/network.js');
 const ipc = electron.ipcRenderer
 
 let network = new Network();
@@ -15,12 +15,10 @@ ipc.on('network-connect', (event, message) => {
   network.client.on('data', data => {
     network.trace.trace(data, '<< ' + data.length + ' bytes received:');
     ipc.send('network-data-received', data);
-
-    /*
-    parsed = this.parser.parseHostMessage(data);
-    console.log(this.trace.object(parsed));
-    */
   });
 })
 
+ipc.on('network-send', (event, message) => {
+  network.send(message);
+})
 

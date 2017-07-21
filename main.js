@@ -76,3 +76,10 @@ ipc.on('host-message-parsed', (event, data) => {
   mainWindow.webContents.send('atm-process-host-message', data)
 })
 
+ipc.on('build-atm-response', (event, data) => {
+  mainWindow.webContents.send('build-atm-response', data)
+})
+
+ipc.on('atm-message-built', (event, data) => {
+  mainWindow.webContents.send('network-send', data)
+})

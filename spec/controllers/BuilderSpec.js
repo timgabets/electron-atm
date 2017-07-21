@@ -8,8 +8,8 @@ describe("Builder", function() {
   });
 
   describe("build()", function(){
-    it("should build empty message", function() {
-      expect(b.build(undefined)).toEqual('');
+    it("should return null on empty message", function() {
+      expect(b.build(undefined)).toEqual(null);
     });
 
     it("should build solicited ready status message", function() {

@@ -9,7 +9,7 @@ Builder.prototype.build = function(object){
   var message = '';
 
   if (!object)
-    return message;
+    return null;
 
   switch(object.message_class){
     case 'Solicited':
@@ -34,7 +34,7 @@ Builder.prototype.build = function(object){
           break;
         default:
             break;
-                }
+        }
 
     default:
       break;

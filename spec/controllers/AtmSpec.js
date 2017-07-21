@@ -6,6 +6,12 @@ describe("ATM", function() {
     message_subclass: 'Status', 
     status_descriptor: 'Ready' 
   };
+  var command_reject = { 
+    message_class: 'Solicited', 
+    message_subclass: 'Status', 
+    status_descriptor: 'Command Reject' 
+  };
+
 
   beforeEach(function() {
     atm = new ATM();
@@ -15,6 +21,17 @@ describe("ATM", function() {
     it("should return false on empty message", function() {
       var host_message = {};
       expect(atm.processHostMessage(host_message)).toEqual(false);
+    });
+
+    it("should respond with 'Command Reject' message to unknown Terminal Command host message", function() {
+      var host_message = {
+        message_class: 'Terminal Command',
+        command_code: 'IDDQD',
+      };
+
+      expect(atm.status).toEqual('Offline');
+      expect(atm.processHostMessage(host_message)).toEqual(command_reject);
+      expect(atm.status).toEqual('Offline');      
     });
 
     it("should process 'Go out-of-service' message properly and respond with 'Ready' message", function() {

@@ -33,11 +33,9 @@ function ATM() {
     switch(data.command_code){
       case 'Go out-of-service':
         this.status = 'Out-Of-Service';
-        // this.sendSolicitedStatus('Ready');
         break;
       case 'Go in-service':
         this.status = 'In-Service';
-        // this.sendSolicitedStatus('Ready');
         break;
       default:
           console.log('atm.processTerminalCommand(): unknown command code: ' + data.command_code);

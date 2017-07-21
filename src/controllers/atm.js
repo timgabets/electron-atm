@@ -36,6 +36,7 @@ function ATM() {
         break;
       case 'Go in-service':
         this.status = 'In-Service';
+        this.changeCurrentState('000');
         break;
       default:
           console.log('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
@@ -93,13 +94,75 @@ function ATM() {
     return this.replySolicitedStatus('Command Reject');
   }
 
-  
+  /**
+   * [processTransactionReply description]
+   * @param  {[type]} data [description]
+   * @return {[type]}      [description]
+   */
   this.processTransactionReply = function(data){
+    // TODO: processing next_state
+    return this.replySolicitedStatus('Ready');
+  };
 
+
+  /**
+   * [initBuffers clears the terminal buffers
+   * When the terminal enters the Card Read State, the following buffers are initialized:
+   *  - Card data buffers (no data)
+   *  - PIN and General Purpose buffers (no data)
+   *  - Amount buffer (zero filled)
+   *  - Operation code buffer (space filled)
+   *  - FDK buffer (zero filled)]
+   * @return {[type]} [description]
+   */
+  this.initBuffers = function(){
+    this.PIN_buffer = null;
+    this.buffer_B = null;
+    this.buffer_C = null;
+    this.amount_buffer = '000000000000';
+    this.opcode_buffer = '        ';
+    this.FDK_buffer = '0000000000000';
+
+    return true;
+  }
+
+
+  /**
+   * [processStateA process the Card Read state]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  this.processStateA = function(state){
+
+    return true;
+  }
+
+  /**
+   * [changeCurrentState description]
+   * @param  {[type]} state_number [description]
+   * @return {[type]}              [description]
+   */
+  this.changeCurrentState = function(state_number){
+    var state = this.states.get(state_number);
+
+    if(!state){
+      // TODO: process inexistent state
+      return false;
+    }
+
+    switch(state.type){
+      case 'A':
+        this.processStateA(state);
+        break;
+      default:
+        console.log('atm.changeCurrentState(): unsupported state type ' + state.type);
+    }
+
+    console.log('Current state : ' + state.number + state.type + ' (' + state.description + ')');
+    return true;
   }
 
   this.states = new StatesService();
-
   this.status = 'Offline';
 }
 
@@ -131,8 +194,8 @@ ATM.prototype.processHostMessage = function(data){
     default:
       console.log('ATM.processHostMessage(): unknown message class: ' + data.message_class);
       break;
-    }
-    return false;
+  }
+  return false;
 };
 
 module.exports = ATM

@@ -17,6 +17,19 @@ describe("ATM", function() {
     atm = new ATM();
   });
 
+
+  describe("initBuffers()", function(){
+    it("should init terminal buffers", function() {
+      expect(atm.initBuffers()).toEqual(true);
+      expect(atm.PIN_buffer).toEqual(null);
+      expect(atm.buffer_B).toEqual(null);
+      expect(atm.buffer_C).toEqual(null);
+      expect(atm.amount_buffer).toEqual('000000000000');
+      expect(atm.opcode_buffer).toEqual('        ');
+      expect(atm.FDK_buffer).toEqual('0000000000000');
+    });
+  });
+
   describe("processHostMessage()", function(){
     it("should return false on empty message", function() {
       var host_message = {};

@@ -69,7 +69,7 @@ function ATM() {
 
   this.states = new StatesService();
 
-  this.status = 'Out-Of-Service';
+  this.status = 'Offline';
 }
 
 /**

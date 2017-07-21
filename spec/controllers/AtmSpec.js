@@ -80,5 +80,17 @@ describe("ATM", function() {
       expect(atm.processHostMessage(host_message)).toEqual(command_reject);
     }); 
 
+
+    it("should respond with 'Ready' message to 'State Tables load' host message", function() {
+      var host_message = {
+        message_class: 'Data Command',
+        message_subclass: 'Customization Command',
+        message_identifier: 'State Tables load',
+        states: '001K003004004127127127127127'
+      };
+
+      expect(atm.processHostMessage(host_message)).toEqual(status_ready);
+    }); 
+
   });
 });

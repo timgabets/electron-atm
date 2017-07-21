@@ -133,7 +133,7 @@ function ATM() {
    * @return {[type]}       [description]
    */
   this.processStateA = function(state){
-    atm.initBuffers();
+    this.initBuffers();
     this.screen = state.screen_number
     return true;
   }
@@ -189,14 +189,12 @@ function ATM() {
     {
       this.card = this.parseTrack2(track2)
       if(this.card)
-      {
-        
-      }else
-      {
-        //TODO: go to error state
-        null;
-      }
+        this.current_state = this.current_state.good_read_next_state;
+      else
+        // TODO: error processing
+        this.current_state.error_screen_number;
 
+      console.log('Card ' + this.card.number + ' read');
     } else
     {
       console.log('Not a Card Read state');

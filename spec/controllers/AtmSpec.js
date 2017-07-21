@@ -28,5 +28,16 @@ describe("ATM", function() {
       expect(atm.status).toEqual('Out-Of-Service');      
     });
 
+    it("should process 'Go in-service' message properly and respond with 'Ready' message", function() {
+      var host_message = {
+        message_class: 'Terminal Command',
+        command_code: 'Go in-service',
+      };
+
+      expect(atm.status).toEqual('Offline');
+      expect(atm.processHostMessage(host_message)).toEqual(status_ready);
+      expect(atm.status).toEqual('In-Service');      
+    });
+
   });
 });

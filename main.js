@@ -83,3 +83,7 @@ ipc.on('build-atm-response', (event, data) => {
 ipc.on('atm-message-built', (event, data) => {
   mainWindow.webContents.send('network-send', data)
 })
+
+ipc.on('ui-read-card', (event, data) => {
+  mainWindow.webContents.send('atm-read-card', data)
+})

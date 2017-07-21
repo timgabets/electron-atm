@@ -133,7 +133,8 @@ function ATM() {
    * @return {[type]}       [description]
    */
   this.processStateA = function(state){
-
+    atm.initBuffers();
+    this.screen = state.screen_number
     return true;
   }
 
@@ -145,10 +146,11 @@ function ATM() {
   this.changeCurrentState = function(state_number){
     var state = this.states.get(state_number);
 
-    if(!state){
+    if(!state)
       // TODO: process inexistent state
       return false;
-    }
+    else
+      this.current_state = state;
 
     switch(state.type){
       case 'A':
@@ -162,8 +164,48 @@ function ATM() {
     return true;
   }
 
+  /**
+   * [parseTrack2 parse track2 and return card object]
+   * @param  {[type]} track2 [track2 string]
+   * @return {[card object]} [description]
+   */
+  this.parseTrack2 = function(track2){
+    var card = {};
+    try{
+      var splitted = track2.split('=')
+      card.track2 = track2;
+      card.number = splitted[0].replace(';', '');
+      card.service_code = splitted[1].substr(4, 3);
+    }catch(e){
+      console.log(e);
+      return null;
+    }
+
+    return card;
+  }
+
+  this.readCard = function(track2){
+    if (this.current_state && this.current_state.type === 'A')
+    {
+      this.card = this.parseTrack2(track2)
+      if(this.card)
+      {
+        
+      }else
+      {
+        //TODO: go to error state
+        null;
+      }
+
+    } else
+    {
+      console.log('Not a Card Read state');
+    }
+  }
+
   this.states = new StatesService();
   this.status = 'Offline';
+  this.initBuffers();
 }
 
 /**

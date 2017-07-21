@@ -18,3 +18,7 @@ ipc.on('atm-process-host-message', (event, message) => {
 ipc.on('atm-process-button-pressed', (event, button) => {
   atm.processButtonPressed(button)
 })
+
+ipc.on('atm-read-card', (event, card_data) => {
+  atm.readCard(card_data)
+})

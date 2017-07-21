@@ -30,6 +30,23 @@ describe("ATM", function() {
     });
   });
 
+  describe("parseTrack2()", function(){
+    it("should parse track2", function() {
+      var track2 = ';4575270595153145=20012211998522600001?';
+      var card = {
+        number: '4575270595153145',
+        service_code: '221',
+        track2: ';4575270595153145=20012211998522600001?'
+      };
+      expect(atm.parseTrack2(track2)).toEqual(card);
+    });
+
+    it("should return null if track2 is invalid", function() {
+      var track2 = ';4575270595153145D200?';
+      expect(atm.parseTrack2(track2)).toEqual(null);
+    });
+  });
+
   describe("processHostMessage()", function(){
     it("should return false on empty message", function() {
       var host_message = {};

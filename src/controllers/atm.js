@@ -55,8 +55,7 @@ function ATM() {
         break;
       default:
         console.log('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
-        this.sendSolicitedStatus('Command Reject');
-        break;
+        return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Ready');
   }

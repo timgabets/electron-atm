@@ -23,6 +23,9 @@ describe("ATM", function() {
       expect(atm.processHostMessage(host_message)).toEqual(false);
     });
 
+    /**
+     * Terminal Command 
+     */
     it("should respond with 'Command Reject' message to unknown Terminal Command host message", function() {
       var host_message = {
         message_class: 'Terminal Command',
@@ -56,5 +59,16 @@ describe("ATM", function() {
       expect(atm.status).toEqual('In-Service');      
     });
 
+    /**
+     * Data Command
+     */
+    it("should respond with 'Command Reject' message to unknown Data Command host message", function() {
+      var host_message = {
+        message_class: 'Data Command',
+        command_code: 'IDDQD',
+      };
+
+      expect(atm.processHostMessage(host_message)).toEqual(command_reject);
+    }); 
   });
 });

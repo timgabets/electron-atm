@@ -46,8 +46,21 @@ function ATM() {
       return this.replySolicitedStatus('Ready');
   } 
 
-  this.processDataCommand = function(data){
 
+  this.processDataCommand = function(data){
+    switch(data.message_subclass){
+      case 'Customization Command':
+        this.processCustomizationCommand(data);
+        break;
+      case 'Interactive Transaction Response':
+        this.processInteractiveTransactionResponse(data);
+        break;
+      default:
+        console.log('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
+        this.sendSolicitedStatus('Command Reject');
+        break;
+    }
+    return this.replySolicitedStatus('Ready');
   }
 
   this.processTransactionReply = function(data){

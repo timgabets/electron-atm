@@ -8,3 +8,7 @@ const ipc = electron.ipcRenderer
 
 let atm = new Builder();
 
+ipc.on('build-atm-response', (event, button) => {
+  //atm.processButtonPressed(button)
+})
+

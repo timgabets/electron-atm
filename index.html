@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Hash</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./vendor/bootstrap-3.3.7.css">
+    <link rel="stylesheet" href="./styles.css">
+
+    <!-- Scripts -->
+    <script>
+      window.nodeRequire = require;
+      delete window.require;
+      delete window.exports;
+      delete window.module;
+    </script>
+    <script src="./vendor/jquery-3.1.1.js"></script>
+    <script src="./window.js" charset="utf-8"></script>
+    <script>window.$ = window.jQuery = nodeRequire('jquery');</script>
+
+  </head>
+  <body>
+    <div id="container" class="container-fluid">
+      <div class="row main-area">
+        <div class="col-md-1 fdk-button-block">
+          <button id="read-card" type="submit" class="btn btn-lg btn-block fdk-button">I</button>
+          <button id="read-card" type="submit" class="btn btn-lg btn-block fdk-button">H</button>
+          <button id="read-card" type="submit" class="btn btn-lg btn-block fdk-button">G</button>
+          <button id="read-card" type="submit" class="btn btn-lg btn-block fdk-button">F</button>
+        </div>
+        
+        <!-- ATM Screen-->
+        <div class="col-md-6 terminal-screen">
+          <img src="img/PIC035.jpg">
+        </div>
+
+        <div class="col-md-1 fdk-button-block">
+          <button id="read-card" type="submit" class="btn btn-lg btn-block fdk-button">A</button>
+          <button id="read-card" type="submit" class="btn btn-lg btn-block fdk-button">B</button>
+          <button id="read-card" type="submit" class="btn btn-lg btn-block fdk-button">C</button>
+          <button id="read-card" type="submit" class="btn btn-lg btn-block fdk-button">D</button>
+        </div>
+
+        <div class="col-md-4">
+          <pre id="sha512-output" class="log-output" type="text"></pre>
+        </div>
+
+
+<!--
+        <div class="col-sm-3">
+        </div>
+      </div>
+
+      <button id="read-card" type="submit" class="btn btn-default">Read card</button>
+    -->
+    </div>
+  </body>
+</html>

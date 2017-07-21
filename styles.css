@@ -1,5 +1,4 @@
 html, body, .container-fluid {
-  background-color: #D6D8DC;
 }
 
 .text-input {
@@ -13,7 +12,41 @@ html, body, .container-fluid {
   white-space: pre-wrap;
 }
 
+.log-output {
+  height: 480px;
+  color: #575B5E;
+  font-size: 14px;
+  font-family: monospace;
+  letter-spacing: 2px;
+  white-space: pre-wrap;
+  margin-right: 10px;
+  border:1px solid #021a40;
+}
+
 .hash-heading {
   color: #575B5E;
   font-weight: normal;
+}
+
+.fdk-button-block {
+	margin-top: 150px;
+	border:1px;
+}
+
+.fdk-button {
+	margin-top: 35px;
+	margin-bottom: 35px;
+}
+
+.main-area {
+	margin-top: 20px;
+	margin-left: 5px;
+}
+
+.terminal-screen {
+}
+
+img {
+   border:1px solid #021a40;
+   border-radius: 5px;
 }

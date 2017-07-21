@@ -4,7 +4,7 @@
   "description": "A minimal Electron ATM application",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron app.js",
     "test": "jasmine"
   },
   "repository": "https://github.com/electron/electron-quick-start",

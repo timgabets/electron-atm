@@ -1,4 +1,4 @@
-const Trace = require('../controllers/trace.js');
+const Trace = nodeRequire('./src/controllers/trace.js');
 
 function StatesService(){
     this.states = {};

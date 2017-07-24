@@ -51,14 +51,17 @@ ipc.on('network-data-received', (event, data) => {
 
 ipc.on('host-message-parsed', (event, data) => {
   window.webContents.send('atm-process-host-message', data)
+  console.log('\'atm-process-host-message\' message sent');
 })
 
 ipc.on('build-atm-response', (event, data) => {
   window.webContents.send('build-atm-response', data)
+  console.log('\'build-atm-response\' message sent');  
 })
 
 ipc.on('atm-message-built', (event, data) => {
   window.webContents.send('network-send', data)
+  console.log('\'network-send\' message sent'); 
 })
 
 ipc.on('ui-read-card', (event, data) => {

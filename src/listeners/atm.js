@@ -2,9 +2,7 @@
  * ATM event listener.
  */
 
-const electron = require('electron')
-const ATM = require('../controllers/atm.js');
-const ipc = electron.ipcRenderer
+const ATM = nodeRequire('./src/controllers/atm.js');
 
 let atm = new ATM();
 

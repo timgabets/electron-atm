@@ -1,4 +1,5 @@
-const StatesService = require('../services/states.js');
+const StatesService = nodeRequire('./src/services/states.js');
+const Log = nodeRequire('./src/controllers/log.js');
 
 function ATM() {
   /**
@@ -18,7 +19,7 @@ function ATM() {
         reply.status_descriptor = status;
         break;
       default:
-        console.log('atm.replySolicitedStatus(): unknown status ' + status);
+        this.log.log('atm.replySolicitedStatus(): unknown status ' + status);
         reply.status_descriptor = 'Command Reject';
     }
     return reply;
@@ -39,7 +40,7 @@ function ATM() {
         this.changeCurrentState('000');
         break;
       default:
-          console.log('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
+          this.log.log('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
           return this.replySolicitedStatus('Command Reject');
         }
       return this.replySolicitedStatus('Ready');
@@ -63,12 +64,12 @@ function ATM() {
           this.config_id = data.config_id;
           return this.replySolicitedStatus('Ready');
         }else{
-          console.log('ATM.processDataCommand(): wrong Config ID');
+          this.log.log('ATM.processDataCommand(): wrong Config ID');
           return this.replySolicitedStatus('Command Reject');
         }
         break;
       default:
-        console.log('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
+        this.log.log('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
         return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Command Reject');
@@ -88,7 +89,7 @@ function ATM() {
         return this.processInteractiveTransactionResponse(data);
         
       default:
-        console.log('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
+        this.log.log('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
         return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Command Reject');
@@ -157,10 +158,10 @@ function ATM() {
         this.processStateA(state);
         break;
       default:
-        console.log('atm.changeCurrentState(): unsupported state type ' + state.type);
+        this.log.log('atm.changeCurrentState(): unsupported state type ' + state.type);
     }
 
-    console.log('Current state : ' + state.number + state.type + ' (' + state.description + ')');
+    this.log.log('Current state : ' + state.number + state.type + ' (' + state.description + ')');
     return true;
   }
 
@@ -177,7 +178,7 @@ function ATM() {
       card.number = splitted[0].replace(';', '');
       card.service_code = splitted[1].substr(4, 3);
     }catch(e){
-      console.log(e);
+      this.log.log(e);
       return null;
     }
 
@@ -194,14 +195,16 @@ function ATM() {
         // TODO: error processing
         this.current_state.error_screen_number;
 
-      console.log('Card ' + this.card.number + ' read');
+      this.log.log('Card ' + this.card.number + ' read');
     } else
     {
-      console.log('Not a Card Read state');
+      this.log.log('Not a Card Read state');
     }
   }
 
   this.states = new StatesService();
+  this.log = new Log();
+
   this.status = 'Offline';
   this.initBuffers();
 }
@@ -212,7 +215,7 @@ function ATM() {
  * @return {[type]}        [description]
  */
 ATM.prototype.processButtonPressed = function(button){
-  console.log(button + ' button pressed')
+  this.log.log(button + ' button pressed')
 };
 
 /**
@@ -232,7 +235,7 @@ ATM.prototype.processHostMessage = function(data){
       return this.processTransactionReply(data);
             
     default:
-      console.log('ATM.processHostMessage(): unknown message class: ' + data.message_class);
+      this.log.log('ATM.processHostMessage(): unknown message class: ' + data.message_class);
       break;
   }
   return false;

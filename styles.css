@@ -15,7 +15,7 @@ html, body, .container-fluid {
 .log-output {
   height: 480px;
   color: #575B5E;
-  font-size: 10px;
+  font-size: 8px;
   font-family: monospace;
   white-space: pre-wrap;
   margin-right: 10px;

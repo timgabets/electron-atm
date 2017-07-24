@@ -1,6 +1,6 @@
 {
   "name": "electron-atm",
-  "version": "0.10",
+  "version": "0.1.0",
   "description": "A minimal Electron ATM application",
   "main": "main.js",
   "scripts": {

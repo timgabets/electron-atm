@@ -8,7 +8,7 @@ function StatesService(){
       this.states = {};
 
     /**
-     * [getEntry get the state entry, e.g. state entry 3 is a substring of original state string from position 7 to position10 ]
+     * [getEntry get the state entry, e.g. state entry 3 is a substring of original state string from position 7 to position 10 ]
      * @param  {[type]} data  [state data to parse]
      * @param  {[type]} entry [state entry to get]
      * @return {[type]}       [3-bytes long state entry on success, null otherwise]

@@ -1,22 +1,19 @@
 {
   "name": "electron-atm",
-  "version": "0.1.0",
+  "version": "0.10",
   "description": "A minimal Electron ATM application",
   "main": "main.js",
   "scripts": {
     "start": "electron app.js",
     "test": "jasmine"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/timgabets/electron-atm",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "ATM"
   ],
   "author": "GitHub",
-  "license": "CC0-1.0",
+  "license": "LGPLv2.1",
   "devDependencies": {
     "electron": "~1.6.2",
     "jasmine": "^2.6.0"

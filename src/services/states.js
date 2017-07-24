@@ -3,7 +3,9 @@ const Log = nodeRequire('./src/controllers/log.js');
 const settings = nodeRequire('electron-settings');
 
 function StatesService(){
-    this.states = {};
+    this.states = settings.get('states');
+    if(!this.states)
+      this.states = {};
 
     /**
      * [getEntry get the state entry, e.g. state entry 3 is a substring of original state string from position 7 to position10 ]
@@ -12,12 +14,12 @@ function StatesService(){
      * @return {[type]}       [3-bytes long state entry on success, null otherwise]
      */
     this.getEntry = function(data, entry){
-        if(entry > 0 && entry < 2)
-            return data.substring(3, 4);
-        else if (entry < 10)            
-            return data.substring(1 + 3 * (entry - 1), 4 + 3 * (entry - 1));
+      if(entry > 0 && entry < 2)
+        return data.substring(3, 4);
+      else if (entry < 10)            
+        return data.substring(1 + 3 * (entry - 1), 4 + 3 * (entry - 1));
 
-        return null;
+      return null;
     }
 
 
@@ -27,15 +29,15 @@ function StatesService(){
      * @return {boolean}     [true if state was successfully added, false otherwise]
      */
     this.addState = function(state){
-        var parsed = this.parseState(state);
-        if(parsed){
-            this.states[parsed.number] = parsed;
-            this.log.log('\tState processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
-            settings.set('states', this.states);
-            return true;
-        }
-        else
-            return false;
+      var parsed = this.parseState(state);
+      if(parsed){
+        this.states[parsed.number] = parsed;
+        this.log.log('\tState processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
+        settings.set('states', this.states);
+        return true;
+      }
+      else
+        return false;
     };
 
     /**
@@ -389,8 +391,8 @@ function StatesService(){
         return parsed;
     }
 
-    this.trace = new Trace();
-    this.log = new Log();
+  this.trace = new Trace();
+  this.log = new Log();
 }
 
 /**
@@ -399,7 +401,7 @@ function StatesService(){
  * @return {[type]}              [description]
  */
 StatesService.prototype.get = function(state_number){
-    return this.states[state_number];
+  return this.states[state_number];
 };
 
 /**
@@ -408,17 +410,17 @@ StatesService.prototype.get = function(state_number){
  * @return {boolean}     [true if data were successfully added, false otherwise]
  */
 StatesService.prototype.add = function(data){
-    if(typeof data === 'object') {
-        for (var i = 0; i < data.length; i++){
-            if(!this.addState(data[i])){
-                this.log.log('Error processing state ' + data[i] );
-                return false;
-            }
-        }
-        return true;
-    } else if (typeof data === 'string') {
-        return this.addState(data); 
-    } 
+  if(typeof data === 'object') {
+    for (var i = 0; i < data.length; i++){
+      if(!this.addState(data[i])){
+        this.log.log('Error processing state ' + data[i] );
+        return false;
+      }
+    }
+    return true;
+  } else if (typeof data === 'string') {
+    return this.addState(data); 
+  } 
 };
 
 module.exports = StatesService

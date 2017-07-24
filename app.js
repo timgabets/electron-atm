@@ -36,8 +36,32 @@ electron.app.once('ready', function () {
   })
 })
 
+ipc.on('FDK Pressed', (event, FDK) => {
+  console.log('FDK ' + FDK + ' pressed');
+  window.webContents.send('atm-process-button-pressed', FDK)
+})
+
 ipc.on('connect-button-pressed', (event, host, port) => {
-  console.log('connect-button-pressed');
   window.webContents.send('network-connect')
+})
+
+ipc.on('network-data-received', (event, data) => {
+  window.webContents.send('parse-host-message', data)
+})
+
+ipc.on('host-message-parsed', (event, data) => {
+  window.webContents.send('atm-process-host-message', data)
+})
+
+ipc.on('build-atm-response', (event, data) => {
+  window.webContents.send('build-atm-response', data)
+})
+
+ipc.on('atm-message-built', (event, data) => {
+  window.webContents.send('network-send', data)
+})
+
+ipc.on('ui-read-card', (event, data) => {
+  window.webContents.send('atm-read-card', data)
 })
 

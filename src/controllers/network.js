@@ -1,7 +1,9 @@
 // NodeJS net module
 const net = nodeRequire('net');
 // trace routines
-const Trace = nodeRequire('./trace.js');
+const Trace = nodeRequire('./src/controllers/trace.js');
+// log routines
+const Log = nodeRequire('./src/controllers/log.js');
 
 function Network() {
     /**
@@ -24,7 +26,20 @@ function Network() {
       this.trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
     };
 
+    /**
+     * [connect description]
+     * @param  {[type]} host [description]
+     * @param  {[type]} port [description]
+     * @return {[type]}      [description]
+     */
+    this.connect = function(host, port){
+      this.client.connect(port, host, _ => {
+        this.log.log('Connected to ' + host + ':' + port);
+      });
+    };
+
     this.trace = new Trace();
+    this.log = new Log();
     this.client = new net.Socket();
 
     /**
@@ -37,18 +52,6 @@ function Network() {
       console.log('Connection closed');
     });
 }
-
-/**
- * [connect description]
- * @param  {[type]} host [description]
- * @param  {[type]} port [description]
- * @return {[type]}      [description]
- */
-Network.prototype.connect = function(host, port){
-  this.client.connect(port, host, function() {
-    console.log('Connected to ' + host + ':' + port);
-  });
-};
 
 /**
  * [send description]

@@ -1,5 +1,6 @@
 const Trace = nodeRequire('./src/controllers/trace.js');
 const Log = nodeRequire('./src/controllers/log.js');
+const settings = nodeRequire('electron-settings');
 
 function StatesService(){
     this.states = {};
@@ -30,6 +31,7 @@ function StatesService(){
         if(parsed){
             this.states[parsed.number] = parsed;
             this.log.log('\tState processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
+            settings.set('states', this.states);
             return true;
         }
         else
@@ -415,7 +417,7 @@ StatesService.prototype.add = function(data){
         }
         return true;
     } else if (typeof data === 'string') {
-        return this.addState(data);
+        return this.addState(data); 
     } 
 };
 

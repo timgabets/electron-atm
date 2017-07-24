@@ -2,9 +2,9 @@
  * Parse listener handles translations from network binary message to internal application message object
  */
 
-const Parser = nodeRequire('./src/controllers/parser.js');
-const Trace = nodeRequire('./src/controllers/trace.js');
-const Log = nodeRequire('./src/controllers/log.js');
+const Parser = require('./src/controllers/parser.js');
+const Trace = require('./src/controllers/trace.js');
+const Log = require('./src/controllers/log.js');
 
 let parser = new Parser();
 let trace = new Trace();

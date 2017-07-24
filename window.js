@@ -4,7 +4,7 @@ $(function () {
   const ipc = electron.ipcRenderer
 
   $('#connect').on('click', _ => {
-    ipc.send('connect-button-pressed', '127.0.0.1', 11032);
+    ipc.send('connect-button-pressed', $('#host').val(), $('#port').val());
   });
 
   $("#connection-data-form").submit(function(e) {

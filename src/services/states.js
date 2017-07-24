@@ -1,6 +1,6 @@
-const Trace = nodeRequire('./src/controllers/trace.js');
-const Log = nodeRequire('./src/controllers/log.js');
-const settings = nodeRequire('electron-settings');
+const Trace = require('../controllers/trace.js');
+const Log = require('../controllers/log.js');
+const settings = require('electron-settings');
 
 function StatesService(){
     this.states = settings.get('states');

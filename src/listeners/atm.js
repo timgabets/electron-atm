@@ -2,7 +2,7 @@
  * ATM event listener.
  */
 
-const ATM = nodeRequire('./src/controllers/atm.js');
+const ATM = require('./src/controllers/atm.js');
 
 let atm = new ATM();
 

@@ -12,8 +12,9 @@
     <!-- Scripts -->
     <script src="./src/listeners/network.js" charset="utf-8"></script>
     <script src="./src/listeners/parser.js" charset="utf-8"></script>
+    <script src="./src/listeners/atm.js" charset="utf-8"></script>
     
-    <!-- All the node.js scripts must be imported above this line, as here we are importing jQuery and renaming require() -->
+    <!-- IMPORTANT!!! All the node.js scripts must be imported above this line, as here we are redefining require() for jQuery purposes -->
     <script>
       window.nodeRequire = require;
       delete window.require;
@@ -24,7 +25,6 @@
     <script src="./window.js" charset="utf-8"></script>
     <script>window.$ = window.jQuery = nodeRequire('jquery');</script>
 
-    <script src="./src/listeners/atm.js" charset="utf-8"></script>
     <script src="./src/listeners/builder.js" charset="utf-8"></script>
 
   </head>

@@ -1,5 +1,5 @@
-const StatesService = nodeRequire('./src/services/states.js');
-const Log = nodeRequire('./src/controllers/log.js');
+const StatesService = require('../services/states.js');
+const Log = require('./log.js');
 
 function ATM() {
   /**

@@ -1,7 +1,7 @@
 // NodeJS net module
-const net = require('net');
+const net = nodeRequire('net');
 // trace routines
-const Trace = require('./trace.js');
+const Trace = nodeRequire('./trace.js');
 
 function Network() {
     /**
@@ -34,7 +34,7 @@ function Network() {
      */
     this.client.on('close', function() {
       //this.client.destroy();
-      console.log('Connection closed');        
+      console.log('Connection closed');
     });
 }
 

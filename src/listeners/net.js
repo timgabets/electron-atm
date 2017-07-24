@@ -2,11 +2,13 @@
  * Listening to Network Events (sending/receiving data from host)
  */
 
-const electron = require('electron')
-const Network = require('../controllers/network.js');
+const electron = nodeRequire('electron')
+const Network = nodeRequire('../controllers/network.js');
 const ipc = electron.ipcRenderer
 
 let network = new Network();
+
+console.log('In net.js');
 
 ipc.on('network-connect', (event, message) => {
   network.connect('127.0.0.1', 11032);

@@ -1,9 +1,9 @@
 // NodeJS net module
-const net = nodeRequire('net');
+const net = require('net');
 // trace routines
-const Trace = nodeRequire('./src/controllers/trace.js');
+const Trace = require('../controllers/trace.js');
 // log routines
-const Log = nodeRequire('./src/controllers/log.js');
+const Log = require('../controllers/log.js');
 
 function Network() {
     /**

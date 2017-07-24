@@ -1,5 +1,5 @@
 
-const Log = nodeRequire('./src/controllers/log.js')
+const Log = require('./log.js')
 
 function Trace(){
     /**

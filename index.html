@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="./styles.css">
 
     <!-- Scripts -->
+    <script src="./src/listeners/network.js" charset="utf-8"></script>
+    
     <script>
       window.nodeRequire = require;
       delete window.require;
@@ -20,7 +22,6 @@
     <script src="./window.js" charset="utf-8"></script>
     <script>window.$ = window.jQuery = nodeRequire('jquery');</script>
 
-    <script src="./src/listeners/network.js" charset="utf-8"></script>
     <script src="./src/listeners/parser.js" charset="utf-8"></script>
     <script src="./src/listeners/atm.js" charset="utf-8"></script>
     <script src="./src/listeners/builder.js" charset="utf-8"></script>

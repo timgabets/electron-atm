@@ -1,4 +1,5 @@
 const Trace = nodeRequire('./src/controllers/trace.js');
+const Log = nodeRequire('./src/controllers/log.js');
 
 function StatesService(){
     this.states = {};
@@ -28,7 +29,7 @@ function StatesService(){
         var parsed = this.parseState(state);
         if(parsed){
             this.states[parsed.number] = parsed;
-            console.log('\tState processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
+            this.log.log('\tState processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
             return true;
         }
         else
@@ -379,7 +380,7 @@ function StatesService(){
 
 
             default:
-                console.log('StatesService.parseState(): error processing state ' + parsed.number + ': unsupported state type ' + parsed.type);
+                this.log.log('StatesService.parseState(): error processing state ' + parsed.number + ': unsupported state type ' + parsed.type);
                 return null;
         }
 
@@ -387,6 +388,7 @@ function StatesService(){
     }
 
     this.trace = new Trace();
+    this.log = new Log();
 }
 
 /**
@@ -407,7 +409,7 @@ StatesService.prototype.add = function(data){
     if(typeof data === 'object') {
         for (var i = 0; i < data.length; i++){
             if(!this.addState(data[i])){
-                console.log('Error processing state ' + data[i] );
+                this.log.log('Error processing state ' + data[i] );
                 return false;
             }
         }

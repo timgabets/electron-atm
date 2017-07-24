@@ -66,7 +66,7 @@ function Trace(){
  * @return {[type]}       [description]
  */
 Trace.prototype.trace = function(data, title){  
-  var trace = '\n' + this.getTimestamp()
+  var trace = this.getTimestamp()
   if (title)
     trace += title + '\n' + this.dump(data.toString('binary'));
   else

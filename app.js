@@ -1,6 +1,7 @@
 var electron = require('electron') // http://electron.atom.io/docs/api
 var path = require('path')         // https://nodejs.org/api/path.html
 var url = require('url')           // https://nodejs.org/api/url.html
+const ipc = electron.ipcMain
 
 var window = null
 
@@ -34,3 +35,9 @@ electron.app.once('ready', function () {
     window.show()
   })
 })
+
+ipc.on('connect-button-pressed', (event, host, port) => {
+  console.log('connect-button-pressed');
+  window.webContents.send('network-connect')
+})
+

@@ -1,3 +1,15 @@
+
+function Log(){
+  this.log = function(data){
+    $( _ => {
+      $('#log-output').append(data);
+
+      var log_element = $("#log-output");
+      log_element.scrollTop = log_element.scrollHeight;
+    })
+  }
+}
+
 function Trace(){
     /**
      * [dump description]
@@ -52,6 +64,8 @@ function Trace(){
 
         return timestamp;
     };
+
+    this.log = new Log();
 };
 
 /**
@@ -60,11 +74,14 @@ function Trace(){
  * @param  {[type]} title [description]
  * @return {[type]}       [description]
  */
-Trace.prototype.trace = function(data, title){
-    if (title)
-        console.log(this.getTimestamp() + ' ' + title + '\n' + this.dump(data.toString('binary')));
-    else
-        console.log(this.getTimestamp() + '\n' + this.dump(data.toString('binary')));
+Trace.prototype.trace = function(data, title){  
+  var trace = '\n' + this.getTimestamp()
+  if (title)
+    trace += title + '\n' + this.dump(data.toString('binary'));
+  else
+    trace += '\n' + this.dump(data.toString('binary'));
+      
+  this.log.log(trace);
 };
 
 /**

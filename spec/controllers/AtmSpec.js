@@ -17,7 +17,6 @@ describe("ATM", function() {
     atm = new ATM();
   });
 
-
   describe("initBuffers()", function(){
     it("should init terminal buffers", function() {
       expect(atm.initBuffers()).toEqual(true);

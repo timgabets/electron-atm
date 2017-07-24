@@ -423,4 +423,4 @@ StatesService.prototype.add = function(data){
   } 
 };
 
-module.exports = StatesService
+module.exports = StatesService;

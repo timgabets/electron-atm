@@ -241,4 +241,4 @@ ATM.prototype.processHostMessage = function(data){
   return false;
 };
 
-module.exports = ATM
+module.exports = ATM;

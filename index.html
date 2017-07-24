@@ -61,9 +61,16 @@
       <button id="read-card" type="submit" class="btn btn-default">Read card</button>
     -->
     </div>
-    <div id="buttons-area" class="row buttons-area">
+
+    <form id="connection-data-form" class="navbar-form navbar-center">
+      <div class="form-group">
+        <input type="text" class="form-control" id="host" value="127.0.0.1" placeholder="Host"></input>
+      </div>
+      <div class="form-group">
+        <input type="number" class="form-control" id="port" value="11032" placeholder="Port"></input>
+      </div>
       <button id="connect" type="submit" class="btn btn-success">Connect</button>
-    </div>
+    </form>
 
   </body>
 </html>

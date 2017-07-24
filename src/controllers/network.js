@@ -34,7 +34,7 @@ function Network() {
      */
     this.connect = function(host, port){
       this.client.connect(port, host, _ => {
-        this.log.log('Connected to ' + host + ':' + port);
+        this.log.log('<b>Connected to ' + host + ':' + port + '</b>');
       });
     };
 
@@ -47,9 +47,9 @@ function Network() {
      * @param  {[type]} )  [description]
      * @return {[type]}   [description]
      */
-    this.client.on('close', function() {
+    this.client.on('close', _ => {
       //this.client.destroy();
-      console.log('Connection closed');
+      this.log.log('<b>Connection closed</b>');
     });
 }
 

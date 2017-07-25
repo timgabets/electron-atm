@@ -7,44 +7,45 @@ describe("States", function() {
   });
 
   describe("getEntry()", function(){
-      it("should get entry 1", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 1)).toEqual('A');
-      });
+    it("should get entry 1", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 1)).toEqual('A');
+    });
 
-      it("should get entry 2", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 2)).toEqual('BCD');
-      }) ;
-      it("should get entry 3", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 3)).toEqual('EFG');
-      });
+    it("should get entry 2", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 2)).toEqual('BCD');
+    }) ;
+    
+    it("should get entry 3", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 3)).toEqual('EFG');
+    });
 
-      it("should get entry 4", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 4)).toEqual('HIJ');
-      });
+    it("should get entry 4", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 4)).toEqual('HIJ');
+    });
 
-      it("should get entry 5", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 5)).toEqual('KLM');
-      });
+    it("should get entry 5", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 5)).toEqual('KLM');
+    });
 
-      it("should get entry 6", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 6)).toEqual('NOP');
-      });
+    it("should get entry 6", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 6)).toEqual('NOP');
+    });
 
-      it("should get entry 7", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 7)).toEqual('QRS');
-      });
+    it("should get entry 7", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 7)).toEqual('QRS');
+    });
 
-      it("should get entry 8", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 8)).toEqual('TUV');
-      });
+    it("should get entry 8", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 8)).toEqual('TUV');
+    });
 
-      it("should get entry 9", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 9)).toEqual('WXY');
-      });
+    it("should get entry 9", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 9)).toEqual('WXY');
+    });
 
-      it("should get entry 10", function() {
-        expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 10)).toEqual(null);
-      });
+    it("should get entry 10", function() {
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 10)).toEqual(null);
+    });
   });  
 
   describe("parseState()", function(){

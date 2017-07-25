@@ -8,7 +8,9 @@ const Trace = require('../controllers/trace.js');
 function ScreensService(settings, log){
   this.screens = settings.get('screens');
   if(!this.screens)
-    this.screens = {};  
+    this.screens = {};
+
+  this.trace = new Trace();
 
   /**
    * [parseScreen description]
@@ -93,9 +95,7 @@ function ScreensService(settings, log){
     } else if (typeof data === 'string') {
       return this.addScreen(data); 
     } 
-  };
-  
-  this.trace = new Trace();
+  };  
 };
 
 

@@ -9,6 +9,9 @@ function StatesService(settings, log){
     this.states = settings.get('states');
     if(!this.states)
         this.states = {};
+    
+    this.trace = new Trace();
+    this.log = log;
 
     /**
      * [getEntry get the state entry, e.g. state entry 3 is a substring of original state string from position 7 to position 10 ]
@@ -393,9 +396,6 @@ function StatesService(settings, log){
 
         return parsed;
     }
-
-  this.trace = new Trace();
-  this.log = log;
 }
 
 /**

@@ -83,6 +83,15 @@ function Parser(){
                             parsed.states.push(splitted[i]);
                         }
                         break;
+
+                    case '5':
+                        parsed.message_identifier = 'FIT Data load';
+                        parsed.FITs = [];
+                        for(var i = 4; i < splitted.length; i++){
+                            parsed.FITs.push(splitted[i]);
+                        }
+                        break;
+                    
                     case '6':
                         parsed.message_identifier = 'Configuration ID number load';
                         parsed.config_id = splitted[4];

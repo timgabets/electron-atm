@@ -51,25 +51,9 @@ describe("FITs", function() {
     it("string '123' should return unchanged", function() {
       expect(f.leftpad('123')).toEqual('123');
     });
-/*
-    it("should convert decimal 254 to hex FE", function() {
-      expect(f.decimal2hex('254')).toEqual('FE');
-    });
-
-    it("should convert decimal 1254 to hex FE", function() {
-      expect(f.decimal2hex('1254')).toEqual('01FE');
-    });
-
-    it("should convert decimal 65136037255255 to hex 418825FFFF", function() {
-      expect(f.decimal2hex('65136037255255')).toEqual('418825FFFF');
-    });
-  */
   });  
 
-
-
   describe("decimal2hex()", function(){
-/*
     it("should convert decimal 1 to hex 01", function() {
       expect(f.decimal2hex('1')).toEqual('01');
     });
@@ -85,7 +69,6 @@ describe("FITs", function() {
     it("should convert decimal 65136037255255 to hex 418825FFFF", function() {
       expect(f.decimal2hex('65136037255255')).toEqual('418825FFFF');
     });
-  */
   });  
 
   /*

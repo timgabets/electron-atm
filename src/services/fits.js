@@ -17,6 +17,7 @@ function FITsService(settings, log){
       return (+d).toString(16).toUpperCase();
   };
 
+
   /**
    * [leftpad padd the string with zeroes from left]
    * @param  {[type]} string [description]
@@ -42,29 +43,11 @@ function FITsService(settings, log){
    * @return {[type]}         [hex string representation, e.g. 41 88 25 FF FF]
    */
   this.decimal2hex = function(decimal){
+    var padded = this.leftpad(decimal)
     var hex = '';
-    var i = decimal.length - 2;
-
-    while (true){
-      console.log(i)
-      hex = this.d2h(decimal.substr(i, 3)).concat(hex);
-
-      /*
-      if(i >= 0) {
-        hex = this.d2h(decimal.substr(i, 3)).concat(hex);
-      }
-      else {
-        hex = this.d2h(decimal.substr(i, decimal.length % 3)).concat(hex);
-        break;
-      }
-      */
-
-      if(i < 0){
-        break;
-      }
-
-      i -= 3;
-    }
+    
+    for (var i = padded.length - 3; i >= 0; i -= 3)
+      hex = this.d2h(padded.substr(i, 3)).concat(hex);
 
     return hex;
   }

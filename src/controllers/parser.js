@@ -70,6 +70,10 @@ function Parser(){
                 switch(splitted[3][1]){
                     case '1':
                         parsed.message_identifier = 'Screen Data load';
+                        parsed.screens = []
+                        for(var i = 4; i < splitted.length; i++){
+                            parsed.screens.push(splitted[i]);
+                        }
                         break;
 
                     case '2':

@@ -170,6 +170,56 @@ describe("Parser", function() {
     });
   });
 
+  describe("parseDataCommands - Load Screens", function(){
+    it("should be able to parse 'Load Screens' message (single screen)", function() {
+      var parsed = { 
+        message_class: 'Data Command', 
+        LUNO: '000', 
+        message_sequence_number: '000', 
+        message_subclass: 'Customization Command',
+        message_identifier: 'Screen Data load', 
+        screens: [ '001SCREENDATA' ] 
+      };
+      expect(p.parse('3000000011001SCREENDATA')).toEqual(parsed);
+    });
+
+/*
+    it("should be able to parse 'Load Screens' message (multiple screens)", function() {
+      var parsed = { 
+        message_class: 'Data Command', 
+        LUNO: '000', 
+        message_sequence_number: '000', 
+        message_subclass: 'Customization Command',
+        message_identifier: 'State Tables load',  
+        states: [ 
+          '000A870500128002002002001127', 
+          '001K003004004127127127127127', 
+          '002J132000132136132000081178', 
+          '003D024000128000000000000000', 
+          '004D024000000128000000000000', 
+          '024B024002131026026138026003', 
+          '026K031043040031031031031031', 
+          '027I025146001000001001001003', 
+          '031X031002131032033010255000', 
+          '032W034352651127230031570191', 
+          '033Z000000000000000000000000', 
+          '034X034002131035036010255000', 
+          '035W181037255127031034250186', 
+          '036Z000000000000000000000000', 
+          '037X037002131038039010255000', 
+          '038W201196330255031390370031', 
+          '039Z000000000000000000000000', 
+          '040X040002131041042010255000', 
+          '041W048270570127352040040040', 
+          '042Z000000000000000000000000', 
+          '043X043002131044045010255000' 
+          ]
+        }
+      expect(p.parse('3000000012000A870500128002002002001127001K003004004127127127127127002J132000132136132000081178003D024000128000000000000000004D024000000128000000000000024B024002131026026138026003026K031043040031031031031031027I025146001000001001001003031X031002131032033010255000032W034352651127230031570191033Z000000000000000000000000034X034002131035036010255000035W181037255127031034250186036Z000000000000000000000000037X037002131038039010255000038W201196330255031390370031039Z000000000000000000000000040X040002131041042010255000041W048270570127352040040040042Z000000000000000000000000043X043002131044045010255000')).toEqual(parsed);
+    });
+*/
+  });
+
   describe("parseHostMessage()", function(){
       it("should be able to parse 'Go out of service message'", function() {
         var parsed = { 

@@ -1,9 +1,22 @@
 describe("Screens", function() {
   var ScreensService = require('../../src/services/screens.js');
-  var s;
+  var log, settings, s;
 
   beforeEach(function() {
-    s = new ScreensService();
+    log = {
+      log: function() {
+      }
+    };
+    
+    settings = {
+      get: function(value) {
+        return {};
+      },
+      set: function(value){
+      }
+    };
+
+    s = new ScreensService(settings, log);
   });
 
   describe("parseScreen()", function(){

@@ -1,4 +1,20 @@
-function ScreensService(){
+const Trace = require('../controllers/trace.js');
+
+/**
+ * [ScreensService description]
+ * @param {[type]} settings [description]
+ * @param {[type]} log      [description]
+ */
+function ScreensService(settings, log){
+  this.screens = settings.get('screens');
+  if(!this.screens)
+    this.screens = {};  
+
+  /**
+   * [parseScreen description]
+   * @param  {[type]} data [description]
+   * @return {[type]}      [description]
+   */
   this.parseScreen = function(data){
     var parsed = {};
     parsed.number = data.substr(0, 3);
@@ -35,12 +51,14 @@ function ScreensService(){
         i += (parsed.image_file.length + ('\x1b\x5c').length);
         continue;
       }
-      
+
       i++;
     }
 
     return parsed;
   }
+
+  this.trace = new Trace();
 };
 
 module.exports = ScreensService

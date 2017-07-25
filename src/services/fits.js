@@ -17,6 +17,58 @@ function FITsService(settings, log){
       return (+d).toString(16).toUpperCase();
   };
 
+  /**
+   * [leftpad padd the string with zeroes from left]
+   * @param  {[type]} string [description]
+   * @return {[type]}        [description]
+   */
+  this.leftpad = function(string){
+    if(string.length % 3 === 1)
+      return '00' + string;
+    else if (string.length % 3 === 2)
+      return '0' + string;
+    else 
+      return string
+  }
+
+
+  /**
+   * [decimal2hex convert decimal string to hex string. 
+   * The FIT data is sent to the terminal in decimal, so
+   * to construct the FIT Data load message, each digit triplet must be
+   * converted from decimal to hex, producing a two‐character string
+   * in the range 00‐FF.]
+   * @param  {[type]} decimal [decimal string received in the FIT message from host, e.g. 065 136 037 255 255]
+   * @return {[type]}         [hex string representation, e.g. 41 88 25 FF FF]
+   */
+  this.decimal2hex = function(decimal){
+    var hex = '';
+    var i = decimal.length - 2;
+
+    while (true){
+      console.log(i)
+      hex = this.d2h(decimal.substr(i, 3)).concat(hex);
+
+      /*
+      if(i >= 0) {
+        hex = this.d2h(decimal.substr(i, 3)).concat(hex);
+      }
+      else {
+        hex = this.d2h(decimal.substr(i, decimal.length % 3)).concat(hex);
+        break;
+      }
+      */
+
+      if(i < 0){
+        break;
+      }
+
+      i -= 3;
+    }
+
+    return hex;
+  }
+
   this.parseFIT = function(data){
     var parsed = {};
     if(!data)

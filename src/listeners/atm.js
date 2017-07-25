@@ -3,10 +3,8 @@
  */
 
 const ATM = require('./src/controllers/atm.js');
-const Log = require('./log.js');
 const settings = require('electron-settings');
 
-let log = new Log();
 let atm = new ATM(settings, log);
 
 ipc.on('atm-process-host-message', (event, message) => {

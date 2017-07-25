@@ -6,9 +6,12 @@ describe("Screens", function() {
     s = new ScreensService();
   });
 
-  describe("add()", function(){
-    it("should add screen", function() {
-      //expect(s.add('000ABCDEFGHIJKLMNOPQRSTUVWXY', 1)).toEqual('A');
+  describe("parseScreen()", function(){
+    it("should parse screen number", function() {
+      var parsed = {
+        number: '778',
+      };
+      expect(s.parseScreen('778iddqd')).toEqual(parsed);
     });
   });  
 });

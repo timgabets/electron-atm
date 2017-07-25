@@ -192,7 +192,7 @@ describe("Parser", function() {
         message_identifier: 'Screen Data load',  
         screens: [ 
           '001SCREENDATA1', 
-          '002SCREENDATA3', 
+          '002SCREENDATA2', 
           '003SCREENDATA3', 
           ]
         }

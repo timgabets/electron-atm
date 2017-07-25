@@ -3,8 +3,9 @@
  */
 
 const ATM = require('./src/controllers/atm.js');
+const settings = require('electron-settings');
 
-let atm = new ATM();
+let atm = new ATM(settings.get('states'));
 
 ipc.on('atm-process-host-message', (event, message) => {
   var response_message = atm.processHostMessage(message);

@@ -1,7 +1,11 @@
 const StatesService = require('../services/states.js');
 const Log = require('./log.js');
 
-function ATM() {
+/**
+ * [ATM description]
+ * @param {[type]} saved_states [description]
+ */
+function ATM(saved_states) {
   /**
    * [replySolicitedStatus description]
    * @param  {[type]} status [description]
@@ -202,7 +206,7 @@ function ATM() {
     }
   }
 
-  this.states = new StatesService();
+  this.states = new StatesService(saved_states);
   this.log = new Log();
 
   this.status = 'Offline';

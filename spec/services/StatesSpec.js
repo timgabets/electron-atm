@@ -3,7 +3,7 @@ describe("States", function() {
   var s;
 
   beforeEach(function() {
-    s = new StatesService();
+    s = new StatesService({});
   });
 
   describe("getEntry()", function(){

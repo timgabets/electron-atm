@@ -1,11 +1,12 @@
 const Trace = require('../controllers/trace.js');
 const Log = require('../controllers/log.js');
-const settings = require('electron-settings');
 
-function StatesService(){
-    this.states = settings.get('states');
-    if(!this.states)
-      this.states = {};
+/**
+ * [StatesService description]
+ * @param {[type]} states [description]
+ */
+function StatesService(states){
+    this.states = states;
 
     /**
      * [getEntry get the state entry, e.g. state entry 3 is a substring of original state string from position 7 to position 10 ]

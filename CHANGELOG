@@ -1,5 +1,6 @@
 
 July 2017
+	0.1.6 FITsService: parsing PIDDX, PFIID and PSTDX fields
 	0.1.5 FITsService utils: d2h(), decimal2hex(), leftpad()
   	0.1.4 parse Load FIT Data message implemented
   	0.1.3 ESC PE (Display Image files) screens support 

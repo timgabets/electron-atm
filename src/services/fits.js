@@ -45,7 +45,7 @@ function FITsService(settings, log){
   this.decimal2hex = function(decimal){
     var padded = this.leftpad(decimal)
     var hex = '';
-    
+
     for (var i = padded.length - 3; i >= 0; i -= 3)
       hex = this.d2h(padded.substr(i, 3)).concat(hex);
 
@@ -62,29 +62,43 @@ function FITsService(settings, log){
     var field_length = 0;
 
     // Insitution ID index
-    field_length = 3;
-    parsed.PIDDX = this.d2h(data.substr(i, field_length));
-    i += field_length;
+    field_length = 1.5 * 2; // The field in NDC manual is referred as '2 Digits', assuming 2 hex digits, which is 3 decimal digits. 
+    parsed.PIDDX = this.decimal2hex(data.substr(i, field_length));
+    i += field_length + 3;
   
-/*
     // Institution ID
-    field_length = 10;
-    parsed.PFIID = this.d2h(data.substr(i, field_length));
+    field_length = 1.5 * 10; // 10 digits
+    parsed.PFIID = this.decimal2hex(data.substr(i, field_length));
     i += field_length;
 
     // PSTDX (Indirect Next State Index)
-    field_length = 2;
-    parsed.PSTDX = data.substr(i, field_length);
+    field_length = 1.5 * 2;
+    parsed.PSTDX = this.decimal2hex(data.substr(i, field_length));
     i += field_length;
-
+    
+    /*
+    TODO:
+    
     // PAGDX (Algorithm/Bank ID Index)
-    parsed.PAGDX = data.substr(i, field_length);
+    parsed.PAGDX = this.decimal2hex(data.substr(i, field_length));
     i += field_length;
 
-    // PMXPN (Maximum PIN Digits Entered)
-    parsed.PMXPN = data.substr(i, field_length);
+    // PMXPN (Maximum PIN Digits Entered) - Maximum number of PIN digits allowed for the cardholder to enter
+    parsed.PMXPN = this.decimal2hex(data.substr(i, field_length))
     i += field_length;
-*/
+
+    // PCKLN (Maximum PIN Digits Checked) - Number of digits used for local PIN check
+    parsed.PCKLN = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+    
+    // PINPD (PIN Pad) - Character used to pad PIN for transmission to the host and the encryption method used
+    parsed.PINPD = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+    
+    // PANDX (PAN Data Index) - Index for location of PAN (Personal Account Number) on card
+    parsed.PANDX = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+    */
     return parsed;
   }
 

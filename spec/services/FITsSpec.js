@@ -71,7 +71,6 @@ describe("FITs", function() {
     });
   });  
 
-  /*
   describe("parseFIT()", function(){
     it("should return empty object on empty string", function() {
       expect(f.parseFIT('')).toBeFalsy();
@@ -79,10 +78,13 @@ describe("FITs", function() {
 
     it("should parse FIT", function() {
       var parsed = {
-        PIDDX: '004',
+        PIDDX: '04',
+        PFIID: '418825FFFF',
+        PSTDX: '01'
       };
       expect(f.parseFIT('004000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(parsed);
     });
   });
+  /*
     */
 });

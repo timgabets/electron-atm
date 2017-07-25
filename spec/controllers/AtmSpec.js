@@ -21,7 +21,12 @@ describe("ATM", function() {
       }
     };
 
-    atm = new ATM(settings);
+    log = {
+      log: function() {
+      }
+    };
+
+    atm = new ATM(settings, log);
   });
 
   describe("atm instance to be defined", function(){
@@ -41,8 +46,7 @@ describe("ATM", function() {
       expect(atm.FDK_buffer).toEqual('0000000000000');
     });
   });
-  
-/*
+
   describe("parseTrack2()", function(){
     it("should parse track2", function() {
       var track2 = ';4575270595153145=20012211998522600001?';
@@ -133,5 +137,4 @@ describe("ATM", function() {
     }); 
 
   });
-*/
 });

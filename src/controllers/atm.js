@@ -1,7 +1,6 @@
 const StatesService = require('../services/states.js');
-const Log = require('./log.js');
 
-function ATM(settings) {
+function ATM(settings, log) {
   /**
    * [replySolicitedStatus description]
    * @param  {[type]} status [description]
@@ -19,7 +18,7 @@ function ATM(settings) {
         reply.status_descriptor = status;
         break;
       default:
-        this.log.log('atm.replySolicitedStatus(): unknown status ' + status);
+        log.log('atm.replySolicitedStatus(): unknown status ' + status);
         reply.status_descriptor = 'Command Reject';
     }
     return reply;
@@ -40,7 +39,7 @@ function ATM(settings) {
         this.changeCurrentState('000');
         break;
       default:
-          this.log.log('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
+          log.log('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
           return this.replySolicitedStatus('Command Reject');
         }
       return this.replySolicitedStatus('Ready');
@@ -64,12 +63,12 @@ function ATM(settings) {
           this.config_id = data.config_id;
           return this.replySolicitedStatus('Ready');
         }else{
-          this.log.log('ATM.processDataCommand(): wrong Config ID');
+          log.log('ATM.processDataCommand(): wrong Config ID');
           return this.replySolicitedStatus('Command Reject');
         }
         break;
       default:
-        this.log.log('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
+        log.log('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
         return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Command Reject');
@@ -89,7 +88,7 @@ function ATM(settings) {
         return this.processInteractiveTransactionResponse(data);
         
       default:
-        this.log.log('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
+        log.log('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
         return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Command Reject');
@@ -158,10 +157,10 @@ function ATM(settings) {
         this.processStateA(state);
         break;
       default:
-        this.log.log('atm.changeCurrentState(): unsupported state type ' + state.type);
+        log.log('atm.changeCurrentState(): unsupported state type ' + state.type);
     }
 
-    this.log.log('Current state : ' + state.number + state.type + ' (' + state.description + ')');
+    log.log('Current state : ' + state.number + state.type + ' (' + state.description + ')');
     return true;
   }
 
@@ -178,7 +177,7 @@ function ATM(settings) {
       card.number = splitted[0].replace(';', '');
       card.service_code = splitted[1].substr(4, 3);
     }catch(e){
-      this.log.log(e);
+      log.log(e);
       return null;
     }
 
@@ -195,15 +194,14 @@ function ATM(settings) {
         // TODO: error processing
         this.current_state.error_screen_number;
 
-      this.log.log('Card ' + this.card.number + ' read');
+      log.log('Card ' + this.card.number + ' read');
     } else
     {
-      this.log.log('Not a Card Read state');
+      log.log('Not a Card Read state');
     }
   }
 
-  this.log = new Log();
-  this.states = new StatesService(settings, this.log);
+  this.states = new StatesService(settings, log);
 
   this.status = 'Offline';
   this.initBuffers();
@@ -215,7 +213,7 @@ function ATM(settings) {
  * @return {[type]}        [description]
  */
 ATM.prototype.processButtonPressed = function(button){
-  this.log.log(button + ' button pressed')
+  log.log(button + ' button pressed')
 };
 
 /**
@@ -235,7 +233,7 @@ ATM.prototype.processHostMessage = function(data){
       return this.processTransactionReply(data);
             
     default:
-      this.log.log('ATM.processHostMessage(): unknown message class: ' + data.message_class);
+      log.log('ATM.processHostMessage(): unknown message class: ' + data.message_class);
       break;
   }
   return false;

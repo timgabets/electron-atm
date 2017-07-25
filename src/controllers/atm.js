@@ -1,5 +1,6 @@
 const StatesService = require('../services/states.js');
 const ScreensService = require('../services/screens.js');
+const FITsService = require('../services/fits.js');
 
 function ATM(settings, log) {
   /**
@@ -62,6 +63,12 @@ function ATM(settings, log) {
       case 'State Tables load':
         if(this.states.add(data.states))
           return this.replySolicitedStatus('Ready') 
+        else
+          return this.replySolicitedStatus('Command Reject');
+
+      case 'FIT Data load':
+        if(this.FITs.add(data.states))
+          return this.replySolicitedStatus('Ready')
         else
           return this.replySolicitedStatus('Command Reject');
 
@@ -211,6 +218,7 @@ function ATM(settings, log) {
 
   this.states = new StatesService(settings, log);
   this.screens = new ScreensService(settings, log);
+  this.FITs = new FITsService(settings, log);
 
   this.status = 'Offline';
   this.initBuffers();

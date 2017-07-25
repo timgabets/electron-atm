@@ -16,10 +16,17 @@ describe("Screens", function() {
       }
     };
 
+    spyOn(settings, 'set');
+
     s = new ScreensService(settings, log);
   });
 
   describe("parseScreen()", function(){
+    it("should return empty object on empty string", function() {
+      expect(s.parseScreen('')).toBeFalsy();
+    });
+
+
     it("should parse screen number", function() {
       var parsed = {
         number: '778',
@@ -36,5 +43,17 @@ describe("Screens", function() {
       };
       expect(s.parseScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c')).toEqual(parsed);
     });
-  });  
+  });
+  
+  describe("addScreen()", function(){
+    it("should not add invalid screen", function() {
+      expect(s.addScreen('')).toBeFalsy();
+      expect(settings.set).not.toHaveBeenCalled();
+    });
+
+    it("should add valid screen", function() {
+      expect(s.addScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c')).toBeTruthy();
+      expect(settings.set).toHaveBeenCalled();
+    });
+  });
 });

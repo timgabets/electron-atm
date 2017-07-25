@@ -17,6 +17,9 @@ function ScreensService(settings, log){
    */
   this.parseScreen = function(data){
     var parsed = {};
+    if(!data)
+      return false;
+
     parsed.number = data.substr(0, 3);
     var i = 3;
 
@@ -54,9 +57,24 @@ function ScreensService(settings, log){
 
       i++;
     }
-
     return parsed;
   }
+
+  /**
+   * [addScreen description]
+   * @param {[type]} screen [description]
+   */
+  this.addScreen = function(screen){
+    var parsed = this.parseScreen(screen);
+    if(parsed){
+      this.screens[parsed.number] = parsed;
+      log.log('\tScreen processed (screens overall: ' + Object.keys(this.screens).length + '):' + this.trace.object(parsed));
+      settings.set('screens', this.screens);
+      return true;
+    }
+    else
+      return false;
+  };
 
   this.trace = new Trace();
 };

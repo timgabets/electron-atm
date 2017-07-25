@@ -459,7 +459,7 @@ describe("States", function() {
   });
 
   describe("addState()", function(){
-      it("should return false while passing empty data", function() {
+      it("should return false when empty data passed", function() {
         expect(s.addState('')).toEqual(false);
       });
 

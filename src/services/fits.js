@@ -5,9 +5,17 @@ function FITsService(settings, log){
   if(!this.FITs)
     this.FITs = {};  
 
+  /**
+   * [d2h convert decimal string to hex string]
+   * @param  {[type]} d [decimal from 0 to 255]
+   * @return {[type]}   [hex string, padded with zeroes]
+   */
   this.d2h = function(d) { 
-    return (+d).toString(16).toUpperCase();
-  }
+    if(d < 10)
+      return '0' + (+d).toString(16).toUpperCase();
+    else
+      return (+d).toString(16).toUpperCase();
+  };
 
   this.parseFIT = function(data){
     var parsed = {};

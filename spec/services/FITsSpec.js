@@ -22,12 +22,20 @@ describe("FITs", function() {
   });
 
   describe("d2h()", function(){
-    it("should convert decimal 255 to hex FF", function() {
-      expect(f.d2h('255')).toEqual('FF');
+    it("should convert decimal 9 to hex 09", function() {
+      expect(f.d2h('9')).toEqual('09');
+    });
+
+    it("should convert decimal 28 to hex 1С", function() {
+      expect(f.d2h('28')).toEqual('1C');
+    });
+
+    it("should convert decimal 065 to hex FF", function() {
+      expect(f.d2h('065')).toEqual('41');
     });
 
     it("should convert decimal 255 to hex FF", function() {
-      expect(f.d2h('065')).toEqual('41');
+      expect(f.d2h('255')).toEqual('FF');
     });
   });
 

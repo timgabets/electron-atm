@@ -191,12 +191,12 @@ describe("Parser", function() {
         message_subclass: 'Customization Command',
         message_identifier: 'Screen Data load',  
         screens: [ 
-          '001SCREENDATA1', 
+          '000\x0c\x1bPEPIC000.jpg\x1b\x5c', 
           '002SCREENDATA2', 
           '003SCREENDATA3', 
           ]
         }
-      expect(p.parse('3000000011001SCREENDATA1002SCREENDATA2003SCREENDATA3')).toEqual(parsed);
+      expect(p.parse('3000000011000\x0c\x1bPEPIC000.jpg\x1b\x5c002SCREENDATA2003SCREENDATA3')).toEqual(parsed);
     });
   });
 

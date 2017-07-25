@@ -1,4 +1,5 @@
 const StatesService = require('../services/states.js');
+const ScreensService = require('../services/screens.js');
 
 function ATM(settings, log) {
   /**
@@ -52,6 +53,12 @@ function ATM(settings, log) {
    */
   this.processCustomizationCommand = function(data){
     switch(data.message_identifier){
+      case 'Screen Data load':
+        if(this.screens.add(data.screens))
+          return this.replySolicitedStatus('Ready') 
+        else
+          return this.replySolicitedStatus('Command Reject');
+
       case 'State Tables load':
         if(this.states.add(data.states))
           return this.replySolicitedStatus('Ready') 
@@ -67,6 +74,7 @@ function ATM(settings, log) {
           return this.replySolicitedStatus('Command Reject');
         }
         break;
+
       default:
         log.log('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
         return this.replySolicitedStatus('Command Reject');
@@ -202,6 +210,7 @@ function ATM(settings, log) {
   }
 
   this.states = new StatesService(settings, log);
+  this.screens = new ScreensService(settings, log);
 
   this.status = 'Offline';
   this.initBuffers();

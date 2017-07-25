@@ -56,4 +56,12 @@ describe("Screens", function() {
       expect(settings.set).toHaveBeenCalled();
     });
   });
+
+  describe("add()", function(){
+    it("should not add screens", function() {
+      screens = [];
+      expect(s.add(screens)).toBeTruthy();
+    });
+  });
+
 });

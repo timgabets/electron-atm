@@ -76,7 +76,27 @@ function ScreensService(settings, log){
       return false;
   };
 
+  /**
+   * [add description]
+   * @param {[type]} data [array of data to add]
+   * @return {boolean}     [true if data were successfully added, false otherwise]
+   */
+  this.add = function(data){
+    if(typeof data === 'object') {
+      for (var i = 0; i < data.length; i++){
+        if(!this.addScreen(data[i])){
+          log.log('Error processing screen ' + data[i] );
+          return false;
+        }
+      }
+      return true;
+    } else if (typeof data === 'string') {
+      return this.addScreen(data); 
+    } 
+  };
+  
   this.trace = new Trace();
 };
+
 
 module.exports = ScreensService

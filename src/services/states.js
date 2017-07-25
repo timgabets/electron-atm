@@ -1,12 +1,14 @@
 const Trace = require('../controllers/trace.js');
-const Log = require('../controllers/log.js');
 
 /**
  * [StatesService description]
- * @param {[type]} states [description]
+ * @param {[type]} settings [description]
+ * @param {[type]} log      [description]
  */
-function StatesService(states){
-    this.states = states;
+function StatesService(settings, log){
+    this.states = settings.get('states');
+    if(!this.states)
+        this.states = {};
 
     /**
      * [getEntry get the state entry, e.g. state entry 3 is a substring of original state string from position 7 to position 10 ]
@@ -393,7 +395,7 @@ function StatesService(states){
     }
 
   this.trace = new Trace();
-  this.log = new Log();
+  this.log = log;
 }
 
 /**

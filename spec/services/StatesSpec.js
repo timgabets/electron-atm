@@ -1,9 +1,22 @@
 describe("States", function() {
   var StatesService = require('../../src/services/states.js');
-  var s;
+  var log, settings, s;
 
   beforeEach(function() {
-    s = new StatesService({});
+    log = {
+      log: function() {
+      }
+    };
+    
+    settings = {
+      get: function() {
+        return {};
+      },
+      set: function(value){
+      }
+    };
+
+    s = new StatesService(settings, log);
   });
 
   describe("getEntry()", function(){

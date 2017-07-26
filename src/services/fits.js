@@ -1,6 +1,7 @@
 const Trace = require('../controllers/trace.js');
 
 function FITsService(settings, log){
+  this.trace = new Trace();
   this.FITs = settings.get('FITs');
   if(!this.FITs)
     this.FITs = {};  
@@ -90,7 +91,7 @@ function FITsService(settings, log){
     // PCKLN (Maximum PIN Digits Checked) - Number of digits used for local PIN check
     parsed.PCKLN = this.decimal2hex(data.substr(i, field_length))
     i += field_length;
-    
+
     // PINPD (PIN Pad) - Character used to pad PIN for transmission to the host and the encryption method used
     parsed.PINPD = this.decimal2hex(data.substr(i, field_length))
     i += field_length;
@@ -102,6 +103,41 @@ function FITsService(settings, log){
     return parsed;
   }
 
+  /**
+   * [addFIT description]
+   * @param {[type]} FIT [description]
+   * @return {boolean}     [true if state was successfully added, false otherwise]
+   */
+  this.addFIT = function(FIT){
+    var parsed = this.parseFIT(FIT);
+    if(parsed){
+      this.FITs[parsed.number] = parsed;
+      log.log('\tFIT processed (FITs overall: ' + Object.keys(this.FITs).length + '):' + this.trace.object(parsed));
+      settings.set('FITs', this.FITs);
+      return true;
+    }
+    else
+      return false;
+  };
 }
+
+/**
+ * [add description]
+ * @param {[type]} data [array of data to add]
+ * @return {boolean}     [true if data were successfully added, false otherwise]
+ */
+FITsService.prototype.add = function(data){
+  if(typeof data === 'object') {
+    for (var i = 0; i < data.length; i++){
+      if(!this.addFIT(data[i])){
+        log.log('Error processing FIT ' + data[i] );
+        return false;
+      }
+    }
+    return true;
+  } else if (typeof data === 'string') {
+    return this.addFIT(data); 
+  } 
+};
 
 module.exports = FITsService

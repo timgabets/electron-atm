@@ -114,7 +114,7 @@ function FITsService(settings, log){
   this.addFIT = function(FIT){
     var parsed = this.parseFIT(FIT);
     if(parsed){
-      this.FITs.append(parsed.number, parsed);
+      this.FITs.append(parsed.PIDDX, parsed);
       log.log('\tFIT processed (FITs overall: ' + this.FITs.size() + '):' + this.trace.object(parsed));
       // TODO: saving ordered-dict in a file
       // settings.set('FITs', this.FITs);

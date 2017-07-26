@@ -67,7 +67,7 @@ function ATM(settings, log) {
           return this.replySolicitedStatus('Command Reject');
 
       case 'FIT Data load':
-        if(this.FITs.add(data.states))
+        if(this.FITs.add(data.FITs))
           return this.replySolicitedStatus('Ready')
         else
           return this.replySolicitedStatus('Command Reject');

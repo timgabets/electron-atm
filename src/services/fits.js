@@ -55,9 +55,10 @@ function FITsService(settings, log){
 
   this.parseFIT = function(data){
     var parsed = {};
-    if(!data)
+    if(!data){
+      log.log('FITsService.parseFIT(): empty data');
       return false;
-
+    }
   
     var i = 0;
     var field_length = 0;
@@ -116,8 +117,10 @@ function FITsService(settings, log){
       settings.set('FITs', this.FITs);
       return true;
     }
-    else
+    else{
+      log.log('FITsService.addFIT(): not added');
       return false;
+    }
   };
 }
 

@@ -65,7 +65,7 @@ function FITsService(settings, log){
 
     // Insitution ID index
     field_length = 1.5 * 2; // The field in NDC manual is referred as '2 Digits', assuming 2 hex digits, which is 3 decimal digits. 
-    parsed.PIDDX = this.decimal2hex(data.substr(i, field_length));
+    parsed.PIDDX = data.substr(i, field_length);
     i += field_length + 3;
   
     // Institution ID

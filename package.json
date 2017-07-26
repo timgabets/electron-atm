@@ -19,6 +19,7 @@
     "jasmine": "^2.6.0"
   },
   "dependencies": {
-    "electron-settings": "^3.1.1"
+    "electron-settings": "^3.1.1",
+    "ordered-dict": "0.0.1"
   }
 }

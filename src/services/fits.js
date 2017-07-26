@@ -1,10 +1,12 @@
 const Trace = require('../controllers/trace.js');
+const OrderedDict = require('ordered-dict');
+//var dict = new OrderedDict();
 
 function FITsService(settings, log){
   this.trace = new Trace();
-  this.FITs = settings.get('FITs');
-  if(!this.FITs)
-    this.FITs = {};  
+  //this.FITs = settings.get('FITs');
+  //if(!this.FITs)
+  this.FITs = new OrderedDict();  
 
   /**
    * [d2h convert decimal string to hex string]
@@ -112,9 +114,10 @@ function FITsService(settings, log){
   this.addFIT = function(FIT){
     var parsed = this.parseFIT(FIT);
     if(parsed){
-      this.FITs[parsed.number] = parsed;
-      log.log('\tFIT processed (FITs overall: ' + Object.keys(this.FITs).length + '):' + this.trace.object(parsed));
-      settings.set('FITs', this.FITs);
+      this.FITs.append(parsed.number, parsed);
+      log.log('\tFIT processed (FITs overall: ' + this.FITs.size() + '):' + this.trace.object(parsed));
+      // TODO: saving ordered-dict in a file
+      // settings.set('FITs', this.FITs);
       return true;
     }
     else{

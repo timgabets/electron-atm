@@ -1,6 +1,7 @@
 
 July 2017
-	0.1.7 FITsService: preocessing FITs sent from host
+	0.1.8 FITsService.getInstitutionByCardnumber()
+	0.1.7 FITsService: processing FITs sent from host
 	0.1.6 FITsService: parsing PIDDX, PFIID and PSTDX fields
 	0.1.5 FITsService utils: d2h(), decimal2hex(), leftpad()
   	0.1.4 parse Load FIT Data message implemented

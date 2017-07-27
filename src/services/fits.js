@@ -5,8 +5,8 @@ const OrderedDict = require('ordered-dict');
 function FITsService(settings, log){
   this.trace = new Trace();
   //this.FITs = settings.get('FITs');
-  //if(!this.FITs)
-  this.FITs = new OrderedDict();  
+  if(!this.FITs)
+    this.FITs = new OrderedDict();  
 
   /**
    * [d2h convert decimal string to hex string]
@@ -128,24 +128,34 @@ function FITsService(settings, log){
 
 
   /**
-   * [matchCardnumberWithMask description]
+   * [matchCardnumberWithMask match card number with a wildcard hexadecimal mask]
    * @param  {[type]} cardnumber [16-character card number]
    * @param  {[type]} mask       [10-character BIN mask, e.g. 418825FFFF]
    * @return {[type]}            [true if there is a match, false otherwise]
    */
   this.matchCardnumberWithMask = function(cardnumber, mask){
-
     for(var i = 0; i < mask.length; i++){
       if( (parseInt(cardnumber[i]) & parseInt(mask[i], 16)).toString() != cardnumber[i]){
         return false;
       }
     }
-
     return true;
   }
 
-  this.getInstitutionByCardnumber = function(cardnumber){
 
+  /**
+   * [getInstitutionByCardnumber description]
+   * @param  {[type]} cardnumber [cardnumber to check]
+   * @return {[type]}            [FIT institution ID]
+   */
+  this.getInstitutionByCardnumber = function(cardnumber){
+    var result;
+    this.FITs.forEach((item, index) => {
+      if(this.matchCardnumberWithMask(cardnumber, item.PFIID)){
+        result = item.PIDDX;
+      }
+    });
+    return result;
   };
 
 }

@@ -123,17 +123,14 @@ describe("FITs", function() {
       expect(f.addFIT('')).toEqual(false);
     });
 
-    /*
-    it("should add valid FIT", function() {
-      var parsed = {
-        PIDDX: '029',
-        PFIID: '418825FFFF',
-        PSTDX: '01'
-      };
+    it("should get proper FIT number from 2 FIT records", function() {
+      // 409225FFFF
+      expect(f.addFIT('028000064146037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
+      // 418825FFFF
       expect(f.addFIT('029000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
-      // TODO:
-      expect(f.getInstitutionByCardnumber('4188250000000001')).toEqual('004');
+      expect(f.getInstitutionByCardnumber('4188250000000001')).toEqual('029');
     });
+    /*
     */
   });
   /*

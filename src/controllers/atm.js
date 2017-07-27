@@ -214,7 +214,9 @@ function ATM(settings, log) {
     return card;
   }
 
-  this.readCard = function(track2){
+  this.readCard = function(cardnumber, track2_data){
+    var track2 = cardnumber + '=' + track2_data;
+
     if (this.current_state && this.current_state.type === 'A')
     {
       this.card = this.parseTrack2(track2)

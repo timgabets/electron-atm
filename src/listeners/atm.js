@@ -18,6 +18,6 @@ ipc.on('atm-process-button-pressed', (event, button) => {
   atm.processButtonPressed(button)
 })
 
-ipc.on('atm-read-card', (event, card_data) => {
-  atm.readCard(card_data)
+ipc.on('atm-read-card', (event, cardnumber, track2) => {
+  atm.readCard(cardnumber, track2)
 })

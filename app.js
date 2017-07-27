@@ -60,7 +60,7 @@ ipc.on('atm-message-built', (event, data) => {
   window.webContents.send('network-send', data)
 })
 
-ipc.on('ui-read-card', (event, data) => {
-  window.webContents.send('atm-read-card', data)
+ipc.on('ui-read-card', (event, cardnumber, track2) => {
+  window.webContents.send('atm-read-card', cardnumber, track2)
 })
 

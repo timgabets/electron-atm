@@ -12,7 +12,12 @@ $(function () {
     ipc.send('connect-button-pressed', $('#host').val(), $('#port').val());
   });
 
+  // Preventing page from refreshing when submit buttons pressed
   $("#connection-data-form").submit(function(e) {
+    e.preventDefault();
+  });
+
+  $("#card-read-form").submit(function(e) {
     e.preventDefault();
   });
 })

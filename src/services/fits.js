@@ -149,12 +149,22 @@ function FITsService(settings, log){
    * @return {[type]}            [FIT institution ID]
    */
   this.getInstitutionByCardnumber = function(cardnumber){
+    var BreakException = {};
     var result;
-    this.FITs.forEach((item, index) => {
-      if(this.matchCardnumberWithMask(cardnumber, item.PFIID)){
-        result = item.PIDDX;
-      }
-    });
+
+    // doing try-catch here as JavaScript can't neither return nor break from for-each loop =(
+    try{
+      this.FITs.forEach((item, index) => {
+        if(this.matchCardnumberWithMask(cardnumber, item.PFIID)){
+          result = item.PIDDX;
+          throw BreakException;
+        }
+      });
+    } catch(e) {
+       if (e !== BreakException) 
+        throw e;
+    }
+
     return result;
   };
 

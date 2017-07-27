@@ -118,20 +118,27 @@ describe("FITs", function() {
   });
 
 
-  describe("addFIT()", function(){
-    it("should return false when empty data passed", function() {
-      expect(f.addFIT('')).toEqual(false);
-    });
-
-    it("should get proper FIT number from 2 FIT records", function() {
+  describe("getInstitutionByCardnumber()", function(){
+    it("should get proper FIT number from 2 different FIT records", function() {
       // 409225FFFF
       expect(f.addFIT('028000064146037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
       // 418825FFFF
       expect(f.addFIT('029000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
       expect(f.getInstitutionByCardnumber('4188250000000001')).toEqual('029');
     });
-    /*
-    */
+    
+    it("should match only the first found FIT", function() {      
+      // 409225FFFF
+      expect(f.addFIT('005000064146037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
+      // 418825FFFF
+      expect(f.addFIT('019000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
+      expect(f.addFIT('020000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
+      expect(f.addFIT('021000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
+      expect(f.addFIT('022000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
+      
+      expect(f.getInstitutionByCardnumber('4188250000000001')).toEqual('019');
+    });
+
   });
   /*
   describe("add()", function(){

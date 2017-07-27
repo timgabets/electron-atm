@@ -1,8 +1,8 @@
 # electron-atm
 
-A simple NDC ATM emulator, written in JavScript using Electron framework. 
+A simple free open-source NDC ATM emulator, written from scratch using pure JavaScript, jQuery and Electron framework. 
 
-![screenshot][img/screenshot.png]
+![screenshot](img/screenshot.png)
 
 ## Features 
 
@@ -28,7 +28,7 @@ Things to be implemented soon:
 
 ## Issues
 
-Please feel free to submit issues and enhancement requests. 
+Please feel free to submit issues and enhancement requests.
 
 ## Contribute
 

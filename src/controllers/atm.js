@@ -1,6 +1,7 @@
 const StatesService = require('../services/states.js');
 const ScreensService = require('../services/screens.js');
 const FITsService = require('../services/fits.js');
+const Trace = require('../controllers/trace.js');
 
 function ATM(settings, log) {
   /**
@@ -141,6 +142,18 @@ function ATM(settings, log) {
     return true;
   }
 
+  /**
+   * [setScreen description]
+   * @param {[type]} screen_number [description]
+   */
+  this.setScreen = function(screen_number){
+    var screen = this.screens.get(screen_number)
+    if(screen){
+      log.info('Current screen : ' + screen_number);
+    } else {
+      log.error('atm.setScreen(): unable to find screen ' + screen_number);
+    }
+  }
 
   /**
    * [processStateA process the Card Read state]
@@ -149,8 +162,10 @@ function ATM(settings, log) {
    */
   this.processStateA = function(state){
     this.initBuffers();
-    this.screen = state.screen_number
+    this.setScreen(state.screen_number)
+
     return true;
+    
   }
 
   /**
@@ -216,6 +231,7 @@ function ATM(settings, log) {
     }
   }
 
+  this.trace = new Trace();
   this.states = new StatesService(settings, log);
   this.screens = new ScreensService(settings, log);
   this.FITs = new FITsService(settings, log);

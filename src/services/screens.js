@@ -76,27 +76,37 @@ function ScreensService(settings, log){
     }
     else
       return false;
-  };
-
-  /**
-   * [add description]
-   * @param {[type]} data [array of data to add]
-   * @return {boolean}     [true if data were successfully added, false otherwise]
-   */
-  this.add = function(data){
-    if(typeof data === 'object') {
-      for (var i = 0; i < data.length; i++){
-        if(!this.addScreen(data[i])){
-          log.info('Error processing screen ' + data[i] );
-          return false;
-        }
-      }
-      return true;
-    } else if (typeof data === 'string') {
-      return this.addScreen(data); 
-    } 
-  };  
+  }; 
 };
 
+
+/**
+ * [get description]
+ * @param  {[type]} state_number [description]
+ * @return {[type]}              [description]
+ */
+ScreensService.prototype.get = function(state_number){
+  return this.screens[state_number];
+};
+
+
+/**
+ * [add description]
+ * @param {[type]} data [array of data to add]
+ * @return {boolean}     [true if data were successfully added, false otherwise]
+ */
+ScreensService.prototype.add = function(data){
+  if(typeof data === 'object') {
+    for (var i = 0; i < data.length; i++){
+      if(!this.addScreen(data[i])){
+        log.info('Error processing screen ' + data[i] );
+        return false;
+      }
+    }
+    return true;
+  } else if (typeof data === 'string') {
+    return this.addScreen(data); 
+  } 
+}; 
 
 module.exports = ScreensService

@@ -56,7 +56,7 @@ function FITsService(settings, log){
   this.parseFIT = function(data){
     var parsed = {};
     if(!data){
-      log.log('FITsService.parseFIT(): empty data');
+      log.info('FITsService.parseFIT(): empty data');
       return false;
     }
   
@@ -113,12 +113,12 @@ function FITsService(settings, log){
     var parsed = this.parseFIT(FIT);
     if(parsed){
       this.FITs[parsed.PIDDX] = parsed;
-      log.log('\tFIT ' + parsed.PIDDX + ' processed (FITs overall: ' + Object.keys(this.FITs).length + '):' + this.trace.object(parsed));
+      log.info('\tFIT ' + parsed.PIDDX + ' processed (FITs overall: ' + Object.keys(this.FITs).length + '):' + this.trace.object(parsed));
       settings.set('FITs', this.FITs);
       return true;
     }
     else{
-      log.log('FITsService.addFIT(): not added');
+      log.info('FITsService.addFIT(): not added');
       return false;
     }
   };
@@ -167,7 +167,7 @@ FITsService.prototype.add = function(data){
   if(typeof data === 'object') {
     for (var i = 0; i < data.length; i++){
       if(!this.addFIT(data[i])){
-        log.log('Error processing FIT ' + data[i] );
+        log.info('Error processing FIT ' + data[i] );
         return false;
       }
     }

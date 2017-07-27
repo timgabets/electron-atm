@@ -70,7 +70,7 @@ function ScreensService(settings, log){
     var parsed = this.parseScreen(screen);
     if(parsed){
       this.screens[parsed.number] = parsed;
-      log.log('\tScreen ' + parsed.number + ' processed (screens overall: ' + Object.keys(this.screens).length + '):' + this.trace.object(parsed));
+      log.info('\tScreen ' + parsed.number + ' processed (screens overall: ' + Object.keys(this.screens).length + '):' + this.trace.object(parsed));
       settings.set('screens', this.screens);
       return true;
     }
@@ -87,7 +87,7 @@ function ScreensService(settings, log){
     if(typeof data === 'object') {
       for (var i = 0; i < data.length; i++){
         if(!this.addScreen(data[i])){
-          log.log('Error processing screen ' + data[i] );
+          log.info('Error processing screen ' + data[i] );
           return false;
         }
       }

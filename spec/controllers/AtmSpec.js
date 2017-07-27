@@ -22,7 +22,7 @@ describe("ATM", function() {
     };
 
     log = {
-      log: function() {
+      info: function() {
       }
     };
 

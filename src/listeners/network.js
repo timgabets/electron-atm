@@ -2,12 +2,12 @@
  * Listening to Network Events (sending/receiving data from host)
  */
 const electron = require('electron')
-//const Network = nodeRequire('../controllers/network');
+const Log = require('./src/controllers/log.js');
+const Network = require('./src/controllers/network.js');
 const ipc = electron.ipcRenderer
 
-const Network = require('./src/controllers/network.js');
-
-let network = new Network();
+let log = new Log();
+let network = new Network(log);
 
 ipc.on('network-connect', (event, message) => {
   

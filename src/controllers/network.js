@@ -5,7 +5,7 @@ const Trace = require('../controllers/trace.js');
 // log routines
 const Log = require('../controllers/log.js');
 
-function Network() {
+function Network(log) {
     /**
      * [getOutgoingMessageLength get the Message Header Length]
      * @param  {[type]} data [binary data]
@@ -34,12 +34,11 @@ function Network() {
      */
     this.connect = function(host, port){
       this.client.connect(port, host, _ => {
-        this.log.log('<b>Connected to ' + host + ':' + port + '</b>');
+        log.info('<b>Connected to ' + host + ':' + port + '</b>');
       });
     };
 
     this.trace = new Trace();
-    this.log = new Log();
     this.client = new net.Socket();
 
     /**
@@ -49,7 +48,7 @@ function Network() {
      */
     this.client.on('close', _ => {
       //this.client.destroy();
-      this.log.log('<b>Connection closed</b>');
+      log.info('<b>Connection closed</b>');
     });
 }
 

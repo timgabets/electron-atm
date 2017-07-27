@@ -1,6 +1,6 @@
 # electron-atm
 
-A simple free open-source APTRA™ Advance NDC ATM emulator, written from scratch using pure JavaScript, jQuery and Electron framework.
+A simple free open-source APTRA™ Advance NDC ATM emulator, written from scratch using, JavaScript, jQuery and Electron framework.
 
 ![screenshot](img/screenshot.png)
 
@@ -13,7 +13,7 @@ Currently only the basic stuff is working, such as:
  * Connecting to ATM host
  * Receiving states from host
  * Receiving screens from host
- * Receiving FITs (financial insitutions) from host
+ * Receiving FITs (financial insitution tables) from host
  * Showing traces in a log area
  * Saving ATM configuration data (such as states, screens and FITs) and restoring it on application start
 

@@ -7,6 +7,18 @@ function Log(){
       $('#log-output').scrollTop($('#log-output')[0].scrollHeight);
     })
   }
-}
+
+  this.info = function(data){
+    this.log(data);
+  };
+
+  this.warn = function(data){
+    this.log(data);
+  };
+
+  this.err = function(data){
+    this.log(data);
+  };
+};
 
 module.exports = Log;

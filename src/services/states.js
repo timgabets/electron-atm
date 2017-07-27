@@ -11,7 +11,6 @@ function StatesService(settings, log){
         this.states = {};
     
     this.trace = new Trace();
-    this.log = log;
 
     /**
      * [getEntry get the state entry, e.g. state entry 3 is a substring of original state string from position 7 to position 10 ]
@@ -38,7 +37,7 @@ function StatesService(settings, log){
       var parsed = this.parseState(state);
       if(parsed){
         this.states[parsed.number] = parsed;
-        this.log.log('\tState ' + parsed.number + ' processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
+        log.info('\tState ' + parsed.number + ' processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
         settings.set('states', this.states);
         return true;
       }
@@ -390,7 +389,7 @@ function StatesService(settings, log){
 
 
             default:
-                this.log.log('StatesService.parseState(): error processing state ' + parsed.number + ': unsupported state type ' + parsed.type);
+                log.info('StatesService.parseState(): error processing state ' + parsed.number + ': unsupported state type ' + parsed.type);
                 return null;
         }
 
@@ -416,7 +415,7 @@ StatesService.prototype.add = function(data){
   if(typeof data === 'object') {
     for (var i = 0; i < data.length; i++){
       if(!this.addState(data[i])){
-        this.log.log('Error processing state ' + data[i] );
+        log.info('Error processing state ' + data[i] );
         return false;
       }
     }

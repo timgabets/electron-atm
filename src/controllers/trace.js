@@ -72,7 +72,7 @@ Trace.prototype.trace = function(data, title){
   else
     trace += '\n' + this.dump(data.toString('binary'));
       
-  this.log.log(trace);
+  this.log.info(trace);
 };
 
 /**

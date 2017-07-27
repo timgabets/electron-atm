@@ -4,7 +4,7 @@ describe("States", function() {
 
   beforeEach(function() {
     log = {
-      log: function() {
+      info: function() {
       }
     };
     

@@ -10,7 +10,7 @@ let builder = new Builder('000');
 ipc.on('build-atm-response', (event, message) => {
   var built = builder.build(message);
   if(built){
-  	log.log('ATM message built:' + trace.object(message));
+  	log.info('ATM message built:' + trace.object(message));
     ipc.send('atm-message-built', built);
   }
 })

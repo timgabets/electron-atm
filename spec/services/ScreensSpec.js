@@ -4,7 +4,7 @@ describe("Screens", function() {
 
   beforeEach(function() {
     log = {
-      log: function() {
+      info: function() {
       }
     };
     

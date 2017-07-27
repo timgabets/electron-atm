@@ -4,7 +4,7 @@ describe("FITs", function() {
 
   beforeEach(function() {
     log = {
-      log: function() {
+      info: function() {
       }
     };
     

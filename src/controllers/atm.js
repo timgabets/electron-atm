@@ -20,7 +20,7 @@ function ATM(settings, log) {
         reply.status_descriptor = status;
         break;
       default:
-        log.log('atm.replySolicitedStatus(): unknown status ' + status);
+        log.info('atm.replySolicitedStatus(): unknown status ' + status);
         reply.status_descriptor = 'Command Reject';
     }
     return reply;
@@ -41,7 +41,7 @@ function ATM(settings, log) {
         this.changeCurrentState('000');
         break;
       default:
-          log.log('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
+          log.info('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
           return this.replySolicitedStatus('Command Reject');
         }
       return this.replySolicitedStatus('Ready');
@@ -77,13 +77,13 @@ function ATM(settings, log) {
           this.config_id = data.config_id;
           return this.replySolicitedStatus('Ready');
         }else{
-          log.log('ATM.processDataCommand(): wrong Config ID');
+          log.info('ATM.processDataCommand(): wrong Config ID');
           return this.replySolicitedStatus('Command Reject');
         }
         break;
 
       default:
-        log.log('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
+        log.info('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
         return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Command Reject');
@@ -103,7 +103,7 @@ function ATM(settings, log) {
         return this.processInteractiveTransactionResponse(data);
         
       default:
-        log.log('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
+        log.info('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
         return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Command Reject');
@@ -172,10 +172,10 @@ function ATM(settings, log) {
         this.processStateA(state);
         break;
       default:
-        log.log('atm.changeCurrentState(): unsupported state type ' + state.type);
+        log.info('atm.changeCurrentState(): unsupported state type ' + state.type);
     }
 
-    log.log('Current state : ' + state.number + state.type + ' (' + state.description + ')');
+    log.info('Current state : ' + state.number + state.type + ' (' + state.description + ')');
     return true;
   }
 
@@ -192,7 +192,7 @@ function ATM(settings, log) {
       card.number = splitted[0].replace(';', '');
       card.service_code = splitted[1].substr(4, 3);
     }catch(e){
-      log.log(e);
+      log.info(e);
       return null;
     }
 
@@ -209,10 +209,10 @@ function ATM(settings, log) {
         // TODO: error processing
         this.current_state.error_screen_number;
 
-      log.log('Card ' + this.card.number + ' read');
+      log.info('Card ' + this.card.number + ' read');
     } else
     {
-      log.log('Not a Card Read state');
+      log.info('Not a Card Read state');
     }
   }
 
@@ -230,7 +230,7 @@ function ATM(settings, log) {
  * @return {[type]}        [description]
  */
 ATM.prototype.processButtonPressed = function(button){
-  log.log(button + ' button pressed')
+  log.info(button + ' button pressed')
 };
 
 /**
@@ -250,7 +250,7 @@ ATM.prototype.processHostMessage = function(data){
       return this.processTransactionReply(data);
             
     default:
-      log.log('ATM.processHostMessage(): unknown message class: ' + data.message_class);
+      log.info('ATM.processHostMessage(): unknown message class: ' + data.message_class);
       break;
   }
   return false;

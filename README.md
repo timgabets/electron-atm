@@ -1,6 +1,6 @@
 # electron-atm
 
-A simple free open-source NDC ATM emulator, written from scratch using pure JavaScript, jQuery and Electron framework. 
+A simple free open-source APTRA™ Advance NDC ATM emulator, written from scratch using pure JavaScript, jQuery and Electron framework.
 
 ![screenshot](img/screenshot.png)
 

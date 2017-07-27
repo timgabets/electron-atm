@@ -1,12 +1,10 @@
 const Trace = require('../controllers/trace.js');
-const OrderedDict = require('ordered-dict');
-//var dict = new OrderedDict();
 
 function FITsService(settings, log){
   this.trace = new Trace();
-  //this.FITs = settings.get('FITs');
+  this.FITs = settings.get('FITs');
   if(!this.FITs)
-    this.FITs = new OrderedDict();  
+    this.FITs = {};  
 
   /**
    * [d2h convert decimal string to hex string]
@@ -114,10 +112,9 @@ function FITsService(settings, log){
   this.addFIT = function(FIT){
     var parsed = this.parseFIT(FIT);
     if(parsed){
-      this.FITs.append(parsed.PIDDX, parsed);
-      log.log('\tFIT processed (FITs overall: ' + this.FITs.size() + '):' + this.trace.object(parsed));
-      // TODO: saving ordered-dict in a file
-      //settings.set('FITs', this.FITs);
+      this.FITs[parsed.PIDDX] = parsed;
+      log.log('\tFIT ' + parsed.PIDDX + ' processed (FITs overall: ' + Object.keys(this.FITs).length + '):' + this.trace.object(parsed));
+      settings.set('FITs', this.FITs);
       return true;
     }
     else{
@@ -146,28 +143,19 @@ function FITsService(settings, log){
   /**
    * [getInstitutionByCardnumber description]
    * @param  {[type]} cardnumber [cardnumber to check]
-   * @return {[type]}            [FIT institution ID]
+   * @return {[type]}            [Matched FIT institution ID or undefined if no FIT found]
    */
   this.getInstitutionByCardnumber = function(cardnumber){
     var BreakException = {};
-    var result;
+    var matched_institution = Number.MAX_VALUE;
 
-    // doing try-catch here as JavaScript can't neither return nor break from for-each loop =(
-    try{
-      this.FITs.forEach((item, index) => {
-        if(this.matchCardnumberWithMask(cardnumber, item.PFIID)){
-          result = item.PIDDX;
-          throw BreakException;
-        }
-      });
-    } catch(e) {
-       if (e !== BreakException) 
-        throw e;
-    }
-
-    return result;
+    for (var item in this.FITs)
+      if(this.matchCardnumberWithMask(cardnumber, this.FITs[item].PFIID) && matched_institution > this.FITs[item].PIDDX)
+        matched_institution = this.FITs[item].PIDDX;
+    
+    if (matched_institution !== Number.MAX_VALUE)
+      return matched_institution
   };
-
 }
 
 /**

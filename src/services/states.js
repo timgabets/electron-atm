@@ -38,7 +38,7 @@ function StatesService(settings, log){
       var parsed = this.parseState(state);
       if(parsed){
         this.states[parsed.number] = parsed;
-        this.log.log('\tState processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
+        this.log.log('\tState ' + parsed.number + ' processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
         settings.set('states', this.states);
         return true;
       }

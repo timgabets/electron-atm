@@ -86,6 +86,38 @@ describe("FITs", function() {
     });
   });
 
+  describe("matchCardnumberWithMask()", function(){
+    it("should match cardnumber with FFFFFFFFFF mask", function() {
+      expect(f.matchCardnumberWithMask('4188250000000001', 'FFFFFFFFFF')).toBeTruthy();
+    });
+
+    it("should match cardnumber with 418825FFFF mask", function() {
+      expect(f.matchCardnumberWithMask('4188250000000001', '418825FFFF')).toBeTruthy();
+    });
+
+    it("should match cardnumber with FFFFF5FFFF mask", function() {
+      expect(f.matchCardnumberWithMask('4188250000000001', 'FFFFF5FFFF')).toBeTruthy();
+    });
+
+    it("should not match cardnumber with FFFFF5FFFF mask", function() {
+      expect(f.matchCardnumberWithMask('4188290000000001', 'FFFFF5FFFF')).toBeFalsy();
+    });
+
+    /*
+    it("should add valid FIT", function() {
+      var parsed = {
+        PIDDX: '029',
+        PFIID: '418825FFFF',
+        PSTDX: '01'
+      };
+      expect(f.addFIT('029000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
+      // TODO:
+      expect(f.getInstitutionByCardnumber('4188250000000001')).toEqual('004');
+    });
+    */
+  });
+
+
   describe("addFIT()", function(){
     it("should return false when empty data passed", function() {
       expect(f.addFIT('')).toEqual(false);
@@ -94,13 +126,13 @@ describe("FITs", function() {
     /*
     it("should add valid FIT", function() {
       var parsed = {
-        PIDDX: '04',
+        PIDDX: '029',
         PFIID: '418825FFFF',
         PSTDX: '01'
       };
-      expect(f.addFIT('004000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
+      expect(f.addFIT('029000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(true);
       // TODO:
-      //expect(f.getInstitutionByCardnumber('04')).toEqual(parsed);
+      expect(f.getInstitutionByCardnumber('4188250000000001')).toEqual('004');
     });
     */
   });

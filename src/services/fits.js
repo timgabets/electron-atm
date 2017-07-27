@@ -117,7 +117,7 @@ function FITsService(settings, log){
       this.FITs.append(parsed.PIDDX, parsed);
       log.log('\tFIT processed (FITs overall: ' + this.FITs.size() + '):' + this.trace.object(parsed));
       // TODO: saving ordered-dict in a file
-      // settings.set('FITs', this.FITs);
+      //settings.set('FITs', this.FITs);
       return true;
     }
     else{
@@ -125,6 +125,29 @@ function FITsService(settings, log){
       return false;
     }
   };
+
+
+  /**
+   * [matchCardnumberWithMask description]
+   * @param  {[type]} cardnumber [16-character card number]
+   * @param  {[type]} mask       [10-character BIN mask, e.g. 418825FFFF]
+   * @return {[type]}            [true if there is a match, false otherwise]
+   */
+  this.matchCardnumberWithMask = function(cardnumber, mask){
+
+    for(var i = 0; i < mask.length; i++){
+      if( (parseInt(cardnumber[i]) & parseInt(mask[i], 16)).toString() != cardnumber[i]){
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  this.getInstitutionByCardnumber = function(cardnumber){
+
+  };
+
 }
 
 /**

@@ -1,5 +1,6 @@
 
 July 2017
+	0.2.1 Handing network errors
 	0.2.0 Filled README and added screenshots
 	0.1.9 Implemented proper FIT table search by cardnumber
 	0.1.8 FITsService.getInstitutionByCardnumber()

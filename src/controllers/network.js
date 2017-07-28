@@ -8,7 +8,7 @@ const Log = require('../controllers/log.js');
 function Network(log) {
   this.trace = new Trace();
   this.client = new net.Socket();
-  
+
   /**
    * [getOutgoingMessageLength get the Message Header Length]
    * @param  {[type]} data [binary data]
@@ -36,9 +36,9 @@ function Network(log) {
    * @return {[type]}      [description]
    */
   this.connect = function(host, port){
-    log.info('Connecting to ' + host + ':' + port );
+    log.warn('Connecting to ' + host + ':' + port );
     this.client.connect(port, host, _ => {
-      log.info('Connected');
+      log.warn('Connected');
     });
   };
 
@@ -50,7 +50,7 @@ function Network(log) {
    */
   this.client.on('close', _ => {
     //this.client.destroy();
-    log.info('Connection closed');
+    log.warn('Connection closed');
   });
 
   /**

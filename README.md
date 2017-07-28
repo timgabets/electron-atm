@@ -26,7 +26,7 @@ Things to be implemented soon:
  * Linking screens and states
  * Crypto support (PIN block encryption and key exchange)
  * ICC support
- * States structure visualisation tool (probably using wis.js)
+ * States structure visualisation tool (probably using [visjs](http://visjs.org/))
 
 ## Issues
 

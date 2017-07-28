@@ -13,7 +13,7 @@ function Log(){
   };
 
   this.warn = function(data){
-    this.log('<p>' + data + '</p>');
+    this.log('<p><b>' + data + '</b></p>');
   };
 
   this.error = function(data){

@@ -54,6 +54,9 @@ function StatesService(settings, log){
         var parsed = {};
         parsed.description = '';
         parsed.number = data.substring(0, 3)
+        if(isNaN(parsed.number))
+            return null;
+
         parsed.type = this.getEntry(data, 1);
         
         switch(parsed.type){

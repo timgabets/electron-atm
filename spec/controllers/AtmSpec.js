@@ -38,9 +38,9 @@ describe("ATM", function() {
   describe("initBuffers()", function(){
     it("should init terminal buffers", function() {
       expect(atm.initBuffers()).toEqual(true);
-      expect(atm.PIN_buffer).toEqual(null);
-      expect(atm.buffer_B).toEqual(null);
-      expect(atm.buffer_C).toEqual(null);
+      expect(atm.PIN_buffer).toBeNull();
+      expect(atm.buffer_B).toBeNull();
+      expect(atm.buffer_C).toBeNull();
       expect(atm.amount_buffer).toEqual('000000000000');
       expect(atm.opcode_buffer).toEqual('        ');
       expect(atm.FDK_buffer).toEqual('0000000000000');
@@ -60,7 +60,7 @@ describe("ATM", function() {
 
     it("should return null if track2 is invalid", function() {
       var track2 = ';4575270595153145D200?';
-      expect(atm.parseTrack2(track2)).toEqual(null);
+      expect(atm.parseTrack2(track2)).toBeNull();
     });
   });
 

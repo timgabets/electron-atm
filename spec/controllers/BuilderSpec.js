@@ -9,7 +9,7 @@ describe("Builder", function() {
 
   describe("build()", function(){
     it("should return null on empty message", function() {
-      expect(b.build(undefined)).toEqual(null);
+      expect(b.build(undefined)).toBeNull();
     });
 
     it("should build solicited ready status message", function() {

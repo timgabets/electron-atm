@@ -57,11 +57,16 @@ describe("States", function() {
     });
 
     it("should get entry 10", function() {
-      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 10)).toEqual(null);
+      expect(s.getEntry('000ABCDEFGHIJKLMNOPQRSTUVWXY', 10)).toBeNull();
     });
   });  
 
   describe("parseState()", function(){
+    it("should return null if state number is invalid", function() {
+      expect(s.parseState('XYZA870500128002002002001127')).toBeNull();
+    });
+
+
       it("should parse state A properly", function() {
         var parsed = { 
           description: 'Card read state',
@@ -454,7 +459,7 @@ describe("States", function() {
 
       it("should throw error if state data is invalid", 
         function() {
-        expect(s.parseState('000"8')).toEqual(null);
+        expect(s.parseState('000"8')).toBeNull();
       });
   });
 
@@ -485,9 +490,14 @@ describe("States", function() {
   });
 
   describe("add()", function(){
-      it("should add states", function() {
-        var states = ['000A870500128002002002001127', '001K003004004127127127127127', '002J132000132136132000081178', '003D024000128000000000000000', '004D024000000128000000000000'];
-        expect(s.add(states)).toEqual(true);
-      });
+    it("should add states", function() {
+      var states = ['000A870500128002002002001127', '001K003004004127127127127127', '002J132000132136132000081178', '003D024000128000000000000000', '004D024000000128000000000000'];
+      expect(s.add(states)).toBeTruthy();
+    });
+
+    it("should return false if one of the states is invalid", function() {
+      var states = ['xyzAxyz500128002002002001127', '004D024000000128000000000000'];
+      expect(s.add(states)).toBeFalsy();
+    });
   });
 });

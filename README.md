@@ -1,5 +1,7 @@
 # electron-atm
 
+![Travis CI build badge](https://travis-ci.org/timgabets/electron-atm.svg?branch=master)
+
 A simple free open-source APTRA™ Advance NDC ATM emulator, written from scratch using, JavaScript, jQuery and Electron framework.
 
 ![screenshot](img/screenshot.png)

@@ -9,7 +9,7 @@ function Log(){
   }
 
   this.info = function(data){
-    this.log('<p>' + data + '</p>');
+    this.log('<div>' + data + '</div>');
   };
 
   this.warn = function(data){

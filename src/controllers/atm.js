@@ -190,7 +190,7 @@ function ATM(settings, log) {
 
     do{
       if(state){
-        log.info('Current state : ' + state.number + state.type + ' (' + state.description + ')');
+        log.info('State changed to ' + state.number + state.type + ' (' + state.description + ')');
       }else
       {
         log.error('Error getting state ' + state_number + ': state not found'); 

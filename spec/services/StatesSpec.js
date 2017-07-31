@@ -282,6 +282,20 @@ describe("States", function() {
       expect(s.parseState('172m138002131173255255570255')).toEqual(parsed);        
     });
 
+    it("should parse state U properly", function() {
+      var parsed = {
+        description: 'Device Fitness Flow Select State',
+        number: '189',
+        type: 'U',
+        device_number: '035',
+        device_available_next_state: '190',
+        device_identifier_grafic: '113',
+        device_unavailable_next_state: '201',
+        device_subcomponent_identifier: '00q'
+      };
+      expect(s.parseState('189U03519011320100q000000000')).toEqual(parsed);        
+    });
+
     it("should parse state W properly", function() {
       var parsed = { 
         number: '035', 

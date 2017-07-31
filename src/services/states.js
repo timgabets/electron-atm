@@ -249,6 +249,18 @@ function StatesService(settings, log){
 
                 break;
 
+            case 'U':
+                parsed.description = 'Device Fitness Flow Select State';
+                ['device_number', 
+                 'device_available_next_state',
+                 'device_identifier_grafic',
+                 'device_unavailable_next_state',
+                 'device_subcomponent_identifier'
+                ].forEach( (element, index) => {
+                    parsed[element] = this.getEntry(data, index + 2)
+                });
+                break;
+
             case 'W':
                 parsed.description = 'FDK Switch state';
                 parsed.states = {};

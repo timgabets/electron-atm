@@ -167,6 +167,10 @@ function ATM(settings, log) {
     return state.good_read_next_state;
   }
 
+  this.processStateB = function(state){
+    this.setScreen(state.screen_number)
+  }
+
   /**
    * [setOpCodeBufferValueAt set this.opcode_buffer[position] with the value ]
    * @param {[type]} position [description]
@@ -290,7 +294,7 @@ function ATM(settings, log) {
         log.info('State changed to ' + state.number + state.type + ' (' + state.description + ')');
       }else
       {
-        log.error('Error getting state ' + state_number + ': state not found'); 
+        log.error('Error getting state ' + state_number + ': state not found');
         return false;
       }
         
@@ -299,11 +303,12 @@ function ATM(settings, log) {
           next_state = this.processStateA(state);
           break;
 
+        case 'B':
+          next_state = this.processStateB(state);
+          break;
+
         case 'D':
-          if(state.extension_state !== '255')
-            next_state = this.processStateD(state, this.states.get(state.extension_state));
-          else
-            next_state = this.processStateD(state);
+          state.extension_state !== '255' ? next_state = this.processStateD(state, this.states.get(state.extension_state)) : next_state = this.processStateD(state);
           break;
 
         case 'K':

@@ -390,6 +390,17 @@ function StatesService(settings, log){
                 });
                 break;
 
+            case '&':
+                parsed.description = 'Barcode Read State';
+                ['screen_number',
+                 'good_read_next_state',
+                 'cancel_next_state',
+                 'error_next_state',
+                 'timeout_next_state',
+                ].forEach( (element, index) => {
+                    parsed[element] = this.getEntry(data, index + 2)
+                });
+                break;
 
             default:
                 log.info('StatesService.parseState(): error processing state ' + parsed.number + ': unsupported state type ' + parsed.type);

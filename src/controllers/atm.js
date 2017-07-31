@@ -247,9 +247,19 @@ function ATM(settings, log) {
     return state.states[parseInt(institution_id)];
   }
 
+  /**
+   * [processStateY description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
   this.processStateY = function(state){
     this.setScreen(state.screen_number);
     this.current_state = state;
+
+    var button = this.buttons_pressed.shift();
+    if(button){
+      return state.FDK_next_state;
+    }
   }
 
   /**
@@ -269,8 +279,6 @@ function ATM(settings, log) {
   this.processState = function(state_number){
     var state = this.states.get(state_number);
     var next_state = null;
-
-    log.info('FITs: ' + this.states);
 
     do{
       if(state){
@@ -359,6 +367,7 @@ function ATM(settings, log) {
   this.initBuffers();
   this.current_screen = {};
   this.current_state = {};
+  this.buttons_pressed = [];
 }
 
 /**
@@ -367,7 +376,9 @@ function ATM(settings, log) {
  * @return {[type]}        [description]
  */
 ATM.prototype.processButtonPressed = function(button){
-  log.info(button + ' button pressed')
+  log.info(button + ' button pressed');
+  this.buttons_pressed.push(button);
+  this.processState(this.current_state.number)
 };
 
 /**

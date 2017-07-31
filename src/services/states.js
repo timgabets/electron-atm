@@ -233,6 +233,22 @@ function StatesService(settings, log){
                 }
                 break;
 
+            case 'm':
+                parsed.description = 'PIN & Language Select State';
+                ['screen_number', 
+                 'timeout_next_state',
+                 'cancel_next_state',
+                 'next_state_options_extension_state',
+                 'operation_codes_extension_state',
+                 'buffer_positions',
+                 'FDK_active_mask',
+                 'multi_language_screens_extension_state'
+                ].forEach( (element, index) => {
+                    parsed[element] = this.getEntry(data, index + 2)
+                });
+
+                break;
+
             case 'W':
                 parsed.description = 'FDK Switch state';
                 parsed.states = {};

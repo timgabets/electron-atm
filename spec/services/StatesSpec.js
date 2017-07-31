@@ -265,6 +265,23 @@ describe("States", function() {
       expect(s.parseState('001K003004004127127127127127')).toEqual(parsed);        
     });
 
+    it("should parse state m properly", function() {
+      var parsed = {
+        description: 'PIN & Language Select State',
+        number: '172',
+        type: 'm',
+        screen_number: '138',
+        timeout_next_state: '002',
+        cancel_next_state: '131',
+        next_state_options_extension_state: '173',
+        operation_codes_extension_state: '255',
+        buffer_positions: '255',
+        FDK_active_mask: '570',
+        multi_language_screens_extension_state: '255'
+      };
+      expect(s.parseState('172m138002131173255255570255')).toEqual(parsed);        
+    });
+
     it("should parse state W properly", function() {
       var parsed = { 
         number: '035', 

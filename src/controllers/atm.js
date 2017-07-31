@@ -261,6 +261,10 @@ function ATM(settings, log) {
     return state.states[this.FDK_buffer]
   }
 
+  this.processStateX = function(state){
+    this.setScreen(state.screen_number);
+  }
+
   /**
    * [processStateY description]
    * @param  {[type]} state [description]
@@ -320,6 +324,10 @@ function ATM(settings, log) {
 
         case 'K':
           next_state = this.processStateK(state);
+          break;
+
+        case 'X':
+          next_state = this.processStateX(state);
           break;
 
         case 'Y':
@@ -413,9 +421,8 @@ ATM.prototype.processPinpadButtonPressed = function(button){
   switch(this.current_state.type){
     case 'B':
       this.PIN_buffer += button;
-      log.info(this.PIN_buffer);
+      //log.info(this.PIN_buffer);
       if(this.PIN_buffer.length == this.max_pin_length)
-      //if(this.PIN_buffer.length == 4)
         this.processState(this.current_state.number)
       break;
 

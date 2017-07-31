@@ -147,9 +147,9 @@ function ATM(settings, log) {
    * @param {[type]} screen_number [description]
    */
   this.setScreen = function(screen_number){
-    this.screen = this.screens.get(screen_number)
-    if(this.screen){
-      log.info(trace.object(this.screen));
+    this.current_screen = this.screens.get(screen_number)
+    if(this.current_screen){
+      log.info(trace.object(this.current_screen));
     } else {
       log.error('atm.setScreen(): unable to find screen ' + screen_number);
     }
@@ -247,9 +247,9 @@ function ATM(settings, log) {
     return state.states[parseInt(institution_id)];
   }
 
-
   this.processStateY = function(state){
-    this.setScreen(state.screen_number)
+    this.setScreen(state.screen_number);
+    this.current_state = state;
   }
 
   /**
@@ -357,7 +357,8 @@ function ATM(settings, log) {
 
   this.status = 'Offline';
   this.initBuffers();
-  this.screen = {};
+  this.current_screen = {};
+  this.current_state = {};
 }
 
 /**

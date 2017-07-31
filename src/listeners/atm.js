@@ -24,8 +24,8 @@ ipc.on('atm-read-card', (event, cardnumber, track2) => {
 
 var current_screen = {}
 setInterval(function() {
-  if(atm.screen != current_screen){
-  	current_screen = atm.screen;
-    ipc.send('atm-change-screen-image', atm.screen.image_file);
+  if(atm.current_screen != current_screen){
+  	current_screen = atm.current_screen;
+    ipc.send('atm-change-screen-image', atm.current_screen.image_file);
   }
-}, 800);
+}, 300);

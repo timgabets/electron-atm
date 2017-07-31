@@ -25,9 +25,17 @@ $(function () {
     e.preventDefault();
   });
 
+  // Updating screen image
   ipc.on('ui-change-screen-image', (event, image) => {
     if(image){
       $("#screen").attr("src", "img/" + image)      
     }
   })
+
+  var FDKs = ['#FDK-A', '#FDK-B', '#FDK-C', '#FDK-D', '#FDK-F', '#FDK-G', '#FDK-H', '#FDK-I'];
+  FDKs.forEach( (element) => {
+    $(element).on('click', _ => {
+      ipc.send('FDK Pressed', $(element).text());
+    });
+  });
 })

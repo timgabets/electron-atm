@@ -24,4 +24,10 @@ $(function () {
   $("#card-read-form").submit(function(e) {
     e.preventDefault();
   });
+
+  ipc.on('ui-change-screen-image', (event, image) => {
+    if(image){
+      $("#screen").attr("src", "img/" + image)      
+    }
+  })
 })

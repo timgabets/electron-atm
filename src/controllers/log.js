@@ -1,3 +1,5 @@
+const Timestamp = require('../services/timestamp.js')
+
 function Log(){
   this.log = function(data){
     $( _ => {
@@ -19,6 +21,8 @@ function Log(){
   this.error = function(data){
     this.log('<p style="color:red">' + data + '</p>');
   };
+
+  this.timestamp = new Timestamp()
 };
 
 module.exports = Log;

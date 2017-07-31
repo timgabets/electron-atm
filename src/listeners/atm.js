@@ -21,3 +21,11 @@ ipc.on('atm-process-button-pressed', (event, button) => {
 ipc.on('atm-read-card', (event, cardnumber, track2) => {
   atm.readCard(cardnumber, track2)
 })
+
+var current_screen = {}
+setInterval(function() {
+  if(atm.screen != current_screen){
+  	current_screen = atm.screen;
+    ipc.send('atm-change-screen-image', atm.screen.image_file);
+  }
+}, 800);

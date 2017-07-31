@@ -22,8 +22,8 @@ describe("ATM", function() {
     };
 
     log = {
-      info: function() {
-      }
+      info: function() {},
+      error: function() {}
     };
 
     atm = new ATM(settings, log);

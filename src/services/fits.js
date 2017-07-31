@@ -78,9 +78,6 @@ function FITsService(settings, log){
     parsed.PSTDX = this.decimal2hex(data.substr(i, field_length));
     i += field_length;
     
-    /*
-    TODO:
-    
     // PAGDX (Algorithm/Bank ID Index)
     parsed.PAGDX = this.decimal2hex(data.substr(i, field_length));
     i += field_length;
@@ -89,6 +86,7 @@ function FITsService(settings, log){
     parsed.PMXPN = this.decimal2hex(data.substr(i, field_length))
     i += field_length;
 
+    /*
     // PCKLN (Maximum PIN Digits Checked) - Number of digits used for local PIN check
     parsed.PCKLN = this.decimal2hex(data.substr(i, field_length))
     i += field_length;
@@ -146,7 +144,6 @@ function FITsService(settings, log){
    * @return {[type]}            [Matched FIT institution ID or undefined if no FIT found]
    */
   this.getInstitutionByCardnumber = function(cardnumber){
-    var BreakException = {};
     var matched_institution = Number.MAX_VALUE;
 
     for (var item in this.FITs)
@@ -156,6 +153,20 @@ function FITsService(settings, log){
     if (matched_institution !== Number.MAX_VALUE)
       return matched_institution
   };
+
+  this.getMaxPINLength = function(cardnumber){
+    var matched_institution = Number.MAX_VALUE;
+    var max_pin;
+
+    for (var item in this.FITs)
+      if(this.matchCardnumberWithMask(cardnumber, this.FITs[item].PFIID) && matched_institution > this.FITs[item].PIDDX){
+        matched_institution = this.FITs[item].PSTDX;
+        max_pin = this.FITs[item].PMXPN[1];
+      }
+    
+    if (matched_institution !== Number.MAX_VALUE)
+      return max_pin
+  }
 }
 
 /**

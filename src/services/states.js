@@ -83,7 +83,7 @@ function StatesService(settings, log){
                 'local_pin_check_good_next_state',
                 'local_pin_check_max_bad_pins_next_state',
                 'local_pin_check_error_screen',
-                'remote_pin_check_next_screen',
+                'remote_pin_check_next_state',
                 'local_pin_check_max_retries',
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)

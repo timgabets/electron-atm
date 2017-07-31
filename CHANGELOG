@@ -1,5 +1,6 @@
 
 July 2017
+	0.3.0 Filling PIN buffer on state B
 	0.2.9 FDK and PIN pad keyboard shotcuts
 	0.2.8 changing screens from img/ directory
 	0.2.7 timestamp service

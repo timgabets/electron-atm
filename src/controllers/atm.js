@@ -169,6 +169,12 @@ function ATM(settings, log) {
 
   this.processStateB = function(state){
     this.setScreen(state.screen_number)
+    this.max_pin_length = this.FITs.getMaxPINLength(this.card.number)
+
+    if(this.PIN_buffer.length > 3){
+      // TODO: PIN encryption 
+      return state.remote_pin_check_next_screen
+    }
   }
 
   /**
@@ -292,7 +298,7 @@ function ATM(settings, log) {
     do{
       if(state){
         this.current_state = state;
-        log.info('State changed to ' + state.number + state.type + ' (' + state.description + ')');
+        log.info('Processing state ' + state.number + state.type + ' (' + state.description + ')');
       }else
       {
         log.error('Error getting state ' + state_number + ': state not found');
@@ -408,6 +414,9 @@ ATM.prototype.processPinpadButtonPressed = function(button){
     case 'B':
       this.PIN_buffer += button;
       log.info(this.PIN_buffer);
+      if(this.PIN_buffer.length == this.max_pin_length)
+      //if(this.PIN_buffer.length == 4)
+        this.processState(this.current_state.number)
       break;
 
     default:

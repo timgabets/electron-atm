@@ -95,7 +95,7 @@ describe("States", function() {
         local_pin_check_good_next_state: '026', 
         local_pin_check_max_bad_pins_next_state: '026', 
         local_pin_check_error_screen: '138', 
-        remote_pin_check_next_screen: '026', 
+        remote_pin_check_next_state: '026', 
         local_pin_check_max_retries: '003' 
       };
       expect(s.parseState('024B024002131026026138026003')).toEqual(parsed);

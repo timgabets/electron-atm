@@ -167,12 +167,50 @@ function ATM(settings, log) {
     return state.good_read_next_state;
   }
 
+  this.setOpCodeBuffer = function(state){
+    var mask = state.clear_mask;
+    /* 
+      Specifies bytes of Operation Code buffer to be cleared to graphic ‘space’. Each bit relates to a byte
+      in the Operation Code buffer. If a bit is zero, the corresponding entry is cleared. If a bit is one, the
+      corresponding entry is unchanged.
+    */
+
+    var keys = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];
+    ['A_preset_mask',
+     'B_preset_mask',
+     'C_preset_mask',
+     'D_preset_mask'
+     ].forEach( (element, index) => {
+        mask = state[element];
+        for(var i = 0; i < 7; i++){
+          if((mask & Math.pow(2, i)).toString() === Math.pow(2, i).toString())
+            this.opcode_buffer = this.opcode_buffer.substr(0, i) + keys[index] + this.opcode_buffer.substr(i + 1)
+        }
+     });
+
+    return null;
+  }
+
+  this.processStateD = function(state){
+    return null;
+  }
+
+  /**
+   * [processStateK description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
   this.processStateK = function(state){
     var institution_id = this.FITs.getInstitutionByCardnumber(this.card.number)
     // log.info('Found institution_id ' + institution_id);
     return state.states[parseInt(institution_id)];
   }
 
+  /**
+   * [processStateBeginICCInit description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
   this.processStateBeginICCInit = function(state){
     return state.icc_init_not_started_next_state;
   }

@@ -136,4 +136,25 @@ describe("ATM", function() {
       expect(atm.processHostMessage(host_message)).toEqual(status_ready);
     }); 
   });
+
+  describe("setOpCodeBuffer()", function(){
+    it("should set opcode values with proper B and C characters", function() {
+      var state ={ 
+        number: '003', 
+        type: 'D', 
+        description:'PreSet Operation Code Buffer',
+        next_state: '024', 
+        clear_mask: '000', 
+        A_preset_mask: '000', // 0000 0000
+        B_preset_mask: '042', // 0010 1010
+        C_preset_mask: '006', // 0000 0110 
+        D_preset_mask: '000', // 0000 0000
+        extension_state: '000' 
+      };
+
+      expect(atm.opcode_buffer).toEqual('        ');
+      expect(atm.setOpCodeBuffer(state)).toBeNull();
+      expect(atm.opcode_buffer).toEqual(' CCB B  ');
+    });
+  });
 });

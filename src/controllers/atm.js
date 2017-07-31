@@ -176,9 +176,11 @@ function ATM(settings, log) {
   this.changeCurrentState = function(state_number){
     var state = this.states.get(state_number);
 
-    if(!state)
+    if(!state){
+      log.error('Error getting state ' + state_number + ': state not found'); 
       // TODO: process inexistent state
       return false;
+    }
     else
       this.current_state = state;
 
@@ -220,13 +222,14 @@ function ATM(settings, log) {
     if (this.current_state && this.current_state.type === 'A')
     {
       this.card = this.parseTrack2(track2)
-      if(this.card)
-        this.current_state = this.current_state.good_read_next_state;
+      if(this.card){
+        log.info('Card ' + this.card.number + ' read');
+        this.changeCurrentState(this.current_state.good_read_next_state);
+      }
       else
         // TODO: error processing
         this.current_state.error_screen_number;
 
-      log.info('Card ' + this.card.number + ' read');
     } else
     {
       log.info('Not a Card Read state');

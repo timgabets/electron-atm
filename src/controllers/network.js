@@ -36,9 +36,9 @@ function Network(log) {
    * @return {[type]}      [description]
    */
   this.connect = function(host, port){
-    log.warn('Connecting to ' + host + ':' + port );
+    this.trace.trace('', ' >> Connecting to ' + host + ':' + port );
     this.client.connect(port, host, _ => {
-      log.warn('Connected');
+      this.trace.trace('', ' >> Connected' );
     });
   };
 

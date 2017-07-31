@@ -37,8 +37,12 @@ electron.app.once('ready', function () {
   })
 })
 
-ipc.on('FDK Pressed', (event, FDK) => {
-  window.webContents.send('atm-process-button-pressed', FDK)
+ipc.on('fdk-pressed', (event, FDK) => {
+  window.webContents.send('atm-process-fdk-pressed', FDK)
+})
+
+ipc.on('pinpad-button-pressed', (event, button) => {
+  window.webContents.send('atm-process-pinpad-button-pressed', button)
 })
 
 ipc.on('connect-button-pressed', (event, host, port) => {

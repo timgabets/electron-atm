@@ -385,14 +385,24 @@ function ATM(settings, log) {
 }
 
 /**
- * [processButtonPressed description]
+ * [processFDKButtonPressed description]
  * @param  {[type]} button [description]
  * @return {[type]}        [description]
  */
-ATM.prototype.processButtonPressed = function(button){
+ATM.prototype.processFDKButtonPressed = function(button){
   log.info(button + ' button pressed');
   this.buttons_pressed.push(button);
   this.processState(this.current_state.number)
+};
+
+
+/**
+ * [processPinpadButtonPressed description]
+ * @param  {[type]} button [description]
+ * @return {[type]}        [description]
+ */
+ATM.prototype.processPinpadButtonPressed = function(button){
+  log.info(button + ' button pressed');
 };
 
 /**

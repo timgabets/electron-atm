@@ -3,6 +3,7 @@ $(function () {
   const electron = nodeRequire('electron')
   const ipc = electron.ipcRenderer
   const settings = nodeRequire('electron-settings');
+  const mousetrap = nodeRequire('mousetrap');
 
   $('#connect').on('click', _ => {
     settings.set('host', {
@@ -32,10 +33,27 @@ $(function () {
     }
   })
 
+  // FDKs mouse click bindings
   var FDKs = ['#FDK-A', '#FDK-B', '#FDK-C', '#FDK-D', '#FDK-F', '#FDK-G', '#FDK-H', '#FDK-I'];
   FDKs.forEach( (element) => {
     $(element).on('click', _ => {
-      ipc.send('FDK Pressed', $(element).text());
+      ipc.send('fdk-pressed', $(element).text());
+    });
+  });
+
+  // FDKs shortcuts
+  FDKs = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'i'];
+  FDKs.forEach( (element) => {
+    mousetrap.bind(element, function() { 
+      ipc.send('fdk-pressed', element.toUpperCase());
+    });
+  });
+
+  // Pinpad buttons keyboard shortcuts
+  var pinpadButtons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+  pinpadButtons.forEach( (element) => {
+    mousetrap.bind(element, function() { 
+      ipc.send('pinpad-button-pressed', element);
     });
   });
 })

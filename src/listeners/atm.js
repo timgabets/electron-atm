@@ -14,8 +14,12 @@ ipc.on('atm-process-host-message', (event, message) => {
   }
 })
 
-ipc.on('atm-process-button-pressed', (event, button) => {
-  atm.processButtonPressed(button)
+ipc.on('atm-process-fdk-pressed', (event, button) => {
+  atm.processFDKButtonPressed(button)
+})
+
+ipc.on('atm-process-pinpad-button-pressed', (event, button) => {
+  atm.processPinpadButtonPressed(button)
 })
 
 ipc.on('atm-read-card', (event, cardnumber, track2) => {

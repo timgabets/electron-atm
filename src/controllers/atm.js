@@ -167,24 +167,45 @@ function ATM(settings, log) {
     return state.good_read_next_state;
   }
 
-  this.setOpCodeBuffer = function(state){
-    var mask = state.clear_mask;
-    /* 
-      Specifies bytes of Operation Code buffer to be cleared to graphic ‘space’. Each bit relates to a byte
-      in the Operation Code buffer. If a bit is zero, the corresponding entry is cleared. If a bit is one, the
-      corresponding entry is unchanged.
-    */
+  /**
+   * [setOpCodeBufferValueAt set this.opcode_buffer[position] with the value ]
+   * @param {[type]} position [description]
+   * @param {[type]} value    [description]
+   */
+  this.setOpCodeBufferValueAt = function(position, value){
+    this.opcode_buffer = this.opcode_buffer.substr(0, position) + value + this.opcode_buffer.substr(position + 1)
+  }
 
+  /**
+   * [setOpCodeBuffer process the D state logic (Pre‐Set Operation Code Buffer)]
+   * @param {[state]} state [D-type state]
+   */
+  this.setOpCodeBuffer = function(state){
+    /**
+     * Specifies bytes of Operation Code buffer to be cleared to graphic ‘space’. Each bit relates to a byte
+     * in the Operation Code buffer. If a bit is zero, the corresponding entry is cleared. If a bit is one, the
+     * corresponding entry is unchanged. 
+     */
+    var mask = state.clear_mask;
+    for(var bit = 0; bit < 8; bit++){
+      if((mask & Math.pow(2, bit)).toString() === '0')
+        this.setOpCodeBufferValueAt(bit, ' ');
+    }
+
+    /**
+     * The buffer contains eight bytes. This entry sets the specified bytes to one of the values from keys[]. If a bit is one, the
+     * corresponding entry is set to keys[i]. If a bit is zero, the corresponding entry is unchanged.
+     */
     var keys = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];
     ['A_preset_mask',
      'B_preset_mask',
      'C_preset_mask',
      'D_preset_mask'
-     ].forEach( (element, index) => {
+     ].forEach( (element, i) => {
         mask = state[element];
-        for(var i = 0; i < 7; i++){
-          if((mask & Math.pow(2, i)).toString() === Math.pow(2, i).toString())
-            this.opcode_buffer = this.opcode_buffer.substr(0, i) + keys[index] + this.opcode_buffer.substr(i + 1)
+        for(var bit = 0; bit < 8; bit++){
+          if((mask & Math.pow(2, bit)).toString() === Math.pow(2, bit).toString())
+            this.setOpCodeBufferValueAt(bit, keys[i]);
         }
      });
 

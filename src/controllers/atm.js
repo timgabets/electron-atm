@@ -219,20 +219,10 @@ function ATM(settings, log) {
   this.readCard = function(cardnumber, track2_data){
     var track2 = cardnumber + '=' + track2_data;
 
-    if (this.current_state && this.current_state.type === 'A')
-    {
-      this.card = this.parseTrack2(track2)
-      if(this.card){
-        log.info('Card ' + this.card.number + ' read');
-        this.changeCurrentState(this.current_state.good_read_next_state);
-      }
-      else
-        // TODO: error processing
-        this.current_state.error_screen_number;
-
-    } else
-    {
-      log.info('Not a Card Read state');
+    this.card = this.parseTrack2(track2)
+    if(this.card){
+      log.info('Card ' + this.card.number + ' read');
+      this.changeCurrentState(this.current_state.good_read_next_state);
     }
   }
 

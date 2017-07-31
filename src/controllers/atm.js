@@ -39,7 +39,7 @@ function ATM(settings, log) {
         break;
       case 'Go in-service':
         this.status = 'In-Service';
-        this.changeCurrentState('000');
+        //this.processState('000');
         break;
       default:
           log.info('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
@@ -164,17 +164,18 @@ function ATM(settings, log) {
     this.initBuffers();
     this.setScreen(state.screen_number)
 
-    return true;
+    return state.good_read_next_state;
     
   }
 
   /**
-   * [changeCurrentState description]
+   * [processState description]
    * @param  {[type]} state_number [description]
    * @return {[type]}              [description]
    */
-  this.changeCurrentState = function(state_number){
+  this.processState = function(state_number){
     var state = this.states.get(state_number);
+    var next_state = null;
 
     if(!state){
       log.error('Error getting state ' + state_number + ': state not found'); 
@@ -184,13 +185,18 @@ function ATM(settings, log) {
     else
       this.current_state = state;
 
-    switch(state.type){
-      case 'A':
-        this.processStateA(state);
-        break;
-      default:
-        log.info('atm.changeCurrentState(): unsupported state type ' + state.type);
-    }
+    do{
+
+      switch(state.type){
+        case 'A':
+          next_state = this.processStateA(state);
+          break;
+
+        default:
+          log.info('atm.processState(): unsupported state type ' + state.type);
+          next_state = null;
+      }
+    }while(false);
 
     log.info('Current state : ' + state.number + state.type + ' (' + state.description + ')');
     return true;
@@ -222,7 +228,7 @@ function ATM(settings, log) {
     this.card = this.parseTrack2(track2)
     if(this.card){
       log.info('Card ' + this.card.number + ' read');
-      this.changeCurrentState(this.current_state.good_read_next_state);
+      this.processState('000');
     }
   }
 

@@ -165,7 +165,16 @@ function ATM(settings, log) {
     this.setScreen(state.screen_number)
 
     return state.good_read_next_state;
-    
+  }
+
+  this.processStateK = function(state){
+    var institution_id = this.FITs.getInstitutionByCardnumber(this.card.number)
+    // log.info('Found institution_id ' + institution_id);
+    return state.states[parseInt(institution_id)];
+  }
+
+  this.processStateBeginICCInit = function(state){
+    return state.icc_init_not_started_next_state;
   }
 
   /**
@@ -176,6 +185,8 @@ function ATM(settings, log) {
   this.processState = function(state_number){
     var state = this.states.get(state_number);
     var next_state = null;
+
+    log.info('FITs: ' + this.states);
 
     do{
       if(state){
@@ -189,7 +200,14 @@ function ATM(settings, log) {
       switch(state.type){
         case 'A':
           next_state = this.processStateA(state);
-          log.info('next state: ' + next_state);
+          break;
+
+        case 'K':
+          next_state = this.processStateK(state);
+          break;
+
+        case '+':
+          next_state = this.processStateBeginICCInit(state);
           break;
 
         default:
@@ -201,7 +219,7 @@ function ATM(settings, log) {
         state = this.states.get(next_state);
       else
         break;
-      
+
     }while(state);
 
     return true;

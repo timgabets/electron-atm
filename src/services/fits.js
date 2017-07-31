@@ -151,7 +151,7 @@ function FITsService(settings, log){
 
     for (var item in this.FITs)
       if(this.matchCardnumberWithMask(cardnumber, this.FITs[item].PFIID) && matched_institution > this.FITs[item].PIDDX)
-        matched_institution = this.FITs[item].PIDDX;
+        matched_institution = this.FITs[item].PSTDX;
     
     if (matched_institution !== Number.MAX_VALUE)
       return matched_institution

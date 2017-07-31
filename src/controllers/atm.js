@@ -177,28 +177,33 @@ function ATM(settings, log) {
     var state = this.states.get(state_number);
     var next_state = null;
 
-    if(!state){
-      log.error('Error getting state ' + state_number + ': state not found'); 
-      // TODO: process inexistent state
-      return false;
-    }
-    else
-      this.current_state = state;
-
     do{
-
+      if(state){
+        log.info('Current state : ' + state.number + state.type + ' (' + state.description + ')');
+      }else
+      {
+        log.error('Error getting state ' + state_number + ': state not found'); 
+        return false;
+      }
+        
       switch(state.type){
         case 'A':
           next_state = this.processStateA(state);
+          log.info('next state: ' + next_state);
           break;
 
         default:
-          log.info('atm.processState(): unsupported state type ' + state.type);
+          log.error('atm.processState(): unsupported state type ' + state.type);
           next_state = null;
       }
-    }while(false);
 
-    log.info('Current state : ' + state.number + state.type + ' (' + state.description + ')');
+      if(next_state)
+        state = this.states.get(next_state);
+      else
+        break;
+      
+    }while(state);
+
     return true;
   }
 

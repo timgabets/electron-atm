@@ -135,6 +135,5 @@ describe("ATM", function() {
 
       expect(atm.processHostMessage(host_message)).toEqual(status_ready);
     }); 
-
   });
 });

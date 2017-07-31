@@ -179,8 +179,9 @@ function ATM(settings, log) {
   /**
    * [setOpCodeBuffer process the D state logic (Pre‐Set Operation Code Buffer)]
    * @param {[state]} state [D-type state]
+   * @param {[extension_state]} state [Z-type state]
    */
-  this.setOpCodeBuffer = function(state){
+  this.setOpCodeBuffer = function(state, extension_state){
     /**
      * Specifies bytes of Operation Code buffer to be cleared to graphic ‘space’. Each bit relates to a byte
      * in the Operation Code buffer. If a bit is zero, the corresponding entry is cleared. If a bit is one, the
@@ -196,7 +197,7 @@ function ATM(settings, log) {
      * The buffer contains eight bytes. This entry sets the specified bytes to one of the values from keys[]. If a bit is one, the
      * corresponding entry is set to keys[i]. If a bit is zero, the corresponding entry is unchanged.
      */
-    var keys = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];
+    var keys = ['A', 'B', 'C', 'D'];
     ['A_preset_mask',
      'B_preset_mask',
      'C_preset_mask',
@@ -209,11 +210,30 @@ function ATM(settings, log) {
         }
      });
 
-    return null;
+    if(extension_state && extension_state.entries){
+      var keys = ['F', 'G', 'H', 'I'];
+      for(var i = 0; i < 4; i++){
+        mask = extension_state.entries[i];
+        for(var bit = 0; bit < 8; bit++){
+          if((mask & Math.pow(2, bit)).toString() === Math.pow(2, bit).toString())
+            this.setOpCodeBufferValueAt(bit, keys[i]);
+        }
+       };
+    }
+
+    return true;
   }
 
-  this.processStateD = function(state){
-    return null;
+  /**
+   * [processStateD description]
+   * @param  {[type]} state           [description]
+   * @param  {[type]} extension_state [description]
+   * @return {[type]}                 [description]
+   */
+  this.processStateD = function(state, extension_state){
+    this.setOpCodeBuffer(state, extension_state);
+    log.info('Operation code buffer set to \'' + this.opcode_buffer + '\'');
+    return state.next_state;
   }
 
   /**
@@ -259,6 +279,13 @@ function ATM(settings, log) {
       switch(state.type){
         case 'A':
           next_state = this.processStateA(state);
+          break;
+
+        case 'D':
+          if(state.extension_state !== '255')
+            next_state = this.processStateD(state, this.states.get(state.extension_state));
+          else
+            next_state = this.processStateD(state);
           break;
 
         case 'K':

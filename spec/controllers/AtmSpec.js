@@ -155,13 +155,13 @@ describe("ATM", function() {
       };
 
       expect(atm.opcode_buffer).toEqual('XXXXXXXX');
-      expect(atm.setOpCodeBuffer(stateD)).toBeNull();
+      expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
       expect(atm.opcode_buffer).toEqual('        ');
     });
 
     it("should left opcode buffer untouched", function() {
       atm.opcode_buffer = 'XXXXXXXX'
-      var stateD ={ 
+      var stateD = { 
         clear_mask: '255',  // 1111 1111
         A_preset_mask: '000',
         B_preset_mask: '000',
@@ -171,13 +171,13 @@ describe("ATM", function() {
       };
 
       expect(atm.opcode_buffer).toEqual('XXXXXXXX');
-      expect(atm.setOpCodeBuffer(stateD)).toBeNull();
+      expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
       expect(atm.opcode_buffer).toEqual('XXXXXXXX');
     });
 
     it("should clear only the left half of opcode buffer", function() {
       atm.opcode_buffer = 'ZZZZZZZZ'
-      var stateD ={ 
+      var stateD = { 
         clear_mask: '240', // 1111 0000
         A_preset_mask: '000',
         B_preset_mask: '000',
@@ -187,13 +187,13 @@ describe("ATM", function() {
       };
 
       expect(atm.opcode_buffer).toEqual('ZZZZZZZZ');
-      expect(atm.setOpCodeBuffer(stateD)).toBeNull();
+      expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
       expect(atm.opcode_buffer).toEqual('    ZZZZ');
     });
 
 
     it("should set opcode values with proper B and C characters", function() {
-      var stateD ={ 
+      var stateD = { 
         clear_mask: '000', 
         A_preset_mask: '000', // 0000 0000
         B_preset_mask: '042', // 0010 1010
@@ -203,7 +203,7 @@ describe("ATM", function() {
       };
 
       expect(atm.opcode_buffer).toEqual('        ');
-      expect(atm.setOpCodeBuffer(stateD)).toBeNull();
+      expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
       expect(atm.opcode_buffer).toEqual(' CCB B  ');
     });
   });

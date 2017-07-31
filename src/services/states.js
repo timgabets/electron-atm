@@ -264,7 +264,7 @@ function StatesService(settings, log){
             case 'W':
                 parsed.description = 'FDK Switch state';
                 parsed.states = {};
-                ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].forEach( (element, index) => {
+                ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'].forEach( (element, index) => {
                     parsed.states[element] = this.getEntry(data, index + 2)
                 });
                 break;

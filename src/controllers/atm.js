@@ -247,6 +247,10 @@ function ATM(settings, log) {
     return state.states[parseInt(institution_id)];
   }
 
+  this.processStateW = function(state){
+    return state.states[this.FDK_buffer]
+  }
+
   /**
    * [processStateY description]
    * @param  {[type]} state [description]
@@ -258,6 +262,7 @@ function ATM(settings, log) {
 
     var button = this.buttons_pressed.shift();
     if(button){
+      this.FDK_buffer = button;
       return state.FDK_next_state;
     }
   }
@@ -307,6 +312,10 @@ function ATM(settings, log) {
 
         case 'Y':
           next_state = this.processStateY(state);
+          break;
+
+        case 'W':
+          next_state = this.processStateW(state);
           break;
 
         case '+':

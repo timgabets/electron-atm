@@ -132,7 +132,7 @@ function ATM(settings, log) {
    * @return {[type]} [description]
    */
   this.initBuffers = function(){
-    this.PIN_buffer = null;
+    this.PIN_buffer = '';
     this.buffer_B = null;
     this.buffer_C = null;
     this.amount_buffer = '000000000000';
@@ -291,6 +291,7 @@ function ATM(settings, log) {
 
     do{
       if(state){
+        this.current_state = state;
         log.info('State changed to ' + state.number + state.type + ' (' + state.description + ')');
       }else
       {
@@ -402,7 +403,17 @@ ATM.prototype.processFDKButtonPressed = function(button){
  * @return {[type]}        [description]
  */
 ATM.prototype.processPinpadButtonPressed = function(button){
-  log.info(button + ' button pressed');
+  //log.info('Button ' + button + 'pressed');
+  switch(this.current_state.type){
+    case 'B':
+      this.PIN_buffer += button;
+      log.info(this.PIN_buffer);
+      break;
+
+    default:
+      log.error('No keyboard entry allowed for state type ' + this.current_state.type);
+      break;
+  }
 };
 
 /**

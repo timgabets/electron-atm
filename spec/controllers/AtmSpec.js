@@ -38,7 +38,7 @@ describe("ATM", function() {
   describe("initBuffers()", function(){
     it("should init terminal buffers", function() {
       expect(atm.initBuffers()).toEqual(true);
-      expect(atm.PIN_buffer).toBeNull();
+      expect(atm.PIN_buffer).toEqual('');
       expect(atm.buffer_B).toBeNull();
       expect(atm.buffer_C).toBeNull();
       expect(atm.amount_buffer).toEqual('000000000000');

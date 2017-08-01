@@ -117,6 +117,7 @@ function ATM(settings, log) {
    */
   this.processTransactionReply = function(data){
     // TODO: processing next_state
+    this.processState(data.next_state);
     return this.replySolicitedStatus('Ready');
   };
 
@@ -269,8 +270,8 @@ function ATM(settings, log) {
      });
 
     if(extension_state && extension_state.entries){
-      var keys = ['F', 'G', 'H', 'I'];
-      for(var i = 0; i < 4; i++){
+      var keys = [null, null, 'F', 'G', 'H', 'I'];
+      for(var i = 2; i < 6; i++){
         mask = extension_state.entries[i];
         for(var bit = 0; bit < 8; bit++){
           if((mask & Math.pow(2, bit)).toString() === Math.pow(2, bit).toString())

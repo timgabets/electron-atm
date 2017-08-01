@@ -206,6 +206,36 @@ describe("ATM", function() {
       expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
       expect(atm.opcode_buffer).toEqual(' CCB B  ');
     });
+
+    it("should set opcode values characters from extension state", function() {
+      var stateD = { 
+        clear_mask: '000', 
+        A_preset_mask: '000', // 0000 0000
+        B_preset_mask: '000', // 0000 0000
+        C_preset_mask: '000', // 0000 0000
+        D_preset_mask: '000', // 0000 0000
+        extension_state: '000' 
+      };
+
+      var stateZ = { 
+        number: '037', 
+        type: 'Z',
+        description: 'Extension state',
+        entries: [ null, 'Z', 
+          '128', // F 1000 0000
+          '064', // G 0100 0000
+          '052', // H 0011 0100
+          '009', // I 0000 1001
+          'CDE', 
+          'FGH', 
+          'IJK', 
+          'LMN' ] 
+      };
+
+      expect(atm.opcode_buffer).toEqual('        ');
+      expect(atm.setOpCodeBuffer(stateD, stateZ)).toBeTruthy();
+      expect(atm.opcode_buffer).toEqual('I HIHHGF');
+    });
   });
 
   describe("processTransactionRequestState()", function(){

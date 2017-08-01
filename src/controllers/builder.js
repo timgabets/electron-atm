@@ -34,7 +34,41 @@ Builder.prototype.build = function(object){
           break;
         default:
             break;
-        }
+      }
+      break;
+
+    case 'Unsolicited':
+      message += 1;
+      
+      switch(object.message_subclass){
+        case 'Transaction Request':
+          message += '1'
+          message += '\x1C';
+          message += this.luno;
+          message += '\x1C';
+          message += '\x1C';
+          message += object.top_of_receipt;
+          message += object.message_coordination_number;
+          message += '\x1C';
+          object.track2 ? message += object.track2 : message += '';
+          message += '\x1C'
+          object.track3 ? message += object.track3 : message += '';
+          message += '\x1C'
+          object.opcode_buffer ? message += object.opcode_buffer : message += '';
+          message += '\x1C'
+          object.amount_buffer ? message += object.amount_buffer : message += '';
+          message += '\x1C'
+          object.PIN_buffer ? message += object.PIN_buffer : message += '';
+          message += '\x1C';
+          object.buffer_B ? message += object.buffer_B : message += '';
+          message += '\x1C';
+          object.buffer_C ? message += object.buffer_C : message += '';
+          message += '\x1C';
+          object.track1 ? message += object.track1 : message += '';
+          message += '\x1C';
+          break;
+      }
+      break;
 
     default:
       break;

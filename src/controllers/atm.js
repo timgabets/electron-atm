@@ -120,6 +120,42 @@ function ATM(settings, log) {
     return this.replySolicitedStatus('Ready');
   };
 
+
+  /**
+   * [getMessageCoordinationNumber 
+   *  Message Co-Ordination Number is a character assigned by the
+   *  terminal to each transaction request message. The terminal assigns a
+   *  different co-ordination number to each successive transaction request,
+   *  on a rotating basis. Valid range of the co-ordination number is 31 hex
+   *  to 3F hex, or if enhanced configuration parameter 34 ‘MCN Range’ has
+   *  been set to 001, from 31 hex to 7E hex. Central must include the
+   *  corresponding co-ordination number when responding with a
+   *  Transaction Reply Command.
+   *  
+   *  This ensures that the Transaction Reply matches the Transaction
+   *  Request. If the co-ordination numbers do not match, the terminal
+   *  sends a Solicited Status message with a Command Reject status.
+   *  Central can override the Message Co-Ordination Number check by
+   *  sending a Co-Ordination Number of ‘0’ in a Transaction Reply
+   *  command. As a result, the terminal does not verify that the
+   *  Transaction Reply co-ordinates with the last transaction request
+   *  message.]
+   * @return {[type]} [description]
+   */
+  this.getMessageCoordinationNumber = function(){
+    var saved = settings.get('message_coordination_number');
+    if(!saved)
+      saved = '\x31';
+
+    saved = (parseInt(saved) + 1).toString();
+
+    if(saved > '\x3F')
+      saved = '\x31';
+
+    settings.set('message_coordination_number', saved);
+    return saved;
+  } 
+
   /**
    * [getEncryptedPIN description]
    * @param  {[type]} clear_pin [description]
@@ -269,6 +305,8 @@ function ATM(settings, log) {
     var request = {
       message_class: 'Unsolicited',
       message_subclass: 'Transaction Request',
+      top_of_receipt: '1',
+      message_coordination_number: this.getMessageCoordinationNumber(),
     };
 
     if(state.send_track2 === '001')
@@ -318,7 +356,7 @@ function ATM(settings, log) {
         break;
     }
 
-    this.transaction_request = request;
+    this.transaction_request = request; // further processing is performed by the atm listener
   }
 
   /**

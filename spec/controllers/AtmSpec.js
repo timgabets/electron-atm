@@ -389,5 +389,5 @@ describe("ATM", function() {
       expect(atm.transaction_request.message_class).toEqual('Unsolicited');
       expect(atm.transaction_request.message_subclass).toEqual('Transaction Request');
     });
-  })
+  });
 });

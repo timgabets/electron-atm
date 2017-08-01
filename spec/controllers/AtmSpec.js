@@ -428,6 +428,9 @@ describe("ATM", function() {
         type: 'B'
       };
 
+      spyOn(atm, 'processState');
+
+      atm.max_pin_length = 6;
       atm.initBuffers();
     });
 
@@ -442,7 +445,7 @@ describe("ATM", function() {
       expect(atm.PIN_buffer).toEqual('1985');
     })
 
-    it("should properly handle pressed backspace button on state B", function(){
+    it("should properly handle pressed Backspace button on state B", function(){
       expect(atm.PIN_buffer).toEqual('');
       
       atm.processPinpadButtonPressed('backspace');
@@ -458,6 +461,39 @@ describe("ATM", function() {
       atm.processPinpadButtonPressed('3');
 
       expect(atm.PIN_buffer).toEqual('5893');
+    })
+
+    it("should properly handle pressed Enter button on state B", function(){
+      expect(atm.PIN_buffer).toEqual('');
+      
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('3');
+
+      expect(atm.PIN_buffer).toEqual('5893');
+      expect(atm.processState).not.toHaveBeenCalled();
+    })
+
+    it("should call processState() when 6 digits entered on state B", function(){
+      expect(atm.PIN_buffer).toEqual('');
+      
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('3');
+
+      expect(atm.PIN_buffer).toEqual('198593');
+      expect(atm.processState).toHaveBeenCalled();
     })
   })
 });

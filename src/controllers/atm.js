@@ -120,6 +120,15 @@ function ATM(settings, log) {
     return this.replySolicitedStatus('Ready');
   };
 
+  /**
+   * [getEncryptedPIN description]
+   * @param  {[type]} clear_pin [description]
+   * @return {[type]}           [description]
+   */
+  this.getEncryptedPIN = function(){
+    // this.PIN_buffer
+    return '1234567891234567';
+  }
 
   /**
    * [initBuffers clears the terminal buffers
@@ -132,7 +141,10 @@ function ATM(settings, log) {
    * @return {[type]} [description]
    */
   this.initBuffers = function(){
+    // In a real ATM PIN_buffer contains encrypted PIN, but in this application PIN_buffer contains clear PIN entered  by cardholder.
+    // To get the encrypted PIN, use getEncryptedPIN() method
     this.PIN_buffer = '';
+
     this.buffer_B = null;
     this.buffer_C = null;
     this.amount_buffer = '000000000000';
@@ -266,6 +278,17 @@ function ATM(settings, log) {
 
     if(state.send_amount_data === '001')
       request.amount_buffer = this.amount_buffer;
+
+    switch(state.send_pin_buffer){
+      case '001':   // Standard format. Send Buffer A
+      case '129':   // Extended format. Send Buffer A
+        request.PIN_buffer = this.getEncryptedPIN();
+        break;
+      case '000':   // Standard format. Do not send Buffer A
+      case '128':   // Extended format. Do not send Buffer A
+      default:
+        break;
+    }
 
     this.transaction_request = request;
   }

@@ -223,7 +223,7 @@ describe("ATM", function() {
         send_operation_code: '001', 
       };
 
-      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      atm.processTransactionRequestState(state)
       expect(atm.transaction_request.opcode_buffer).toEqual(atm.opcode_buffer);
     });
 
@@ -235,7 +235,7 @@ describe("ATM", function() {
         send_operation_code: '000', 
       };
 
-      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      atm.processTransactionRequestState(state)
       expect(atm.transaction_request.opcode_buffer).toBeUndefined();
     });
 
@@ -246,7 +246,7 @@ describe("ATM", function() {
         send_track2: '001', 
       };
 
-      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      atm.processTransactionRequestState(state)
       expect(atm.transaction_request.track2).toEqual(atm.track2);
     });
 
@@ -257,7 +257,7 @@ describe("ATM", function() {
         send_track2: '000',
       };
 
-      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      atm.processTransactionRequestState(state)
       expect(atm.transaction_request.track2).toBeUndefined();
     });
 
@@ -268,7 +268,7 @@ describe("ATM", function() {
         send_amount_data: '001',
       };
 
-      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      atm.processTransactionRequestState(state)
       expect(atm.transaction_request.amount_buffer).toEqual(atm.amount_buffer);
     });
 
@@ -279,8 +279,54 @@ describe("ATM", function() {
         send_amount_data: '000', 
       };
 
-      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      atm.processTransactionRequestState(state)
       expect(atm.transaction_request.amount_buffer).toBeUndefined();
+    });
+
+    it("should properly fill transaction request data when send_pin_buffer is disabled (Standard format)", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_pin_buffer: '000',
+      };
+
+      atm.processTransactionRequestState(state)
+      expect(atm.transaction_request.PIN_buffer).toBeUndefined();
+    });
+
+    it("should properly fill transaction request data when send_pin_buffer is enabled (Standard format)", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_pin_buffer: '001',
+      };
+
+      atm.processTransactionRequestState(state);
+      expect(atm.transaction_request.PIN_buffer).toBeDefined();
+      expect(atm.transaction_request.PIN_buffer.length).toEqual(16);
+    });
+
+    it("should properly fill transaction request data when send_pin_buffer is disabled (Extended format)", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_pin_buffer: '128',
+      };
+
+      atm.processTransactionRequestState(state)
+      expect(atm.transaction_request.PIN_buffer).toBeUndefined();
+    });
+
+    it("should properly fill transaction request data when send_pin_buffer is enabled (Extended format)", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_pin_buffer: '129',
+      };
+
+      atm.processTransactionRequestState(state);
+      expect(atm.transaction_request.PIN_buffer).toBeDefined();
+      expect(atm.transaction_request.PIN_buffer.length).toEqual(16);
     });
 
   })

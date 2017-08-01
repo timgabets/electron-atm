@@ -145,8 +145,8 @@ function ATM(settings, log) {
     // To get the encrypted PIN, use getEncryptedPIN() method
     this.PIN_buffer = '';
 
-    this.buffer_B = null;
-    this.buffer_C = null;
+    this.buffer_B = '';
+    this.buffer_C = '';
     this.amount_buffer = '000000000000';
     this.opcode_buffer = '        ';
     this.FDK_buffer = '0000000000000';
@@ -287,6 +287,31 @@ function ATM(settings, log) {
       case '000':   // Standard format. Do not send Buffer A
       case '128':   // Extended format. Do not send Buffer A
       default:
+        break;
+    }
+
+    switch(state.send_buffer_B_buffer_C){
+      case '000': // Send no buffers
+        break;
+
+      case '001': // Send Buffer B
+        request.buffer_B = this.buffer_B;
+        break;
+
+      case '002': // Send Buffer C
+        request.buffer_C = this.buffer_C;
+        break;
+
+      case '003': // Send Buffer B and C
+        request.buffer_B = this.buffer_B;
+        request.buffer_C = this.buffer_C;
+        break;
+
+      default:
+        // TODO: If the extended format is selected in table entry 8, this entry is an Extension state number.
+        if(state.send_pin_buffer in ['128', '129']){
+          null;
+        }
         break;
     }
 

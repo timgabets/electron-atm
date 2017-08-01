@@ -39,8 +39,8 @@ describe("ATM", function() {
     it("should init terminal buffers", function() {
       expect(atm.initBuffers()).toEqual(true);
       expect(atm.PIN_buffer).toEqual('');
-      expect(atm.buffer_B).toBeNull();
-      expect(atm.buffer_C).toBeNull();
+      expect(atm.buffer_B).toEqual('');
+      expect(atm.buffer_C).toEqual('');
       expect(atm.amount_buffer).toEqual('000000000000');
       expect(atm.opcode_buffer).toEqual('        ');
       expect(atm.FDK_buffer).toEqual('0000000000000');
@@ -214,6 +214,8 @@ describe("ATM", function() {
       atm.opcode_buffer = 'ZZZZZZZZ';
       atm.track2 = '8990011234567890=20062011987612300720';
       atm.amount_buffer = '000000001337';
+      atm.buffer_B = 'XZXZXZXZXZX';
+      atm.buffer_C = '19671994';
     });
 
     it("should properly fill transaction request data when send_operation_code is enabled", function(){
@@ -329,5 +331,52 @@ describe("ATM", function() {
       expect(atm.transaction_request.PIN_buffer.length).toEqual(16);
     });
 
+    it("should properly fill transaction request data when send_buffer_B_buffer_C is 000", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_buffer_B_buffer_C: '000',
+      };
+
+      atm.processTransactionRequestState(state);
+      expect(atm.transaction_request.buffer_B).toBeUndefined();
+      expect(atm.transaction_request.buffer_C).toBeUndefined();
+    });
+
+    it("should properly fill transaction request data when send_buffer_B_buffer_C is 001", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_buffer_B_buffer_C: '001',
+      };
+
+      atm.processTransactionRequestState(state);
+      expect(atm.transaction_request.buffer_B).toEqual(atm.buffer_B);
+      expect(atm.transaction_request.buffer_C).toBeUndefined();
+    });
+
+    it("should properly fill transaction request data when send_buffer_B_buffer_C is 002", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_buffer_B_buffer_C: '002',
+      };
+
+      atm.processTransactionRequestState(state);
+      expect(atm.transaction_request.buffer_B).toBeUndefined();
+      expect(atm.transaction_request.buffer_C).toEqual(atm.buffer_C);
+    });
+
+    it("should properly fill transaction request data when send_buffer_B_buffer_C is 003", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_buffer_B_buffer_C: '003',
+      };
+
+      atm.processTransactionRequestState(state);
+      expect(atm.transaction_request.buffer_B).toEqual(atm.buffer_B);
+      expect(atm.transaction_request.buffer_C).toEqual(atm.buffer_C);
+    });
   })
 });

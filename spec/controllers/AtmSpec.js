@@ -495,5 +495,32 @@ describe("ATM", function() {
       expect(atm.PIN_buffer).toEqual('198593');
       expect(atm.processState).toHaveBeenCalled();
     })
+
+    it("should call processState() when 4 digits PIN entered + Enter button pressed on state B", function(){
+      expect(atm.PIN_buffer).toEqual('');
+      
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('enter');
+
+      expect(atm.PIN_buffer).toEqual('9855');
+      expect(atm.processState).toHaveBeenCalled();
+    })
+
+    it("should not call processState() when PIN buffer is less than 4 on state B", function(){
+      expect(atm.PIN_buffer).toEqual('');
+      
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('enter');
+      atm.processPinpadButtonPressed('enter');
+      atm.processPinpadButtonPressed('enter');
+
+      expect(atm.PIN_buffer).toEqual('1');
+      expect(atm.processState).not.toHaveBeenCalled();
+    })    
   })
 });

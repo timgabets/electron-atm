@@ -603,6 +603,11 @@ ATM.prototype.processPinpadButtonPressed = function(button){
           this.PIN_buffer = this.PIN_buffer.slice(0, -1);
           break;
 
+        case 'enter':
+          if(this.PIN_buffer.length >= 4)
+            this.processState(this.current_state.number)
+          break;
+
         default:
           this.PIN_buffer += button;
           log.info(this.PIN_buffer);

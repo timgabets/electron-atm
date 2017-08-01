@@ -256,6 +256,9 @@ function ATM(settings, log) {
 
     var request = {};
 
+    if(state.send_track2 === '001')
+      request.track2 = this.track2;
+
     if(state.send_operation_code === '001')
       request.opcode_buffer = this.opcode_buffer;
 
@@ -458,9 +461,8 @@ function ATM(settings, log) {
   }
 
   this.readCard = function(cardnumber, track2_data){
-    var track2 = cardnumber + '=' + track2_data;
-
-    this.card = this.parseTrack2(track2)
+    this.track2 = cardnumber + '=' + track2_data;
+    this.card = this.parseTrack2(this.track2)
     if(this.card){
       log.info('Card ' + this.card.number + ' read');
       this.processState('000');

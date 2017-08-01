@@ -213,21 +213,14 @@ describe("ATM", function() {
       atm.transaction_request = null;
       atm.opcode_buffer = 'ZZZZZZZZ';
       atm.track2 = '8990011234567890=20062011987612300720';
+      atm.amount_buffer = '000000001337';
     });
 
     it("should properly fill transaction request data when send_operation_code is enabled", function(){
       var state = {
         number: '027', 
         type: 'I', 
-        description: 'Transaction request state',
-        screen_number: '025', 
-        timeout_next_state: '146', 
-        send_track2: '001', 
-        send_track1_track3: '000', 
         send_operation_code: '001', 
-        send_amount_data: '001', 
-        send_pin_buffer: '001', 
-        send_buffer_B_buffer_C: '003' 
       };
 
       expect(atm.processTransactionRequestState(state)).toBeUndefined();
@@ -239,14 +232,7 @@ describe("ATM", function() {
         number: '027', 
         type: 'I', 
         description: 'Transaction request state',
-        screen_number: '025', 
-        timeout_next_state: '146', 
-        send_track2: '001', 
-        send_track1_track3: '000', 
         send_operation_code: '000', 
-        send_amount_data: '001', 
-        send_pin_buffer: '001', 
-        send_buffer_B_buffer_C: '003'
       };
 
       expect(atm.processTransactionRequestState(state)).toBeUndefined();
@@ -257,38 +243,44 @@ describe("ATM", function() {
       var state = {
         number: '027', 
         type: 'I', 
-        description: 'Transaction request state',
-        screen_number: '025', 
-        timeout_next_state: '146', 
         send_track2: '001', 
-        send_track1_track3: '000', 
-        send_operation_code: '001', 
-        send_amount_data: '001', 
-        send_pin_buffer: '001', 
-        send_buffer_B_buffer_C: '003' 
       };
 
       expect(atm.processTransactionRequestState(state)).toBeUndefined();
       expect(atm.transaction_request.track2).toEqual(atm.track2);
     });
 
-    it("should properly fill transaction request data when send_track2 is desiabled", function(){
+    it("should properly fill transaction request data when send_track2 is disabled", function(){
       var state = {
         number: '027', 
         type: 'I', 
-        description: 'Transaction request state',
-        screen_number: '025', 
-        timeout_next_state: '146', 
-        send_track2: '000', 
-        send_track1_track3: '000', 
-        send_operation_code: '001', 
-        send_amount_data: '001', 
-        send_pin_buffer: '001', 
-        send_buffer_B_buffer_C: '003' 
+        send_track2: '000',
       };
 
       expect(atm.processTransactionRequestState(state)).toBeUndefined();
       expect(atm.transaction_request.track2).toBeUndefined();
+    });
+
+    it("should properly fill transaction request data when send_amount_data is enabled", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_amount_data: '001',
+      };
+
+      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      expect(atm.transaction_request.amount_buffer).toEqual(atm.amount_buffer);
+    });
+
+    it("should properly fill transaction request data when send_amount_data is disabled", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        send_amount_data: '000', 
+      };
+
+      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      expect(atm.transaction_request.amount_buffer).toBeUndefined();
     });
 
   })

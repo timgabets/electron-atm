@@ -259,8 +259,13 @@ function ATM(settings, log) {
     if(state.send_track2 === '001')
       request.track2 = this.track2;
 
+    // Send Track 1 and/or Track 3 option is not supported 
+
     if(state.send_operation_code === '001')
       request.opcode_buffer = this.opcode_buffer;
+
+    if(state.send_amount_data === '001')
+      request.amount_buffer = this.amount_buffer;
 
     this.transaction_request = request;
   }

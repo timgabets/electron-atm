@@ -43,6 +43,16 @@ describe("Screens", function() {
       };
       expect(s.parseScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c')).toEqual(parsed);
     });
+
+    it("should parse Screen Blinking and Colour control", function() {
+      var parsed = {
+        number: '039',
+        clear_screen: true,
+        display_image_files_control: true,
+        image_file: 'PIC039.jpg',
+      };
+      expect(s.parseScreen('039\x0c\x1bPEPIC039.jpg\x1b\x5c\x1b[27;80m')).toEqual(parsed);
+    });
   });
   
   describe("addScreen()", function(){

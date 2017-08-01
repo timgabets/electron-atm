@@ -72,3 +72,10 @@ ipc.on('ui-read-card', (event, cardnumber, track2) => {
 ipc.on('atm-change-screen-image', (event, image) => {
   window.webContents.send('ui-change-screen-image', image)
 })
+
+ipc.on('atm-transaction-request', (event, request_data) => {
+  console.log('atm-transaction-request', request_data);
+  //window.webContents.send('ui-change-screen-image', image)
+})
+
+

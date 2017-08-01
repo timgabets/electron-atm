@@ -246,6 +246,27 @@ function ATM(settings, log) {
     return state.next_state;
   }
 
+  /**
+   * [processTransactionRequestState description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  this.processTransactionRequestState = function(state){
+    this.setScreen(state.screen_number);
+
+    var request = {};
+
+    if(state.send_operation_code === '001')
+      request.opcode_buffer = this.opcode_buffer;
+
+    this.transaction_request = request;
+  }
+
+  /**
+   * [processCloseState description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
   this.processCloseState = function(state){
     this.setScreen(state.receipt_delivered_screen);
   }
@@ -261,10 +282,20 @@ function ATM(settings, log) {
     return state.states[parseInt(institution_id)];
   }
 
+  /**
+   * [processStateW description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
   this.processStateW = function(state){
     return state.states[this.FDK_buffer]
   }
 
+  /**
+   * [processStateX description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
   this.processStateX = function(state){
     this.setScreen(state.screen_number);
 
@@ -300,12 +331,27 @@ function ATM(settings, log) {
     return state.icc_init_not_started_next_state;
   }
 
+  /**
+   * [processStateCompleteICCAppInit description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
   this.processStateCompleteICCAppInit = function(state){
     var extension_state = this.states.get(state.extension_state);
     this.setScreen(state.please_wait_screen_number);
 
     log.info(this.trace.object(extension_state))
     return extension_state.entries[8]; // Processing not performed
+  }
+
+  /**
+   * [processSetICCDataState description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  this.processSetICCDataState = function(state){
+    // No processing as ICC cards are not currently supported
+    return state.next_state;
   }
 
   /**
@@ -340,6 +386,10 @@ function ATM(settings, log) {
           state.extension_state !== '255' ? next_state = this.processStateD(state, this.states.get(state.extension_state)) : next_state = this.processStateD(state);
           break;
 
+        case 'I':
+          next_state = this.processTransactionRequestState(state);
+          break;
+
         case 'J':
           next_state = this.processCloseState(state);
           break;
@@ -366,7 +416,10 @@ function ATM(settings, log) {
 
         case '/':
           next_state = this.processStateCompleteICCAppInit(state);
-          console.log(next_state);
+          break;
+
+        case '?':
+          next_state = this.processSetICCDataState(state);
           break;
 
         default:
@@ -424,6 +477,7 @@ function ATM(settings, log) {
   this.current_screen = {};
   this.current_state = {};
   this.buttons_pressed = [];
+  this.transaction_request = null;
 }
 
 /**
@@ -448,7 +502,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
   switch(this.current_state.type){
     case 'B':
       this.PIN_buffer += button;
-      log.info(this.PIN_buffer);
+      //log.info(this.PIN_buffer);
       if(this.PIN_buffer.length == this.max_pin_length)
         this.processState(this.current_state.number)
       break;

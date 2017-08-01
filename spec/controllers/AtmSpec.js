@@ -207,4 +207,50 @@ describe("ATM", function() {
       expect(atm.opcode_buffer).toEqual(' CCB B  ');
     });
   });
+
+  describe("processTransactionRequestState()", function(){
+    beforeEach(function() {
+      atm.transaction_request = null;
+      atm.opcode_buffer = 'ZZZZZZZZ';
+    });
+
+    it("should properly fill transaction request data when send_operation_code is enabled", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        description: 'Transaction request state',
+        screen_number: '025', 
+        timeout_next_state: '146', 
+        send_track2: '001', 
+        send_track1_track3: '000', 
+        send_operation_code: '001', 
+        send_amount_data: '001', 
+        send_pin_buffer: '001', 
+        send_buffer_B_buffer_C: '003' 
+      };
+
+      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      expect(atm.transaction_request.opcode_buffer).toEqual('ZZZZZZZZ');
+    });
+
+    it("should properly fill transaction request data when send_operation_code is disabled", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+        description: 'Transaction request state',
+        screen_number: '025', 
+        timeout_next_state: '146', 
+        send_track2: '001', 
+        send_track1_track3: '000', 
+        send_operation_code: '000', 
+        send_amount_data: '001', 
+        send_pin_buffer: '001', 
+        send_buffer_B_buffer_C: '003'
+      };
+
+      expect(atm.processTransactionRequestState(state)).toBeUndefined();
+      expect(atm.transaction_request.opcode_buffer).toBeUndefined();
+    });
+
+  })
 });

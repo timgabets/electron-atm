@@ -33,3 +33,11 @@ setInterval(function() {
     ipc.send('atm-change-screen-image', atm.current_screen.image_file);
   }
 }, 300);
+
+var transaction_request = null
+setInterval(function() {
+  if(atm.transaction_request){
+    ipc.send('atm-transaction-request', atm.transaction_request);
+    atm.transaction_request = null
+  }
+}, 300);

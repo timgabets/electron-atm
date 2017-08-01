@@ -263,6 +263,12 @@ function ATM(settings, log) {
 
   this.processStateX = function(state){
     this.setScreen(state.screen_number);
+
+    var button = this.buttons_pressed.shift();
+    if(button){
+      this.FDK_buffer = button;
+      return state.FDK_next_state;
+    }
   }
 
   /**

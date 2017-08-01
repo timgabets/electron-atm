@@ -29,7 +29,7 @@ $(function () {
   // Updating screen image
   ipc.on('ui-change-screen-image', (event, image) => {
     if(image){
-      $("#screen").attr("src", "img/" + image)      
+      $("#screen").attr("src", "/home/tim/share/screens/" + image)      
     }
   })
 

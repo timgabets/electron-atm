@@ -34,17 +34,19 @@ This is a side project of my full-time job and only the features that I currentl
 Currently only the basic stuff is working, such as:
 
  * Connecting to ATM host
+ * Moving through the basic states (A, B, D, X, W etc.)
+ * Showing basic image screens, linked to the state
+ * Checking the Card's financial institution based on FIT tables
+ * Keyboard shortcuts (FDK and numeric)
  * Receiving states from host
  * Receiving screens from host
  * Receiving FITs (financial insitution tables) from host
  * Showing traces in a log area
  * Saving ATM configuration data (such as states, screens and FITs) and restoring it on application start
 
-Things to be implemented soon:
-
- * Card events processing
- * State processing (moving through the states)
- * Linking screens and states
+Things to be implemented (very) soon:
+ * Showing text upon the image screen
+ * Saving the image path in user settings
  * Crypto support (PIN block encryption and key exchange)
  * ICC support
  * States structure visualisation tool (probably using [visjs](http://visjs.org/))

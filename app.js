@@ -57,8 +57,8 @@ ipc.on('host-message-parsed', (event, data) => {
   window.webContents.send('atm-process-host-message', data)
 })
 
-ipc.on('build-atm-response', (event, data) => {
-  window.webContents.send('build-atm-response', data)
+ipc.on('build-message-to-host', (event, message) => {
+  window.webContents.send('build-message-to-host', message)
 })
 
 ipc.on('atm-message-built', (event, data) => {
@@ -71,11 +71,6 @@ ipc.on('ui-read-card', (event, cardnumber, track2) => {
 
 ipc.on('atm-change-screen-image', (event, image) => {
   window.webContents.send('ui-change-screen-image', image)
-})
-
-ipc.on('atm-transaction-request', (event, request_data) => {
-  console.log('atm-transaction-request', request_data);
-  //window.webContents.send('ui-change-screen-image', image)
 })
 
 

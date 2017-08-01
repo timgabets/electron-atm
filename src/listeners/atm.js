@@ -10,7 +10,7 @@ let atm = new ATM(settings, log);
 ipc.on('atm-process-host-message', (event, message) => {
   var response_message = atm.processHostMessage(message);
   if (response_message) {
-    ipc.send('build-atm-response', response_message);
+    ipc.send('build-message-to-host', response_message);
   }
 })
 
@@ -37,7 +37,7 @@ setInterval(function() {
 var transaction_request = null
 setInterval(function() {
   if(atm.transaction_request){
-    ipc.send('atm-transaction-request', atm.transaction_request);
+    ipc.send('build-message-to-host', atm.transaction_request);
     atm.transaction_request = null
   }
 }, 300);

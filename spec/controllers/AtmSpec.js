@@ -420,4 +420,44 @@ describe("ATM", function() {
       expect(atm.transaction_request.message_subclass).toEqual('Transaction Request');
     });
   });
+
+  describe("processPinpadButtonPressed()", function(){
+    beforeEach(function() {
+      atm.current_state = { 
+        number: '230', 
+        type: 'B'
+      };
+
+      atm.initBuffers();
+    });
+
+    it("should put the entered numbers into PIN buffer on state B", function(){
+      expect(atm.PIN_buffer).toEqual('');
+      
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('5');
+
+      expect(atm.PIN_buffer).toEqual('1985');
+    })
+
+    it("should properly handle pressed backspace button on state B", function(){
+      expect(atm.PIN_buffer).toEqual('');
+      
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('3');
+
+      expect(atm.PIN_buffer).toEqual('5893');
+    })
+  })
 });

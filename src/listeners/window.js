@@ -50,7 +50,7 @@ $(function () {
   });
 
   // Pinpad buttons keyboard shortcuts
-  var pinpadButtons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+  var pinpadButtons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'esc', 'enter', 'backspace'];
   pinpadButtons.forEach( (element) => {
     mousetrap.bind(element, function() { 
       ipc.send('pinpad-button-pressed', element);

@@ -45,6 +45,7 @@ Currently only the basic stuff is working, such as:
  * Saving ATM configuration data (such as states, screens and FITs) and restoring it on application start
 
 Things to be implemented (very) soon:
+ * Esc, Enter, Backspace shortcuts support
  * Showing text upon the image screen
  * Saving the image path in user settings
  * Crypto support (PIN block encryption and key exchange)

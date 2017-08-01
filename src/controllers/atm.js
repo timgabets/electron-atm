@@ -173,7 +173,7 @@ function ATM(settings, log) {
 
     if(this.PIN_buffer.length > 3){
       // TODO: PIN encryption 
-      return state.remote_pin_check_next_screen
+      return state.remote_pin_check_next_state
     }
   }
 
@@ -246,6 +246,10 @@ function ATM(settings, log) {
     return state.next_state;
   }
 
+  this.processCloseState = function(state){
+    this.setScreen(state.receipt_delivered_screen);
+  }
+
   /**
    * [processStateK description]
    * @param  {[type]} state [description]
@@ -296,6 +300,14 @@ function ATM(settings, log) {
     return state.icc_init_not_started_next_state;
   }
 
+  this.processStateCompleteICCAppInit = function(state){
+    var extension_state = this.states.get(state.extension_state);
+    this.setScreen(state.please_wait_screen_number);
+
+    log.info(this.trace.object(extension_state))
+    return extension_state.entries[8]; // Processing not performed
+  }
+
   /**
    * [processState description]
    * @param  {[type]} state_number [description]
@@ -328,6 +340,10 @@ function ATM(settings, log) {
           state.extension_state !== '255' ? next_state = this.processStateD(state, this.states.get(state.extension_state)) : next_state = this.processStateD(state);
           break;
 
+        case 'J':
+          next_state = this.processCloseState(state);
+          break;
+
         case 'K':
           next_state = this.processStateK(state);
           break;
@@ -346,6 +362,11 @@ function ATM(settings, log) {
 
         case '+':
           next_state = this.processStateBeginICCInit(state);
+          break;
+
+        case '/':
+          next_state = this.processStateCompleteICCAppInit(state);
+          console.log(next_state);
           break;
 
         default:
@@ -427,7 +448,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
   switch(this.current_state.type){
     case 'B':
       this.PIN_buffer += button;
-      //log.info(this.PIN_buffer);
+      log.info(this.PIN_buffer);
       if(this.PIN_buffer.length == this.max_pin_length)
         this.processState(this.current_state.number)
       break;

@@ -353,7 +353,7 @@ describe("States", function() {
         number: '037', 
         type: 'Z',
         description: 'Extension state',
-        entries: [ '123', '456', '789', '0AB', 'CDE', 'FGH', 'IJK', 'LMN' ] 
+        entries: [ null, 'Z', '123', '456', '789', '0AB', 'CDE', 'FGH', 'IJK', 'LMN' ] 
       };
       expect(s.parseState('037Z1234567890ABCDEFGHIJKLMN')).toEqual(parsed);        
     });

@@ -37,7 +37,7 @@ function StatesService(settings, log){
       var parsed = this.parseState(state);
       if(parsed){
         this.states[parsed.number] = parsed;
-        log.info('\tState ' + parsed.number + ' processed (states overall: ' + Object.keys(this.states).length + '):' + this.trace.object(parsed));
+        log.info('State ' + parsed.number + ' processed:' + this.trace.object(parsed));
         settings.set('states', this.states);
         return true;
       }
@@ -270,8 +270,12 @@ function StatesService(settings, log){
                 break;
 
             case 'Z':
+                /**
+                 * Accessing Z state entries may be perfromed by state.entries[i] - to get i-th table entry as it's written in NDC's spec. 
+                 * E.g. state.entries[1] is 'Z', state.entry[4] is "Z state table entry 4"
+                 */
                 parsed.description = 'Extension state'
-                parsed.entries = [];
+                parsed.entries = [null, 'Z'];
                 for(var i = 2; i < 10; i++)
                     parsed.entries.push(this.getEntry(data, i))
                 break;

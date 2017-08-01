@@ -266,7 +266,10 @@ function ATM(settings, log) {
   this.processTransactionRequestState = function(state){
     this.setScreen(state.screen_number);
 
-    var request = {};
+    var request = {
+      message_class: 'Unsolicited',
+      message_subclass: 'Transaction Request',
+    };
 
     if(state.send_track2 === '001')
       request.track2 = this.track2;

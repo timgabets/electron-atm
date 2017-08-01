@@ -378,5 +378,16 @@ describe("ATM", function() {
       expect(atm.transaction_request.buffer_B).toEqual(atm.buffer_B);
       expect(atm.transaction_request.buffer_C).toEqual(atm.buffer_C);
     });
+
+    it("should create Unsolicited Transaction Request message object", function(){
+      var state = {
+        number: '027', 
+        type: 'I', 
+      };
+
+      atm.processTransactionRequestState(state);
+      expect(atm.transaction_request.message_class).toEqual('Unsolicited');
+      expect(atm.transaction_request.message_subclass).toEqual('Transaction Request');
+    });
   })
 });

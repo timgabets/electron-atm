@@ -52,3 +52,10 @@ img {
   border:1px solid #021a40;
   border-radius: 5px;
 }
+
+.on-screen-text { 
+   position: absolute; 
+   top: 200px; 
+   left: 450px; 
+   width: 100%; 
+}

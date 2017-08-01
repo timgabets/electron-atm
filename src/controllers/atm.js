@@ -595,7 +595,7 @@ ATM.prototype.processFDKButtonPressed = function(button){
  * @return {[type]}        [description]
  */
 ATM.prototype.processPinpadButtonPressed = function(button){
-  log.info('Button ' + button + ' pressed');
+  //log.info('Button ' + button + ' pressed');
   switch(this.current_state.type){
     case 'B':
       switch(button){
@@ -610,7 +610,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
 
         default:
           this.PIN_buffer += button;
-          log.info(this.PIN_buffer);
+          //log.info(this.PIN_buffer);
           if(this.PIN_buffer.length == this.max_pin_length)
             this.processState(this.current_state.number)
       }

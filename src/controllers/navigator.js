@@ -14,6 +14,8 @@ var opts = {
   }
 };
 
+console.log();
+
 nodes = [
  {'id': '000', 'size': 150, 'label': "000 A\ndescription: Card read state\n\nscreen_number:970\ngood_read_next_state:500\nerror_screen_number:128\nread_condition_1:002\nread_condition_2:002\nread_condition_3:002\ncard_return_flag:001\nno_fit_match_next_state:127", 'color': "white", 'shape': 'box', 'font': {'size': '28', 'face': 'monospace', 'align': 'width'}},
  {'id': 'cfg_0x00405a49', 'size': 150, 'label': "0x00405a49:\ntest   bl, 0x01\nje     0x00405a62<<Insn>>\n", 'color': "white", 'shape': 'box', 'font': {'size': '28', 'face': 'monospace', 'align': 'left'}},

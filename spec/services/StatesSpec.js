@@ -593,5 +593,24 @@ describe("States", function() {
       expect(s.add(states)).toBeTruthy();
       expect(s.getEdges()).toEqual(edges);
     })
+
+    it("should return edges when added multiple states", function(){
+      var edges = [
+        {'from': '000', 'to': '500'},
+        {'from': '000', 'to': '127'},
+        {'from': '001', 'to': '003'},
+        {'from': '001', 'to': '004' }, 
+        {'from': '001', 'to': '004' }, 
+        {'from': '001', 'to': '127' }, 
+        {'from': '001', 'to': '127' }, 
+        {'from': '001', 'to': '127' }, 
+        {'from': '001', 'to': '127' }, 
+        {'from': '001', 'to': '127' }
+      ];
+      var states = ['000A870500128002002002001127', '001K003004004127127127127127'];
+      
+      expect(s.add(states)).toBeTruthy();
+      expect(s.getEdges()).toEqual(edges);
+    })
   })
 });

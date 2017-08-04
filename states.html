@@ -1,0 +1,88 @@
+<html>
+ <head>
+  <style type="text/css">
+   #mynetwork {
+    width: 900px;
+    height: 850px;
+    border: 1px solid lightgray;
+   }
+  </style>
+  <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+  <script src="node_modules/vis/dist/vis.js"></script>
+ </head>
+<body>
+<p><a href="index.html">Back</a></p>
+<p><div id="mynetwork"></div><br /></p>
+<script type="text/javascript">
+var opts = {
+  manipulation: false,
+  height: '90%',
+  layout: {
+    hierarchical: {
+      enabled: true,
+      levelSeparation: 300
+    }
+  },
+  physics: {
+    hierarchicalRepulsion: {
+      nodeDistance: 300
+    }
+  }
+};
+
+
+
+nodes = [
+ {'id': '000', 'size': 150, 'label': "000 A\ndescription: Card read state\n\nscreen_number:970\ngood_read_next_state:500\nerror_screen_number:128\nread_condition_1:002\nread_condition_2:002\nread_condition_3:002\ncard_return_flag:001\nno_fit_match_next_state:127", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'width'}},
+ {'id': 'cfg_0x00405a49', 'size': 150, 'label': "0x00405a49:\ntest   bl, 0x01\nje     0x00405a62<<Insn>>\n", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'left'}},
+ {'id': 'cfg_0x00405a55', 'size': 150, 'label': "0x00405a55:\nmov    ecx, DWORD PTR ss:[esp + 0x1c]\npush   ecx\ncall   0x004095c6<<Func>>\n", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'left'}},
+ {'id': 'cfg_0x00405a62', 'size': 150, 'label': "0x00405a62:\nmov    eax, 0x00000002\nmov    ecx, DWORD PTR ss:[esp + 0x000000a8]\nmov    DWORD PTR fs:[0x00000000], ecx\npop    ecx\npop    esi\npop    ebp\npop    ebx\nadd    esp, 0x000000a4\nret\n", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'left'}},
+ {'id': 'cfg_0x004095c6', 'size': 150, 'label': "0x004095c6:\nmov    edi, edi\npush   ebp\nmov    ebp, esp\npop    ebp\njmp    0x00417563<<Func>>\n", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'left'}},
+ {'id': 'cfg_0x00405a39', 'size': 150, 'label': "0x00405a39:\nand    ebx, 0xfd<-0x03>\nlea    ecx, [esp + 0x34]\nmov    DWORD PTR ss:[esp + 0x10], ebx\ncall   0x00403450<<Func>>\n", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'left'}},
+ {'id': 'cfg_0x00403450', 'size': 150, 'label': "0x00403450:\npush   0xff<-0x01>\npush   0x0042fa64\nmov    eax, DWORD PTR fs:[0x00000000]\npush   eax\npush   ecx\npush   ebx\npush   ebp\npush   esi\npush   edi\nmov    eax, DWORD PTR ds:[0x0043dff0<.data+0x0ff0>]\nxor    eax, esp\npush   eax\nlea    eax, [esp + 0x18]\nmov    DWORD PTR fs:[0x00000000], eax\nmov    esi, ecx\nmov    DWORD PTR ss:[esp + 0x14], esi\npush   esi\nmov    DWORD PTR ss:[esp + 0x24], 0x00000004\ncall   0x0042f03f<<Func>>\n", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'left'}},
+ {'id': 'cfg_0x00405a4e', 'size': 150, 'label': "0x00405a4e:\ncmp    DWORD PTR ss:[esp + 0x30], 0x10\njb     0x00405a62<<Insn>>\n", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'left'}},
+ {'id': 'cfg_0x00405a5f', 'size': 150, 'label': "0x00405a5f:\nadd    esp, 0x04\n", 'color': "silver", 'shape': 'box', 'font': {'size': '24', 'face': 'monospace', 'align': 'left'}},
+]
+
+/*
+states = [
+"000":{"description":"Card read state","number":"000","type":"A","screen_number":"970","good_read_next_state":"500","error_screen_number":"128","read_condition_1":"002","read_condition_2":"002","read_condition_3":"002","card_return_flag":"001","no_fit_match_next_state":"127"},
+"001":{"description":"FIT Switch state","number":"001","type":"K","states":["003","004","004","004","004","741","127","127"]},
+"002":{"description":"Close state","number":"002","type":"J","receipt_delivered_screen":"132","next_state":"000","no_receipt_delivered_screen":"132","card_retained_screen_number":"136","statement_delivered_screen_number":"132","bna_notes_returned_screen":"120","extension_state":"264"},
+"003":{"description":"PreSet Operation Code Buffer","number":"003","type":"D","next_state":"011","clear_mask":"000","A_preset_mask":"128","B_preset_mask":"000","C_preset_mask":"000","D_preset_mask":"000","extension_state":"000"},
+"004":{"description":"PreSet Operation Code Buffer","number":"004","type":"D","next_state":"011","clear_mask":"000","A_preset_mask":"000","B_preset_mask":"128","C_preset_mask":"000","D_preset_mask":"000","extension_state":"000"},
+"008":{"description":"PreSet Operation Code Buffer","number":"008","type":"D","next_state":"018","clear_mask":"000","A_preset_mask":"000","B_preset_mask":"016","C_preset_mask":"000","D_preset_mask":"000","extension_state":"000"},
+"009":{"description":"PreSet Operation Code Buffer","number":"009","type":"D","next_state":"018","clear_mask":"000","A_preset_mask":"016","B_preset_mask":"000","C_preset_mask":"000","D_preset_mask":"000","extension_state":"000"},
+"010":{"description":"PreSet Operation Code Buffer","number":"010","type":"D","next_state":"018","clear_mask":"000","A_preset_mask":"000","B_preset_mask":"000","C_preset_mask":"016","D_preset_mask":"000","extension_state":"000"},
+"011":{"description":"Eight FDK selection state","number":"011","type":"Y","screen_number":"023","timeout_next_state":"002","cancel_next_state":"131","FDK_next_state":"012","extension_state":"255","buffer_positions":"004","FDK_active_mask":"052","multi_language_screens":"013"},
+"012":{"description":"FDK Switch state","number":"012","type":"W","states":{"A":"255","B":"255","C":"018","D":"255","E":"018","F":"018","G":"255","H":"255"}},
+"013":{"description":"Extension state","number":"013","type":"Z","entries":["000","000","600","000","300","000","000","000"]}
+]
+*/
+
+edges = [
+{'from': "000", 'to': "cfg_0x00405a39", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "000", 'to': "cfg_0x00405a39", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "000", 'to': "cfg_0x00405a49", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a49", 'to': "cfg_0x00405a4e", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a49", 'to': "cfg_0x00405a62", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a55", 'to': "cfg_0x00405a5f", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a55", 'to': "cfg_0x004095c6", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x004095c6", 'to': "cfg_0x00417563", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a39", 'to': "cfg_0x00403450", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a39", 'to': "cfg_0x00405a49", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00403450", 'to': "cfg_0x00403489", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00403450", 'to': "cfg_0x0042f03f", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a4e", 'to': "cfg_0x00405a55", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a4e", 'to': "cfg_0x00405a62", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+{'from': "cfg_0x00405a5f", 'to': "cfg_0x00405a62", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
+/*
+*/
+]
+
+var container = document.getElementById('mynetwork');
+var data = {'nodes': nodes, 'edges': edges}
+var gph = new vis.Network(container, data, opts);
+</script>
+</body>
+</html>

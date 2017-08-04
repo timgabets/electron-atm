@@ -12,7 +12,7 @@ electron.app.once('ready', function () {
     // Set the initial width to 800px
     width: 1950,
     // Set the initial height to 600px
-    height: 650,
+    height: 680,
     // Set the default background color of the window to match the CSS
     // background color of the page, this prevents any white flickering
     backgroundColor: "#D6D8DC",

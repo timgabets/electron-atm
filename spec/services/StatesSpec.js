@@ -555,9 +555,24 @@ describe("States", function() {
     it("should return single state node", function(){
       var nodes = [{'id': '000', 'label': '000\ndescription: Card read state'}];
       var state = '000A870500128002002002001127';
-      
+
       expect(s.add(state)).toBeTruthy();
       expect(s.getNodes()).toEqual(nodes);
+    });
+
+    it("should return multiple state nodes", function(){
+      var nodes = [
+        { 'id': '000', 'label': '000\ndescription: Card read state' }, 
+        { 'id': '001', 'label': '001\ndescription: FIT Switch state' }, 
+        { 'id': '002', 'label': '002\ndescription: Close state' }, 
+        { 'id': '003', 'label': '003\ndescription: PreSet Operation Code Buffer' }, 
+        { 'id': '004', 'label': '004\ndescription: PreSet Operation Code Buffer' }
+      ];
+      var states = ['000A870500128002002002001127', '001K003004004127127127127127', '002J132000132136132000081178', '003D024000128000000000000000', '004D024000000128000000000000'];
+
+      expect(s.add(states)).toBeTruthy();
+      expect(s.getNodes()).toEqual(nodes);
     })
+
   })
 });

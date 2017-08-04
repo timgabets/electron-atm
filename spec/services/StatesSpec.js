@@ -261,7 +261,7 @@ describe("States", function() {
         number: '001', 
         type: 'K',
         description: 'FIT Switch state',
-        states: [ '003', '004', '004', '127', '127', '127', '127', '127' ] 
+        states_to: [ '003', '004', '004', '127', '127', '127', '127', '127' ] 
       };
       expect(s.parseState('001K003004004127127127127127')).toEqual(parsed);        
     });

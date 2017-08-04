@@ -377,7 +377,7 @@ function ATM(settings, log) {
   this.processStateK = function(state){
     var institution_id = this.FITs.getInstitutionByCardnumber(this.card.number)
     // log.info('Found institution_id ' + institution_id);
-    return state.states[parseInt(institution_id)];
+    return state.states_to[parseInt(institution_id)];
   }
 
   /**

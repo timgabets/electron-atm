@@ -238,10 +238,10 @@ function StatesService(settings, log){
 
             case 'K':
                 parsed.description = 'FIT Switch state';
-                parsed.states = [];
+                parsed.states_to = [];
                 var i = 2;
                 while(i < 10){
-                    parsed.states.push(this.getEntry(data, i));
+                    parsed.states_to.push(this.getEntry(data, i));
                     i++;
                 }
                 break;

@@ -51,6 +51,18 @@ function StatesService(settings, log){
      * @return {[type]}      [description]
      */
     this.parseState = function(data){
+        /**
+         * [addStateLinks add states_to property to the given state object. After running this function, state.states_to contains state exits]
+         * @param {[type]} state      [state]
+         * @param {[type]} properties [array of properties, containing the state numbers to go, e.g. ['500', '004']]
+         */
+        function addStateLinks(state, properties){
+          state.states_to = [];
+          properties.forEach( (property, index) => {
+            state.states_to.push(state[property]);
+          });
+        };
+
         var parsed = {};
         parsed.description = '';
         parsed.number = data.substring(0, 3)
@@ -73,6 +85,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['good_read_next_state', 'no_fit_match_next_state']);
                 break;
 
             case 'B':

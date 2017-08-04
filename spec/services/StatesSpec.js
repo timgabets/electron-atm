@@ -79,7 +79,8 @@ describe("States", function() {
         read_condition_2: '002', 
         read_condition_3: '002', 
         card_return_flag: '001', 
-        no_fit_match_next_state: '127' 
+        no_fit_match_next_state: '127',
+        states_to: ['500', '127']
       };
       expect(s.parseState('000A870500128002002002001127')).toEqual(parsed);
     });
@@ -525,7 +526,8 @@ describe("States", function() {
           read_condition_2: '002', 
           read_condition_3: '002', 
           card_return_flag: '001', 
-          no_fit_match_next_state: '127' 
+          no_fit_match_next_state: '127',
+          states_to: [ '500', '127' ]
         };
 
         expect(s.addState('000A870500128002002002001127')).toEqual(true);

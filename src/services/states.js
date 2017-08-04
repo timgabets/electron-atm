@@ -504,4 +504,23 @@ StatesService.prototype.getNodes = function(){
   return nodes;
 };
 
+StatesService.prototype.getEdges = function(){
+  var edges = [];
+
+  for (var i in this.states){
+    var state = this.states[i];
+    
+    if(state.states_to){
+      state.states_to.forEach( state_to => {
+        var edge = {};
+        edge.from = state.number;
+        edge.to = state_to;
+        edges.push(edge);
+      });
+    }
+  }
+
+  return edges;
+};
+
 module.exports = StatesService;

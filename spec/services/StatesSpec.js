@@ -575,6 +575,23 @@ describe("States", function() {
       expect(s.add(states)).toBeTruthy();
       expect(s.getNodes()).toEqual(nodes);
     })
+  })
 
+  describe("getEdges()", function(){
+    it("should return empty edges where there is no states", function(){
+      var edges = [];
+      expect(s.getEdges()).toEqual(edges);
+    })
+
+    it("should return edges when single state added", function(){
+      var edges = [
+        {'from': '000', 'to': '500'},
+        {'from': '000', 'to': '127'}
+      ];
+      var states = ['000A870500128002002002001127',];
+      
+      expect(s.add(states)).toBeTruthy();
+      expect(s.getEdges()).toEqual(edges);
+    })
   })
 });

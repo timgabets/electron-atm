@@ -21,6 +21,7 @@
   "dependencies": {
     "electron-settings": "^3.1.1",
     "istanbul": "^0.4.5",
-    "mousetrap": "^1.6.1"
+    "mousetrap": "^1.6.1",
+    "vis": "^4.20.1"
   }
 }

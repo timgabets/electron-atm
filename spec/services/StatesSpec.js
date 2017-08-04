@@ -550,4 +550,14 @@ describe("States", function() {
       expect(s.add(states)).toBeFalsy();
     });
   });
+
+  describe("getNodes()", function(){
+    it("should return single state node", function(){
+      var nodes = [{'id': '000', 'label': '000\ndescription: Card read state'}];
+      var state = '000A870500128002002002001127';
+      
+      expect(s.add(state)).toBeTruthy();
+      expect(s.getNodes()).toEqual(nodes);
+    })
+  })
 });

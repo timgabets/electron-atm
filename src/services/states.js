@@ -471,4 +471,24 @@ StatesService.prototype.add = function(data){
   } 
 };
 
+/**
+ * [getNodes get state nodes (for state navigator)]
+ * @return {[type]} [array of state nodes]
+ */
+StatesService.prototype.getNodes = function(){
+  var nodes = [];
+
+  for (var i in this.states){
+    var node = {};
+    var state = this.states[i];
+    
+    node.id = state.number;
+    node.label = state.number + '\ndescription: ' + state.description;
+
+    nodes.push(node);
+  }
+
+  return nodes;
+};
+
 module.exports = StatesService;

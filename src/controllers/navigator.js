@@ -14,7 +14,15 @@ var opts = {
   }
 };
 
-console.log();
+
+state_nodes = states.getNodes();
+
+state_nodes.forEach(node => {
+  node['size'] = 150;
+  node['color'] = 'white';
+  node['shape'] = 'box';
+  node['font'] = {'size': '28', 'face': 'monospace', 'align': 'left'};
+})
 
 nodes = [
  {'id': '000', 'size': 150, 'label': "000 A\ndescription: Card read state\n\nscreen_number:970\ngood_read_next_state:500\nerror_screen_number:128\nread_condition_1:002\nread_condition_2:002\nread_condition_3:002\ncard_return_flag:001\nno_fit_match_next_state:127", 'color': "white", 'shape': 'box', 'font': {'size': '28', 'face': 'monospace', 'align': 'width'}},
@@ -28,26 +36,22 @@ nodes = [
  {'id': 'cfg_0x00405a5f', 'size': 150, 'label': "0x00405a5f:\nadd    esp, 0x04\n", 'color': "white", 'shape': 'box', 'font': {'size': '28', 'face': 'monospace', 'align': 'left'}},
 ]
 
+state_edges = states.getEdges()
+state_edges.forEach( edge => {
+  edge['arrows'] = 'to';
+  edge['physics'] = false;
+  edge['smooth'] = {'type': 'cubicBezier'};
+});
+console.log(state_edges);
+
 edges = [
 {'from': "000", 'to': "cfg_0x00405a39", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
 {'from': "000", 'to': "cfg_0x00405a39", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
 {'from': "000", 'to': "cfg_0x00405a49", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a49", 'to': "cfg_0x00405a4e", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a49", 'to': "cfg_0x00405a62", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a55", 'to': "cfg_0x00405a5f", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a55", 'to': "cfg_0x004095c6", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x004095c6", 'to': "cfg_0x00417563", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a39", 'to': "cfg_0x00403450", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a39", 'to': "cfg_0x00405a49", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00403450", 'to': "cfg_0x00403489", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00403450", 'to': "cfg_0x0042f03f", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a4e", 'to': "cfg_0x00405a55", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a4e", 'to': "cfg_0x00405a62", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
-{'from': "cfg_0x00405a5f", 'to': "cfg_0x00405a62", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
 /*
 */
 ]
 
 var container = document.getElementById('mynetwork');
-var data = {'nodes': nodes, 'edges': edges}
+var data = {'nodes': state_nodes, 'edges': state_edges}
 var gph = new vis.Network(container, data, opts);

@@ -494,11 +494,13 @@ StatesService.prototype.getNodes = function(){
   for (var i in this.states){
     var node = {};
     var state = this.states[i];
-    
-    node.id = state.number;
-    node.label = state.number + '\ndescription: ' + state.description;
 
-    nodes.push(node);
+    // TODO: workaround
+    if(state.type){
+        node.id = state.number;
+        node.label = state.number + ' ' + state.type + '\ndescription: ' + state.description;
+        nodes.push(node);
+    }
   }
 
   return nodes;

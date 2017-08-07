@@ -635,4 +635,17 @@ describe("States", function() {
       expect(s.states['000']['level']).toBeNull();
     });
   })
+
+  describe("setStateLevels()", function(){
+    it("should set state levels", function(){
+      s.states = {
+        '003': { type: 'Z'},
+        '197': { type: 'Z'},
+        '345': { type: 'Z'},
+      };
+
+      s.setStateLevels(['003', '197', '345'], 14);
+      expect(s.states['003']['level']).toEqual(14);
+    })
+  })
 });

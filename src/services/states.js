@@ -475,8 +475,10 @@ function StatesService(settings, log){
       }
     }
 
-    this.setStateLevels = function(states, level){
-
+    this.setStateLevels = function(state_numbers, level){
+      state_numbers.forEach(number => {
+        this.states[number]['level'] = level;
+      });
     }
 }
 
@@ -514,9 +516,9 @@ StatesService.prototype.updateStateLevels = function(){
 
   var state = this.states.get['000'];
   var level = 0;
+  state.level = level;
 
-  setStateLevels(state.states_to, level);
-
+  setStateLevels(state.states_to, ++level);
 };
 
 

@@ -1,3 +1,8 @@
 html, body, .container-fluid {
 }
 
+img {
+  border:1px solid #021a40;
+  border-radius: 10px;
+}
+

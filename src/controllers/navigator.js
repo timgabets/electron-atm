@@ -41,5 +41,15 @@ var data = {'nodes': nodes, 'edges': edges}
 var graph = new vis.Network(container, data, options);
 
 graph.on("click", function (params) {
-  console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+  //console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+
+  var state_number = this.getNodeAt(params.pointer.DOM);
+  if(state_number){
+    var state = states.get(state_number);
+    var screen = screens.get(state.screen_number);
+
+    if(screen && screen.image_file){
+      document.getElementById('screen').setAttribute("src", "/home/tim/share/screens/" + screen.image_file);
+    }
+  }
 });

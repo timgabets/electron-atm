@@ -1,5 +1,7 @@
 
 August 2017
+	0.3.5 State Navigator: updating screen image when jumping through the states
+	0.3.4 Displaying ATM screen in states navigator
 	0.3.3 Displaying states graph using visjs network
 	0.3.2 Esc, Enter, Backspace shortcuts
 	0.3.1 Sending transaction requests

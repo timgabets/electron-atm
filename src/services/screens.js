@@ -82,11 +82,11 @@ function ScreensService(settings, log){
 
 /**
  * [get description]
- * @param  {[type]} state_number [description]
+ * @param  {[type]} screen_number [description]
  * @return {[type]}              [description]
  */
-ScreensService.prototype.get = function(state_number){
-  return this.screens[state_number];
+ScreensService.prototype.get = function(screen_number){
+  return this.screens[screen_number];
 };
 
 

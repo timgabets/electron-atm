@@ -6,6 +6,8 @@ A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-s
 
 ![screenshot](img/screenshot.png)
 
+![states navigator](img/states.png)
+
 ## To Use
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From the command line:
@@ -43,9 +45,9 @@ Currently only the basic stuff is working, such as:
  * Receiving FITs (financial insitution tables) from host
  * Showing traces in a log area
  * Saving ATM configuration data (such as states, screens and FITs) and restoring it on application start
+ * State Navigator: updating screen image when jumping through the states
 
 Things to be implemented (very) soon:
- * State navigator: automatic level calculation
  * Showing text upon the image screen
  * Saving the image path in user settings
  * Crypto support (PIN block encryption and key exchange)

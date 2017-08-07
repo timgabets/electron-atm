@@ -634,7 +634,7 @@ describe("States", function() {
       s.clearStateLevels();
       expect(s.states['000']['level']).toBeNull();
     });
-  })
+  });
 
   describe("setStateLevels()", function(){
     it("should set state levels", function(){
@@ -647,5 +647,36 @@ describe("States", function() {
       s.setStateLevels(['003', '197', '345'], 14);
       expect(s.states['003']['level']).toEqual(14);
     })
+  });
+
+  describe("updateStateLevels()", function(){
+    it("should update state levels with depth 1", function(){
+      var parsed = { 
+        number: '000', 
+        type: 'A', 
+        description: 'Card read state',
+        screen_number: '870', 
+        good_read_next_state: '500', 
+        error_screen_number: '128', 
+        read_condition_1: '002', 
+        read_condition_2: '002', 
+        read_condition_3: '002', 
+        card_return_flag: '001', 
+        no_fit_match_next_state: '127',
+        states_to: [ '500', '127' ]
+      };
+
+      expect(s.addState('000A870500128002002002001127')).toEqual(true);
+      expect(s.get('000')).toEqual(parsed);
+
+      expect(s.addState('500Zxxxxxxxxxxxxxxxxxxxxxxxx')).toEqual(true);
+      expect(s.addState('127Zxxxxxxxxxxxxxxxxxxxxxxxx')).toEqual(true);
+      s.updateStateLevels();
+
+      expect(s.get('000')['level']).toEqual(0);
+      expect(s.get('500')['level']).toEqual(1);
+      expect(s.get('127')['level']).toEqual(1);
+    })
   })
+
 });

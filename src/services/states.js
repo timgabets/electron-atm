@@ -468,6 +468,10 @@ function StatesService(settings, log){
         return parsed;
     }
 
+    /**
+     * [clearStateLevels description]
+     * @return {[type]} [description]
+     */
     this.clearStateLevels = function(){
       for (var i in this.states){
         var state = this.states[i];
@@ -475,11 +479,30 @@ function StatesService(settings, log){
       }
     }
 
+    /**
+     * [setStateLevels description]
+     * @param {[type]} state_numbers [description]
+     * @param {[type]} level         [description]
+     */
     this.setStateLevels = function(state_numbers, level){
       state_numbers.forEach(number => {
         this.states[number]['level'] = level;
       });
-    }
+    };
+
+    /**
+     * [updateStateLevels description]
+     * @return {[type]} [description]
+     */
+    this.updateStateLevels = function(){
+      this.clearStateLevels();
+    
+      var state = this.states['000'];
+      var level = 0;
+      state.level = level;
+    
+      this.setStateLevels(state.states_to, ++level);
+    };
 }
 
 /**
@@ -509,18 +532,6 @@ StatesService.prototype.add = function(data){
     return this.addState(data); 
   } 
 };
-
-
-StatesService.prototype.updateStateLevels = function(){
-  this.clearStateLevels();
-
-  var state = this.states.get['000'];
-  var level = 0;
-  state.level = level;
-
-  setStateLevels(state.states_to, ++level);
-};
-
 
 /**
  * [getNodes get state nodes (for state navigator)]

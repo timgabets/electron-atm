@@ -567,21 +567,21 @@ describe("States", function() {
 
   describe("getNodes()", function(){
     it("should return single state node", function(){
-      var nodes = [{'id': '000', 'label': '000 A', 'level': 0}];
       var state = '000A870500128002002002001127';
+      expect(s.addState(state)).toBeTruthy();
 
-      expect(s.add(state)).toBeTruthy();
+      var nodes = [{'id': '000', 'label': '000 A', 'level': 0}];
       expect(s.getNodes()).toEqual(nodes);
     });
 
     it("should return multiple state nodes", function(){
-      var nodes = [
-        { 'id': '000', 'label': '000 A', 'level': 0 }, 
-        { 'id': '001', 'label': '001 K', 'level': 1 },
-      ];
-      var states = ['000A870500128002002002001127', '001K003004004127127127127127'];
-
+      var states = ['000A870500128002002002001127', '500K003004004127127127127127'];
       expect(s.add(states)).toBeTruthy();
+      
+      var nodes = [
+        { 'id': '500', 'label': '500 K', 'level': 1 },
+        { 'id': '000', 'label': '000 A', 'level': 0 }, 
+      ];
       expect(s.getNodes()).toEqual(nodes);
     })
   })
@@ -787,7 +787,47 @@ describe("States", function() {
       expect(s.get('026')['level']).toEqual(2);
     })
 
-    
+    it("should not change level if states_to contains the state itself", function(){
+      // Level 0
+      var A000 = { 
+        number: '000', 
+        type: 'A', 
+        description: 'Card read state',
+        screen_number: '870', 
+        good_read_next_state: '219', 
+        error_screen_number: '128', 
+        read_condition_1: '002', 
+        read_condition_2: '002', 
+        read_condition_3: '002', 
+        card_return_flag: '001', 
+        no_fit_match_next_state: '127',
+        states_to: [ '219', '127' ]
+      };
+      expect(s.addState('000A870219128002002002001127')).toEqual(true);
+      expect(s.get('000')).toEqual(A000);
+
+      var F219 = { 
+        number: '219', 
+        type: 'F',
+        description: 'Amount entry state',
+        screen_number: '069', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_A_next_state: '220', 
+        FDK_B_next_state: '255', 
+        FDK_C_next_state: '220', 
+        FDK_D_next_state: '219', 
+        amount_display_screen: '006',
+        states_to: [ '002', '131', '220', '255', '220', '219' ]
+      };
+      expect(s.addState('219F069002131220255220219006')).toEqual(true);   
+      expect(s.get('219')).toEqual(F219);
+
+      s.updateStateLevels();
+      expect(s.get('000')['level']).toEqual(0);
+      expect(s.get('219')['level']).toEqual(1);
+
+    });
   })
 
 });

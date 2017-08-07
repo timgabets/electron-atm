@@ -42,14 +42,21 @@ nodes.forEach(node => {
   node['heightConstraint'] = { minimum: 100 };
   node['widthConstraint'] = { minimum: 100 };
 })
+console.log(nodes);
 
 edges = states.getEdges()
+/*
+edges = [
+  {from: '127', to: '500'},
+];
+*/
+
 edges.forEach( edge => {
   edge['arrows'] = 'to';
   edge['physics'] = false;
   edge['smooth'] = {'type': 'cubicBezier'};
 });
-console.log(edges);
+//console.log(edges);
 
 var container = document.getElementById('mynetwork');
 var data = {'nodes': nodes, 'edges': edges}

@@ -494,7 +494,7 @@ function StatesService(settings, log){
         var state = this.states[number];
 
         if(state && !state.level){
-          state['level'] = level;
+          state.level = level;
 
           this.setStateLevels(state.states_to, level + 1);
         }
@@ -551,33 +551,18 @@ StatesService.prototype.add = function(data){
 StatesService.prototype.getNodes = function(){
   var nodes = [];
 
+  this.updateStateLevels();
+
   for (var i in this.states){
     var node = {};
     var state = this.states[i];
 
-    node.id = state.number;
-    node.label = state.number + ' ' + state.type;
-    switch(state.type){
-      case 'A':
-        node.level = 0;
-        break;
-
-      case 'b':
-      case 'B':
-        node.level = 2;
-        break;
-
-      case 'k':
-      case 'K':
-        node.level = 1;
-        break;
-
-      default:
-        node.level = state.type.charCodeAt(0) % 65;
-        break;
+    if(state.level !== null){
+      node.id = state.number;
+      node.label = state.number + ' ' + state.type;
+      node.level = state.level;
+      nodes.push(node);
     }
-      
-    nodes.push(node);
   }
 
   return nodes;

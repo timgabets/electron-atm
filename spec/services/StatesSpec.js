@@ -247,8 +247,7 @@ describe("States", function() {
         card_retained_screen_number: '136', 
         statement_delivered_screen_number: '132', 
         bna_notes_returned_screen: '081', 
-        extension_state: '178',
-        states_to: [ '000' ]
+        extension_state: '178'
       };
       expect(s.parseState('002J132000132136132000081178')).toEqual(parsed);        
     });
@@ -677,6 +676,118 @@ describe("States", function() {
       expect(s.get('500')['level']).toEqual(1);
       expect(s.get('127')['level']).toEqual(1);
     })
+
+    it("should update state levels with depth 2", function(){
+      // Level 0
+      var A000 = { 
+        number: '000', 
+        type: 'A', 
+        description: 'Card read state',
+        screen_number: '870', 
+        good_read_next_state: '500', 
+        error_screen_number: '128', 
+        read_condition_1: '002', 
+        read_condition_2: '002', 
+        read_condition_3: '002', 
+        card_return_flag: '001', 
+        no_fit_match_next_state: '127',
+        states_to: [ '500', '127' ]
+      };
+      expect(s.addState('000A870500128002002002001127')).toEqual(true);
+      expect(s.get('000')).toEqual(A000);
+
+      // Level 1
+      var B500 = { 
+        number: '500', 
+        type: 'B', 
+        description: 'PIN Entry state',
+        screen_number: '024', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        local_pin_check_good_next_state: '026', 
+        local_pin_check_max_bad_pins_next_state: '026', 
+        local_pin_check_error_screen: '138', 
+        remote_pin_check_next_state: '026', 
+        local_pin_check_max_retries: '003',
+        states_to: [ '002', '131', '026', '026', '026' ]
+      };
+      expect(s.addState('500B024002131026026138026003')).toEqual(true);
+      expect(s.get('500')).toEqual(B500);
+
+      var D127 ={ 
+        number: '127', 
+        type: 'D', 
+        description:'PreSet Operation Code Buffer',
+        next_state: '024', 
+        clear_mask: '000', 
+        A_preset_mask: '128', 
+        B_preset_mask: '001', 
+        C_preset_mask: '002', 
+        D_preset_mask: '003', 
+        extension_state: '005',
+        states_to: [ '024' ]
+      };
+      expect(s.addState('127D024000128001002003004005')).toEqual(true);
+      expect(s.get('127')).toEqual(D127);
+
+      // Level 2
+      var J002 = { 
+        number: '002', 
+        type: 'J',
+        description: 'Close state',
+        receipt_delivered_screen: '132', 
+        next_state: '000', 
+        no_receipt_delivered_screen: '132', 
+        card_retained_screen_number: '136', 
+        statement_delivered_screen_number: '132', 
+        bna_notes_returned_screen: '081', 
+        extension_state: '178'
+      };
+      expect(s.addState('002J132000132136132000081178')).toEqual(true);
+      expect(s.get('002')).toEqual(J002);
+
+      var J131 = { 
+        number: '131', 
+        type: 'J',
+        description: 'Close state',
+        receipt_delivered_screen: '132', 
+        next_state: '000', 
+        no_receipt_delivered_screen: '132', 
+        card_retained_screen_number: '136', 
+        statement_delivered_screen_number: '132', 
+        bna_notes_returned_screen: '081', 
+        extension_state: '178'
+      };
+      expect(s.addState('131J132000132136132000081178')).toEqual(true);
+      expect(s.get('131')).toEqual(J131);
+
+      var J026 = { 
+        number: '026', 
+        type: 'J',
+        description: 'Close state',
+        receipt_delivered_screen: '132', 
+        next_state: '000', 
+        no_receipt_delivered_screen: '132', 
+        card_retained_screen_number: '136', 
+        statement_delivered_screen_number: '132', 
+        bna_notes_returned_screen: '081', 
+        extension_state: '178'
+      };
+      expect(s.addState('026J132000132136132000081178')).toEqual(true);
+      expect(s.get('026')).toEqual(J026);
+
+      // Updating levels
+      s.updateStateLevels();
+
+      expect(s.get('000')['level']).toEqual(0);
+      expect(s.get('500')['level']).toEqual(1);
+      expect(s.get('127')['level']).toEqual(1);
+      expect(s.get('002')['level']).toEqual(2);
+      expect(s.get('131')['level']).toEqual(2);
+      expect(s.get('026')['level']).toEqual(2);
+    })
+
+    
   })
 
 });

@@ -235,7 +235,9 @@ function StatesService(settings, log){
 
                 parsed.bna_notes_returned_screen = this.getEntry(data, 8);
                 parsed.extension_state = this.getEntry(data, 9);
-                addStateLinks(parsed, ['next_state',]);
+                
+                if(parsed['next_state'] !== '000')
+                  addStateLinks(parsed, ['next_state',]);
                 break;
 
             case 'k':
@@ -485,8 +487,17 @@ function StatesService(settings, log){
      * @param {[type]} level         [description]
      */
     this.setStateLevels = function(state_numbers, level){
+      if(!state_numbers)
+        return;
+
       state_numbers.forEach(number => {
-        this.states[number]['level'] = level;
+        var state = this.states[number];
+
+        if(state && !state.level){
+          state['level'] = level;
+
+          this.setStateLevels(state.states_to, level + 1);
+        }
       });
     };
 

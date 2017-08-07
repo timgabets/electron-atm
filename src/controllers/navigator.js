@@ -38,9 +38,9 @@ nodes.forEach(node => {
   node['size'] = 150;
   node['color'] = 'white';
   node['shape'] = 'box';
-  node['font'] = {'size': '28', 'face': 'monospace', 'align': 'left'};
-  node['heightConstraint'] = { minimum: 150 };
-  node['widthConstraint'] = { maximum: 300 };
+  node['font'] = {'size': '28', 'face': 'monospace', 'align': 'center'};
+  node['heightConstraint'] = { minimum: 100 };
+  node['widthConstraint'] = { minimum: 100 };
 })
 
 edges = states.getEdges()

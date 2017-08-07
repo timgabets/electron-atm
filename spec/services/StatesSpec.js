@@ -97,7 +97,8 @@ describe("States", function() {
         local_pin_check_max_bad_pins_next_state: '026', 
         local_pin_check_error_screen: '138', 
         remote_pin_check_next_state: '026', 
-        local_pin_check_max_retries: '003' 
+        local_pin_check_max_retries: '003',
+        states_to: [ '002', '131', '026', '026', '026' ]
       };
       expect(s.parseState('024B024002131026026138026003')).toEqual(parsed);
     });
@@ -114,6 +115,7 @@ describe("States", function() {
         csp_fail_next_state: '000', 
         second_entry_screen_number: '064', 
         mismatch_first_entry_screen_number: '065', extension_state: '231',
+        states_to: [ '002', '131', '232', '000' ]
       };
       expect(s.parseState('230b063002131232000064065231')).toEqual(parsed);
     });
@@ -124,6 +126,7 @@ describe("States", function() {
         number: '634', 
         type: 'C', 
         next_state: '631',
+        states_to: [ '631' ],
       };
       expect(s.parseState('634C631791092174618362840503')).toEqual(parsed);
     });
@@ -139,7 +142,8 @@ describe("States", function() {
         B_preset_mask: '001', 
         C_preset_mask: '002', 
         D_preset_mask: '003', 
-        extension_state: '005' 
+        extension_state: '005',
+        states_to: [ '024' ]
       };
       expect(s.parseState('003D024000128001002003004005')).toEqual(parsed);
     });
@@ -157,6 +161,7 @@ describe("States", function() {
         FDK_C_next_state: '571', 
         FDK_D_next_state: '132', 
         buffer_location: '000',
+        states_to: [ '002', '131', '255', '255', '571', '132' ]
       };
       expect(s.parseState('141E141002131255255571132000')).toEqual(parsed);        
     });
@@ -173,7 +178,8 @@ describe("States", function() {
         FDK_B_next_state: '255', 
         FDK_C_next_state: '220', 
         FDK_D_next_state: '219', 
-        amount_display_screen: '006' 
+        amount_display_screen: '006',
+        states_to: [ '002', '131', '220', '255', '220', '219' ]
       };
       expect(s.parseState('219F069002131220255220219006')).toEqual(parsed);        
     });
@@ -206,7 +212,8 @@ describe("States", function() {
         FDK_B_next_state: '255', 
         FDK_C_next_state: '090', 
         FDK_D_next_state: '089', 
-        buffer_and_display_params: '003' 
+        buffer_and_display_params: '003',
+        states_to: [ '002', '131', '090', '255', '090', '089' ]
       };
       expect(s.parseState('089H564002131090255090089003')).toEqual(parsed);        
     });
@@ -223,7 +230,8 @@ describe("States", function() {
         send_operation_code: '001', 
         send_amount_data: '001', 
         send_pin_buffer: '001', 
-        send_buffer_B_buffer_C: '003' 
+        send_buffer_B_buffer_C: '003',
+        states_to: [ '146' ],
       };
       expect(s.parseState('027I025146001000001001001003')).toEqual(parsed);        
     });
@@ -239,7 +247,8 @@ describe("States", function() {
         card_retained_screen_number: '136', 
         statement_delivered_screen_number: '132', 
         bna_notes_returned_screen: '081', 
-        extension_state: '178' 
+        extension_state: '178',
+        states_to: [ '000' ]
       };
       expect(s.parseState('002J132000132136132000081178')).toEqual(parsed);        
     });
@@ -251,7 +260,8 @@ describe("States", function() {
         description: 'Smart FIT check state',
         good_read_next_state: '001', 
         card_return_flag: '001', 
-        no_fit_match_next_state: '127' 
+        no_fit_match_next_state: '127',
+        states_to: [ '001' ]
       };
       expect(s.parseState('515k000001000000000000001127')).toEqual(parsed);        
     });
@@ -312,6 +322,7 @@ describe("States", function() {
           H: '250', 
           I: '186' 
         },
+        states_to: [ '181', '037', '255', '127', '031', '034', '250', '186' ]
       }
       expect(s.parseState('035W181037255127031034250186')).toEqual(parsed);        
     });
@@ -327,7 +338,8 @@ describe("States", function() {
         FDK_next_state: '038', 
         extension_state: '039', 
         buffer_id: '010', 
-        FDK_active_mask: '255' 
+        FDK_active_mask: '255',
+        states_to: [ '002', '131', '038' ]
       };
       expect(s.parseState('037X037002131038039010255000')).toEqual(parsed);        
     });
@@ -344,7 +356,8 @@ describe("States", function() {
         extension_state: '255', 
         buffer_positions: '004', 
         FDK_active_mask: '052', 
-        multi_language_screens: '013'
+        multi_language_screens: '013',
+        states_to: [ '002', '131', '012' ]
       };
       expect(s.parseState('011Y023002131012255004052013')).toEqual(parsed);        
     });
@@ -555,7 +568,7 @@ describe("States", function() {
 
   describe("getNodes()", function(){
     it("should return single state node", function(){
-      var nodes = [{'id': '000', 'label': '000 A\nCard read state'}];
+      var nodes = [{'id': '000', 'label': '000 A', 'level': 0}];
       var state = '000A870500128002002002001127';
 
       expect(s.add(state)).toBeTruthy();
@@ -564,13 +577,10 @@ describe("States", function() {
 
     it("should return multiple state nodes", function(){
       var nodes = [
-        { 'id': '000', 'label': '000 A\nCard read state' }, 
-        { 'id': '001', 'label': '001 K\nFIT Switch state' }, 
-        { 'id': '002', 'label': '002 J\nClose state' }, 
-        { 'id': '003', 'label': '003 D\nPreSet Operation Code Buffer' }, 
-        { 'id': '004', 'label': '004 D\nPreSet Operation Code Buffer' }
+        { 'id': '000', 'label': '000 A', 'level': 0 }, 
+        { 'id': '001', 'label': '001 K', 'level': 1 },
       ];
-      var states = ['000A870500128002002002001127', '001K003004004127127127127127', '002J132000132136132000081178', '003D024000128000000000000000', '004D024000000128000000000000'];
+      var states = ['000A870500128002002002001127', '001K003004004127127127127127'];
 
       expect(s.add(states)).toBeTruthy();
       expect(s.getNodes()).toEqual(nodes);

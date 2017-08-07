@@ -287,10 +287,11 @@ function StatesService(settings, log){
             case 'W':
                 parsed.description = 'FDK Switch state';
                 parsed.states = {};
+                parsed.states_to = [];
                 ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'].forEach( (element, index) => {
                     parsed.states[element] = this.getEntry(data, index + 2)
+                    parsed.states_to.push(parsed.states[element]);
                 });
-                addStateLinks(parsed, ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I']);
                 break;
 
             case 'Z':
@@ -508,7 +509,7 @@ StatesService.prototype.getNodes = function(){
     var state = this.states[i];
 
     node.id = state.number;
-    node.label = state.number + ' ' + state.type + '\n' + state.description;
+    node.label = state.number + ' ' + state.type/* + '\n' + state.description*/;
     switch(state.type){
       case 'A':
         node.level = 0;

@@ -509,7 +509,25 @@ StatesService.prototype.getNodes = function(){
 
     node.id = state.number;
     node.label = state.number + ' ' + state.type + '\n' + state.description;
-    node.level = state.type.charCodeAt(0) % 65;
+    switch(state.type){
+      case 'A':
+        node.level = 0;
+        break;
+
+      case 'b':
+      case 'B':
+        node.level = 2;
+        break;
+
+      case 'k':
+      case 'K':
+        node.level = 1;
+        break;
+
+      default:
+        node.level = state.type.charCodeAt(0) % 65;
+        break;
+    }
       
     nodes.push(node);
   }

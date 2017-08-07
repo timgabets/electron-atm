@@ -9,26 +9,26 @@ var opts = {
   },
   physics: {
     hierarchicalRepulsion: {
-      nodeDistance: 300
+      nodeDistance: 100
     }
   }
 };
 
 
 var options = {
-    edges: {
-        smooth: {
-            type: 'cubicBezier',
-            forceDirection: 'horizontal',
-            roundness: 0.4
-        }
-    },
-    layout: {
-        hierarchical: {
-            direction: 'UD',
-        }
-    },
-    physics:false
+  edges: {
+    smooth: {
+      type: 'cubicBezier',
+      forceDirection: 'horizontal',
+      roundness: 0.4
+    }
+  },
+  layout: {
+    hierarchical: {
+        direction: 'UD',
+    }
+  },
+  physics: false,
 };
 
 
@@ -40,6 +40,7 @@ nodes.forEach(node => {
   node['shape'] = 'box';
   node['font'] = {'size': '28', 'face': 'monospace', 'align': 'left'};
   node['heightConstraint'] = { minimum: 150 };
+  node['widthConstraint'] = { maximum: 300 };
 })
 
 edges = states.getEdges()

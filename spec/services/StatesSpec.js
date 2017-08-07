@@ -442,6 +442,7 @@ describe("States", function() {
         automatic_icc_app_selection_flag: '000', 
         default_app_label_usage_flag: '000', 
         cardholder_confirmation_flag: '000',
+        states_to: [ '501', '001' ],
       }
       expect(s.parseState('500+501001001000000000000000')).toEqual(parsed);        
     });
@@ -570,7 +571,7 @@ describe("States", function() {
       var state = '000A870500128002002002001127';
       expect(s.addState(state)).toBeTruthy();
 
-      var nodes = [{'id': '000', 'label': '000 A', 'level': 0}];
+      var nodes = [{'id': '000', 'label': '000 A', 'level': 1}];
       expect(s.getNodes()).toEqual(nodes);
     });
 
@@ -579,8 +580,8 @@ describe("States", function() {
       expect(s.add(states)).toBeTruthy();
       
       var nodes = [
-        { 'id': '500', 'label': '500 K', 'level': 1 },
-        { 'id': '000', 'label': '000 A', 'level': 0 }, 
+        { 'id': '500', 'label': '500 K', 'level': 2 },
+        { 'id': '000', 'label': '000 A', 'level': 1 }, 
       ];
       expect(s.getNodes()).toEqual(nodes);
     })
@@ -672,9 +673,9 @@ describe("States", function() {
       expect(s.addState('127Zxxxxxxxxxxxxxxxxxxxxxxxx')).toEqual(true);
       s.updateStateLevels();
 
-      expect(s.get('000')['level']).toEqual(0);
-      expect(s.get('500')['level']).toEqual(1);
-      expect(s.get('127')['level']).toEqual(1);
+      expect(s.get('000')['level']).toEqual(1);
+      expect(s.get('500')['level']).toEqual(2);
+      expect(s.get('127')['level']).toEqual(2);
     })
 
     it("should update state levels with depth 2", function(){
@@ -779,12 +780,12 @@ describe("States", function() {
       // Updating levels
       s.updateStateLevels();
 
-      expect(s.get('000')['level']).toEqual(0);
-      expect(s.get('500')['level']).toEqual(1);
-      expect(s.get('127')['level']).toEqual(1);
-      expect(s.get('002')['level']).toEqual(2);
-      expect(s.get('131')['level']).toEqual(2);
-      expect(s.get('026')['level']).toEqual(2);
+      expect(s.get('000')['level']).toEqual(1);
+      expect(s.get('500')['level']).toEqual(2);
+      expect(s.get('127')['level']).toEqual(2);
+      expect(s.get('002')['level']).toEqual(3);
+      expect(s.get('131')['level']).toEqual(3);
+      expect(s.get('026')['level']).toEqual(3);
     })
 
     it("should not change level if states_to contains the state itself", function(){
@@ -824,8 +825,8 @@ describe("States", function() {
       expect(s.get('219')).toEqual(F219);
 
       s.updateStateLevels();
-      expect(s.get('000')['level']).toEqual(0);
-      expect(s.get('219')['level']).toEqual(1);
+      expect(s.get('000')['level']).toEqual(1);
+      expect(s.get('219')['level']).toEqual(2);
 
     });
   })

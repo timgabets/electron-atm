@@ -401,6 +401,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['icc_init_started_next_state', 'icc_init_not_started_next_state']);
                 break;
 
             case ',':
@@ -509,7 +510,7 @@ function StatesService(settings, log){
       this.clearStateLevels();
     
       var state = this.states['000'];
-      var level = 0;
+      var level = 1;
       state.level = level;
     
       this.setStateLevels(state.states_to, ++level);

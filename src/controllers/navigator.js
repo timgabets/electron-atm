@@ -25,7 +25,7 @@ var options = {
   },
   layout: {
     hierarchical: {
-        direction: 'UD',
+        direction: 'LR',
     }
   },
   physics: false,
@@ -45,18 +45,12 @@ nodes.forEach(node => {
 console.log(nodes);
 
 edges = states.getEdges()
-/*
-edges = [
-  {from: '127', to: '500'},
-];
-*/
 
 edges.forEach( edge => {
   edge['arrows'] = 'to';
   edge['physics'] = false;
   edge['smooth'] = {'type': 'cubicBezier'};
 });
-//console.log(edges);
 
 var container = document.getElementById('mynetwork');
 var data = {'nodes': nodes, 'edges': edges}

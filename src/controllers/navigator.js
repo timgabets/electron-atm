@@ -40,6 +40,12 @@ var container = document.getElementById('mynetwork');
 var data = {'nodes': nodes, 'edges': edges}
 var graph = new vis.Network(container, data, options);
 
+// Focus on state 000
+graph.focus('000', {
+  scale: 0.4,
+  offset: {x:-400, y:200}
+});
+
 graph.on("click", function (params) {
   //console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
 

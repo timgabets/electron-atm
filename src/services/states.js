@@ -101,6 +101,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['timeout_next_state', 'cancel_next_state', 'local_pin_check_good_next_state', 'local_pin_check_max_bad_pins_next_state', 'remote_pin_check_next_state']);
                 break;
 
             case 'b':
@@ -116,6 +117,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['timeout_next_state', 'cancel_next_state', 'good_read_next_state', 'csp_fail_next_state']);
                 break;
 
             case 'C':
@@ -124,6 +126,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['next_state',]);
                 break;
 
             case 'D':
@@ -138,6 +141,7 @@ function StatesService(settings, log){
                     parsed[element] = this.getEntry(data, index + 2)
                 });
                 parsed.extension_state = this.getEntry(data, 9);
+                addStateLinks(parsed, ['next_state',]);
                 break;
 
             case 'E':
@@ -153,6 +157,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['timeout_next_state', 'cancel_next_state', 'FDK_A_next_state', 'FDK_B_next_state', 'FDK_C_next_state', 'FDK_D_next_state']);
                 break;
 
             case 'F':
@@ -168,6 +173,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['timeout_next_state', 'cancel_next_state', 'FDK_A_next_state', 'FDK_B_next_state', 'FDK_C_next_state', 'FDK_D_next_state']);
                 break;
 
             case 'G':
@@ -197,6 +203,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['timeout_next_state', 'cancel_next_state', 'FDK_A_next_state', 'FDK_B_next_state', 'FDK_C_next_state', 'FDK_D_next_state']);
                 break;
 
             case 'I':
@@ -212,6 +219,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['timeout_next_state',]);
                 break;
 
             case 'J':
@@ -227,6 +235,7 @@ function StatesService(settings, log){
 
                 parsed.bna_notes_returned_screen = this.getEntry(data, 8);
                 parsed.extension_state = this.getEntry(data, 9);
+                addStateLinks(parsed, ['next_state',]);
                 break;
 
             case 'k':
@@ -234,6 +243,7 @@ function StatesService(settings, log){
                 parsed.good_read_next_state = this.getEntry(data, 3);
                 parsed.card_return_flag = this.getEntry(data, 8);
                 parsed.no_fit_match_next_state = this.getEntry(data, 9);
+                addStateLinks(parsed, ['good_read_next_state',]);
                 break;
 
             case 'K':
@@ -280,6 +290,7 @@ function StatesService(settings, log){
                 ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'].forEach( (element, index) => {
                     parsed.states[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I']);
                 break;
 
             case 'Z':
@@ -305,7 +316,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
-
+                addStateLinks(parsed, ['timeout_next_state', 'cancel_next_state', 'FDK_next_state']);
                 break;
 
             case 'Y':
@@ -321,6 +332,7 @@ function StatesService(settings, log){
                 ].forEach( (element, index) => {
                     parsed[element] = this.getEntry(data, index + 2)
                 });
+                addStateLinks(parsed, ['timeout_next_state', 'cancel_next_state', 'FDK_next_state']);
                 break;
 
             case '>':
@@ -495,12 +507,11 @@ StatesService.prototype.getNodes = function(){
     var node = {};
     var state = this.states[i];
 
-    // TODO: workaround
-    if(state.type){
-        node.id = state.number;
-        node.label = state.number + ' ' + state.type + '\ndescription: ' + state.description;
-        nodes.push(node);
-    }
+    node.id = state.number;
+    node.label = state.number + ' ' + state.type + '\n' + state.description;
+    node.level = state.type.charCodeAt(0) % 65;
+      
+    nodes.push(node);
   }
 
   return nodes;

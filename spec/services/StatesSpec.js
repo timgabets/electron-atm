@@ -555,7 +555,7 @@ describe("States", function() {
 
   describe("getNodes()", function(){
     it("should return single state node", function(){
-      var nodes = [{'id': '000', 'label': '000 A\ndescription: Card read state'}];
+      var nodes = [{'id': '000', 'label': '000 A\nCard read state'}];
       var state = '000A870500128002002002001127';
 
       expect(s.add(state)).toBeTruthy();
@@ -564,11 +564,11 @@ describe("States", function() {
 
     it("should return multiple state nodes", function(){
       var nodes = [
-        { 'id': '000', 'label': '000 A\ndescription: Card read state' }, 
-        { 'id': '001', 'label': '001 K\ndescription: FIT Switch state' }, 
-        { 'id': '002', 'label': '002 J\ndescription: Close state' }, 
-        { 'id': '003', 'label': '003 D\ndescription: PreSet Operation Code Buffer' }, 
-        { 'id': '004', 'label': '004 D\ndescription: PreSet Operation Code Buffer' }
+        { 'id': '000', 'label': '000 A\nCard read state' }, 
+        { 'id': '001', 'label': '001 K\nFIT Switch state' }, 
+        { 'id': '002', 'label': '002 J\nClose state' }, 
+        { 'id': '003', 'label': '003 D\nPreSet Operation Code Buffer' }, 
+        { 'id': '004', 'label': '004 D\nPreSet Operation Code Buffer' }
       ];
       var states = ['000A870500128002002002001127', '001K003004004127127127127127', '002J132000132136132000081178', '003D024000128000000000000000', '004D024000000128000000000000'];
 

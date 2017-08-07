@@ -623,4 +623,16 @@ describe("States", function() {
       expect(s.getEdges()).toEqual(edges);
     })
   })
+
+  describe("clearStateLevels()", function(){
+    it("should clear state levels", function(){
+      s.states = {
+        '000': { level: 3 },
+        '001': { level: 4 },
+      };
+
+      s.clearStateLevels();
+      expect(s.states['000']['level']).toBeNull();
+    });
+  })
 });

@@ -467,6 +467,17 @@ function StatesService(settings, log){
 
         return parsed;
     }
+
+    this.clearStateLevels = function(){
+      for (var i in this.states){
+        var state = this.states[i];
+        state.level = null;
+      }
+    }
+
+    this.setStateLevels = function(states, level){
+
+    }
 }
 
 /**
@@ -497,6 +508,18 @@ StatesService.prototype.add = function(data){
   } 
 };
 
+
+StatesService.prototype.updateStateLevels = function(){
+  this.clearStateLevels();
+
+  var state = this.states.get['000'];
+  var level = 0;
+
+  setStateLevels(state.states_to, level);
+
+};
+
+
 /**
  * [getNodes get state nodes (for state navigator)]
  * @return {[type]} [array of state nodes]
@@ -509,7 +532,7 @@ StatesService.prototype.getNodes = function(){
     var state = this.states[i];
 
     node.id = state.number;
-    node.label = state.number + ' ' + state.type/* + '\n' + state.description*/;
+    node.label = state.number + ' ' + state.type;
     switch(state.type){
       case 'A':
         node.level = 0;

@@ -2,18 +2,32 @@
  <head>
   <style type="text/css">
    #mynetwork {
-    width: 1250px;
-    height: 580px;
-    border: 1px solid lightgray;
+    width: 1050px;
+    height: 620px;
+    border: 1px solid;
    }
+   #mynetwork {
+    display:inline-block;
+    margin-right:20px;
+   } 
+   #screen {
+    display:inline-block;
+   } 
   </style>
+   
+  <link rel="stylesheet" href="./css/states.css">
   <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+  
   <script src="node_modules/vis/dist/vis.js"></script>
   <script src="./src/listeners/navigator.js" charset="utf-8"></script>
+
  </head>
   <body>
-    <a href="index.html">Back</a>
-    <div id="mynetwork"></div><br />
+    <a href="index.html">Back</a><br/>
+    <div id="mynetwork"></div>
+    <img id="screen" src="/home/tim/share/screens/PIC010.jpg" width="320" height="240">    
+
+
     <script src="./src/controllers/navigator.js"></script>
   </body>
 </html>

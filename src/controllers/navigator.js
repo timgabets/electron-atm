@@ -1,20 +1,3 @@
-var opts = {
-  manipulation: false,
-  height: '90%',
-  layout: {
-    hierarchical: {
-      enabled: true,
-      levelSeparation: 300
-    }
-  },
-  physics: {
-    hierarchicalRepulsion: {
-      nodeDistance: 100
-    }
-  }
-};
-
-
 var options = {
   edges: {
     smooth: {
@@ -26,6 +9,8 @@ var options = {
   layout: {
     hierarchical: {
         direction: 'LR',
+        levelSeparation: 150,
+        nodeSpacing: 150
     }
   },
   physics: false,
@@ -42,7 +27,6 @@ nodes.forEach(node => {
   node['heightConstraint'] = { minimum: 100 };
   node['widthConstraint'] = { minimum: 100 };
 })
-console.log(nodes);
 
 edges = states.getEdges()
 
@@ -54,4 +38,8 @@ edges.forEach( edge => {
 
 var container = document.getElementById('mynetwork');
 var data = {'nodes': nodes, 'edges': edges}
-var gph = new vis.Network(container, data, options);
+var graph = new vis.Network(container, data, options);
+
+graph.on("click", function (params) {
+  console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+});

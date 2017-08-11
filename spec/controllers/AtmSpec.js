@@ -627,4 +627,51 @@ describe("ATM", function() {
       expect(atm.isFDKButtonActive('D')).toBeFalsy();
     })
   });
+
+  describe("setAmountBuffer()", function(){
+    it("should set amount buffer", function(){
+      expect(atm.amount_buffer).toEqual('000000000000');
+      atm.setAmountBuffer('15067');
+      expect(atm.amount_buffer).toEqual('000000015067');
+    })
+
+    it("should leave amount buffer unchanged if no value provided", function(){
+      expect(atm.amount_buffer).toEqual('000000000000');
+      atm.setAmountBuffer('15067');
+      expect(atm.amount_buffer).toEqual('000000015067');
+      atm.setAmountBuffer();
+      expect(atm.amount_buffer).toEqual('000000015067');
+    })
+  });
+
+  describe("processStateX()", function(){
+    beforeEach(function() {
+      state = { 
+        number: '037', 
+        type: 'X',
+        description: 'FDK information entry state',
+        screen_number: '037', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_next_state: '038', 
+        extension_state: '037', 
+        buffer_id: '033', 
+        FDK_active_mask: '255',
+        states_to: [ '002', '131', '038' ]
+      };
+  
+      extension_state = { 
+        number: '037', 
+        type: 'Z',
+        description: 'Extension state',
+        entries: [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] 
+      };
+    });
+
+    it("should set amount buffer properly", function(){
+      expect(atm.amount_buffer).toEqual('000000000000');
+      atm.processStateX(state, extension_state);
+
+    });
+  });
 });

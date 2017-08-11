@@ -453,19 +453,62 @@ function ATM(settings, log) {
     return state.states[this.FDK_buffer]
   }
 
+
+  /**
+   * [setAmountBuffer assign the provide value to amount buffer]
+   * @param {[type]} amount [description]
+   */
+  this.setAmountBuffer = function(amount){
+    if(!amount)
+      return;
+    this.amount_buffer = this.amount_buffer.substr(amount.length) + amount;
+  };
+
+
   /**
    * [processStateX description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateX = function(state){
+  this.processStateX = function(state, extension_state){
     log.info(this.trace.object(state));
+    log.info(this.trace.object(extension_state));
     this.setScreen(state.screen_number);
     this.setFDKsActiveMask(state.FDK_active_mask);
 
     var button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
       this.FDK_buffer = button;
+
+      if(extension_state){
+        /**
+         * Buffer ID identifies which buffer is to be edited and the number of zeros to add 
+         * to the values specified in the Extension state:
+         * 01X - General purpose buffer B
+         * 02X - General purpose buffer C
+         * 03X - Amount buffer
+         * X specifies the number of zeros in the range 0-9
+         */
+        switch(state.buffer_id.substr(1, 1)){
+          case '1':
+            // Buffer B
+            break;
+  
+          case '2':
+            // Buffer C
+            break;
+  
+          case '3':
+            // Amount buffer
+            amount_buffer
+            break;
+  
+          default:
+            log.error('Unsupported buffer id value: ' + state.buffer_id);
+            break;
+        }
+      }
+
       return state.FDK_next_state;
     }
   }
@@ -568,7 +611,7 @@ function ATM(settings, log) {
           break;
 
         case 'X':
-          next_state = this.processStateX(state);
+          (state.extension_state !== '255' && state.extension_state !== '000') ? next_state = this.processStateX(state, this.states.get(state.extension_state)) : next_state = this.processStateX(state);
           break;
 
         case 'Y':

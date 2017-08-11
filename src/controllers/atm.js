@@ -10,6 +10,9 @@ function ATM(settings, log) {
    * @return {Boolean}        [true if FDK is active, false if inactive]
    */
   this.isFDKButtonActive = function(button){
+    if(!button)
+      return;
+
     for (var i = 0; i < this.activeFDKs.length; i++)
       if(button.toUpperCase() === this.activeFDKs[i] )
         return true; 
@@ -427,9 +430,10 @@ function ATM(settings, log) {
   this.processStateX = function(state){
     log.info(this.trace.object(state));
     this.setScreen(state.screen_number);
+    this.setFDKsActiveMask(state.FDK_active_mask);
 
     var button = this.buttons_pressed.shift();
-    if(button){
+    if(this.isFDKButtonActive(button)){
       this.FDK_buffer = button;
       return state.FDK_next_state;
     }
@@ -441,11 +445,12 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateY = function(state){
+    log.info(this.trace.object(state));
     this.setScreen(state.screen_number);
-    this.current_state = state;
+    this.setFDKsActiveMask(state.FDK_active_mask);
 
     var button = this.buttons_pressed.shift();
-    if(button){
+    if(this.isFDKButtonActive(button)){
       this.FDK_buffer = button;
       return state.FDK_next_state;
     }

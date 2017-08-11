@@ -553,6 +553,10 @@ describe("ATM", function() {
   });
 
   describe("isFDKButtonActive()", function(){
+    it("should return undefined if button value is not provided", function(){
+      expect(atm.isFDKButtonActive()).toBeUndefined();
+    });
+
     it("should perform case-insensitive check through active FDKs", function(){
       atm.setFDKsActiveMask('129');
       expect(atm.activeFDKs).toEqual(['A', 'I']);

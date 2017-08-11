@@ -33,19 +33,19 @@ $(function () {
     }
   })
 
-  // FDKs mouse click bindings
-  var FDKs = ['#FDK-A', '#FDK-B', '#FDK-C', '#FDK-D', '#FDK-F', '#FDK-G', '#FDK-H', '#FDK-I'];
-  FDKs.forEach( (element) => {
-    $(element).on('click', _ => {
-      ipc.send('fdk-pressed', $(element).text());
-    });
-  });
-
   // FDKs shortcuts
-  FDKs = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'i'];
+  var FDKs = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'i'];
   FDKs.forEach( (element) => {
     mousetrap.bind(element, function() { 
       ipc.send('fdk-pressed', element.toUpperCase());
+    });
+  });
+
+  // FDKs mouse click bindings
+  FDKs = ['#FDK-A', '#FDK-B', '#FDK-C', '#FDK-D', '#FDK-F', '#FDK-G', '#FDK-H', '#FDK-I'];
+  FDKs.forEach( (element) => {
+    $(element).on('click', _ => {
+      ipc.send('fdk-pressed', $(element).text());
     });
   });
 
@@ -61,9 +61,12 @@ $(function () {
   var activeFDKs = [];
   setInterval(function() {
     if(atm.activeFDKs != activeFDKs){
-      // current_screen = atm.current_screen;
-      // ipc.send('atm-change-screen-image', atm.current_screen.image_file);
       activeFDKs = atm.activeFDKs;
+      
+      FDKs.forEach( (element) => {
+        $(element).prop('disabled', true);
+      });
+
       activeFDKs.forEach( (button) => {
         if(button)
           $('#FDK-' + button).prop('disabled', false);

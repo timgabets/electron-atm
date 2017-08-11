@@ -35,6 +35,8 @@ function ATM(settings, log) {
     for(var bit = 0; bit < 8; bit++)
       if((mask & Math.pow(2, bit)).toString() !== '0')
         this.activeFDKs.push(FDKs[bit])
+
+    log.info('Active FDKs: ' + this.activeFDKs);
   }
 
   /**
@@ -249,12 +251,22 @@ function ATM(settings, log) {
     return state.good_read_next_state;
   }
 
-  this.processStateB = function(state){
+
+  this.processPINEntryState = function(state){
+    /**
+     * The cardholder enters the PIN, which can consist of from four to
+     * sixteen digits, on the facia keyboard. If the cardholder enters fewer
+     * than the number of digits specified in the FIT entry, PMXPN, he
+     * must press FDK ‘A’ (or FDK ‘I’, if the option which enables the keys
+     * to the left of the CRT is set) or the Enter key after the last digit has
+     * been entered. Pressing the Clear key clears all digits.
+     */
     this.setScreen(state.screen_number)
+    this.setFDKsActiveMask('001'); // Enabling button 'A' only
     this.max_pin_length = this.FITs.getMaxPINLength(this.card.number)
 
     if(this.PIN_buffer.length > 3){
-      // TODO: PIN encryption 
+      // TODO: PIN encryption
       return state.remote_pin_check_next_state
     }
   }
@@ -513,7 +525,7 @@ function ATM(settings, log) {
           break;
 
         case 'B':
-          next_state = this.processStateB(state);
+          next_state = this.processPINEntryState(state);
           break;
 
         case 'D':

@@ -10,9 +10,9 @@ electron.app.once('ready', function () {
   // Create a new window
   window = new electron.BrowserWindow({
     // Set the initial width to 800px
-    width: 1950,
+    width: 1520,
     // Set the initial height to 600px
-    height: 720,
+    height: 660,
     // Set the default background color of the window to match the CSS
     // background color of the page, this prevents any white flickering
     backgroundColor: "#D6D8DC",
@@ -21,7 +21,7 @@ electron.app.once('ready', function () {
   })
 
   // Open the DevTools.
-  window.webContents.openDevTools()
+  // window.webContents.openDevTools()
 
   // Load a URL in the window to the local index.html path
   window.loadURL(url.format({

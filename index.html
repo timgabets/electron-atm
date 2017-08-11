@@ -39,7 +39,7 @@
         </div>
         
         <!-- ATM Screen-->
-        <div class="col-md-6 terminal-screen">
+        <div class="col-md-5 terminal-screen">
           <img id="screen" src="/home/tim/share/screens/PIC010.jpg" width="640" height="480">
         </div>
 
@@ -54,60 +54,50 @@
           <pre id="log-output" class="log-output" type="text"></pre>
         </div>
 
-
-<!--
-        <div class="col-sm-3">
+        <div id="buffers" class="col-md-1 form-group buffers">
+          <div>PIN Buffer:
+            <input type="text" class="form-control" id="pin-buffer" value="" placeholder="PIN Buffer" title="PIN Buffer" disabled></input>
+          </div>
+          <div>Buffer B:
+            <input type="text" class="form-control" id="buffer-b" value="" placeholder="Buffer B" disabled></input>
+          </div>
+          <div>Buffer C:
+            <input type="text" class="form-control" id="buffer-c" value="" placeholder="Buffer C" disabled></input>
+          </div>
+          <div>Opcode buffer:
+            <input type="text" class="form-control" id="opcode-buffer" value="" placeholder="Opcode Buffer" disabled></input>
+          </div>
+          <div>Amount buffer:
+            <input type="text" class="form-control" id="amount-buffer" value="" placeholder="Amount Buffer" disabled></input>
+          </div>
         </div>
       </div>
 
-      <button id="read-card" type="submit" class="btn btn-default">Read card</button>
-    -->
+    <div class="row forms-area">
+      <form id="connection-data-form" class="navbar-form navbar-center">
+        <div class="form-group">
+          <input type="text" class="form-control" id="host" value="127.0.0.1" placeholder="Host"></input>
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" id="port" value="11032" placeholder="Port"></input>
+        </div>
+        <button type="submit" class="btn btn-success" id="connect">Connect</button>
+      </form>
+
+      <form id="card-read-form" class="navbar-form navbar-center">
+        <div class="form-group">
+          <input type="text" class="form-control" id="cardnumber" value="8990011234567890" placeholder="Card Number"></input>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="track2" value="20062011987612300720" placeholder="Track2"></input>
+        </div>
+        <button type="submit" class="btn btn-default" id="card-inserted" >Read Card</button>
+      </form>
     </div>
 
-    <form id="connection-data-form" class="navbar-form navbar-center">
-      <div class="form-group">
-        <input type="text" class="form-control" id="host" value="127.0.0.1" placeholder="Host"></input>
-      </div>
-      <div class="form-group">
-        <input type="number" class="form-control" id="port" value="11032" placeholder="Port"></input>
-      </div>
-      <button type="submit" class="btn btn-success" id="connect">Connect</button>
-    </form>
-
-    <form id="buffers" class="navbar-form navbar-center">
-      <div class="form-group">
-        <div>PIN Buffer</div>
-        <input type="text" class="form-control" id="pin-buffer" value="" placeholder="PIN Buffer" disabled></input>
-      </div>
-      <div class="form-group">
-        <div>Buffer B</div>
-        <input type="text" class="form-control" id="buffer-b" value="" placeholder="Buffer B" disabled></input>
-      </div>
-      <div class="form-group">
-        <div>Buffer C</div>
-        <input type="text" class="form-control" id="buffer-c" value="" placeholder="Buffer C" disabled></input>
-      </div>
-      <div class="form-group">
-        <div>Opcode buffer</div>
-        <input type="text" class="form-control" id="opcode-buffer" value="" placeholder="Opcode Buffer" disabled></input>
-      </div>
-      <div class="form-group">
-        <div>Amount buffer</div>
-        <input type="text" class="form-control" id="amount-buffer" value="" placeholder="Amount Buffer" disabled></input>
-      </div>
-    </form>
-
-    <form id="card-read-form" class="navbar-form navbar-center">
-      <div class="form-group">
-        <input type="text" class="form-control" id="cardnumber" value="8990011234567890" placeholder="Card Number"></input>
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" id="track2" value="20062011987612300720" placeholder="Track2"></input>
-      </div>
-      <button type="submit" class="btn btn-default" id="card-inserted" >Read Card</button>
-    </form>
-
-    <a href="states.html">States</a>
+    <div class="row links">
+      <a href="states.html">States</a>
+    </div>
 
   </body>
 </html>

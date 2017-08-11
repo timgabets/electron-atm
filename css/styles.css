@@ -14,13 +14,15 @@ html, body, .container-fluid {
 
 .log-output {
   height: 480px;
-  width: 560px;
   color: #575B5E;
   font-size: 10px;
   font-family: monospace;
   white-space: pre-wrap;
-  margin-right: 10px;
   border:1px solid #021a40;
+}
+
+.buffers {
+  width: 150px;
 }
 
 .fdk-button-block {

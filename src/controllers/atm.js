@@ -4,8 +4,17 @@ const FITsService = require('../services/fits.js');
 const Trace = require('../controllers/trace.js');
 
 function ATM(settings, log) {
+  /**
+   * [isFDKButtonActive check whether the FDKs is active or not]
+   * @param  {[type]}  button [FDK button to be checked, e.g. 'A', 'G' (case does not matter - 'a', 'g' works as well) ]
+   * @return {Boolean}        [true if FDK is active, false if inactive]
+   */
   this.isFDKButtonActive = function(button){
+    for (var i = 0; i < this.activeFDKs.length; i++)
+      if(button.toUpperCase() === this.activeFDKs[i] )
+        return true; 
     
+    return false;
   }
 
   /**

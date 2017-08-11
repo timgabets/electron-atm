@@ -550,6 +550,20 @@ describe("ATM", function() {
       atm.setFDKsActiveMask('666');
       expect(atm.activeFDKs).toEqual(['A', 'I']);
     });
+  });
 
+  describe("isFDKButtonActive()", function(){
+    it("should perform case-insensitive check through active FDKs", function(){
+      atm.setFDKsActiveMask('129');
+      expect(atm.activeFDKs).toEqual(['A', 'I']);
+      expect(atm.isFDKButtonActive('a')).toBeTruthy();
+      expect(atm.isFDKButtonActive('A')).toBeTruthy();
+
+      expect(atm.isFDKButtonActive('i')).toBeTruthy();
+      expect(atm.isFDKButtonActive('I')).toBeTruthy();
+      
+      expect(atm.isFDKButtonActive('d')).toBeFalsy();
+      expect(atm.isFDKButtonActive('D')).toBeFalsy();
+    })
   });
 });

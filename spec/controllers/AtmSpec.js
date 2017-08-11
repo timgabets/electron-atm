@@ -757,4 +757,92 @@ describe("ATM", function() {
       expect(atm.buffer_C).toEqual('6000');
     });
   });
+
+
+  describe("processFourFDKSelectionState()", function(){
+    it("should set active FDK", function(){
+      var state = { 
+        number: '141', 
+        type: 'E',
+        description: 'Four FDK selection state',
+        screen_number: '141', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_A_next_state: '255', 
+        FDK_B_next_state: '255', 
+        FDK_C_next_state: '571', 
+        FDK_D_next_state: '132', 
+        buffer_location: '000',
+      };
+
+      expect(atm.activeFDKs).toEqual([]);
+      atm.processFourFDKSelectionState(state);
+      expect(atm.activeFDKs).toEqual(['C', 'D']);
+    })
+
+    it("should put the pressed button into the opcode buffer", function(){
+      var state = { 
+        number: '141', 
+        type: 'E',
+        description: 'Four FDK selection state',
+        screen_number: '141', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_A_next_state: '255', 
+        FDK_B_next_state: '255', 
+        FDK_C_next_state: '571', 
+        FDK_D_next_state: '132', 
+        buffer_location: '000',
+      };
+
+      expect(atm.opcode_buffer).toEqual('        ');
+
+      atm.buttons_pressed.push('C');
+      atm.processFourFDKSelectionState(state);
+      expect(atm.opcode_buffer).toEqual('       C');
+    })
+
+    it("should put the pressed button into the opcode buffer", function(){
+      var state = { 
+        number: '141', 
+        type: 'E',
+        description: 'Four FDK selection state',
+        screen_number: '141', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_A_next_state: '255', 
+        FDK_B_next_state: '255', 
+        FDK_C_next_state: '571', 
+        FDK_D_next_state: '132', 
+        buffer_location: '006',
+      };
+
+      expect(atm.opcode_buffer).toEqual('        ');
+
+      atm.buttons_pressed.push('D');
+      atm.processFourFDKSelectionState(state);
+      expect(atm.opcode_buffer).toEqual(' D      ');
+    })
+
+    it("should leave opcode buffer unchanged if buffer location value is invalid", function(){
+      var state = { 
+        number: '141', 
+        type: 'E',
+        description: 'Four FDK selection state',
+        screen_number: '141', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_A_next_state: '255', 
+        FDK_B_next_state: '255', 
+        FDK_C_next_state: '571', 
+        FDK_D_next_state: '132', 
+        buffer_location: '008',
+      };
+
+      expect(atm.opcode_buffer).toEqual('        ');
+      atm.buttons_pressed.push('D');
+      atm.processFourFDKSelectionState(state);
+      expect(atm.opcode_buffer).toEqual('        ');
+    })
+  })
 });

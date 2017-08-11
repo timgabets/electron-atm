@@ -354,8 +354,34 @@ function ATM(settings, log) {
    */
   this.processStateD = function(state, extension_state){
     this.setOpCodeBuffer(state, extension_state);
-    log.info('Operation code buffer set to \'' + this.opcode_buffer + '\'');
     return state.next_state;
+  }
+
+  /**
+   * [processFourFDKSelectionState description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  this.processFourFDKSelectionState = function(state){
+    this.setScreen(state.screen_number);
+    log.info(this.trace.object(state));
+
+    this.activeFDKs= [];
+    ['A', 'B', 'C', 'D'].forEach((element, index) => {
+      if(state['FDK_' + element + '_next_state'] !== '255')
+        this.activeFDKs.push(element);
+    })
+
+    var button = this.buttons_pressed.shift();
+    if(this.isFDKButtonActive(button)){
+      var index = parseInt(state.buffer_location);
+      if(index < 8)
+        this.setOpCodeBufferValueAt(7 - index, button)
+      else
+        log.error('Invalid buffer location value: ' + state.buffer_location + '. Operation Code buffer is not changed');
+
+      return state['FDK_' + button + '_next_state'];      
+    }
   }
 
 
@@ -471,8 +497,6 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateX = function(state, extension_state){
-    log.info(this.trace.object(state));
-    log.info(this.trace.object(extension_state));
     this.setScreen(state.screen_number);
     this.setFDKsActiveMask(state.FDK_active_mask);
 
@@ -510,17 +534,14 @@ function ATM(settings, log) {
         switch(state.buffer_id.substr(1, 1)){
           case '1':
             this.buffer_B = buffer_value;
-            log.info('Buffer B set to ' + buffer_value);
             break;
   
           case '2':
             this.buffer_C = buffer_value;
-            log.info('Buffer C set to ' + buffer_value);
             break;
   
           case '3':
             this.setAmountBuffer(buffer_value);
-            log.info('Amount buffer set to ' + buffer_value);
             break;
   
           default:
@@ -582,6 +603,7 @@ function ATM(settings, log) {
     return state.next_state;
   }
 
+
   /**
    * [processState description]
    * @param  {[type]} state_number [description]
@@ -612,6 +634,10 @@ function ATM(settings, log) {
 
         case 'D':
           state.extension_state !== '255' ? next_state = this.processStateD(state, this.states.get(state.extension_state)) : next_state = this.processStateD(state);
+          break;
+
+        case 'E':
+          next_state = this.processFourFDKSelectionState(state);
           break;
 
         case 'F':

@@ -56,7 +56,7 @@ Things to be implemented (very) soon:
 
 ## Issues
 
-Please feel free to submit issues and enhancement requests.
+Please feel free to submit issues and enhancement requests, or just drop me an [email](mailto:tim@gabets.ru) if you want to give some feedback or participate in the project.
 
 ## Contribute
 

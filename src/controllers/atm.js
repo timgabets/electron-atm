@@ -364,7 +364,6 @@ function ATM(settings, log) {
    */
   this.processFourFDKSelectionState = function(state){
     this.setScreen(state.screen_number);
-    log.info(this.trace.object(state));
 
     this.activeFDKs= [];
     ['A', 'B', 'C', 'D'].forEach((element, index) => {
@@ -594,6 +593,16 @@ function ATM(settings, log) {
   }
 
   /**
+   * [processICCReinit description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  this.processICCReinit = function(state){
+    return state.processing_not_performed_next_state;
+  }
+
+
+  /**
    * [processSetICCDataState description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
@@ -674,6 +683,10 @@ function ATM(settings, log) {
 
         case '/':
           next_state = this.processStateCompleteICCAppInit(state);
+          break;
+
+        case ';':
+          next_state = this.processICCReinit(state);
           break;
 
         case '?':

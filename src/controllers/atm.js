@@ -4,6 +4,27 @@ const FITsService = require('../services/fits.js');
 const Trace = require('../controllers/trace.js');
 
 function ATM(settings, log) {
+  this.isFDKButtonActive = function(button){
+    
+  }
+
+  /**
+   * [setFDKsActiveMask set the current FDK mask ]
+   * @param {[type]} mask [number from 000 to 255, represented as string]
+   */
+  this.setFDKsActiveMask = function(mask){
+    if(mask > 255){
+      log.error('Invalid FDK mask: ' + mask);
+      return;
+    }
+
+    this.activeFDKs = [];
+    var FDKs = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];
+    for(var bit = 0; bit < 8; bit++)
+      if((mask & Math.pow(2, bit)).toString() !== '0')
+        this.activeFDKs.push(FDKs[bit])
+  }
+
   /**
    * [replySolicitedStatus description]
    * @param  {[type]} status [description]
@@ -395,6 +416,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateX = function(state){
+    log.info(this.trace.object(state));
     this.setScreen(state.screen_number);
 
     var button = this.buttons_pressed.shift();
@@ -574,6 +596,7 @@ function ATM(settings, log) {
   this.current_screen = {};
   this.current_state = {};
   this.buttons_pressed = [];
+  this.activeFDKs = [];
   this.transaction_request = null;
 }
 

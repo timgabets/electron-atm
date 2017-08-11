@@ -523,4 +523,33 @@ describe("ATM", function() {
       expect(atm.processState).not.toHaveBeenCalled();
     })    
   })
+
+  describe("setFDKsActiveMask()", function(){
+    it("FDK mask 000 should enable disable all the buttons", function(){
+      expect(atm.activeFDKs).toEqual([]);
+      atm.setFDKsActiveMask('000');
+      expect(atm.activeFDKs).toEqual([]);
+    });
+
+    it("FDK mask 060 should enable C, D, F and G buttons", function(){
+      expect(atm.activeFDKs).toEqual([]);
+      atm.setFDKsActiveMask('060');
+      expect(atm.activeFDKs).toEqual(['C', 'D', 'F', 'G']);
+    });
+
+    it("FDK mask 255 should enable all the buttons", function(){
+      expect(atm.activeFDKs).toEqual([]);
+      atm.setFDKsActiveMask('255');
+      expect(atm.activeFDKs).toEqual(['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I']);
+    });
+
+    it("should leave the current FDK mask unchanged if new FDK mask is invalid", function(){
+      expect(atm.activeFDKs).toEqual([]);
+      atm.setFDKsActiveMask('129');
+      expect(atm.activeFDKs).toEqual(['A', 'I']);
+      atm.setFDKsActiveMask('666');
+      expect(atm.activeFDKs).toEqual(['A', 'I']);
+    });
+
+  });
 });

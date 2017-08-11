@@ -36,7 +36,7 @@ This is a side project of my full-time job and only the features that I currentl
 Currently only the basic stuff is working, such as:
 
  * Connecting to ATM host
- * Moving through the basic states (A, B, D, X, W etc.)
+ * Moving through the basic states (A, B, D, E, X, W etc.)
  * Showing basic image screens, linked to the state
  * Checking the Card's financial institution based on FIT tables
  * Keyboard shortcuts: FDK (A-I), numeric(0-9), Esc, Enter and Backspace

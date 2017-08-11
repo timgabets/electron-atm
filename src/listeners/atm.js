@@ -26,6 +26,7 @@ ipc.on('atm-read-card', (event, cardnumber, track2) => {
   atm.readCard(cardnumber, track2)
 })
 
+// Updating ATM screen 
 var current_screen = {}
 setInterval(function() {
   if(atm.current_screen != current_screen){

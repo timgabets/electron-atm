@@ -56,4 +56,18 @@ $(function () {
       ipc.send('pinpad-button-pressed', element);
     });
   });
+
+  // Activating/deactivating FDK buttons
+  var activeFDKs = [];
+  setInterval(function() {
+    if(atm.activeFDKs != activeFDKs){
+      // current_screen = atm.current_screen;
+      // ipc.send('atm-change-screen-image', atm.current_screen.image_file);
+      activeFDKs = atm.activeFDKs;
+      activeFDKs.forEach( (button) => {
+        if(button)
+          $('#FDK-' + button).prop('disabled', false);
+      })
+    }
+  }, 200);
 })

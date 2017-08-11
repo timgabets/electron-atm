@@ -645,7 +645,7 @@ describe("ATM", function() {
   });
 
   describe("processStateX()", function(){
-    beforeEach(function() {
+    it("should set amount buffer properly when A button pressed", function(){
       state = { 
         number: '037', 
         type: 'X',
@@ -655,7 +655,7 @@ describe("ATM", function() {
         cancel_next_state: '131', 
         FDK_next_state: '038', 
         extension_state: '037', 
-        buffer_id: '033', 
+        buffer_id: '033',  // amount buffer, 3 zeroes
         FDK_active_mask: '255',
         states_to: [ '002', '131', '038' ]
       };
@@ -666,12 +666,95 @@ describe("ATM", function() {
         description: 'Extension state',
         entries: [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] 
       };
-    });
 
-    it("should set amount buffer properly", function(){
+      atm.buttons_pressed.push('A');
       expect(atm.amount_buffer).toEqual('000000000000');
       atm.processStateX(state, extension_state);
+      expect(atm.amount_buffer).toEqual('000000150000');
+    });
 
+    it("should set amount buffer properly when B button pressed", function(){
+      state = { 
+        number: '037', 
+        type: 'X',
+        description: 'FDK information entry state',
+        screen_number: '037', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_next_state: '038', 
+        extension_state: '037', 
+        buffer_id: '039',  // amount buffer, 9 zeroes
+        FDK_active_mask: '255',
+        states_to: [ '002', '131', '038' ]
+      };
+  
+      extension_state = { 
+        number: '037', 
+        type: 'Z',
+        description: 'Extension state',
+        entries: [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] 
+      };
+
+      atm.buttons_pressed.push('B');
+      expect(atm.amount_buffer).toEqual('000000000000');
+      atm.processStateX(state, extension_state);
+      expect(atm.amount_buffer).toEqual('250000000000');
+    });
+
+    it("should set buffer B properly", function(){
+      state = { 
+        number: '037', 
+        type: 'X',
+        description: 'FDK information entry state',
+        screen_number: '037', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_next_state: '038', 
+        extension_state: '037', 
+        buffer_id: '010',  // buffer B, no zeroes
+        FDK_active_mask: '255',
+        states_to: [ '002', '131', '038' ]
+      };
+  
+      extension_state = { 
+        number: '037', 
+        type: 'Z',
+        description: 'Extension state',
+        entries: [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] 
+      };
+
+      atm.buttons_pressed.push('C');      
+      expect(atm.buffer_B).toEqual('');
+      atm.processStateX(state, extension_state);
+      expect(atm.buffer_B).toEqual('400');
+    });
+
+    it("should set buffer C properly", function(){
+      state = { 
+        number: '037', 
+        type: 'X',
+        description: 'FDK information entry state',
+        screen_number: '037', 
+        timeout_next_state: '002', 
+        cancel_next_state: '131', 
+        FDK_next_state: '038', 
+        extension_state: '037', 
+        buffer_id: '021',  // buffer B, 1 zero
+        FDK_active_mask: '255',
+        states_to: [ '002', '131', '038' ]
+      };
+  
+      extension_state = { 
+        number: '037', 
+        type: 'Z',
+        description: 'Extension state',
+        entries: [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] 
+      };
+
+      atm.buttons_pressed.push('D');      
+      expect(atm.buffer_C).toEqual('');
+      atm.processStateX(state, extension_state);
+      expect(atm.buffer_C).toEqual('6000');
     });
   });
 });

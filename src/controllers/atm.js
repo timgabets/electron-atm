@@ -482,6 +482,18 @@ function ATM(settings, log) {
 
       if(extension_state){
         /**
+         * Each table entry contains a value that is stored in
+         * the buffer specified in the associated FDK
+         * Information Entry state table (table entry 7) if the
+         * specified FDK or touch area is pressed.
+         */
+        var buffer_value;
+        [null, null, 'A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'].forEach((element, index) => {
+          if(button === element)
+            buffer_value = extension_state.entries[index];
+        })
+
+        /**
          * Buffer ID identifies which buffer is to be edited and the number of zeros to add 
          * to the values specified in the Extension state:
          * 01X - General purpose buffer B
@@ -489,18 +501,26 @@ function ATM(settings, log) {
          * 03X - Amount buffer
          * X specifies the number of zeros in the range 0-9
          */
+        // Checking number of zeores to pad
+        var num_of_zeroes = state.buffer_id.substr(2, 1);
+        for (var i = 0; i < num_of_zeroes; i++)
+          buffer_value += '0';
+
+        // Checking which buffer to use
         switch(state.buffer_id.substr(1, 1)){
           case '1':
-            // Buffer B
+            this.buffer_B = buffer_value;
+            log.info('Buffer B set to ' + buffer_value);
             break;
   
           case '2':
-            // Buffer C
+            this.buffer_C = buffer_value;
+            log.info('Buffer C set to ' + buffer_value);
             break;
   
           case '3':
-            // Amount buffer
-            amount_buffer
+            this.setAmountBuffer(buffer_value);
+            log.info('Amount buffer set to ' + buffer_value);
             break;
   
           default:

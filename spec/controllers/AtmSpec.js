@@ -421,7 +421,7 @@ describe("ATM", function() {
     });
   });
 
-  describe("processPinpadButtonPressed()", function(){
+  describe("processPinpadButtonPressed() for state B", function(){
     beforeEach(function() {
       atm.current_state = { 
         number: '230', 
@@ -434,7 +434,7 @@ describe("ATM", function() {
       atm.initBuffers();
     });
 
-    it("should put the entered numbers into PIN buffer on state B", function(){
+    it("should put the entered numbers into PIN buffer", function(){
       expect(atm.PIN_buffer).toEqual('');
       
       atm.processPinpadButtonPressed('1');
@@ -445,7 +445,7 @@ describe("ATM", function() {
       expect(atm.PIN_buffer).toEqual('1985');
     })
 
-    it("should properly handle pressed Backspace button on state B", function(){
+    it("should properly handle pressed Backspace button", function(){
       expect(atm.PIN_buffer).toEqual('');
       
       atm.processPinpadButtonPressed('backspace');
@@ -463,7 +463,7 @@ describe("ATM", function() {
       expect(atm.PIN_buffer).toEqual('5893');
     })
 
-    it("should properly handle pressed Enter button on state B", function(){
+    it("should properly handle pressed Enter button", function(){
       expect(atm.PIN_buffer).toEqual('');
       
       atm.processPinpadButtonPressed('backspace');
@@ -482,7 +482,7 @@ describe("ATM", function() {
       expect(atm.processState).not.toHaveBeenCalled();
     })
 
-    it("should call processState() when 6 digits entered on state B", function(){
+    it("should call processState() when 6 digits entered", function(){
       expect(atm.PIN_buffer).toEqual('');
       
       atm.processPinpadButtonPressed('1');
@@ -496,7 +496,7 @@ describe("ATM", function() {
       expect(atm.processState).toHaveBeenCalled();
     })
 
-    it("should call processState() when 4 digits PIN entered + Enter button pressed on state B", function(){
+    it("should call processState() when 4 digits PIN entered + Enter button pressed", function(){
       expect(atm.PIN_buffer).toEqual('');
       
       atm.processPinpadButtonPressed('1');
@@ -511,7 +511,7 @@ describe("ATM", function() {
       expect(atm.processState).toHaveBeenCalled();
     })
 
-    it("should not call processState() when PIN buffer is less than 4 on state B", function(){
+    it("should not call processState() when PIN buffer is less than 4", function(){
       expect(atm.PIN_buffer).toEqual('');
       
       atm.processPinpadButtonPressed('1');
@@ -522,7 +522,64 @@ describe("ATM", function() {
       expect(atm.PIN_buffer).toEqual('1');
       expect(atm.processState).not.toHaveBeenCalled();
     })    
-  })
+  });
+
+  describe("processPinpadButtonPressed() for state F", function(){
+    beforeEach(function() {
+      atm.current_state = { 
+        number: '700', 
+        type: 'F'
+      };
+
+      spyOn(atm, 'processState');
+
+      atm.initBuffers();
+    });
+
+    it("should put the entered numbers into amount buffer", function(){
+      expect(atm.amount_buffer).toEqual('000000000000');
+      
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('5');
+
+      expect(atm.amount_buffer).toEqual('000000001985');
+    })
+
+    it("should properly handle pressed Backspace button", function(){
+      expect(atm.amount_buffer).toEqual('000000000000');
+      
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('3');
+
+      expect(atm.amount_buffer).toEqual('000000005893');
+    })
+
+    it("should properly handle pressed Enter button", function(){
+      expect(atm.amount_buffer).toEqual('000000000000');
+      
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('backspace');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('enter');
+
+      expect(atm.amount_buffer).toEqual('000000009855');
+      expect(atm.processState).toHaveBeenCalled();
+    })
+  });
 
   describe("setFDKsActiveMask()", function(){
     it("FDK mask 000 should enable disable all the buttons", function(){

@@ -219,7 +219,7 @@ function ATM(settings, log) {
     this.buffer_C = '';
     this.amount_buffer = '000000000000';
     this.opcode_buffer = '        ';
-    this.FDK_buffer = '';
+    this.FDK_buffer = '';   // FDK_buffer is only needed on state type W to determine the next state
 
     return true;
   }
@@ -249,7 +249,11 @@ function ATM(settings, log) {
     return state.good_read_next_state;
   }
 
-
+  /**
+   * [processPINEntryState description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
   this.processPINEntryState = function(state){
     /**
      * The cardholder enters the PIN, which can consist of from four to
@@ -267,6 +271,22 @@ function ATM(settings, log) {
       // TODO: PIN encryption
       return state.remote_pin_check_next_state
     }
+  }
+
+  /**
+   * [processAmountEntryState description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  this.processAmountEntryState = function(state){
+    log.info(this.trace.object(state));
+    this.setScreen(state.screen_number);
+    this.setFDKsActiveMask('015'); // Enabling 'A', 'B', 'C', 'D' buttons
+    this.amount_buffer = '000000000000';
+
+    var button = this.buttons_pressed.shift();
+    if(this.isFDKButtonActive(button))
+      return state['FDK_' + button + '_next_state'];
   }
 
   /**
@@ -337,6 +357,7 @@ function ATM(settings, log) {
     log.info('Operation code buffer set to \'' + this.opcode_buffer + '\'');
     return state.next_state;
   }
+
 
   /**
    * [processTransactionRequestState description]
@@ -530,6 +551,10 @@ function ATM(settings, log) {
           state.extension_state !== '255' ? next_state = this.processStateD(state, this.states.get(state.extension_state)) : next_state = this.processStateD(state);
           break;
 
+        case 'F':
+          next_state = this.processAmountEntryState(state);
+          break;
+
         case 'I':
           next_state = this.processTransactionRequestState(state);
           break;
@@ -671,6 +696,24 @@ ATM.prototype.processPinpadButtonPressed = function(button){
           //log.info(this.PIN_buffer);
           if(this.PIN_buffer.length == this.max_pin_length)
             this.processState(this.current_state.number)
+      }
+      break;
+
+    case 'F':
+      switch(button){
+        case 'enter':
+          // If the cardholder presses the Enter key, it has the same effect as pressing FDK ‘A’
+          this.buttons_pressed.push('A');
+          this.processState(this.current_state.number)
+          break;
+
+        case 'backspace':
+          this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1)
+          break;
+
+        default:
+          this.amount_buffer = this.amount_buffer.substr(1) + button;
+          break;
       }
       break;
 

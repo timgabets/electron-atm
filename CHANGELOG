@@ -1,5 +1,6 @@
 
 August 2017
+	0.3.8 Processing Amount Entry state (filling amount buffer etc.)
 	0.3.7 Disabling FDK buttons in UI (based on FDK Active Mask)
 	0.3.6 Processing FDK active mask for states X and Y
 	0.3.5 State Navigator: updating screen image when jumping through the states

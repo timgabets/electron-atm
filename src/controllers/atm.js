@@ -34,9 +34,7 @@ function ATM(settings, log) {
     var FDKs = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];
     for(var bit = 0; bit < 8; bit++)
       if((mask & Math.pow(2, bit)).toString() !== '0')
-        this.activeFDKs.push(FDKs[bit])
-
-    log.info('Active FDKs: ' + this.activeFDKs);
+        this.activeFDKs.push(FDKs[bit]);
   }
 
   /**
@@ -633,8 +631,19 @@ function ATM(settings, log) {
  */
 ATM.prototype.processFDKButtonPressed = function(button){
   log.info(button + ' button pressed');
-  this.buttons_pressed.push(button);
-  this.processState(this.current_state.number)
+
+  switch(this.current_state.type){
+    case 'B':
+      if (button === 'A' && this.PIN_buffer.length >= 4)
+        this.processState(this.current_state.number);
+      break;
+
+    default:
+      // No special processing required
+      this.buttons_pressed.push(button);
+      this.processState(this.current_state.number);
+      break;
+  };
 };
 
 

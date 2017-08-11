@@ -73,4 +73,50 @@ $(function () {
       })
     }
   }, 200);
+
+  // PIN buffer update
+  var PIN_buffer = '';
+  setInterval(function() {
+    if(atm.PIN_buffer != PIN_buffer){
+      PIN_buffer = atm.PIN_buffer;
+      $("#pin-buffer").val(PIN_buffer);
+    }
+  }, 200);
+
+  // Buffer B update
+  var buffer_B = '';
+  setInterval(function() {
+    if(atm.buffer_B != buffer_B){
+      buffer_B = atm.buffer_B;
+      $("#buffer-b").val(buffer_B);
+    }
+  }, 200);
+
+  // Buffer C update
+  var buffer_C = '';
+  setInterval(function() {
+    if(atm.buffer_C != buffer_C){
+      buffer_C = atm.buffer_C;
+      $("#buffer-c").val(buffer_C);
+    }
+  }, 200);
+
+  // Opcode buffer update
+  var opcode_buffer = '';
+  setInterval(function() {
+    if(atm.opcode_buffer != opcode_buffer){
+      opcode_buffer = atm.opcode_buffer;
+      $("#opcode-buffer").val(opcode_buffer);
+    }
+  }, 200);
+
+  // Amount buffer update
+  var amount_buffer = '';
+  setInterval(function() {
+    if(atm.amount_buffer != amount_buffer){
+      amount_buffer = atm.amount_buffer;
+      $("#amount-buffer").val(amount_buffer);
+    }
+  }, 200);
+
 })

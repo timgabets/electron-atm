@@ -219,7 +219,7 @@ function ATM(settings, log) {
     this.buffer_C = '';
     this.amount_buffer = '000000000000';
     this.opcode_buffer = '        ';
-    this.FDK_buffer = '0000000000000';
+    this.FDK_buffer = '';
 
     return true;
   }

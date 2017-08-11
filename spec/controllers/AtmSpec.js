@@ -43,7 +43,7 @@ describe("ATM", function() {
       expect(atm.buffer_C).toEqual('');
       expect(atm.amount_buffer).toEqual('000000000000');
       expect(atm.opcode_buffer).toEqual('        ');
-      expect(atm.FDK_buffer).toEqual('0000000000000');
+      expect(atm.FDK_buffer).toEqual('');
     });
   });
 

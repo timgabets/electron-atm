@@ -8,6 +8,7 @@ const Log = require('../controllers/log.js');
 function Network(log) {
   this.trace = new Trace();
   this.client = new net.Socket();
+  this.isConnected = false;
 
   /**
    * [getOutgoingMessageLength get the Message Header Length]
@@ -36,10 +37,16 @@ function Network(log) {
    * @return {[type]}      [description]
    */
   this.connect = function(host, port){
-    this.trace.trace('', ' >> Connecting to ' + host + ':' + port );
-    this.client.connect(port, host, _ => {
-      this.trace.trace('', ' >> Connected' );
-    });
+    if(this.isConnected){
+      this.trace.trace('', ' >> Already connected to ' + host + ':' + port );
+    }else
+    {
+      this.trace.trace('', ' >> Connecting to ' + host + ':' + port );
+      this.client.connect(port, host, _ => {
+        this.trace.trace('', ' >> Connected' );
+        this.isConnected = true;
+      });
+    }
   };
 
 

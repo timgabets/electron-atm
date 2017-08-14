@@ -1,5 +1,6 @@
 
 August 2017
+	0.4.1 Checking whether the ATM is already connected to the host
 	0.4.0 Processing Four FDK Selection state (state E)
 	0.3.9 Processing Buffer ID in state X (FDK Information Entry state)
 	0.3.8 Processing Amount Entry state (filling amount buffer etc.)

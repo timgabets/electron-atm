@@ -39,8 +39,7 @@ function Network(log) {
   this.connect = function(host, port){
     if(this.isConnected){
       this.trace.trace('', ' >> Already connected to ' + host + ':' + port );
-    }else
-    {
+    }else {
       this.trace.trace('', ' >> Connecting to ' + host + ':' + port );
       this.client.connect(port, host, _ => {
         this.trace.trace('', ' >> Connected' );
@@ -56,8 +55,11 @@ function Network(log) {
    * @return {[type]}   [description]
    */
   this.client.on('close', _ => {
-    //this.client.destroy();
-    log.warn('Connection closed');
+    this.client.destroy();
+    if(this.isConnected)
+      log.warn('Connection closed');
+    
+    this.isConnected = false;
   });
 
   /**

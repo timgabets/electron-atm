@@ -235,6 +235,29 @@ describe("Parser", function() {
 */
   });
 
+
+  describe("parseDataCommands - Extended Encryption Key Information", function(){
+    it("should be able to parse 'Extended Encryption Key Information' message", function() {
+      var parsed = { 
+        message_class: 'Data Command', 
+        LUNO: '000', 
+        message_sequence_number: '000', 
+        message_subclass: 'Extended Encryption Key Information', 
+        modifier: 'Decipher new comms key with current master key', 
+        new_key_length: '030',
+        new_key_data: '000000000000000000000000000000000000000000000000',
+      }
+      /**
+       * 00 41 33 30 1c 30 30 30 1c 30 30 30 1c 34 32 1c         .A30.000.000.42.
+       * 30 33 30 30 30 30 30 30 30 30 30 30 30 30 30 30         0300000000000000
+       * 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30         0000000000000000
+       * 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30         0000000000000000
+       * 30 30 30                                                000
+       */
+      expect(p.parse('30\x1c000\x1c000\x1c42\x1c030000000000000000000000000000000000000000000000000')).toEqual(parsed);
+    });
+  });
+
   describe("parseHostMessage()", function(){
       it("should be able to parse 'Go out of service message'", function() {
         var parsed = { 

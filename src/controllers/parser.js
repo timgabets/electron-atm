@@ -111,6 +111,16 @@ function Parser(){
                 parsed.screen_data_field = splitted[5];
                 break;
 
+            case '4':
+                parsed.message_subclass = 'Extended Encryption Key Information';
+                switch(splitted[3][1]){
+                    case '2':
+                      parsed.modifier = 'Decipher new comms key with current master key';
+                      parsed.new_key_length = splitted[4].substr(0, 3);
+                      parsed.new_key_data = splitted[4].substr(3);
+                      break;
+                }
+                break;
         }
 
         return parsed;

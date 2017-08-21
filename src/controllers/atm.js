@@ -119,11 +119,40 @@ function ATM(settings, log) {
         break;
 
       default:
-        log.info('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
+        log.error('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
         return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Command Reject');
   };
+
+  /**
+   * [dec2hex convert decimal string to hex string, e.g. 040198145193087203201076202216192211251240251237 to 28C691C157CBC94CCAD8C0D3FBF0FBED]
+   * @param  {[type]} dec_string [decimal string ]
+   * @return {[type]}            [hex string]
+   */
+  this.dec2hex = function (dec_string){
+    var hex_string = '';
+    for(var i = 0; i < dec_string.length; i += 3){
+      var chunk = parseInt(dec_string.substr(i, 3)).toString(16);
+      (chunk.length === 1) ? (hex_string = hex_string + '0' + chunk ) : hex_string += chunk;
+    }
+
+    return hex_string.toUpperCase();
+  }
+
+  this.processExtendedEncKeyInfo = function(data){
+    switch(data.modifier){
+      case 'Decipher new comms key with current master key':
+        // data.new_ney_data
+        break;
+
+      default:
+        log.error('Unsupported modifier');
+        break;
+    }
+
+    return this.replySolicitedStatus('Command Reject');
+  }
 
   /**
    * [processDataCommand description]
@@ -137,6 +166,9 @@ function ATM(settings, log) {
 
       case 'Interactive Transaction Response':
         return this.processInteractiveTransactionResponse(data);
+
+      case 'Extended Encryption Key Information':
+        return this.processExtendedEncKeyInfo(data);
         
       default:
         log.info('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);

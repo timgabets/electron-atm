@@ -861,5 +861,15 @@ describe("ATM", function() {
     it('should get encrypted PIN', function(){
       expect(atm.getEncryptedPIN()).toEqual('=3;:1>04<88654=4');
     });
-  })
+  });
+
+  describe('dec2hex()', function(){
+    it('should convert decimal string to hex string', function(){
+      expect(atm.dec2hex('040198145193087203201076202216192211251240251237')).toEqual('28C691C157CBC94CCAD8C0D3FBF0FBED');
+    })
+
+    it('should convert decimal string to hex string', function(){
+      expect(atm.dec2hex('000001002003004005006007008009010011012013014015')).toEqual('000102030405060708090A0B0C0D0E0F');
+    })
+  });
 });

@@ -95,7 +95,6 @@ function Pinblock(){
     }
 
     return pinblock;
-
   }
 }
 

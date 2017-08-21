@@ -246,6 +246,11 @@ describe("ATM", function() {
       atm.amount_buffer = '000000001337';
       atm.buffer_B = 'XZXZXZXZXZX';
       atm.buffer_C = '19671994';
+      
+      // PIN block related data
+      atm.PIN_buffer = '1234';
+      atm.card = {number: '4000001234562000'};
+      atm.terminal_pin_key = 'DEADBEEFDEADBEEFDEADBEEFDEADBEEF';
     });
 
     it("should properly fill transaction request data when send_operation_code is enabled", function(){
@@ -844,5 +849,17 @@ describe("ATM", function() {
       atm.processFourFDKSelectionState(state);
       expect(atm.opcode_buffer).toEqual('        ');
     })
+  })
+
+  describe('getEncryptedPIN()', function(){
+    beforeEach(function() {
+      atm.PIN_buffer = '1234';
+      atm.card = {number: '4000001234562000'};
+      atm.terminal_pin_key = 'DEADBEEFDEADBEEFDEADBEEFDEADBEEF';
+    });
+
+    it('should get encrypted PIN', function(){
+      expect(atm.getEncryptedPIN()).toEqual('=3;:1>04<88654=4');
+    });
   })
 });

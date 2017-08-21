@@ -2,6 +2,8 @@ const StatesService = require('../services/states.js');
 const ScreensService = require('../services/screens.js');
 const FITsService = require('../services/fits.js');
 const Trace = require('../controllers/trace.js');
+const Pinblock = require('../controllers/pinblock.js');
+const DES3 = require('../controllers/des3.js');
 
 function ATM(settings, log) {
   /**
@@ -192,12 +194,11 @@ function ATM(settings, log) {
 
   /**
    * [getEncryptedPIN description]
-   * @param  {[type]} clear_pin [description]
    * @return {[type]}           [description]
    */
   this.getEncryptedPIN = function(){
-    // this.PIN_buffer
-    return '1234567891234567';
+    var atm_pinblock = this.des3.encrypt(this.terminal_pin_key, this.pinblock.get(this.PIN_buffer, this.card.number));
+    return this.pinblock.encode_to_atm_format(atm_pinblock);
   }
 
   /**
@@ -211,7 +212,7 @@ function ATM(settings, log) {
    * @return {[type]} [description]
    */
   this.initBuffers = function(){
-    // In a real ATM PIN_buffer contains encrypted PIN, but in this application PIN_buffer contains clear PIN entered  by cardholder.
+    // In a real ATM PIN_buffer contains encrypted PIN, but in this application PIN_buffer contains clear PIN entered by cardholder.
     // To get the encrypted PIN, use getEncryptedPIN() method
     this.PIN_buffer = '';
 
@@ -741,6 +742,8 @@ function ATM(settings, log) {
   this.states = new StatesService(settings, log);
   this.screens = new ScreensService(settings, log);
   this.FITs = new FITsService(settings, log);
+  this.pinblock = new Pinblock();
+  this.des3 = new DES3();
 
   this.status = 'Offline';
   this.initBuffers();

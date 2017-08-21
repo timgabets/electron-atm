@@ -58,6 +58,45 @@ function Pinblock(){
 
     return atm_pinblock;
   };
+
+
+  this.decode_from_atm_format = function(atm_pinblock){
+    var pinblock = '';
+    for (var i = 0; i < atm_pinblock.length; i++){
+      switch(atm_pinblock[i]){
+        case ':':
+          pinblock += 'A'
+          break;
+
+        case ';':
+          pinblock += 'B'
+          break;
+
+        case '=':
+          pinblock += 'C'
+          break;
+
+        case '<':
+          pinblock += 'D'
+          break;
+
+        case '>':
+          pinblock += 'E'
+          break;
+
+        case '?':
+          pinblock += 'F'
+          break;
+        
+        default:
+          pinblock += atm_pinblock[i];
+          break;
+      }
+    }
+
+    return pinblock;
+
+  }
 }
 
 module.exports = Pinblock;

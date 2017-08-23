@@ -3,7 +3,7 @@ const ScreensService = require('../services/screens.js');
 const FITsService = require('../services/fits.js');
 const Trace = require('../controllers/trace.js');
 const Pinblock = require('../controllers/pinblock.js');
-const DES3 = require('../controllers/des3.js');
+const des3 = require('node-cardcrypto').des;
 
 function ATM(settings, log) {
   /**
@@ -147,7 +147,7 @@ function ATM(settings, log) {
         log.info('New comms key received: ' + comms_key);
 
         //this.terminal_master_key = '';
-        this.terminal_pin_key = this.des3.decrypt(this.terminal_master_key, comms_key);
+        this.terminal_pin_key = des3.ecb_decrypt(this.terminal_master_key, comms_key);
         
         return this.replySolicitedStatus('Ready');
         break;
@@ -235,7 +235,7 @@ function ATM(settings, log) {
    * @return {[type]}           [description]
    */
   this.getEncryptedPIN = function(){
-    var atm_pinblock = this.des3.encrypt(this.terminal_pin_key, this.pinblock.get(this.PIN_buffer, this.card.number));
+    var atm_pinblock = des3.ecb_encrypt(this.terminal_pin_key, this.pinblock.get(this.PIN_buffer, this.card.number));
     return this.pinblock.encode_to_atm_format(atm_pinblock);
   }
 
@@ -781,7 +781,6 @@ function ATM(settings, log) {
   this.screens = new ScreensService(settings, log);
   this.FITs = new FITsService(settings, log);
   this.pinblock = new Pinblock();
-  this.des3 = new DES3();
 
   this.status = 'Offline';
   this.initBuffers();

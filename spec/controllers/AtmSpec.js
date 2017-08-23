@@ -872,4 +872,38 @@ describe("ATM", function() {
       expect(atm.dec2hex('000001002003004005006007008009010011012013014015')).toEqual('000102030405060708090A0B0C0D0E0F');
     })
   });
+
+  describe('processExtendedEncKeyInfo()', function(){
+    beforeEach(function() {
+      atm.terminal_master_key = 'B6D55EABAD23BC4FD558F8D619A21C34';
+      atm.terminal_pin_key = 'DEADBEEFDEADBEEFDEADBEEFDEADBEEF';
+    });
+
+    it('should change terminal PIN key', function(){
+      var data = {
+        message_class: 'Data Command',
+        LUNO: 000,
+        message_sequence_number: '000',
+        message_subclass: 'Extended Encryption Key Information',
+        modifier: 'Decipher new comms key with current master key',
+        new_key_length: '030',
+        new_key_data: '040198145193087203201076202216192211251240251237',
+      };
+    
+      /*
+        new_key_data: '040198145193087203201076202216192211251240251237' is decimal representation of 28C691C157CBC94CCAD8C0D3FBF0FBED
+        28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
+       */
+
+      var status_ready = { 
+        message_class: 'Solicited', 
+        message_subclass: 'Status', 
+        status_descriptor: 'Ready'
+      };      
+
+      expect(atm.terminal_pin_key).toEqual('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+      expect(atm.processExtendedEncKeyInfo(data)).toEqual(status_ready);
+      expect(atm.terminal_pin_key).toEqual('7B278B03B439DDCACF8B3333AC591BCA');
+    })
+  });
 });

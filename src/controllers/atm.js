@@ -143,7 +143,13 @@ function ATM(settings, log) {
   this.processExtendedEncKeyInfo = function(data){
     switch(data.modifier){
       case 'Decipher new comms key with current master key':
-        // data.new_ney_data
+        var comms_key = this.dec2hex(data.new_key_data);
+        log.info('New comms key received: ' + comms_key);
+
+        //this.terminal_master_key = '';
+        this.terminal_pin_key = this.des3.decrypt(this.terminal_master_key, comms_key);
+        
+        return this.replySolicitedStatus('Ready');
         break;
 
       default:

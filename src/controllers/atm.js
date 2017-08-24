@@ -140,25 +140,35 @@ function ATM(settings, log) {
     return hex_string.toUpperCase();
   }
 
+  this.setCommsKey = function(key_decimal, length){
+    var comms_key = this.dec2hex(key_decimal);
+    var expected_key_length = parseInt(length, 16) / 1.5;
+
+    if(comms_key.length !== expected_key_length)
+    {
+      log.error('Key length mismatch. New key has length ' + comms_key.length + ', but expected length is ' + expected_key_length);
+      return false;
+    }
+
+    log.info('New comms key received: ' + comms_key);
+    if(!this.terminal_master_key)
+    {
+      log.error('Invalid master key: ' + this.terminal_master_key);
+      return false;
+    }
+
+    this.terminal_pin_key = des3.ecb_decrypt(this.terminal_master_key, comms_key);
+    log.info('New comms key value: ' + this.terminal_pin_key);
+    return true;
+  }
+
   this.processExtendedEncKeyInfo = function(data){
     switch(data.modifier){
       case 'Decipher new comms key with current master key':
-        var comms_key = this.dec2hex(data.new_key_data);
-        var expected_key_length = parseInt(data.new_key_length, 16) / 1.5;
-        
-        log.info('New comms key received: ' + comms_key);
-
-        this.terminal_pin_key = des3.ecb_decrypt(this.terminal_master_key, comms_key);
-        
-        if(this.terminal_pin_key.length === expected_key_length)
-        {
-          log.info('New comms key value: ' + this.terminal_pin_key);
+        if( this.setCommsKey(data.new_key_data, data.new_key_length) )
           return this.replySolicitedStatus('Ready');
-        }
-        else 
-        {
-          log.error('Key length mismatch. Decrypted key has length ' + this.terminal_pin_key.length + ', but expected length is ' + expected_key_length);
-        }
+        else
+          return this.replySolicitedStatus('Command Reject');
         break;
 
       default:

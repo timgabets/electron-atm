@@ -326,7 +326,7 @@ function ATM(settings, log) {
     this.buffer_C = '';
     this.amount_buffer = '000000000000';
     this.opcode_buffer = '        ';
-    this.FDK_buffer = '';   // FDK_buffer is only needed on state type W to determine the next state
+    this.FDK_buffer = '';   // FDK_buffer is only needed on state type Y and W to determine the next state
 
     return true;
   }
@@ -386,7 +386,6 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processAmountEntryState = function(state){
-    log.info(this.trace.object(state));
     this.setScreen(state.screen_number);
     this.setFDKsActiveMask('015'); // Enabling 'A', 'B', 'C', 'D' buttons
     this.amount_buffer = '000000000000';
@@ -678,14 +677,24 @@ function ATM(settings, log) {
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateY = function(state){
+  this.processStateY = function(state, extension_state){
     this.setScreen(state.screen_number);
     this.setFDKsActiveMask(state.FDK_active_mask);
 
-    var button = this.buttons_pressed.shift();
-    if(this.isFDKButtonActive(button)){
-      this.FDK_buffer = button;
-      return state.FDK_next_state;
+    if(extension_state)
+    {
+      log.error('Extension state on state Y is not yet supported');
+    }else{
+      var button = this.buttons_pressed.shift();
+      if(this.isFDKButtonActive(button)){
+        this.FDK_buffer = button;
+
+        // If there is no extension state, state.buffer_positions defines the Operation Code buffer position 
+        // to be edited by a value in the range 000 to 007.
+        this.setOpCodeBufferValueAt(parseInt(state.buffer_positions), button);
+       
+        return state.FDK_next_state;
+      }
     }
   }
 
@@ -707,7 +716,6 @@ function ATM(settings, log) {
     var extension_state = this.states.get(state.extension_state);
     this.setScreen(state.please_wait_screen_number);
 
-    log.info(this.trace.object(extension_state))
     return extension_state.entries[8]; // Processing not performed
   }
 
@@ -789,7 +797,7 @@ function ATM(settings, log) {
           break;
 
         case 'Y':
-          next_state = this.processStateY(state);
+          (state.extension_state !== '255' && state.extension_state !== '000') ? next_state = this.processStateY(state, this.states.get(state.extension_state)) : next_state = this.processStateY(state);
           break;
 
         case 'W':

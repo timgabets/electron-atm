@@ -254,8 +254,21 @@ function ATM(settings, log) {
    * @return {[type]}           [description]
    */
   this.getEncryptedPIN = function(){
-    var atm_pinblock = des3.ecb_encrypt(this.terminal_pin_key, this.pinblock.get(this.PIN_buffer, this.card.number));
-    return this.pinblock.encode_to_atm_format(atm_pinblock);
+    if(this.terminal_pin_key){
+      log.info('Clear PIN block:     [' + this.pinblock.get(this.PIN_buffer, this.card.number) + ']')
+
+      var encrypted_pinblock = des3.ecb_encrypt(this.terminal_pin_key, this.pinblock.get(this.PIN_buffer, this.card.number));
+      log.info('Encrypted PIN block: [' + encrypted_pinblock + ']');
+
+      var atm_pinblock = this.pinblock.encode_to_atm_format(encrypted_pinblock);
+      log.info('Formatted PIN block: [' + atm_pinblock + ']');
+      
+      return atm_pinblock;
+    } else
+    {
+      log.error('Terminal key is not set, unable to encrypt PIN block');
+      return null;
+    }
   }
 
   /**
@@ -503,6 +516,7 @@ function ATM(settings, log) {
         }
         break;
     }
+
 
     this.transaction_request = request; // further processing is performed by the atm listener
   }
@@ -808,6 +822,7 @@ function ATM(settings, log) {
   this.buttons_pressed = [];
   this.activeFDKs = [];
   this.transaction_request = null;
+  this.terminal_pin_key = '24F9CC53E456DD2147224E4BDBD190FC';
 }
 
 /**

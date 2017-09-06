@@ -74,25 +74,36 @@
       </div>
 
     <div class="row forms-area">
-      <form id="connection-data-form" class="navbar-form navbar-center">
-        <div class="form-group">
-          <input type="text" class="form-control" id="host" value="127.0.0.1" placeholder="Host"></input>
-        </div>
-        <div class="form-group">
-          <input type="number" class="form-control" id="port" value="11032" placeholder="Port"></input>
-        </div>
-        <button type="submit" class="btn btn-success" id="connect">Connect</button>
-      </form>
+      <div class="col-md-6">
+        <form id="connection-data-form" class="navbar-form navbar-center">
+          <div class="form-group">
+            <input type="text" class="form-control" id="host" value="127.0.0.1" placeholder="Host"></input>
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" id="port" value="11032" placeholder="Port"></input>
+          </div>
+          <button type="submit" class="btn btn-success" id="connect">Connect</button>
+        </form>
+  
+        <form id="card-read-form" class="navbar-form navbar-center">
+          <div class="form-group">
+            <input type="text" class="form-control" id="cardnumber" value="4338259918748135" placeholder="Card Number"></input>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="track2" value="20062211001668600001" placeholder="Track2"></input>
+          </div>
+          <button type="submit" class="btn btn-default" id="card-inserted" >Read Card</button>
+        </form>
+      </div>
 
-      <form id="card-read-form" class="navbar-form navbar-center">
-        <div class="form-group">
-          <input type="text" class="form-control" id="cardnumber" value="8990011234567890" placeholder="Card Number"></input>
+      <div class="col-md-4 keys">
+        <div>Master Key:
+          <input type="text" class="form-control" id="master-key" value="" placeholder="Master Key" title="Master Key"></input>
         </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="track2" value="20062011987612300720" placeholder="Track2"></input>
+        <div>Communications Key:
+          <input type="text" class="form-control" id="comms-key" value="" placeholder="Communications Key" title="Communications Key"></input>
         </div>
-        <button type="submit" class="btn btn-default" id="card-inserted" >Read Card</button>
-      </form>
+      </div>
     </div>
 
     <div class="row links">

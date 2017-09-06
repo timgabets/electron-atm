@@ -861,6 +861,11 @@ describe("ATM", function() {
     it('should get encrypted PIN', function(){
       expect(atm.getEncryptedPIN()).toEqual('=3;:1>04<88654=4');
     });
+
+    it('should return null if no termianl key', function(){
+      atm.terminal_pin_key = undefined;
+      expect(atm.getEncryptedPIN()).toBeNull();
+    });    
   });
 
   describe('dec2hex()', function(){

@@ -16,6 +16,10 @@ describe("Pinblock", function() {
     it("should encode pinblock to ATM format", function() {
       expect(pinblock.encode_to_atm_format('0123456789ABCDEF')).toEqual('0123456789:;=<>?');
     });
+
+    it("should format to empty string when the empty string passed as pinblock", function() {
+      expect(pinblock.encode_to_atm_format('')).toEqual('');
+    });
   });
 
   describe("decode_from_atm_format()", function(){

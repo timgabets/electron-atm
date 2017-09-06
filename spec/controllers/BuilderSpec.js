@@ -54,7 +54,7 @@ describe("Builder", function() {
         buffer_C: '1337',
         track1: '%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?',
       };
-      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C;011234567890123445=724724000000000****00300XXXX020200099010=********************==1=100000000000000000**?*\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
+      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C;011234567890123445=724724000000000****00300XXXX020200099010=********************==1=100000000000000000**?*\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
     });
 
     it("should build Unsolicited Transaction Request message without track2 provided", function() {
@@ -70,7 +70,7 @@ describe("Builder", function() {
         buffer_C: '1337',
         track1: '%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?',
       };
-      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C1?\x1C\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
+      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C\x1C1?\x1C\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
     });
 
     it("should build Unsolicited Transaction Request message without opcode_buffer provided", function() {
@@ -86,7 +86,7 @@ describe("Builder", function() {
         buffer_C: '1337',
         track1: '%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?',
       };
-      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1C\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
+      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1C\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
     });
 
     it("should build Unsolicited Transaction Request message without amount_buffer provided", function() {
@@ -102,7 +102,7 @@ describe("Builder", function() {
         buffer_C: '1337',
         track1: '%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?',
       };
-      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
+      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
     });
 
     it("should build Unsolicited Transaction Request message without PIN_buffer provided", function() {
@@ -118,7 +118,7 @@ describe("Builder", function() {
         buffer_C: '1337',
         track1: '%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?',
       };
-      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
+      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C\x1C19671994\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
     });
 
     it("should build Unsolicited Transaction Request message without Buufer B provided", function() {
@@ -134,7 +134,7 @@ describe("Builder", function() {
         buffer_C: '1337',
         track1: '%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?',
       };
-      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
+      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C\x1C1337\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
     });
 
     it("should build Unsolicited Transaction Request message without Buffer C provided", function() {
@@ -150,7 +150,7 @@ describe("Builder", function() {
         buffer_B: '19671994',
         track1: '%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?',
       };
-      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
+      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C\x1C%B1234567890123445^PADILLA/L.                ^99011X100000*000000000XXX000000?\x1C');
     });
 
     it("should build Unsolicited Transaction Request message without Track 1 data provided", function() {
@@ -166,7 +166,7 @@ describe("Builder", function() {
         buffer_B: '19671994',
         buffer_C: '1337'
       };
-      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C\x1C');
+      expect(b.build(object)).toEqual('11\x1C777\x1C\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C\x1C');
     });
 
   });

@@ -47,6 +47,8 @@ Builder.prototype.build = function(object){
           message += this.luno;
           message += '\x1C';
           message += '\x1C';
+          object.time_variant_number ? message += object.time_variant_number : message += '';
+          message += '\x1C';
           message += object.top_of_receipt;
           message += object.message_coordination_number;
           message += '\x1C';

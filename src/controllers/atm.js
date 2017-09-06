@@ -24,19 +24,37 @@ function ATM(settings, log) {
 
   /**
    * [setFDKsActiveMask set the current FDK mask ]
-   * @param {[type]} mask [number from 000 to 255, represented as string]
+   * @param {[type]} mask [1. number from 000 to 255, represented as string, OR
+   *                       2. binary mask, represented as string, e.g. 100011000 ]
    */
   this.setFDKsActiveMask = function(mask){
-    if(mask > 255){
-      log.error('Invalid FDK mask: ' + mask);
-      return;
-    }
+    if(mask.length <= 3){
+      // 1. mask is a number from 000 to 255, represented as string
+      if(mask > 255){
+        log.error('Invalid FDK mask: ' + mask);
+        return;
+      }
 
-    this.activeFDKs = [];
-    var FDKs = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];
-    for(var bit = 0; bit < 8; bit++)
-      if((mask & Math.pow(2, bit)).toString() !== '0')
-        this.activeFDKs.push(FDKs[bit]);
+      this.activeFDKs = [];
+      var FDKs = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];  // E excluded
+      for(var bit = 0; bit < 8; bit++)
+        if((mask & Math.pow(2, bit)).toString() !== '0')
+          this.activeFDKs.push(FDKs[bit]);
+
+    } else if(mask.length > 0)
+    {
+      // 2. mask is a binary mask, represented as string, e.g. 100011000 
+      this.activeFDKs = [];
+      var activator = mask[0];
+
+      var FDKs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']; // E included
+      for(var i = 0; i < mask.length; i++)
+          if(mask[i] === '1')
+            this.activeFDKs.push(FDKs[i]);
+    } else
+    {
+      log.error('Empty FDK mask');
+    }
   }
 
   /**
@@ -123,6 +141,23 @@ function ATM(settings, log) {
         return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Command Reject');
+  };
+
+  /**
+   * [processInteractiveTransactionResponse description]
+   * @param  {[type]} data [description]
+   * @return {[type]}      [description]
+   */
+  this.processInteractiveTransactionResponse = function(data){
+    if(data.active_keys){
+      //setFDKsActiveMask
+      100010000
+
+    }
+
+
+
+    return this.replySolicitedStatus('Ready');
   };
 
   /**
@@ -596,7 +631,7 @@ function ATM(settings, log) {
          * 03X - Amount buffer
          * X specifies the number of zeros in the range 0-9
          */
-        // Checking number of zeores to pad
+        // Checking number of zeroes to pad
         var num_of_zeroes = state.buffer_id.substr(2, 1);
         for (var i = 0; i < num_of_zeroes; i++)
           buffer_value += '0';
@@ -631,7 +666,6 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateY = function(state){
-    log.info(this.trace.object(state));
     this.setScreen(state.screen_number);
     this.setFDKsActiveMask(state.FDK_active_mask);
 

@@ -809,6 +809,20 @@ function ATM(settings, log) {
     }
   }
 
+  this.initKeys = function(){
+    this.terminal_master_key = settings.get('terminal_master_key');
+    if(!this.terminal_master_key){
+      this.terminal_master_key = '4BA59DC607B13AF49F3CD22CB2FDA11E';
+      settings.set('terminal_master_key', this.terminal_master_key);
+    }
+
+    this.terminal_pin_key = settings.get('terminal_pin_key');
+    if(!this.terminal_pin_key){
+      this.terminal_pin_key = '24F9CC53E456DD2147224E4BDBD190FC';
+      settings.set('terminal_pin_key', this.terminal_pin_key);
+    }
+  };
+
   this.trace = new Trace();
   this.states = new StatesService(settings, log);
   this.screens = new ScreensService(settings, log);
@@ -817,12 +831,13 @@ function ATM(settings, log) {
 
   this.status = 'Offline';
   this.initBuffers();
+  this.initKeys();
   this.current_screen = {};
   this.current_state = {};
   this.buttons_pressed = [];
   this.activeFDKs = [];
   this.transaction_request = null;
-  this.terminal_pin_key = '24F9CC53E456DD2147224E4BDBD190FC';
+
 }
 
 /**

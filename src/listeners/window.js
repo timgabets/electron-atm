@@ -119,4 +119,22 @@ $(function () {
     }
   }, 200);
 
+  // Terminal key update
+  var terminal_pin_key = '';
+  setInterval(function() {
+    if(atm.terminal_pin_key != terminal_pin_key){
+      terminal_pin_key = atm.terminal_pin_key;
+      $("#comms-key").val(terminal_pin_key);
+    }
+  }, 200);
+
+  // Master key update
+  var terminal_master_key = '';
+  setInterval(function() {
+    if(atm.terminal_master_key != terminal_master_key){
+      terminal_master_key = atm.terminal_master_key;
+      $("#master-key").val(terminal_master_key);
+    }
+  }, 200);
+
 })

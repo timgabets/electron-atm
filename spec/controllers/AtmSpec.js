@@ -13,11 +13,16 @@ describe("ATM", function() {
   var atm, settings;
 
   beforeEach(function() {
+    var s = {};
     settings = {
-      get: function() {
-        return {};
+      get: function(item) {
+        if(s[item])
+          return s[item]
+        else
+          return {};
       },
-      set: function(value){
+      set: function(item, value){
+        s[item] = value;
       }
     };
 
@@ -613,15 +618,15 @@ describe("ATM", function() {
       expect(atm.activeFDKs).toEqual(['A', 'I']);
     });
 
-    it("FDK mask 100010000 should enable buttons A, E (Cancel) and F", function(){
+    it("FDK mask 0100010000 should enable buttons A, E (Cancel) and F", function(){
       expect(atm.activeFDKs).toEqual([]);
-      atm.setFDKsActiveMask('100011000');
+      atm.setFDKsActiveMask('0100011000');
       expect(atm.activeFDKs).toEqual(['A', 'E', 'F']);
     });
 
-    it("FDK mask 111111111 should enable all the buttons", function(){
+    it("FDK mask 0111111111 should enable all the buttons", function(){
       expect(atm.activeFDKs).toEqual([]);
-      atm.setFDKsActiveMask('111111111');
+      atm.setFDKsActiveMask('0111111111');
       expect(atm.activeFDKs).toEqual(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']);
     });
   });
@@ -936,5 +941,35 @@ describe("ATM", function() {
       atm.terminal_master_key = null;
       expect(atm.setCommsKey(data.new_key_data, data.new_key_length)).toBeFalsy()
     })
+  });
+
+  describe('getMessageCoordinationNumber', function(){
+    it('should return proper message coordination number', function(){
+      settings.set('message_coordination_number', '0');
+
+      // ASCII code 49 
+      expect(atm.getMessageCoordinationNumber()).toEqual('1');
+      // 50
+      expect(atm.getMessageCoordinationNumber()).toEqual('2');
+
+      for (var i =0; i < 10; i++ )
+        atm.getMessageCoordinationNumber();
+
+      // 61
+      expect(atm.getMessageCoordinationNumber()).toEqual('=');
+    });
+
+    it('should rotate message coordination number', function(){
+      settings.set('message_coordination_number', '0');
+      expect(atm.getMessageCoordinationNumber()).toEqual('1');
+      for (var i =0; i < 75; i++ )
+        atm.getMessageCoordinationNumber();
+
+      expect(atm.getMessageCoordinationNumber()).toEqual('}');
+      expect(atm.getMessageCoordinationNumber()).toEqual('~');
+      // End of cycle, should start over again
+      expect(atm.getMessageCoordinationNumber()).toEqual('1');
+      expect(atm.getMessageCoordinationNumber()).toEqual('2');
+    });
   });
 });

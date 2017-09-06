@@ -45,7 +45,9 @@ function ATM(settings, log) {
     {
       // 2. mask is a binary mask, represented as string, e.g. 100011000 
       this.activeFDKs = [];
-      var activator = mask[0];
+      
+      // The first character of the mask is a 'Numeric Keys activator', and is not currently processed
+      mask = mask.substr(1, mask.length);
 
       var FDKs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']; // E included
       for(var i = 0; i < mask.length; i++)
@@ -149,13 +151,13 @@ function ATM(settings, log) {
    * @return {[type]}      [description]
    */
   this.processInteractiveTransactionResponse = function(data){
-    if(data.active_keys){
-      //setFDKsActiveMask
-      100010000
+    this.interactive_transaction = true;
 
+    if(data.active_keys){
+      this.setFDKsActiveMask(data.active_keys)
     }
 
-
+    // TODO: update screen data from data.screen_data_field
 
     return this.replySolicitedStatus('Ready');
   };
@@ -273,12 +275,11 @@ function ATM(settings, log) {
   this.getMessageCoordinationNumber = function(){
     var saved = settings.get('message_coordination_number');
     if(!saved)
-      saved = '\x31';
+      saved = '0';
 
-    saved = (parseInt(saved) + 1).toString();
-
-    if(saved > '\x3F')
-      saved = '\x31';
+    saved = String.fromCharCode(saved.toString().charCodeAt(0) + 1);
+    if(saved.toString().charCodeAt(0) > 126)
+      saved = '1';
 
     settings.set('message_coordination_number', saved);
     return saved;
@@ -505,51 +506,63 @@ function ATM(settings, log) {
       message_coordination_number: this.getMessageCoordinationNumber(),
     };
 
-    if(state.send_track2 === '001')
-      request.track2 = this.track2;
+    if(!this.interactive_transaction)
+    {
+      if(state.send_track2 === '001')
+        request.track2 = this.track2;
 
-    // Send Track 1 and/or Track 3 option is not supported 
+      // Send Track 1 and/or Track 3 option is not supported 
 
-    if(state.send_operation_code === '001')
-      request.opcode_buffer = this.opcode_buffer;
+      if(state.send_operation_code === '001')
+        request.opcode_buffer = this.opcode_buffer;
 
-    if(state.send_amount_data === '001')
-      request.amount_buffer = this.amount_buffer;
+      if(state.send_amount_data === '001')
+        request.amount_buffer = this.amount_buffer;
 
-    switch(state.send_pin_buffer){
-      case '001':   // Standard format. Send Buffer A
-      case '129':   // Extended format. Send Buffer A
-        request.PIN_buffer = this.getEncryptedPIN();
-        break;
-      case '000':   // Standard format. Do not send Buffer A
-      case '128':   // Extended format. Do not send Buffer A
-      default:
-        break;
-    }
+      switch(state.send_pin_buffer){
+        case '001':   // Standard format. Send Buffer A
+        case '129':   // Extended format. Send Buffer A
+          request.PIN_buffer = this.getEncryptedPIN();
+          break;
+        case '000':   // Standard format. Do not send Buffer A
+        case '128':   // Extended format. Do not send Buffer A
+        default:
+          break;
+      }
 
-    switch(state.send_buffer_B_buffer_C){
-      case '000': // Send no buffers
-        break;
+      switch(state.send_buffer_B_buffer_C){
+        case '000': // Send no buffers
+          break;
 
-      case '001': // Send Buffer B
-        request.buffer_B = this.buffer_B;
-        break;
+        case '001': // Send Buffer B
+          request.buffer_B = this.buffer_B;
+          break;
 
-      case '002': // Send Buffer C
-        request.buffer_C = this.buffer_C;
-        break;
+        case '002': // Send Buffer C
+          request.buffer_C = this.buffer_C;
+          break;
 
-      case '003': // Send Buffer B and C
-        request.buffer_B = this.buffer_B;
-        request.buffer_C = this.buffer_C;
-        break;
+        case '003': // Send Buffer B and C
+          request.buffer_B = this.buffer_B;
+          request.buffer_C = this.buffer_C;
+          break;
 
-      default:
-        // TODO: If the extended format is selected in table entry 8, this entry is an Extension state number.
-        if(state.send_pin_buffer in ['128', '129']){
-          null;
-        }
-        break;
+        default:
+          // TODO: If the extended format is selected in table entry 8, this entry is an Extension state number.
+          if(state.send_pin_buffer in ['128', '129']){
+            null;
+          }
+          break;
+      }
+    } else {
+      this.interactive_transaction = false;
+
+      // Keyboard data entered after receiving an Interactive Transaction Response is stored in General Purpose Buffer B
+      var button = this.buttons_pressed.shift();
+      if(this.isFDKButtonActive(button)){
+        this.buffer_B = button;
+        request.buffer_B = button;
+      }
     }
 
 

@@ -79,7 +79,8 @@ $(function () {
   setInterval(function() {
     if(atm.current_state.number != current_state){
       current_state = atm.current_state.number;
-      $("#current-state").val(atm.current_state.number.toString() + ' ' + atm.current_state.type);
+      if(atm.current_state.number)
+        $("#current-state").val(atm.current_state.number.toString() + ' ' + atm.current_state.type);
     }
   }, 200);
 

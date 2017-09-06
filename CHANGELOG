@@ -1,4 +1,5 @@
 September 2017
+	0.4.5 Fixed bug with message coordination number rotation
 	0.4.4 Showing current state and screen
 	0.4.3 Saving encryption keys in a settings file
 

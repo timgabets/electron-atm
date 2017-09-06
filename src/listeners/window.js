@@ -74,6 +74,24 @@ $(function () {
     }
   }, 200);
 
+  // Current state update
+  var current_state = '';
+  setInterval(function() {
+    if(atm.current_state.number != current_state){
+      current_state = atm.current_state.number;
+      $("#current-state").val(atm.current_state.number.toString() + ' ' + atm.current_state.type);
+    }
+  }, 200);
+
+  // Current screen update
+  var current_screen = '';
+  setInterval(function() {
+    if(atm.current_screen.number != current_screen){
+      current_screen = atm.current_screen.number;
+      $("#current-screen").val(atm.current_screen.number);
+    }
+  }, 200);
+
   // PIN buffer update
   var PIN_buffer = '';
   setInterval(function() {

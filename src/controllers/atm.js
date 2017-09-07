@@ -505,13 +505,25 @@ function ATM(settings, log) {
 
     log.info(trace.object(state));
 
-    // state.buffer_and_display_params is Entry Mode, Buffer and Display Parameters.
-    // Format NND, Range N = 00 and 01-32, Range D = 0-3.
-    // TODO: currently only the D (the last character processed)
-
     var button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
       return state['FDK_' + button + '_next_state'];
+    }
+
+    switch(state.buffer_and_display_params[2])
+    {
+      case '0':
+      case '1':
+        this.buffer_C = '';
+        break;
+
+      case '2':
+      case '3':
+        this.buffer_B = '';
+        break;
+
+      default: 
+        log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
     }
   };
 

@@ -255,7 +255,8 @@ describe("ATM", function() {
       // PIN block related data
       atm.PIN_buffer = '1234';
       atm.card = {number: '4000001234562000'};
-      atm.terminal_pin_key = 'DEADBEEFDEADBEEFDEADBEEFDEADBEEF';
+      atm.initKeys();
+      atm.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
     });
 
     it("should properly fill transaction request data when send_operation_code is enabled", function(){
@@ -1027,15 +1028,17 @@ describe("ATM", function() {
     beforeEach(function() {
       atm.PIN_buffer = '1234';
       atm.card = {number: '4000001234562000'};
-      atm.terminal_pin_key = 'DEADBEEFDEADBEEFDEADBEEFDEADBEEF';
+      atm.initKeys();
+      atm.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
     });
 
     it('should get encrypted PIN', function(){
       expect(atm.getEncryptedPIN()).toEqual('=3;:1>04<88654=4');
     });
 
-    it('should return null if no termianl key', function(){
-      atm.terminal_pin_key = undefined;
+    it('should return null if no terminal key', function(){
+      atm.initKeys();      
+      atm.setTerminalKey(undefined);
       expect(atm.getEncryptedPIN()).toBeNull();
     });    
   });
@@ -1052,8 +1055,9 @@ describe("ATM", function() {
 
   describe('setCommsKey()', function(){
     beforeEach(function() {
-      atm.terminal_master_key = 'B6D55EABAD23BC4FD558F8D619A21C34';
-      atm.terminal_pin_key = 'DEADBEEFDEADBEEFDEADBEEFDEADBEEF';
+      atm.initKeys();
+      atm.setMasterKey('B6D55EABAD23BC4FD558F8D619A21C34');
+      atm.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
     });
 
     it('should change terminal PIN key', function(){
@@ -1072,9 +1076,9 @@ describe("ATM", function() {
         28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
        */
 
-      expect(atm.terminal_pin_key).toEqual('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+      expect(atm.getTerminalKey()).toEqual('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
       expect(atm.setCommsKey(data.new_key_data, data.new_key_length)).toBeTruthy()
-      expect(atm.terminal_pin_key).toEqual('7B278B03B439DDCACF8B3333AC591BCA');
+      expect(atm.getTerminalKey()).toEqual('7B278B03B439DDCACF8B3333AC591BCA');
     })
 
     it('should raise if master key is empty', function(){
@@ -1093,7 +1097,8 @@ describe("ATM", function() {
         28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
        */
 
-      atm.terminal_master_key = null;
+      atm.initKeys();
+      atm.setMasterKey(null) ;
       expect(atm.setCommsKey(data.new_key_data, data.new_key_length)).toBeFalsy()
     })
   });
@@ -1125,6 +1130,45 @@ describe("ATM", function() {
       // End of cycle, should start over again
       expect(atm.getMessageCoordinationNumber()).toEqual('1');
       expect(atm.getMessageCoordinationNumber()).toEqual('2');
+    });
+  });
+
+  describe('getTerminalKey() and getMasterKey()', function(){
+    beforeEach(function() {
+      atm.initKeys();
+      atm.setMasterKey('B6D55EABAD23BC4FD558F8D619A21C34');
+      atm.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+    });
+
+    it('should get terminal key', function(){
+      expect(atm.getTerminalKey()).toEqual('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+    });
+
+    it('should get master key', function(){
+      expect(atm.getMasterKey()).toEqual('B6D55EABAD23BC4FD558F8D619A21C34');
+    });
+  });
+
+  describe('setTerminalKey() and setMasterKey()', function(){
+    beforeEach(function() {
+      atm.initKeys();
+      atm.setMasterKey('B6D55EABAD23BC4FD558F8D619A21C34');
+      atm.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+      spyOn(settings, 'set');
+    });
+
+    it('should set terminal key', function(){
+      expect(atm.getTerminalKey()).toEqual('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+      atm.setTerminalKey('B667E96A6D5C961CB667E96A6D5C961C');
+      expect(atm.getTerminalKey()).toEqual('B667E96A6D5C961CB667E96A6D5C961C');
+      expect(settings.set).toHaveBeenCalled();
+    });
+
+    it('should set master key', function(){
+      expect(atm.getMasterKey()).toEqual('B6D55EABAD23BC4FD558F8D619A21C34');
+      atm.setMasterKey('D2C4E412AE89A92AD2C4E412AE89A92A');
+      expect(atm.getMasterKey()).toEqual('D2C4E412AE89A92AD2C4E412AE89A92A');
+      expect(settings.set).toHaveBeenCalled();
     });
   });
 });

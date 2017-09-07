@@ -188,14 +188,15 @@ function ATM(settings, log) {
     }
 
     log.info('New comms key received: ' + comms_key);
-    if(!this.terminal_master_key)
+    if(!this.keys.master_key.key)
     {
-      log.error('Invalid master key: ' + this.terminal_master_key);
+      log.error('Invalid master key: ' + this.keys.master_key.key);
       return false;
     }
 
-    this.terminal_pin_key = des3.ecb_decrypt(this.terminal_master_key, comms_key);
-    log.info('New comms key value: ' + this.terminal_pin_key);
+    this.keys.pin_key.key = des3.ecb_decrypt(this.keys.master_key.key, comms_key);
+    log.info('New comms key value: ' + this.keys.pin_key.key);
+    settings.set('pin_key', this.keys.pin_key.key);
     return true;
   }
 
@@ -290,10 +291,10 @@ function ATM(settings, log) {
    * @return {[type]}           [description]
    */
   this.getEncryptedPIN = function(){
-    if(this.terminal_pin_key){
+    if(this.keys.pin_key.key){
       log.info('Clear PIN block:     [' + this.pinblock.get(this.PIN_buffer, this.card.number) + ']')
 
-      var encrypted_pinblock = des3.ecb_encrypt(this.terminal_pin_key, this.pinblock.get(this.PIN_buffer, this.card.number));
+      var encrypted_pinblock = des3.ecb_encrypt(this.keys.pin_key.key, this.pinblock.get(this.PIN_buffer, this.card.number));
       log.info('Encrypted PIN block: [' + encrypted_pinblock + ']');
 
       var atm_pinblock = this.pinblock.encode_to_atm_format(encrypted_pinblock);
@@ -907,17 +908,54 @@ function ATM(settings, log) {
   }
 
   this.initKeys = function(){
-    this.terminal_master_key = settings.get('terminal_master_key');
-    if(!this.terminal_master_key){
-      this.terminal_master_key = '4BA59DC607B13AF49F3CD22CB2FDA11E';
-      settings.set('terminal_master_key', this.terminal_master_key);
-    }
+    this.keys = {
+      master_key: {
+        key: '', 
+        check_value: ''},
+      pin_key: {
+        key: '', 
+        check_value: ''}
+    };
 
-    this.terminal_pin_key = settings.get('terminal_pin_key');
-    if(!this.terminal_pin_key){
-      this.terminal_pin_key = '24F9CC53E456DD2147224E4BDBD190FC';
-      settings.set('terminal_pin_key', this.terminal_pin_key);
-    }
+    var key = settings.get('master_key');
+    (key) ? this.setMasterKey(key) : this.setMasterKey('4BA59DC607B13AF49F3CD22CB2FDA11E');
+
+    var key = settings.get('pin_key');
+    (key) ? this.setTerminalKey(key) : this.setTerminalKey('1E9CA58EBE65FF4B6F339393142DA096');
+  };
+
+  /**
+   * [getTerminalKey description]
+   * @return {[type]} [description]
+   */
+  this.getTerminalKey = function(){
+    return this.keys.pin_key.key;
+  };
+
+  /**
+   * [setTerminalKey description]
+   * @param {[type]} key [description]
+   */
+  this.setTerminalKey = function(key){
+    this.keys.pin_key.key = key;
+    settings.set('pin_key', key);
+  };
+
+  /**
+   * [getMasterKey description]
+   * @return {[type]} [description]
+   */
+  this.getMasterKey = function(){
+    return this.keys.master_key.key;
+  };
+
+  /**
+   * [setMasterKey description]
+   * @param {[type]} key [description]
+   */
+  this.setMasterKey = function(key){
+    this.keys.master_key.key = key;
+    settings.set('master_key', key);
   };
 
   this.trace = new Trace();
@@ -943,7 +981,7 @@ function ATM(settings, log) {
  * @return {[type]}        [description]
  */
 ATM.prototype.processFDKButtonPressed = function(button){
-  log.info(button + ' button pressed');
+  // log.info(button + ' button pressed');
 
   switch(this.current_state.type){
     case 'B':

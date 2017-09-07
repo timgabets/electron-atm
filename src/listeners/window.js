@@ -139,20 +139,20 @@ $(function () {
   }, 200);
 
   // Terminal key update
-  var terminal_pin_key = '';
+  var pin_key = '';
   setInterval(function() {
-    if(atm.terminal_pin_key != terminal_pin_key){
-      terminal_pin_key = atm.terminal_pin_key;
-      $("#comms-key").val(terminal_pin_key);
+    if(atm.keys.pin_key.key != pin_key){
+      pin_key = atm.keys.pin_key.key;
+      $("#comms-key").val(pin_key);
     }
   }, 200);
 
   // Master key update
-  var terminal_master_key = '';
+  var master_key = '';
   setInterval(function() {
-    if(atm.terminal_master_key != terminal_master_key){
-      terminal_master_key = atm.terminal_master_key;
-      $("#master-key").val(terminal_master_key);
+    if(atm.keys.master_key.key != master_key){
+      master_key = atm.keys.master_key.key;
+      $("#master-key").val(master_key);
     }
   }, 200);
 

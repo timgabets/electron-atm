@@ -50,6 +50,10 @@ html, body, .container-fluid {
   width: 670px;
 }
 
+.keys {
+  font-family: monospace;
+}
+
 img {
   border:1px solid #021a40;
   border-radius: 5px;

@@ -924,12 +924,20 @@ function ATM(settings, log) {
     (key) ? this.setTerminalKey(key) : this.setTerminalKey('1E9CA58EBE65FF4B6F339393142DA096');
   };
 
+  this.getKeyCheckValue = function(key){
+    var kcv = des3.ecb_encrypt(key, '00000000000000000000000000000000');
+    if(kcv)
+      return kcv.substr(0, 6);
+    else
+      return null;
+  }
+
   /**
    * [getTerminalKey description]
    * @return {[type]} [description]
    */
   this.getTerminalKey = function(){
-    return this.keys.pin_key.key;
+    return [this.keys.pin_key.key, this.getKeyCheckValue(this.keys.pin_key.key)];
   };
 
   /**
@@ -946,7 +954,7 @@ function ATM(settings, log) {
    * @return {[type]} [description]
    */
   this.getMasterKey = function(){
-    return this.keys.master_key.key;
+    return [this.keys.master_key.key, this.getKeyCheckValue(this.keys.master_key.key)] ;
   };
 
   /**

@@ -35,11 +35,11 @@ function Pinblock(){
           break;
 
         case 'C':
-          atm_pinblock += '='
+          atm_pinblock += '<'
           break;
 
         case 'D':
-          atm_pinblock += '<'
+          atm_pinblock += '='
           break;
 
         case 'E':
@@ -72,11 +72,11 @@ function Pinblock(){
           pinblock += 'B'
           break;
 
-        case '=':
+        case '<':
           pinblock += 'C'
           break;
 
-        case '<':
+        case '=':
           pinblock += 'D'
           break;
 

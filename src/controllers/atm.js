@@ -485,9 +485,35 @@ function ATM(settings, log) {
       else
         log.error('Invalid buffer location value: ' + state.buffer_location + '. Operation Code buffer is not changed');
 
-      return state['FDK_' + button + '_next_state'];      
+      return state['FDK_' + button + '_next_state'];
     }
   }
+
+  this.processInformationEntryState = function(state){
+    this.setScreen(state.screen_number);
+    var active_mask = '0';
+    [state.FDK_A_next_state,
+     state.FDK_B_next_state,
+     state.FDK_C_next_state,
+     state.FDK_D_next_state].forEach((element, index) => {
+      if(element !== '255')
+        active_mask += '1';
+      else
+        active_mask += '0';
+    })
+    this.setFDKsActiveMask(active_mask);
+
+    log.info(trace.object(state));
+
+    // state.buffer_and_display_params is Entry Mode, Buffer and Display Parameters.
+    // Format NND, Range N = 00 and 01-32, Range D = 0-3.
+    // TODO: currently only the D (the last character processed)
+
+    var button = this.buttons_pressed.shift();
+    if(this.isFDKButtonActive(button)){
+      return state['FDK_' + button + '_next_state'];
+    }
+  };
 
 
   /**
@@ -780,6 +806,10 @@ function ATM(settings, log) {
           next_state = this.processAmountEntryState(state);
           break;
 
+        case 'H':
+          next_state = this.processInformationEntryState(state);
+          break;
+
         case 'I':
           next_state = this.processTransactionRequestState(state);
           break;
@@ -961,6 +991,36 @@ ATM.prototype.processPinpadButtonPressed = function(button){
           this.amount_buffer = this.amount_buffer.substr(1) + button;
           break;
       }
+      break;
+
+    case 'H':
+      if( this.current_state.buffer_and_display_params[2] === '0' || this.current_state.buffer_and_display_params[2] === '1'){
+        // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+        // 1 - Display data as keyed in. Store data in general-purpose Buffer C
+        switch(button){
+          case 'backspace':
+            this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1)
+            break;
+          default:
+            if(this.buffer_C.length < 12)
+              this.buffer_C += button;
+            break;
+        }
+      } else if(  this.current_state.buffer_and_display_params[2] === '2' || this.current_state.buffer_and_display_params[2] === '3'){
+        // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+        // 3 - Display data as keyed in. Store data in general-purpose Buffer B
+        switch(button){
+          case 'backspace':
+            this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1)
+            break;
+          default:
+            if(this.buffer_B.length < 12)
+              this.buffer_B += button;
+            break;
+        }
+      } else
+        log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
+
       break;
 
     default:

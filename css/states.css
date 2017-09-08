@@ -6,26 +6,24 @@ img {
   border-radius: 10px;
 }
 
-#mynetwork {
- width: 900px;
- height: 620px;
- border: 1px solid;
- border-radius: 10px;
+.mynetwork {
+  width: 900px;
+  height: 620px;
+  border: 1px solid;
+  border-radius: 10px;
+  margin-left: 20px;
+  display:inline-block;
+  margin-right:10px;
 }
 
-#mynetwork {
- display:inline-block;
- margin-right:10px;
-} 
-
-#states-screen {
- display:inline-block;
- margin-bottom:10px;
+.states-screen {
+  display:inline-block;
+  margin-bottom:10px;
 } 
 
 .state-details {
   margin-top:10px;
-  height: 240px;
+  height: 250px;
   color: #575B5E;
   font-size: 9px;
   font-family: monospace;

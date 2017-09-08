@@ -15,9 +15,21 @@ img {
 
 #mynetwork {
  display:inline-block;
- margin-right:20px;
+ margin-right:10px;
 } 
 
 #states-screen {
  display:inline-block;
+ margin-bottom:10px;
 } 
+
+.state-details {
+  margin-top:10px;
+  height: 240px;
+  color: #575B5E;
+  font-size: 9px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  border:1px solid #021a40;
+  border-radius: 10px;
+}

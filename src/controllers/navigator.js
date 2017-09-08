@@ -55,7 +55,7 @@ graph.on("click", function (params) {
     var screen = screens.get(state.screen_number);
 
     if(screen && screen.image_file){
-      document.getElementById('screen').setAttribute("src", "/home/tim/share/screens/" + screen.image_file);
+      document.getElementById('states-screen').setAttribute("src", "/home/tim/share/screens/" + screen.image_file);
     }
   }
 });

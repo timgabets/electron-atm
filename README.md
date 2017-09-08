@@ -44,13 +44,14 @@ Currently only the basic stuff is working, such as:
  * Receiving screens from host
  * Receiving FITs (financial insitution tables) from host
  * Showing traces in a log area
- * Saving ATM configuration data (such as states, screens and FITs) and restoring it on application start
+ * Saving ATM configuration data (such as states, screens, FITs, ConfigID, counters etc) and restoring it on application start
  * Crypto support: PIN block encryption, dynamic key exchange etc. (Triple DES double length key only)
+ * State Navigator: showing graph of states
  * State Navigator: updating screen image when jumping through the states
  * State Navigator: displaying state details when state sleected
 
 Things to be implemented (very) soon:
- * Showing text upon the image screen
+ * Showing text upon the image screen (for interactive transactions)
  * Saving the image path in user settings
  * ICC support
 

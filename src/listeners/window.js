@@ -144,8 +144,9 @@ $(function () {
     if(atm.keys.pin_key.key != pin_key){
       pin_key = atm.keys.pin_key.key;
       $("#comms-key").val(pin_key);
+      $("#comms-key-cv").val(atm.getTerminalKey()[1]);
     }
-  }, 200);
+  }, 500);
 
   // Master key update
   var master_key = '';
@@ -153,7 +154,8 @@ $(function () {
     if(atm.keys.master_key.key != master_key){
       master_key = atm.keys.master_key.key;
       $("#master-key").val(master_key);
+      $("#master-key-cv").val(atm.getMasterKey()[1]);
     }
-  }, 200);
+  }, 500);
 
 })

@@ -614,6 +614,8 @@ function ATM(settings, log) {
    */
   this.processCloseState = function(state){
     this.setScreen(state.receipt_delivered_screen);
+    this.setFDKsActiveMask('000');  // Disable all FDK buttons
+    log.info(trace.object(state));
   }
 
   /**

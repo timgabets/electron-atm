@@ -50,7 +50,11 @@ html, body, .container-fluid {
   width: 670px;
 }
 
-.keys {
+.key {
+  font-family: monospace;
+}
+
+.key-check-value {
   font-family: monospace;
 }
 

@@ -64,7 +64,7 @@ function ATM(settings, log) {
    * @param  {[type]} status [description]
    * @return {[type]}        [description]
    */
-  this.replySolicitedStatus = function(status){
+  this.replySolicitedStatus = function(status, command_code){
     var reply = {};
     reply.message_class = 'Solicited';
     reply.message_subclass = 'Status'; 
@@ -78,7 +78,14 @@ function ATM(settings, log) {
         
       case 'Terminal State':
         reply.status_descriptor = status;
-        reply.config_id = this.getConfigID();
+        switch(command_code){
+          case 'Send Configuration ID':
+            reply.config_id = this.getConfigID();
+            break;
+
+          default:
+            break;
+        }
         break;
 
       default:
@@ -102,8 +109,8 @@ function ATM(settings, log) {
       case 'Go out-of-service':
         this.status = 'Out-Of-Service';
         break;
-      case 'Configuration Parameters Load':
-        return this.replySolicitedStatus('Terminal State');
+      case 'Send Configuration ID':
+        return this.replySolicitedStatus('Terminal State', data.command_code);
 
       default:
           log.error('atm.processTerminalCommand(): unknown command code: ' + data.command_code);

@@ -276,7 +276,7 @@ describe("Parser", function() {
         message_class: 'Terminal Command', 
         LUNO: '000', 
         message_sequence_number: '000', 
-        command_code: 'Configuration Parameters Load' 
+        command_code: 'Send Configuration ID' 
       };
       /*
        *  00 0c 31 30 1c 30 30 30 1c 30 30 30 1c 33               ..10.000.000.3

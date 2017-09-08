@@ -52,6 +52,9 @@ function Parser(){
                 parsed.command_code = 'Go out-of-service';
                 break;
             case '3':
+                parsed.command_code = 'Send Configuration ID';
+                break;
+            case '4':
                 parsed.command_code = 'Configuration Parameters Load';
                 break;
             default:

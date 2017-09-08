@@ -528,8 +528,6 @@ function ATM(settings, log) {
     })
     this.setFDKsActiveMask(active_mask);
 
-    log.info(trace.object(state));
-
     var button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
       return state['FDK_' + button + '_next_state'];
@@ -684,8 +682,6 @@ function ATM(settings, log) {
   this.processStateX = function(state, extension_state){
     this.setScreen(state.screen_number);
     this.setFDKsActiveMask(state.FDK_active_mask);
-
-    log.info(trace.object(state));
 
     var button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){

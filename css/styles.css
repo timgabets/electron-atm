@@ -1,0 +1,66 @@
+html, body, .container-fluid {
+}
+
+.text-input {
+  font-size: 16px;
+}
+
+.hash-output {
+  color: #575B5E;
+  font-size: 16px;
+  letter-spacing: 2px;
+  white-space: pre-wrap;
+}
+
+.log-output {
+  height: 480px;
+  color: #575B5E;
+  font-size: 9px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  border:1px solid #021a40;
+}
+
+.buffers {
+  width: 150px;
+}
+
+.fdk-button-block {
+  margin-top: 150px;
+  width: 80px;
+  border:1px;
+}
+
+.fdk-button {
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.main-area {
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+.buttons-area {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.terminal-screen {
+  width: 670px;
+}
+
+.key {
+  font-family: monospace;
+}
+
+.key-check-value {
+  font-family: monospace;
+}
+
+img {
+  border:1px solid #021a40;
+  border-radius: 5px;
+}
+
+

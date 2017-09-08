@@ -2,7 +2,6 @@
  <head>
   <link rel="stylesheet" href="./vendor/bootstrap-3.3.7.css"> 
   <link rel="stylesheet" href="./css/states.css">
-
   <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" />
   
   <script src="node_modules/vis/dist/vis.js"></script>
@@ -10,14 +9,14 @@
 
  </head>
   <body>
-    <div id="container" class="container-fluid">
-      <div class="row main-states-area">
-        <a href="index.html">Back</a><br/>
-
-        <div id="mynetwork" class="col-md-8"></div>
+  <a href="index.html">Back</a><br/>
+   <div id="container" class="container-fluid">
+      <div class="row">
+        <div id="mynetwork" class="col-md-8 mynetwork"></div>
 
         <div class="col-md-4">
-          <img id="screen" src="/home/tim/share/screens/PIC010.jpg" width="480" height="360">    
+          <img id="states-screen" src="/home/tim/share/screens/PIC010.jpg" width="480" height="360"> 
+          <pre id="state-details" class="state-details" type="text"></pre>
         </div>
       </div>
     </div>

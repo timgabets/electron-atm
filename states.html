@@ -15,8 +15,8 @@
     display:inline-block;
    } 
   </style>
-   
-  <link rel="stylesheet" href="./css/states.css">
+  <link rel="stylesheet" href="./vendor/bootstrap-3.3.7.css">
+  <link rel="stylesheet" href="./css/style.css">
   <link href="node_modules/vis/dist/vis.css" rel="stylesheet" type="text/css" />
   
   <script src="node_modules/vis/dist/vis.js"></script>
@@ -24,9 +24,17 @@
 
  </head>
   <body>
-    <a href="index.html">Back</a><br/>
-    <div id="mynetwork"></div>
-    <img id="screen" src="/home/tim/share/screens/PIC010.jpg" width="480" height="360">    
+    <div id="container" class="container-fluid">
+      <div class="row main-states-area">
+        <a href="index.html">Back</a><br/>
+
+        <div id="mynetwork" class="col-md-8"></div>
+
+        <div class="col-md-4">
+          <img id="screen" src="/home/tim/share/screens/PIC010.jpg" width="480" height="360">    
+        </div>
+      </div>
+    </div>
 
     <script src="./src/controllers/navigator.js"></script>
   </body>

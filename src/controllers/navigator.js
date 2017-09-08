@@ -21,7 +21,7 @@ nodes = states.getNodes();
 
 nodes.forEach(node => {
   node['size'] = 150;
-  node['color'] = 'white';
+  node['color'] = 'silver';
   node['shape'] = 'box';
   node['font'] = {'size': '28', 'face': 'monospace', 'align': 'center'};
   node['heightConstraint'] = { minimum: 100 };

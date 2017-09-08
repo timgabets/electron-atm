@@ -659,6 +659,8 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateW = function(state){
+    log.info(trace.object(state));
+
     return state.states[this.FDK_buffer]
   }
 
@@ -682,6 +684,8 @@ function ATM(settings, log) {
   this.processStateX = function(state, extension_state){
     this.setScreen(state.screen_number);
     this.setFDKsActiveMask(state.FDK_active_mask);
+
+    log.info(trace.object(state));
 
     var button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
@@ -965,7 +969,7 @@ function ATM(settings, log) {
     this.supply_counters = {};
     this.supply_counters.tsn = '0000';
     this.supply_counters.transaction_count = '0000000';
-    this.supply_counters.notes_in_cassettes = '00001000020000300004';
+    this.supply_counters.notes_in_cassettes = '00011000220003300044';
     this.supply_counters.notes_rejected = '00000000000000000000';
     this.supply_counters.notes_dispensed = '00000000000000000000';
     this.supply_counters.last_trxn_notes_dispensed = '00000000000000000000';

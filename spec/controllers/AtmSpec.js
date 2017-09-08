@@ -1209,7 +1209,7 @@ describe("ATM", function() {
 
       expect(reply.tsn).toEqual('0000');
       expect(reply.transaction_count).toEqual('0000000');
-      expect(reply.notes_in_cassettes).toEqual('00001000020000300004');
+      expect(reply.notes_in_cassettes).toEqual('00011000220003300044');
       expect(reply.notes_rejected).toEqual('00000000000000000000');
       expect(reply.notes_dispensed).toEqual('00000000000000000000');
       expect(reply.last_trxn_notes_dispensed).toEqual('00000000000000000000');

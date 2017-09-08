@@ -53,6 +53,7 @@ describe("Parser", function() {
           LUNO: '000', 
           message_sequence_number: '', 
           next_state: '133', 
+          notes_to_dispense: '',
           transaction_serial_number: '0775', 
           function_identifier: '9', 
           screen_number: '064', 

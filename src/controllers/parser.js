@@ -146,6 +146,8 @@ function Parser(){
 
         parsed.next_state = splitted[3]
 
+        parsed.notes_to_dispense = splitted[4];
+
         parsed.transaction_serial_number = splitted[5].substring(0, 4)
         parsed.function_identifier = splitted[5].substring(4, 5)
         parsed.screen_number = splitted[5].substring(5, 8)

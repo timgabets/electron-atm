@@ -1,4 +1,5 @@
 September 2017
+	0.5.5 State Navigator is using bootstrap styling
 	0.5.4 Replying dummy message to 'Send Supply Counters' host command
 	0.5.3 Replying to 'Send Configuration ID' host command
 	0.5.2 Showing Key check values

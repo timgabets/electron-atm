@@ -55,7 +55,7 @@ function Parser(){
                 parsed.command_code = 'Send Configuration ID';
                 break;
             case '4':
-                parsed.command_code = 'Configuration Parameters Load';
+                parsed.command_code = 'Send Supply Counters';
                 break;
             default:
                 break;

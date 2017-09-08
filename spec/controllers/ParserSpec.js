@@ -271,7 +271,7 @@ describe("Parser", function() {
       expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c2')).toEqual(parsed);
     });
 
-    it("should be able to parse 'Configuration Parameters Load' message", function() {
+    it("should be able to parse 'Send Configuration ID' message", function() {
       var parsed = { 
         message_class: 'Terminal Command', 
         LUNO: '000', 
@@ -282,6 +282,19 @@ describe("Parser", function() {
        *  00 0c 31 30 1c 30 30 30 1c 30 30 30 1c 33               ..10.000.000.3
        */
       expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c3')).toEqual(parsed);
+    });
+
+    it("should be able to parse 'Send supply counters' message", function() {
+      var parsed = { 
+        message_class: 'Terminal Command', 
+        LUNO: '000', 
+        message_sequence_number: '000', 
+        command_code: 'Send Supply Counters' 
+      };
+      /*
+       *  00 0c 31 30 1c 30 30 30 1c 30 30 30 1c 34               ..10.000.000.4
+       */
+      expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c4')).toEqual(parsed);
     });
 
   });

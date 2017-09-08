@@ -1192,4 +1192,31 @@ describe("ATM", function() {
       expect(settings.set).toHaveBeenCalled();
     });
   });
+
+  describe('getSupplyCounters()', function(){
+    it('should get supply counters', function(){
+      // TODO:
+    });
+  });
+
+  describe('replySolicitedStatus()', function(){
+    it('should get reply to \'Send Supply Counters\' terminal command', function(){
+      var reply = atm.replySolicitedStatus('Terminal State', 'Send Supply Counters');
+
+      expect(reply.message_class).toEqual('Solicited');
+      expect(reply.message_subclass).toEqual('Status');
+      expect(reply.message_subclass).toEqual('Status');
+
+      expect(reply.tsn).toEqual('0000');
+      expect(reply.transaction_count).toEqual('0000000');
+      expect(reply.notes_in_cassettes).toEqual('00001000020000300004');
+      expect(reply.notes_rejected).toEqual('00000000000000000000');
+      expect(reply.notes_dispensed).toEqual('00000000000000000000');
+      expect(reply.last_trxn_notes_dispensed).toEqual('00000000000000000000');
+      expect(reply.card_captured).toEqual('00000');
+      expect(reply.envelopes_deposited).toEqual('00000');
+      expect(reply.camera_film_remaining).toEqual('00000');
+      expect(reply.last_envelope_serial).toEqual('00000');
+    });
+  });  
 });

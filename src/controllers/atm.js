@@ -83,6 +83,11 @@ function ATM(settings, log) {
             reply.config_id = this.getConfigID();
             break;
 
+          case 'Send Supply Counters':
+            var counters = this.getSupplyCounters();
+            for(var c in counters) reply[c] = counters[c];
+            break;
+
           default:
             break;
         }
@@ -110,6 +115,7 @@ function ATM(settings, log) {
         this.status = 'Out-Of-Service';
         break;
       case 'Send Configuration ID':
+      case 'Send Supply Counters':
         return this.replySolicitedStatus('Terminal State', data.command_code);
 
       default:
@@ -266,6 +272,8 @@ function ATM(settings, log) {
     this.processState(data.next_state);
     return this.replySolicitedStatus('Ready');
   };
+
+
 
 
   /**
@@ -954,6 +962,21 @@ function ATM(settings, log) {
     var config_id = settings.get('config_id');
     (config_id) ? this.setConfigID(config_id) : this.setConfigID('0000');
 
+    this.supply_counters = {};
+    this.supply_counters.tsn = '0000';
+    this.supply_counters.transaction_count = '0000000';
+    this.supply_counters.notes_in_cassettes = '00001000020000300004';
+    this.supply_counters.notes_rejected = '00000000000000000000';
+    this.supply_counters.notes_dispensed = '00000000000000000000';
+    this.supply_counters.last_trxn_notes_dispensed = '00000000000000000000';
+    this.supply_counters.card_captured = '00000';
+    this.supply_counters.envelopes_deposited = '00000';
+    this.supply_counters.camera_film_remaining = '00000';
+    this.supply_counters.last_envelope_serial = '00000';
+  }
+
+  this.getSupplyCounters = function(){
+    return this.supply_counters;
   }
 
   this.getKeyCheckValue = function(key){

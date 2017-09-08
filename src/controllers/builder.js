@@ -29,7 +29,24 @@ Builder.prototype.build = function(object){
               message += 'C';
               break;
             case 'Terminal State':
-              message += 'F\x1C6' + object.config_id;
+              if(object.config_id){
+                // Send Configuration ID
+                message += 'F\x1C6' + object.config_id;
+              } else if(object.tsn) {
+                // Send Supply Counters
+                message += 'F\x1C2';
+                message += object.tsn;
+                message += object.transaction_count;
+                message += object.notes_in_cassettes;
+                message += object.notes_rejected;
+                message += object.notes_dispensed;
+                message += object.last_trxn_notes_dispensed;
+                message += object.card_captured;
+                message += object.envelopes_deposited;
+                message += object.camera_film_remaining;
+                message += object.last_envelope_serial;
+              }
+
               break;
             default:
               message += 'A';

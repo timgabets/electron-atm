@@ -6,3 +6,18 @@ img {
   border-radius: 10px;
 }
 
+#mynetwork {
+ width: 900px;
+ height: 620px;
+ border: 1px solid;
+ border-radius: 10px;
+}
+
+#mynetwork {
+ display:inline-block;
+ margin-right:20px;
+} 
+
+#states-screen {
+ display:inline-block;
+} 

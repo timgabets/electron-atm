@@ -1177,4 +1177,19 @@ describe("ATM", function() {
       expect(atm.getKeyCheckValue('DEADBEEFDEADBEEFDEADBEEFDEADBEEF')).toEqual('2AE358');
     })
   });
+
+  describe('setConfigID() and getConfigID()', function(){
+    beforeEach(function() {
+      atm.initCounters();
+      atm.setConfigID('0000');
+      spyOn(settings, 'set');
+    });
+
+    it('should set ConfigID', function(){
+      expect(atm.getConfigID()).toEqual('0000');
+      atm.setConfigID('0003');
+      expect(atm.getConfigID()).toEqual('0003');
+      expect(settings.set).toHaveBeenCalled();
+    });
+  });
 });

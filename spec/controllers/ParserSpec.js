@@ -235,7 +235,6 @@ describe("Parser", function() {
 */
   });
 
-
   describe("parseDataCommands - Extended Encryption Key Information", function(){
     it("should be able to parse 'Extended Encryption Key Information' message", function() {
       var parsed = { 
@@ -259,14 +258,31 @@ describe("Parser", function() {
   });
 
   describe("parseHostMessage()", function(){
-      it("should be able to parse 'Go out of service message'", function() {
-        var parsed = { 
-          message_class: 'Terminal Command', 
-          LUNO: '000', 
-          message_sequence_number: '000', 
-          command_code: 'Go out-of-service' 
-        };
-        expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c2')).toEqual(parsed);
-      });
+    it("should be able to parse 'Go out of service' message", function() {
+      var parsed = { 
+        message_class: 'Terminal Command', 
+        LUNO: '000', 
+        message_sequence_number: '000', 
+        command_code: 'Go out-of-service' 
+      };
+      /*
+       *  00 0c 31 30 1c 30 30 30 1c 30 30 30 1c 32               ..10.000.000.2
+       */
+      expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c2')).toEqual(parsed);
+    });
+
+    it("should be able to parse 'Configuration Parameters Load' message", function() {
+      var parsed = { 
+        message_class: 'Terminal Command', 
+        LUNO: '000', 
+        message_sequence_number: '000', 
+        command_code: 'Configuration Parameters Load' 
+      };
+      /*
+       *  00 0c 31 30 1c 30 30 30 1c 30 30 30 1c 33               ..10.000.000.3
+       */
+      expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c3')).toEqual(parsed);
+    });
+
   });
 });

@@ -75,8 +75,14 @@ function ATM(settings, log) {
       case 'Specific Command Reject':
         reply.status_descriptor = status;
         break;
+        
+      case 'Terminal State':
+        reply.status_descriptor = status;
+        reply.config_id = this.getConfigID();
+        break;
+
       default:
-        log.info('atm.replySolicitedStatus(): unknown status ' + status);
+        log.error('atm.replySolicitedStatus(): unknown status ' + status);
         reply.status_descriptor = 'Command Reject';
     }
     return reply;
@@ -89,15 +95,18 @@ function ATM(settings, log) {
    */
   this.processTerminalCommand = function(data){
     switch(data.command_code){
-      case 'Go out-of-service':
-        this.status = 'Out-Of-Service';
-        break;
       case 'Go in-service':
         this.status = 'In-Service';
         //this.processState('000');
         break;
+      case 'Go out-of-service':
+        this.status = 'Out-Of-Service';
+        break;
+      case 'Configuration Parameters Load':
+        return this.replySolicitedStatus('Terminal State');
+
       default:
-          log.info('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
+          log.error('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
           return this.replySolicitedStatus('Command Reject');
         }
       return this.replySolicitedStatus('Ready');
@@ -130,7 +139,7 @@ function ATM(settings, log) {
 
       case 'Configuration ID number load':
         if(data.config_id){
-          this.config_id = data.config_id;
+          this.setConfigID(data.config_id);
           return this.replySolicitedStatus('Ready');
         }else{
           log.info('ATM.processDataCommand(): wrong Config ID');
@@ -909,6 +918,10 @@ function ATM(settings, log) {
     }
   }
 
+  /**
+   * [initKeys description]
+   * @return {[type]} [description]
+   */
   this.initKeys = function(){
     this.keys = {
       master_key: {
@@ -925,6 +938,16 @@ function ATM(settings, log) {
     var key = settings.get('pin_key');
     (key) ? this.setTerminalKey(key) : this.setTerminalKey('1E9CA58EBE65FF4B6F339393142DA096');
   };
+
+  /**
+   * [initCounters description]
+   * @return {[type]} [description]
+   */
+  this.initCounters = function(){
+    var config_id = settings.get('config_id');
+    (config_id) ? this.setConfigID(config_id) : this.setConfigID('0000');
+
+  }
 
   this.getKeyCheckValue = function(key){
     var kcv = des3.ecb_encrypt(key, '00000000000000000000000000000000');
@@ -968,6 +991,19 @@ function ATM(settings, log) {
     settings.set('master_key', key);
   };
 
+  /**
+   * [setConfigID description]
+   * @param {[type]} config_id [description]
+   */
+  this.setConfigID = function(config_id){
+    this.config_id = config_id;
+    settings.set('config_id', config_id);
+  };
+
+  this.getConfigID = function(){
+    return this.config_id;
+  }
+
   this.trace = new Trace();
   this.states = new StatesService(settings, log);
   this.screens = new ScreensService(settings, log);
@@ -977,6 +1013,7 @@ function ATM(settings, log) {
   this.status = 'Offline';
   this.initBuffers();
   this.initKeys();
+  this.initCounters();
   this.current_screen = {};
   this.current_state = {};
   this.buttons_pressed = [];

@@ -1,4 +1,5 @@
 September 2017
+	0.5.3 Replying to 'Send Configuration ID' host command
 	0.5.2 Showing Key check values
 	0.5.1 Fixed ugly bug with incorrect ATM block encoding
 	0.5.0 atm.getTerminalKey() and atm.getMasterKey()

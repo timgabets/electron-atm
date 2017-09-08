@@ -50,7 +50,10 @@ function Parser(){
                 break;
             case '2':
                 parsed.command_code = 'Go out-of-service';
-                break
+                break;
+            case '3':
+                parsed.command_code = 'Configuration Parameters Load';
+                break;
             default:
                 break;
         }

@@ -28,6 +28,9 @@ Builder.prototype.build = function(object){
             case 'Specific Command Reject':
               message += 'C';
               break;
+            case 'Terminal State':
+              message += 'F\x1C6' + object.config_id;
+              break;
             default:
               message += 'A';
           }

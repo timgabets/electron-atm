@@ -482,6 +482,8 @@ function StatesService(settings, log){
         var state = this.states[i];
         state.level = null;
       }
+
+      this.levels.clear();
     }
 
     /**
@@ -496,8 +498,11 @@ function StatesService(settings, log){
       state_numbers.forEach(number => {
         var state = this.states[number];
 
-        if(state && !state.level){
+        if( state && 
+            !state.level){
+
           state.level = level;
+          this.levels.addState(state.number, level);
 
           this.setStateLevels(state.states_to, level + 1);
         }

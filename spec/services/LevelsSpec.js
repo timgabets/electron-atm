@@ -35,4 +35,15 @@ describe("Levels", function() {
       expect(l.getMaxLevel()).toEqual(17);
     });
   });
+
+  describe('clear()', function(){
+    it('should clear all the levels data', function(){
+      expect(l.addState('903', 17)).toBeTruthy();
+      expect(l.addState('142', 17)).toBeTruthy();
+      expect(l.getStates(17)).toEqual(['903', '142']);
+      
+      l.clear();
+      expect(l.getStates(17)).toBeUndefined();
+    });
+  });
 });

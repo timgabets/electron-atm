@@ -1,4 +1,5 @@
 const Trace = require('../controllers/trace.js');
+const LevelsService = require('./levels.js');
 
 /**
  * [StatesService description]
@@ -11,6 +12,7 @@ function StatesService(settings, log){
         this.states = {};
     
     this.trace = new Trace();
+    this.levels = new LevelsService();
 
     /**
      * [getEntry get the state entry, e.g. state entry 3 is a substring of original state string from position 7 to position 10 ]

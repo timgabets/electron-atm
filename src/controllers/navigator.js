@@ -52,6 +52,8 @@ graph.on("click", function (params) {
   var state_number = this.getNodeAt(params.pointer.DOM);
   if(state_number){
     var state = states.get(state_number);
+    var extension_state = states.getExtensionState(state);
+
     var screen = screens.get(state.screen_number);
 
     if(screen && screen.image_file){
@@ -59,5 +61,7 @@ graph.on("click", function (params) {
     }
 
     document.getElementById('state-details').append(trace.object(state));
+    if(extension_state)
+      document.getElementById('state-details').append(trace.object(extension_state));
   }
 });

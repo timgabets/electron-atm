@@ -61,6 +61,9 @@ Trace.prototype.trace = function(data, title){
  * @return {[type]}       [description]
  */
 Trace.prototype.object = function(data){
+    if(!data)
+        return '';
+
     var dump = '\n';
 
     var maxLen = 0;

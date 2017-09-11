@@ -504,6 +504,12 @@ function StatesService(settings, log){
           state.level = level;
           this.levels.addState(state.number, level);
 
+          var extension_state = this.getExtensionState(state);
+          if(extension_state){
+            extension_state.level = level;
+            this.levels.addState(extension_state.number, level);
+          }
+
           this.setStateLevels(state.states_to, level + 1);
         }
       });
@@ -522,6 +528,28 @@ function StatesService(settings, log){
     
       this.setStateLevels(state.states_to, ++level);
     };
+
+    /**
+     * [getExtensionState description]
+     * @param  {[type]} state [description]
+     * @return {[type]}       [description]
+     */
+    this.getExtensionState = function(state){
+      var extension_state = null;
+
+      if( state.extension_state && 
+          state.extension_state !== '000' &&
+          state.extension_state !== '255'){
+
+        extension_state = this.states[state.extension_state];
+        if(extension_state && extension_state.type === 'Z')
+          return extension_state;
+        else 
+          return null;
+      }
+
+      return extension_state;
+    }
 }
 
 /**
@@ -568,6 +596,11 @@ StatesService.prototype.getNodes = function(){
     if(state.level !== null){
       node.id = state.number;
       node.label = state.number + ' ' + state.type;
+
+      var extension_state = this.getExtensionState(state);
+      if(extension_state)
+        node.label += '\n' + extension_state.number + ' ' + extension_state.type;
+
       node.level = state.level;
       nodes.push(node);
     }

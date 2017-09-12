@@ -141,20 +141,20 @@ $(function () {
   // Terminal key update
   var pin_key = '';
   setInterval(function() {
-    if(atm.keys.pin_key.key != pin_key){
-      pin_key = atm.keys.pin_key.key;
+    if(crypto.getTerminalKey()[0] != pin_key){
+      pin_key = crypto.getTerminalKey()[0];
       $("#comms-key").val(pin_key);
-      $("#comms-key-cv").val(atm.getTerminalKey()[1]);
+      $("#comms-key-cv").val(crypto.getTerminalKey()[1]);
     }
   }, 500);
 
   // Master key update
   var master_key = '';
   setInterval(function() {
-    if(atm.keys.master_key.key != master_key){
-      master_key = atm.keys.master_key.key;
+    if(crypto.getMasterKey()[0] != master_key){
+      master_key = crypto.getMasterKey()[0];
       $("#master-key").val(master_key);
-      $("#master-key-cv").val(atm.getMasterKey()[1]);
+      $("#master-key-cv").val(crypto.getMasterKey()[1]);
     }
   }, 500);
 

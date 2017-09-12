@@ -17,17 +17,26 @@ img {
 }
 
 .states-screen {
+  width: 360px;
   display:inline-block;
   margin-bottom:10px;
 } 
 
 .state-details {
   margin-top:10px;
-  height: 250px;
+  width: 360px;
+  height: 328px;
   color: #575B5E;
-  font-size: 11px;
+  font-size: 10px;
   font-family: monospace;
   white-space: pre-wrap;
   border:1px solid #021a40;
   border-radius: 10px;
+}
+
+.buffers {
+  width: 150px;
+  font-family: monospace;
+  font-size: 18px;
+  letter-spacing: 2px;
 }

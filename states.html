@@ -14,13 +14,18 @@
       <div class="row">
         <div id="mynetwork" class="col-md-8 mynetwork"></div>
 
-        <div class="col-md-4">
-          <img id="states-screen" src="/home/tim/share/screens/PIC010.jpg" width="480" height="360"> 
+        <div class="col-md-3">  
+          <img id="states-screen" class="states-screen" src="/home/tim/share/screens/PIC010.jpg"> 
           <pre id="state-details" class="state-details" type="text"></pre>
         </div>
+
+      <div id="buffers" class="col-md-1 form-group">
+        <div>Opcode buffer:
+          <input type="text" class="form-control buffers" id="opcode-buffer" value="" disabled=""></input>
+        </div>
+      </div>
       </div>
     </div>
-
     <script src="./src/controllers/navigator.js"></script>
   </body>
 </html>

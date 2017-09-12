@@ -56,12 +56,25 @@ graph.on("click", function (params) {
 
     var screen = screens.get(state.screen_number);
 
+    // Updating screen
     if(screen && screen.image_file){
       document.getElementById('states-screen').setAttribute("src", "/home/tim/share/screens/" + screen.image_file);
     }
 
-    document.getElementById('state-details').append(trace.object(state));
+    // Showing stte details
+    document.getElementById('state-details').innerHTML = trace.object(state);
     if(extension_state)
       document.getElementById('state-details').append(trace.object(extension_state));
+
+    // Opcode buffer
+    if(state && state.type === 'D'){
+      atm.opcode_buffer = '********';
+      atm.setOpCodeBuffer(state, extension_state);
+
+      document.getElementById('opcode-buffer').value = atm.opcode_buffer.split(' ').join('_');
+      document.getElementById('opcode-buffer').removeAttribute("disabled");
+    }else{
+      document.getElementById('opcode-buffer').setAttribute("disabled", true);
+    }
   }
 });

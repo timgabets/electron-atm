@@ -58,6 +58,12 @@ html, body, .container-fluid {
   font-family: monospace;
 }
 
+.letter-spacing {
+  font-family: monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
 img {
   border:1px solid #021a40;
   border-radius: 5px;

@@ -125,7 +125,7 @@ $(function () {
   setInterval(function() {
     if(atm.opcode_buffer != opcode_buffer){
       opcode_buffer = atm.opcode_buffer;
-      $("#opcode-buffer").val(opcode_buffer);
+      $("#opcode-buffer").val(opcode_buffer.split(' ').join('_'));
     }
   }, 200);
 

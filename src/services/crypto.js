@@ -100,11 +100,11 @@ function CryptoService(settings, log){
    * [getEncryptedPIN description]
    * @return {[type]}           [description]
    */
-  this.getEncryptedPIN = function(){
+  this.getEncryptedPIN = function(PIN_buffer, card_number){
     if(this.keys.pin_key.key){
-      log.info('Clear PIN block:     [' + this.pinblock.get(this.PIN_buffer, this.card.number) + ']')
+      log.info('Clear PIN block:     [' + this.pinblock.get(PIN_buffer, card_number) + ']')
 
-      var encrypted_pinblock = des3.ecb_encrypt(this.keys.pin_key.key, this.pinblock.get(this.PIN_buffer, this.card.number));
+      var encrypted_pinblock = des3.ecb_encrypt(this.getTerminalKey()[0], this.pinblock.get(PIN_buffer, card_number));
       log.info('Encrypted PIN block: [' + encrypted_pinblock + ']');
 
       var atm_pinblock = this.pinblock.encode_to_atm_format(encrypted_pinblock);

@@ -1,6 +1,7 @@
 const StatesService = require('../services/states.js');
 const ScreensService = require('../services/screens.js');
 const FITsService = require('../services/fits.js');
+const CryptoService = require('../services/crypto.js');
 const Trace = require('../controllers/trace.js');
 const Pinblock = require('../controllers/pinblock.js');
 const des3 = require('node-cardcrypto').des;
@@ -184,48 +185,10 @@ function ATM(settings, log) {
     return this.replySolicitedStatus('Ready');
   };
 
-  /**
-   * [dec2hex convert decimal string to hex string, e.g. 040198145193087203201076202216192211251240251237 to 28C691C157CBC94CCAD8C0D3FBF0FBED]
-   * @param  {[type]} dec_string [decimal string ]
-   * @return {[type]}            [hex string]
-   */
-  this.dec2hex = function (dec_string){
-    var hex_string = '';
-    for(var i = 0; i < dec_string.length; i += 3){
-      var chunk = parseInt(dec_string.substr(i, 3)).toString(16);
-      (chunk.length === 1) ? (hex_string = hex_string + '0' + chunk ) : hex_string += chunk;
-    }
-
-    return hex_string.toUpperCase();
-  }
-
-  this.setCommsKey = function(key_decimal, length){
-    var comms_key = this.dec2hex(key_decimal);
-    var expected_key_length = parseInt(length, 16) / 1.5;
-
-    if(comms_key.length !== expected_key_length)
-    {
-      log.error('Key length mismatch. New key has length ' + comms_key.length + ', but expected length is ' + expected_key_length);
-      return false;
-    }
-
-    log.info('New comms key received: ' + comms_key);
-    if(!this.keys.master_key.key)
-    {
-      log.error('Invalid master key: ' + this.keys.master_key.key);
-      return false;
-    }
-
-    this.keys.pin_key.key = des3.ecb_decrypt(this.keys.master_key.key, comms_key);
-    log.info('New comms key value: ' + this.keys.pin_key.key);
-    settings.set('pin_key', this.keys.pin_key.key);
-    return true;
-  }
-
   this.processExtendedEncKeyInfo = function(data){
     switch(data.modifier){
       case 'Decipher new comms key with current master key':
-        if( this.setCommsKey(data.new_key_data, data.new_key_length) )
+        if( this.crypto.setCommsKey(data.new_key_data, data.new_key_length) )
           return this.replySolicitedStatus('Ready');
         else
           return this.replySolicitedStatus('Command Reject');
@@ -979,22 +942,6 @@ function ATM(settings, log) {
     return this.supply_counters;
   }
 
-  this.getKeyCheckValue = function(key){
-    var kcv = des3.ecb_encrypt(key, '00000000000000000000000000000000');
-    if(kcv)
-      return kcv.substr(0, 6);
-    else
-      return null;
-  }
-
-  /**
-   * [getTerminalKey description]
-   * @return {[type]} [description]
-   */
-  this.getTerminalKey = function(){
-    return [this.keys.pin_key.key, this.getKeyCheckValue(this.keys.pin_key.key)];
-  };
-
   /**
    * [setTerminalKey description]
    * @param {[type]} key [description]
@@ -1002,14 +949,6 @@ function ATM(settings, log) {
   this.setTerminalKey = function(key){
     this.keys.pin_key.key = key;
     settings.set('pin_key', key);
-  };
-
-  /**
-   * [getMasterKey description]
-   * @return {[type]} [description]
-   */
-  this.getMasterKey = function(){
-    return [this.keys.master_key.key, this.getKeyCheckValue(this.keys.master_key.key)] ;
   };
 
   /**
@@ -1038,6 +977,7 @@ function ATM(settings, log) {
   this.states = new StatesService(settings, log);
   this.screens = new ScreensService(settings, log);
   this.FITs = new FITsService(settings, log);
+  this.crypto = new CryptoService(settings, log);
   this.pinblock = new Pinblock();
 
   this.status = 'Offline';

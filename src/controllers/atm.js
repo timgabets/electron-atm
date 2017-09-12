@@ -271,29 +271,7 @@ function ATM(settings, log) {
 
     settings.set('message_coordination_number', saved);
     return saved;
-  } 
-
-  /**
-   * [getEncryptedPIN description]
-   * @return {[type]}           [description]
-   */
-  this.getEncryptedPIN = function(){
-    if(this.keys.pin_key.key){
-      log.info('Clear PIN block:     [' + this.pinblock.get(this.PIN_buffer, this.card.number) + ']')
-
-      var encrypted_pinblock = des3.ecb_encrypt(this.keys.pin_key.key, this.pinblock.get(this.PIN_buffer, this.card.number));
-      log.info('Encrypted PIN block: [' + encrypted_pinblock + ']');
-
-      var atm_pinblock = this.pinblock.encode_to_atm_format(encrypted_pinblock);
-      log.info('Formatted PIN block: [' + atm_pinblock + ']');
-      
-      return atm_pinblock;
-    } else
-    {
-      log.error('Terminal key is not set, unable to encrypt PIN block');
-      return null;
-    }
-  }
+  };
 
   /**
    * [initBuffers clears the terminal buffers
@@ -545,7 +523,7 @@ function ATM(settings, log) {
       switch(state.send_pin_buffer){
         case '001':   // Standard format. Send Buffer A
         case '129':   // Extended format. Send Buffer A
-          request.PIN_buffer = this.getEncryptedPIN();
+          request.PIN_buffer = this.crypto.getEncryptedPIN(this.PIN_buffer, this.card.number);
           break;
         case '000':   // Standard format. Do not send Buffer A
         case '128':   // Extended format. Do not send Buffer A
@@ -894,27 +872,6 @@ function ATM(settings, log) {
       log.info('Card ' + this.card.number + ' read');
       this.processState('000');
     }
-  }
-
-  /**
-   * [initKeys description]
-   * @return {[type]} [description]
-   */
-  this.initKeys = function(){
-    this.keys = {
-      master_key: {
-        key: '', 
-        check_value: ''},
-      pin_key: {
-        key: '', 
-        check_value: ''}
-    };
-
-    var key = settings.get('master_key');
-    (key) ? this.setMasterKey(key) : this.setMasterKey('4BA59DC607B13AF49F3CD22CB2FDA11E');
-
-    var key = settings.get('pin_key');
-    (key) ? this.setTerminalKey(key) : this.setTerminalKey('1E9CA58EBE65FF4B6F339393142DA096');
   };
 
   /**
@@ -940,24 +897,6 @@ function ATM(settings, log) {
 
   this.getSupplyCounters = function(){
     return this.supply_counters;
-  }
-
-  /**
-   * [setTerminalKey description]
-   * @param {[type]} key [description]
-   */
-  this.setTerminalKey = function(key){
-    this.keys.pin_key.key = key;
-    settings.set('pin_key', key);
-  };
-
-  /**
-   * [setMasterKey description]
-   * @param {[type]} key [description]
-   */
-  this.setMasterKey = function(key){
-    this.keys.master_key.key = key;
-    settings.set('master_key', key);
   };
 
   /**
@@ -982,7 +921,6 @@ function ATM(settings, log) {
 
   this.status = 'Offline';
   this.initBuffers();
-  this.initKeys();
   this.initCounters();
   this.current_screen = {};
   this.current_state = {};

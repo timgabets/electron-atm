@@ -255,8 +255,7 @@ describe("ATM", function() {
       // PIN block related data
       atm.PIN_buffer = '1234';
       atm.card = {number: '4000001234562000'};
-      atm.initKeys();
-      atm.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+      atm.crypto.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
     });
 
     it("should properly fill transaction request data when send_operation_code is enabled", function(){

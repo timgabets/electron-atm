@@ -593,7 +593,9 @@ StatesService.prototype.getNodes = function(){
     var node = {};
     var state = this.states[i];
 
-    if(state.level !== null){
+    if( state.level !== null && 
+        state.type !== 'Z')
+    {
       node.id = state.number;
       node.label = state.number + ' ' + state.type;
 

@@ -67,8 +67,7 @@ graph.on("click", function (params) {
       document.getElementById('state-details').append(trace.object(extension_state));
 
     // Opcode buffer
-    if(state && state.type === 'D'){
-      atm.opcode_buffer = '********';
+    if(state && state.type === 'D'){      
       atm.setOpCodeBuffer(state, extension_state);
 
       document.getElementById('opcode-buffer').value = atm.opcode_buffer.split(' ').join('_');

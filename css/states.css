@@ -7,8 +7,8 @@ img {
 }
 
 .mynetwork {
-  width: 900px;
-  height: 620px;
+  width: 940px;
+  height: 550px;
   border: 1px solid;
   border-radius: 10px;
   margin-left: 20px;
@@ -17,21 +17,21 @@ img {
 }
 
 .states-screen {
-  width: 360px;
+  width: 348px;
   display:inline-block;
   margin-bottom:10px;
 } 
 
 .state-details {
   margin-top:10px;
-  width: 360px;
-  height: 328px;
+  height: 270px;
   color: #575B5E;
   font-size: 10px;
   font-family: monospace;
   white-space: pre-wrap;
   border:1px solid #021a40;
   border-radius: 10px;
+  margin-right: 20px;
 }
 
 .buffers {
@@ -39,4 +39,9 @@ img {
   font-family: monospace;
   font-size: 18px;
   letter-spacing: 2px;
+}
+
+.form-control {
+    min-width: 130;
+    width: 130px !important;
 }

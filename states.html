@@ -14,18 +14,30 @@
       <div class="row">
         <div id="mynetwork" class="col-md-8 mynetwork"></div>
 
-        <div class="col-md-3">  
+        <div class="col-md-4">  
           <img id="states-screen" class="states-screen" src="/home/tim/share/screens/PIC010.jpg"> 
           <pre id="state-details" class="state-details" type="text"></pre>
         </div>
+      </div>
 
-      <div id="buffers" class="col-md-1 form-group">
-        <div>Opcode buffer:
-          <input type="text" class="form-control buffers" id="opcode-buffer" value="" disabled=""></input>
+      <div class="row">
+        <div id="headers" class="col-md-1">
+          <div>Opcode buffer:</div>
         </div>
       </div>
+
+      <div class="row">
+        <form id="buffers" class="navbar-form navbar-center col-md-1">
+          <div class="form-group">
+            <input type="text" class="form-control" id="opcode-buffer" value="" disabled=""></input>
+          </div>
+          <!-- <button type="submit" class="btn btn-default" id="clear-opcode-buffer">Clear</button> -->
+        </form>
       </div>
+
     </div>
+
+
     <script src="./src/controllers/navigator.js"></script>
   </body>
 </html>

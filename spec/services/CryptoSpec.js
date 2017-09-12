@@ -5,6 +5,8 @@ describe("CryptoService", function() {
   beforeEach(function() {
     log = {
       info: function() {
+      },
+      error: function() {
       }
     };
     
@@ -34,7 +36,6 @@ describe("CryptoService", function() {
     });
   });
 
-/*
   describe('setTerminalKey() and setMasterKey()', function(){
     beforeEach(function() {
       s.setMasterKey('B6D55EABAD23BC4FD558F8D619A21C34');
@@ -65,15 +66,14 @@ describe("CryptoService", function() {
 
   describe('dec2hex()', function(){
     it('should convert decimal string to hex string', function(){
-      expect(atm.dec2hex('040198145193087203201076202216192211251240251237')).toEqual('28C691C157CBC94CCAD8C0D3FBF0FBED');
+      expect(s.dec2hex('040198145193087203201076202216192211251240251237')).toEqual('28C691C157CBC94CCAD8C0D3FBF0FBED');
     });
 
     it('should convert decimal string to hex string', function(){
-      expect(atm.dec2hex('000001002003004005006007008009010011012013014015')).toEqual('000102030405060708090A0B0C0D0E0F');
+      expect(s.dec2hex('000001002003004005006007008009010011012013014015')).toEqual('000102030405060708090A0B0C0D0E0F');
     });
   });
-*/
-/*
+
   describe('setCommsKey()', function(){
     beforeEach(function() {
       s.setMasterKey('B6D55EABAD23BC4FD558F8D619A21C34');
@@ -90,12 +90,10 @@ describe("CryptoService", function() {
         new_key_length: '030',
         new_key_data: '040198145193087203201076202216192211251240251237',
       };
-    */
       /*
         new_key_data: '040198145193087203201076202216192211251240251237' is decimal representation of 28C691C157CBC94CCAD8C0D3FBF0FBED
         28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
        */
-/*
       expect(s.getTerminalKey()).toEqual(['DEADBEEFDEADBEEFDEADBEEFDEADBEEF', '2AE358']);
       expect(s.setCommsKey(data.new_key_data, data.new_key_length)).toBeTruthy()
       expect(s.getTerminalKey()).toEqual(['7B278B03B439DDCACF8B3333AC591BCA', '41DD5C']);
@@ -111,12 +109,10 @@ describe("CryptoService", function() {
         new_key_length: '030',
         new_key_data: '040198145193087203201076202216192211251240251237',
       };
-    */
       /*
         new_key_data: '040198145193087203201076202216192211251240251237' is decimal representation of 28C691C157CBC94CCAD8C0D3FBF0FBED
         28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
        */
-/*
       s.setMasterKey(null) ;
       expect(s.setCommsKey(data.new_key_data, data.new_key_length)).toBeFalsy()
     })
@@ -138,5 +134,4 @@ describe("CryptoService", function() {
       expect(s.getEncryptedPIN()).toBeNull();
     });    
   });
-*/
 });

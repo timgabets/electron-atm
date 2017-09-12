@@ -1,8 +1,7 @@
+const Pinblock = require('../controllers/pinblock.js');
 const des3 = require('node-cardcrypto').des;
 
 function CryptoService(settings, log){
-
-
   /**
    * [setMasterKey description]
    * @param {[type]} key [description]
@@ -118,6 +117,8 @@ function CryptoService(settings, log){
       return null;
     }
   };
+
+  this.pinblock = new Pinblock();
 
   this.keys = {
     master_key: {

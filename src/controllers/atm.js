@@ -598,8 +598,6 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateW = function(state){
-    log.info(trace.object(state));
-
     return state.states[this.FDK_buffer]
   }
 
@@ -942,6 +940,25 @@ ATM.prototype.processFDKButtonPressed = function(button){
     case 'B':
       if (button === 'A' && this.PIN_buffer.length >= 4)
         this.processState(this.current_state.number);
+      break;
+
+    case 'H':
+      var active_mask = '0';
+      [this.current_state.FDK_A_next_state,
+       this.current_state.FDK_B_next_state,
+       this.current_state.FDK_C_next_state,
+       this.current_state.FDK_D_next_state].forEach((element, index) => {
+        if(element !== '255')
+          active_mask += '1';
+        else
+          active_mask += '0';
+      })
+      this.setFDKsActiveMask(active_mask);
+
+      if(this.isFDKButtonActive(button)){
+        this.buttons_pressed.push(button);
+        this.processState(this.current_state.number);
+      }
       break;
 
     default:

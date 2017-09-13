@@ -1,4 +1,5 @@
 September 2017
+	0.6.0 State navigator: show the states that are not linked directly to 000
 	0.5.9 Dynamic screen support (Screen built from data sent in Interactive Transaction Response)
 	0.5.8 Showing Opcode buffer in states navigator
 	0.5.7 cryto routines moved to CryptoService

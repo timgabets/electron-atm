@@ -525,8 +525,19 @@ function StatesService(settings, log){
       var state = this.states['000'];
       var level = 1;
       state.level = level;
-    
+        
+      // Build a graph for states linked to state 000
       this.setStateLevels(state.states_to, ++level);
+
+      // Continue with the states that are not linked directly to 000
+      var unlinked_state_numbers = [];
+      for (var i in this.states){
+        if(this.states[i] && !this.states[i].level)
+          unlinked_state_numbers.push(this.states[i].number);
+      }
+
+      level = this.levels.getMaxLevel() + 3;  // Add some space to separate the states
+      this.setStateLevels(unlinked_state_numbers, ++level);
     };
 
     /**

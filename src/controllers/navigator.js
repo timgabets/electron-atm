@@ -16,7 +16,6 @@ var options = {
   physics: false,
 };
 
-
 nodes = states.getNodes();
 
 nodes.forEach(node => {
@@ -47,11 +46,10 @@ graph.focus('000', {
 });
 
 graph.on("click", function (params) {
-  //console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+  var node_id = this.getNodeAt(params.pointer.DOM);
 
-  var state_number = this.getNodeAt(params.pointer.DOM);
-  if(state_number){
-    var state = states.get(state_number);
+  if(node_id){
+    var state = states.get(node_id);
     var extension_state = states.getExtensionState(state);
 
     var screen = screens.get(state.screen_number);

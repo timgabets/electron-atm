@@ -76,7 +76,20 @@ function ScreensService(settings, log){
     }
     else
       return false;
-  }; 
+  };
+
+  /**
+   * [parseDynamicScreenData Parse Dynamic screen data coming from Interactive transaction reply from host.
+   *                         As dynamic data comes without screen number, we just appending the fake screen 
+   *                         number and parse it as usual]
+   * @return {[type]} [parsed screen]
+   */
+  this.parseDynamicScreenData = function(data){
+    var parsed = this.parseScreen('xxx' + data);
+    if(parsed)
+      parsed.number = 'DYNAMIC';
+    return parsed;
+  };
 };
 
 

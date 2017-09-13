@@ -74,4 +74,25 @@ describe("Screens", function() {
     });
   });
 
+
+  describe('parseDynamicScreenData()', function(){
+    /*
+    12:01:47.874<< 84 bytes received:
+      00 52 33 30 1c 30 30 30 1c 30 30 30 1c 32 31 30         .R30.000.000.210
+      31 30 30 30 31 30 30 30 30 1c 30 33 37 1c 0c 0c         100010000.037...
+      1b 50 45 50 49 43 32 33 35 2e 6a 70 67 1b 5c 1b         .PEPIC235.jpg.\.
+      5b 32 37 3b 38 30 6d 1b 28 76 1b 29 76 0f 46 4b         [27;80m.(v.)v.FK
+      20 20 20 20 20 20 20 20 20 20 20 20 20 20 43 4f                       CO
+      55 50 4f 4e                                             UPON
+   */
+    it('should parse', function(){
+      var parsed = {
+        number: 'DYNAMIC',
+        display_image_files_control: true,
+        image_file: 'PIC235.jpg',
+      };
+      expect(s.parseDynamicScreenData('\x1BPEPIC235.jpg\x1B\\x1B[27;80m\x1B(v\x1B)v\x0FFK              COUPON')).toEqual(parsed);
+    })
+  });
+
 });

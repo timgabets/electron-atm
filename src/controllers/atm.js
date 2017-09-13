@@ -180,7 +180,7 @@ function ATM(settings, log) {
       this.setFDKsActiveMask(data.active_keys)
     }
 
-    // TODO: update screen data from data.screen_data_field
+    this.current_screen = this.screens.parseDynamicScreenData(data.screen_data_field);
 
     return this.replySolicitedStatus('Ready');
   };

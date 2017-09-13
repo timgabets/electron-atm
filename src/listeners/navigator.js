@@ -94,9 +94,12 @@ graph.on("click", function (params) {
 $(function () {
   const mousetrap = nodeRequire('mousetrap');
 
-  $('#search-state-button').on('click', _ => {
+  $("#search-state-form").submit(function(e) {
+    e.preventDefault();
+  
     var state = states.get($('#search-state-input').val());
-
+    var extension_state = states.getExtensionState(state);
+    
     if(state)
     {
       // Center
@@ -111,14 +114,16 @@ $(function () {
         $('#states-screen').attr('src', '/home/tim/share/screens/' + screen.image_file);
       }
 
+      // Change opcode buffer
+      // Opcode buffer
+      if(state && state.type === 'D'){      
+        atm.setOpCodeBuffer(state, extension_state);
+
+        $('#opcode-buffer').val(atm.opcode_buffer.split(' ').join('_'));
+        $('#opcode-buffer').removeAttr('disabled');
+      }else{
+        $('#opcode-buffer').attr('disabled', true);
+      }
     }
-    
-    
   });
-
-  // Preventing page from refreshing when submit buttons pressed
-  $("#search-state-form").submit(function(e) {
-    e.preventDefault();
-  });
-
 })

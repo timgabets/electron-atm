@@ -1,4 +1,6 @@
 September 2017
+	0.6.2 State Search form
+	0.6.1 State navigator: basic state search 
 	0.6.0 State navigator: show the states that are not linked directly to state 000
 	0.5.9 Dynamic screen support (Screen built from data sent in Interactive Transaction Response)
 	0.5.8 Showing Opcode buffer in states navigator

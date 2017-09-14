@@ -28,6 +28,15 @@ ipc.on('atm-read-card', (event, cardnumber, track2) => {
   atm.readCard(cardnumber, track2)
 })
 
+ipc.on('atm-network-connection-established', (event) => {
+  atm.setStatus('Connected');
+})
+
+ipc.on('atm-network-disconnected', (event) => {
+  console.log('Offline');
+  atm.setStatus('Offline');
+})
+
 // Updating ATM screen 
 var current_screen = {}
 setInterval(function() {

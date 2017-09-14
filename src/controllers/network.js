@@ -48,20 +48,6 @@ function Network(log) {
     }
   };
 
-
-  /**
-   * [network disconnect listener]
-   * @param  {[type]} )  [description]
-   * @return {[type]}   [description]
-   */
-  this.client.on('close', _ => {
-    this.client.destroy();
-    if(this.isConnected)
-      log.warn('Connection closed');
-    
-    this.isConnected = false;
-  });
-
   /**
    * [network error handler]
    * @param  {[type]} 'error' [description]

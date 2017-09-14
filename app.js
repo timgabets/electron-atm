@@ -49,6 +49,14 @@ ipc.on('connect-button-pressed', (event, host, port) => {
   window.webContents.send('network-connect')
 })
 
+ipc.on('network-connection-established', (event) => {
+  window.webContents.send('atm-network-connection-established')
+})
+
+ipc.on('network-disconnected', (event) => {
+  window.webContents.send('atm-network-disconnected')
+})
+
 ipc.on('network-data-received', (event, data) => {
   window.webContents.send('parse-host-message', data)
 })

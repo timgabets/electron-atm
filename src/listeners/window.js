@@ -6,11 +6,14 @@ $(function () {
   const mousetrap = nodeRequire('mousetrap');
 
   $('#atm-status-button').on('click', _ => {
+    /*
     settings.set('host', {
       'ip': $('#host').val(), 
       'port': $('#port').val()});
 
     ipc.send('connect-button-pressed', $('#host').val(), $('#port').val());
+    */
+    ipc.send('connect-button-pressed');
   });
 
   $('#card-inserted').on('click', _ => {
@@ -176,7 +179,6 @@ $(function () {
     if(atm.status != status){
       status = atm.status;
 
-      console.log(status);
       switch(status){
         case 'Offline':
           clearButtonClasses();

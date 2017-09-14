@@ -72,6 +72,11 @@ html, body, .container-fluid {
   letter-spacing: 2px;
 }
 
+.connection-buttons{
+  margin-top: 7px;
+  margin-right: 15px;
+}
+
 img {
   border:1px solid #021a40;
   border-radius: 5px;

@@ -109,11 +109,11 @@ function ATM(settings, log) {
   this.processTerminalCommand = function(data){
     switch(data.command_code){
       case 'Go in-service':
-        this.status = 'In-Service';
+        this.setStatus('In-Service');
         //this.processState('000');
         break;
       case 'Go out-of-service':
-        this.status = 'Out-Of-Service';
+        this.setStatus('Out-Of-Service');
         break;
       case 'Send Configuration ID':
       case 'Send Supply Counters':
@@ -908,7 +908,11 @@ function ATM(settings, log) {
 
   this.getConfigID = function(){
     return this.config_id;
-  }
+  };
+
+  this.setStatus = function(status){
+    this.status = status;
+  };
 
   this.trace = new Trace();
   this.states = new StatesService(settings, log);
@@ -917,7 +921,7 @@ function ATM(settings, log) {
   this.crypto = new CryptoService(settings, log);
   this.pinblock = new Pinblock();
 
-  this.status = 'Offline';
+  this.setStatus('Offline');
   this.initBuffers();
   this.initCounters();
   this.current_screen = {};
@@ -976,7 +980,7 @@ ATM.prototype.processFDKButtonPressed = function(button){
  * @return {[type]}        [description]
  */
 ATM.prototype.processPinpadButtonPressed = function(button){
-  log.info('Button ' + button + ' pressed');
+  //log.info('Button ' + button + ' pressed');
   switch(this.current_state.type){
     case 'B':
       switch(button){

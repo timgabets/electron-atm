@@ -5,7 +5,7 @@ $(function () {
   const settings = nodeRequire('electron-settings');
   const mousetrap = nodeRequire('mousetrap');
 
-  $('#connect').on('click', _ => {
+  $('#atm-status-button').on('click', _ => {
     settings.set('host', {
       'ip': $('#host').val(), 
       'port': $('#port').val()});
@@ -157,5 +157,58 @@ $(function () {
       $("#master-key-cv").val(crypto.getMasterKey()[1]);
     }
   }, 500);
+
+  // Status button update
+  var status = '';
+  setInterval(function() {
+    function clearButtonClasses(){
+      $('#atm-status-button').removeClass('btn-success');
+      $('#atm-status-button').removeClass('btn-warning');
+      $('#atm-status-button').removeClass('btn-danger');
+    };
+
+    function clearIconClasses(){
+      $('#atm-status-icon').removeClass('glyphicon-link');
+      $('#atm-status-icon').removeClass('glyphicon-wrench');
+      $('#atm-status-icon').removeClass('glyphicon-remove');
+    };
+
+    if(atm.status != status){
+      status = atm.status;
+
+      console.log(status);
+      switch(status){
+        case 'Offline':
+          clearButtonClasses();
+          clearIconClasses();
+          $('#atm-status-icon').addClass('glyphicon-remove');
+          $('#atm-status-button').attr('title', 'ATM is Out-Of-Service');
+          break;
+
+        case 'Connected':
+          clearButtonClasses();
+          clearIconClasses();
+          $('#atm-status-icon').addClass('glyphicon-link');
+          $('#atm-status-button').attr('title', 'ATM is Out-Of-Service');
+          break;
+
+        case 'In-Service':
+          clearButtonClasses();
+          clearIconClasses();
+          $('#atm-status-button').addClass('btn-success')
+          $('#atm-status-icon').addClass('glyphicon-link');
+          $('#atm-status-button').attr('title', 'ATM is In-Service');
+          break;
+
+        case 'Out-Of-Service':
+          clearButtonClasses();        
+          clearIconClasses();
+          $('#atm-status-button').addClass('btn-warning')
+          $('#atm-status-button').attr('title', 'ATM is Out-Of-Service');
+          $('#atm-status-icon').addClass('glyphicon-wrench');
+          break;
+      }      
+    }
+  }, 300);
 
 })

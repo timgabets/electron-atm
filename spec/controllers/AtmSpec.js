@@ -531,7 +531,19 @@ describe("ATM", function() {
 
       expect(atm.PIN_buffer).toEqual('1');
       expect(atm.processState).not.toHaveBeenCalled();
-    })    
+    });
+
+    it("should clear PIN Buffer when Esc pressed", function(){
+      expect(atm.PIN_buffer).toEqual('');
+      
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('2');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('esc');
+
+      expect(atm.PIN_buffer).toEqual('');
+      expect(atm.processState).not.toHaveBeenCalled();
+    })
   });
 
   describe("processPinpadButtonPressed() for state F", function(){

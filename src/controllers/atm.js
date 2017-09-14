@@ -976,7 +976,7 @@ ATM.prototype.processFDKButtonPressed = function(button){
  * @return {[type]}        [description]
  */
 ATM.prototype.processPinpadButtonPressed = function(button){
-  //log.info('Button ' + button + ' pressed');
+  log.info('Button ' + button + ' pressed');
   switch(this.current_state.type){
     case 'B':
       switch(button){
@@ -987,6 +987,10 @@ ATM.prototype.processPinpadButtonPressed = function(button){
         case 'enter':
           if(this.PIN_buffer.length >= 4)
             this.processState(this.current_state.number)
+          break;
+
+        case 'esc':
+          this.PIN_buffer = '';
           break;
 
         default:

@@ -30,10 +30,43 @@
   </head>
   <body>
     <div id="container" class="container-fluid">
-      <div class="row links">
-        <a href="states.html">States</a>
-      </div>
-      
+
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Electron ATM</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">ATM <span class="sr-only">(current)</span></a></li>
+              <li><a href="states.html">States</a></li>
+            </ul>
+
+            <form id="buffers-form buffers" class="navbar-form navbar-center col-md-1">
+              <div class="form-group">
+                <input type="text" class="form-control buffer-sm" id="current-state" value="" title="State" placeholder="State" disabled></input>
+                <input type="text" class="form-control buffer-sm" id="current-screen" value="" title="Screen" placeholder="Screen" disabled></input>
+                <input type="text" class="form-control buffer-md" id="pin-buffer" value="" title="PIN Buffer" placeholder="PIN Buffer" disabled></input>
+                <input type="text" class="form-control buffer-md" id="buffer-b" value="" title="Buffer B" placeholder="Buffer B" disabled></input>
+                <input type="text" class="form-control buffer-md" id="buffer-c" value="" title="Buffer C" placeholder="Buffer C" disabled></input>
+                <input type="text" class="form-control buffer-md letter-spacing" id="opcode-buffer" value="" title="Operation Code Buffer" placeholder="Opcode" disabled></input>
+                <input type="text" class="form-control buffer-md" id="amount-buffer" value="" title="Amount Buffer" placeholder="Amount Buffer" disabled></input>
+              </div>
+            </form>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+
       <div class="row main-area">
         <div class="col-md-1 fdk-button-block">
           <button id="FDK-I" type="submit" class="btn btn-lg btn-block fdk-button" disabled>I</button>
@@ -54,32 +87,8 @@
           <button id="FDK-D" type="submit" class="btn btn-lg btn-block fdk-button" disabled>D</button>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-5">
           <pre id="log-output" class="log-output" type="text"></pre>
-        </div>
-
-        <div id="buffers" class="col-md-1 form-group buffers">
-          <div>State:
-            <input type="text" class="form-control letter-spacing" id="current-state" value="" title="State" disabled></input>
-          </div>
-          <div>Screen:
-            <input type="text" class="form-control letter-spacing" id="current-screen" value="" title="Screen" disabled></input>
-          </div>
-          <div>PIN Buffer:
-            <input type="text" class="form-control letter-spacing" id="pin-buffer" value="" title="PIN Buffer" disabled></input>
-          </div>
-          <div>Buffer B:
-            <input type="text" class="form-control" id="buffer-b" value="" disabled></input>
-          </div>
-          <div>Buffer C:
-            <input type="text" class="form-control" id="buffer-c" value="" disabled></input>
-          </div>
-          <div>Opcode buffer:
-            <input type="text" class="form-control letter-spacing" id="opcode-buffer" value="" disabled></input>
-          </div>
-          <div>Amount buffer:
-            <input type="text" class="form-control" id="amount-buffer" value="" placeholder="Amount Buffer" disabled></input>
-          </div>
         </div>
       </div>
 
@@ -107,19 +116,17 @@
       </div>
 
       <div class="col-md-3 keys-area">
-        <div>Master Key:
+        <div>
           <input type="text" class="form-control key" id="master-key" value="" placeholder="Master Key" title="Master Key" disabled></input>
         </div>
-        <div>Communications Key:
+        <div>
           <input type="text" class="form-control key" id="comms-key" value="" placeholder="Communications Key" title="Communications Key" disabled></input>
         </div>
       </div>
 
       <div class="col-md-1 kcv-area">
-        <br>
-        <input type="text" class="form-control key-check-value" id="master-key-cv" value="" placeholder="KCV" title="KCV" disabled></input>
-        <br>
-        <input type="text" class="form-control key-check-value" id="comms-key-cv" value="" placeholder="KCV" title="KCV" disabled></input>
+        <input type="text" class="form-control key-check-value" id="master-key-cv" value="" placeholder="KCV" title="Master Key check value" disabled></input>
+        <input type="text" class="form-control key-check-value" id="comms-key-cv" value="" placeholder="KCV" title="Communications Key check value" disabled></input>
       </div>
     
     </div>

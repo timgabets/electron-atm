@@ -15,14 +15,22 @@ html, body, .container-fluid {
 .log-output {
   height: 480px;
   color: #575B5E;
-  font-size: 9px;
+  font-size: 10px;
   font-family: monospace;
   white-space: pre-wrap;
   border:1px solid #021a40;
 }
 
-.buffers {
-  width: 150px;
+.buffer-sm {
+  width: 80px !important;
+}
+
+.buffer-md {
+  width: 120px !important;
+}
+
+.buffer-lg {
+  width: 180px !important;
 }
 
 .fdk-button-block {

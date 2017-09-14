@@ -11,7 +11,7 @@ let network = new Network(log);
 
 ipc.on('network-connect', (event, message) => {
   
-  network.connect('127.0.0.1', 11032);
+  network.toggleConnect('127.0.0.1', 11032);
 
   network.client.on('connect', data => {
     ipc.send('network-connection-established');

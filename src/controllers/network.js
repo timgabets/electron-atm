@@ -36,9 +36,9 @@ function Network(log) {
    * @param  {[type]} port [description]
    * @return {[type]}      [description]
    */
-  this.connect = function(host, port){
+  this.toggleConnect = function(host, port){
     if(this.isConnected){
-      this.trace.trace('', ' >> Already connected to ' + host + ':' + port );
+      this.client.end();
     }else {
       this.trace.trace('', ' >> Connecting to ' + host + ':' + port );
       this.client.connect(port, host, _ => {

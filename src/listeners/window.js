@@ -179,19 +179,18 @@ $(function () {
     if(atm.status != status){
       status = atm.status;
 
+      $('#atm-status-button').attr('title', 'ATM is ' + atm.status);
       switch(status){
         case 'Offline':
           clearButtonClasses();
           clearIconClasses();
           $('#atm-status-icon').addClass('glyphicon-remove');
-          $('#atm-status-button').attr('title', 'ATM is Out-Of-Service');
           break;
 
         case 'Connected':
           clearButtonClasses();
           clearIconClasses();
           $('#atm-status-icon').addClass('glyphicon-link');
-          $('#atm-status-button').attr('title', 'ATM is Out-Of-Service');
           break;
 
         case 'In-Service':
@@ -199,14 +198,12 @@ $(function () {
           clearIconClasses();
           $('#atm-status-button').addClass('btn-success')
           $('#atm-status-icon').addClass('glyphicon-link');
-          $('#atm-status-button').attr('title', 'ATM is In-Service');
           break;
 
         case 'Out-Of-Service':
           clearButtonClasses();        
           clearIconClasses();
           $('#atm-status-button').addClass('btn-warning')
-          $('#atm-status-button').attr('title', 'ATM is Out-Of-Service');
           $('#atm-status-icon').addClass('glyphicon-wrench');
           break;
       }      

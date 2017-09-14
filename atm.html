@@ -35,13 +35,9 @@
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+            <button id="atm-status-button" type="button" class="btn btn-md connection-buttons" aria-label="Left Align">
+              <span id="atm-status-icon" class="glyphicon" aria-hidden="true"></span>
             </button>
-            <a class="navbar-brand" href="#">Electron ATM</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -101,7 +97,7 @@
           <div class="form-group">
             <input type="number" class="form-control" id="port" value="11032" placeholder="Port"></input>
           </div>
-          <button type="submit" class="btn btn-success" id="connect">Connect</button>
+          <!--<button type="submit" class="btn btn-success" id="connect">Connect</button>-->
         </form>
   
         <form id="card-read-form" class="navbar-form navbar-center">

@@ -48,16 +48,18 @@ function Network(ipc, log) {
         log.error(e);
       });
 
+      this.client.on('end', _ => {
+        this.isConnected = false;
+        ipc.send('network-connection-status-change', this.isConnected);
+        log.warn('Connection closed');
+      });
+
       this.client.on('data', (data) => {
         this.trace.trace(data, '<< ' + data.length + ' bytes received:');
         ipc.send('network-data-received', data);
       });
     }else{
       this.client.end();
-      
-      this.isConnected = false;
-      ipc.send('network-connection-status-change', this.isConnected);
-      log.warn('Connection closed');
     }
   };
 }

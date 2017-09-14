@@ -33,7 +33,6 @@ ipc.on('atm-network-connection-established', (event) => {
 })
 
 ipc.on('atm-network-disconnected', (event) => {
-  console.log('Offline');
   atm.setStatus('Offline');
 })
 

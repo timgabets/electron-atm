@@ -1,9 +1,14 @@
 describe("Network", function() {
   var Network = require('../../src/controllers/network.js');
   var n;
+  var ipc;
 
   beforeEach(function() {
-    n = new Network();
+    ipc = {
+      send: function(value) {
+      },
+    };
+    n = new Network(ipc);
   });
 
   describe("getOutgoingMessageLength()", function(){

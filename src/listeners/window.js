@@ -173,7 +173,7 @@ $(function () {
     function clearIconClasses(){
       $('#atm-status-icon').removeClass('glyphicon-link');
       $('#atm-status-icon').removeClass('glyphicon-wrench');
-      $('#atm-status-icon').removeClass('glyphicon-remove');
+      $('#atm-status-icon').removeClass('glyphicon-resize-full');
     };
 
     if(atm.status != status){
@@ -184,7 +184,7 @@ $(function () {
         case 'Offline':
           clearButtonClasses();
           clearIconClasses();
-          $('#atm-status-icon').addClass('glyphicon-remove');
+          $('#atm-status-icon').addClass('glyphicon-resize-full');
           break;
 
         case 'Connected':

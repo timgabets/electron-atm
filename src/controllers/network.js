@@ -2,9 +2,8 @@
 const net = require('net');
 // trace routines
 const Trace = require('../controllers/trace.js');
-const ipc = electron.ipcRenderer
 
-function Network(log) {
+function Network(ipc, log) {
   this.trace = new Trace();
   //this.client = new net.Socket();
   this.isConnected = false;
@@ -42,7 +41,7 @@ function Network(log) {
       this.client = net.createConnection({ host: host, port: port }, () => {
         this.isConnected = true;
         this.trace.trace('', ' >> Connected' );
-        ipc.send('network-connection-established');
+        ipc.send('network-connection-status-change', this.isConnected);
       });
 
       this.client.on('error', (e) => {
@@ -57,7 +56,7 @@ function Network(log) {
       this.client.end();
       
       this.isConnected = false;
-      ipc.send('network-disconnected');
+      ipc.send('network-connection-status-change', this.isConnected);
       log.warn('Connection closed');
     }
   };

@@ -7,7 +7,7 @@ const Network = require('./src/controllers/network.js');
 const ipc = electron.ipcRenderer
 
 let log = new Log();
-let network = new Network(log);
+let network = new Network(ipc, log);
 
 ipc.on('network-connect', (event, message) => {
   network.toggleConnect('127.0.0.1', 11032);

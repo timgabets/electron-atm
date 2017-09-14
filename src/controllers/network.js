@@ -2,12 +2,11 @@
 const net = require('net');
 // trace routines
 const Trace = require('../controllers/trace.js');
-// log routines
-const Log = require('../controllers/log.js');
+const ipc = electron.ipcRenderer
 
 function Network(log) {
   this.trace = new Trace();
-  this.client = new net.Socket();
+  //this.client = new net.Socket();
   this.isConnected = false;
 
   /**
@@ -31,32 +30,37 @@ function Network(log) {
   };
 
   /**
-   * [connect description]
+   * [toggleConnect description]
    * @param  {[type]} host [description]
    * @param  {[type]} port [description]
    * @return {[type]}      [description]
    */
   this.toggleConnect = function(host, port){
-    if(this.isConnected){
-      this.client.end();
-    }else {
+    if(!this.isConnected){
       this.trace.trace('', ' >> Connecting to ' + host + ':' + port );
-      this.client.connect(port, host, _ => {
-        this.trace.trace('', ' >> Connected' );
+
+      this.client = net.createConnection({ host: host, port: port }, () => {
         this.isConnected = true;
+        this.trace.trace('', ' >> Connected' );
+        ipc.send('network-connection-established');
       });
+
+      this.client.on('error', (e) => {
+        log.error(e);
+      });
+
+      this.client.on('data', (data) => {
+        this.trace.trace(data, '<< ' + data.length + ' bytes received:');
+        ipc.send('network-data-received', data);
+      });
+    }else{
+      this.client.end();
+      
+      this.isConnected = false;
+      ipc.send('network-disconnected');
+      log.warn('Connection closed');
     }
   };
-
-  /**
-   * [network error handler]
-   * @param  {[type]} 'error' [description]
-   * @param  {[type]} (e      [exception]
-   * @return {[type]}         [description]
-   */
-  this.client.on('error', (e) => {
-    log.error(e);
-  });
 }
 
 /**

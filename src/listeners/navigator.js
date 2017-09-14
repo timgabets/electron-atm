@@ -112,13 +112,35 @@ $(function () {
     }
   });
 
+
+  graph.on("selectNode", function (params) {
+    // TODO
+  });
+
+
+  graph.on("deselectNode", function (params) {
+    // TODO
+  });
+
+
   $("#search-state-form").submit(function(e) {
     e.preventDefault();
+    var state_number = $('#search-state-input').val();
+
+    if(state_number.length == 2){
+      state_number = '0' + state_number;
+      $('#search-state-input').val(state_number)
+    }
+    else if (state_number.length === 1){
+      state_number = '00' + state_number;
+      $('#search-state-input').val(state_number)
+    }
   
-    var state = states.get($('#search-state-input').val());
+    var state = states.get(state_number);
     if(state)
     {
       graph.focus(state.number, {});  // Center
+      graph.selectNodes([state.number,]);   // Select node
 
       updateScreen(screens.get(state.screen_number));
       updateStateDetails(state, states.getExtensionState(state));

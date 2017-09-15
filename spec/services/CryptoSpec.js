@@ -132,4 +132,10 @@ describe("CryptoService", function() {
       expect(s.getEncryptedPIN('1234', '4000001234562000')).toBeNull();
     });    
   });
+
+  describe('', function(){
+    it('should format key', function(){
+      expect(s.format('DEADBEEFDEADBEEFDEADBEEFDEADBEEF')).toEqual('DEAD BEEF DEAD BEEF DEAD BEEF DEAD BEEF');
+    })
+  })
 });

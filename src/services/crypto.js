@@ -118,6 +118,16 @@ function CryptoService(settings, log){
     }
   };
 
+  this.format = function(data){
+    var formatted = '';
+    for(var i = 0; i < data.length; i++){
+      if(i !== 0 && i % 4 === 0)
+        formatted += ' '
+      formatted += data[i];
+    }
+    return formatted;
+  }
+
   this.pinblock = new Pinblock();
 
   this.keys = {

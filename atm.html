@@ -51,13 +51,13 @@
 
             <form id="buffers-form buffers" class="navbar-form navbar-right">
               <div class="form-group">
-                <input type="text" class="form-control buffer-sm" id="current-state" value="" title="State" placeholder="State" disabled></input>
-                <input type="text" class="form-control buffer-sm" id="current-screen" value="" title="Screen" placeholder="Screen" disabled></input>
-                <input type="text" class="form-control buffer-md" id="pin-buffer" value="" title="PIN Buffer" placeholder="PIN Buffer" disabled></input>
-                <input type="text" class="form-control buffer-md" id="buffer-b" value="" title="Buffer B" placeholder="Buffer B" disabled></input>
-                <input type="text" class="form-control buffer-md" id="buffer-c" value="" title="Buffer C" placeholder="Buffer C" disabled></input>
-                <input type="text" class="form-control buffer-md letter-spacing" id="opcode-buffer" value="" title="Operation Code Buffer" placeholder="Opcode" disabled></input>
-                <input type="text" class="form-control buffer-md" id="amount-buffer" value="" title="Amount Buffer" placeholder="Amount Buffer" disabled></input>
+                <input type="text" class="form-control buffer-6 letter-spacing" id="current-state" value="" title="State" placeholder="State" disabled></input>
+                <input type="text" class="form-control buffer-8 letter-spacing" id="current-screen" value="" title="Screen" placeholder="Screen" disabled></input>
+                <input type="text" class="form-control buffer-8 letter-spacing" id="pin-buffer" value="" title="PIN Buffer" placeholder="Buffer A" disabled></input>
+                <input type="text" class="form-control buffer-8 letter-spacing" id="buffer-b" value="" title="Buffer B" placeholder="Buffer B" disabled></input>
+                <input type="text" class="form-control buffer-8 letter-spacing" id="buffer-c" value="" title="Buffer C" placeholder="Buffer C" disabled></input>
+                <input type="text" class="form-control buffer-8 letter-spacing" id="opcode-buffer" value="" title="Operation Code Buffer" placeholder="Opcode" disabled></input>
+                <input type="text" class="form-control buffer-12 letter-spacing" id="amount-buffer" value="" title="Amount Buffer" placeholder="Amount Buffer" disabled></input>
               </div>
             </form>
 
@@ -93,7 +93,6 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul>
             <form id="card-read-form" class="navbar-form navbar-left">
               <div class="form-group">
                 <input type="text" class="form-control" id="cardnumber" value="4338259918748135" placeholder="Card Number"></input>
@@ -106,14 +105,12 @@
       
             <form id="keys-form buffers" class="navbar-form navbar-right keys-form ">
               <div class="form-group">
-                <input type="text" class="form-control buffer-lg key " id="master-key" value="" placeholder="Master Key" title="Master Key" disabled></input>
-                <input type="text" class="form-control buffer-sm key-check-value" id="master-key-cv" value="" placeholder="KCV" title="Master Key check value" disabled></input>
-                <input type="text" class="form-control buffer-lg key" id="comms-key" value="" placeholder="Communications Key" title="Communications Key" disabled></input>
-                <input type="text" class="form-control buffer-sm key-check-value" id="comms-key-cv" value="" placeholder="KCV" title="Communications Key check value" disabled></input>
+                <input type="text" class="form-control buffer-32" id="master-key" value="" placeholder="Master Key" title="Master Key" disabled></input>
+                <input type="text" class="form-control buffer-6" id="master-key-cv" value="" placeholder="KCV" title="Master Key check value" disabled></input>
+                <input type="text" class="form-control buffer-32" id="comms-key" value="" placeholder="Communications Key" title="Communications Key" disabled></input>
+                <input type="text" class="form-control buffer-6" id="comms-key-cv" value="" placeholder="KCV" title="Communications Key check value" disabled></input>
               </div>
             </form>
-
-            </ul>
 
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

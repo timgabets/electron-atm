@@ -21,16 +21,39 @@ html, body, .container-fluid {
   border:1px solid #021a40;
 }
 
-.buffer-sm {
+.buffer-6 {
   width: 80px !important;
+  font-family: monospace;
+  font-size: 13px;
 }
 
-.buffer-md {
-  width: 120px !important;
+.buffer-8 {
+  width: 100px !important;
+  font-family: monospace;
+  font-size: 13px;
 }
 
-.buffer-lg {
-  width: 300px !important;
+.buffer-12 {
+  width: 130px !important;
+  font-family: monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.buffer-16 {
+  width: 160px !important;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.buffer-32 {
+  width: 305px !important;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.letter-spacing {
+  letter-spacing: 1px;  
 }
 
 .fdk-button-block {
@@ -56,20 +79,6 @@ html, body, .container-fluid {
 
 .terminal-screen {
   width: 670px;
-}
-
-.key {
-  font-family: monospace;
-}
-
-.key-check-value {
-  font-family: monospace;
-}
-
-.letter-spacing {
-  font-family: monospace;
-  font-size: 16px;
-  letter-spacing: 2px;
 }
 
 .connection-buttons{

@@ -185,6 +185,7 @@ $(function () {
           clearButtonClasses();
           clearIconClasses();
           $('#atm-status-icon').addClass('glyphicon-remove-circle');
+          $('#atm-status-button').addClass('btn-danger')
           break;
 
         case 'Connected':

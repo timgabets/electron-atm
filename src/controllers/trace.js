@@ -12,7 +12,7 @@ function Trace(){
         var dump = '';
         var hex_line = '';
         var ascii_line = '';
-        var padding  = '        ';
+        var padding  = '    ';
 
         for (var i in data) {
             var charcode = data.charCodeAt(i);
@@ -20,7 +20,7 @@ function Trace(){
             (charcode >= 32 && charcode <= 126) ? (ascii_line += data[i]) : (ascii_line += '.');
 
             if(i % 16 === 15){  
-                dump = dump + '\t' + hex_line + padding + ascii_line + '\n';
+                dump = dump + '    ' + hex_line + padding + ascii_line + '\n';
                 hex_line = '';
                 ascii_line = '';
             }
@@ -29,7 +29,7 @@ function Trace(){
         if (hex_line){
             for (i = 0; i < (16 - ascii_line.length); i++)
                 padding += '   ';
-            dump = dump + '\t' + hex_line + padding + ascii_line;
+            dump = dump + '    ' + hex_line + padding + ascii_line;
         }
 
         return dump;
@@ -75,7 +75,7 @@ Trace.prototype.object = function(data){
         var property_name = property;
         while(property_name.length < maxLen)
             property_name += ' ';
-        dump += '\t[' + property_name + ']: [' + data[property].toString().replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
+        dump += '    [' + property_name + ']: [' + data[property].toString().replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
     }
     return dump;
 };

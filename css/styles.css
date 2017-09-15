@@ -15,7 +15,7 @@ html, body, .container-fluid {
 .log-output {
   height: 480px;
   color: #575B5E;
-  font-size: 10px;
+  font-size: 11px;
   font-family: monospace;
   white-space: pre-wrap;
   border:1px solid #021a40;
@@ -47,7 +47,7 @@ html, body, .container-fluid {
 }
 
 .buffer-32 {
-  width: 305px !important;
+  width: 280px !important;
   font-family: monospace;
   font-size: 13px;
 }

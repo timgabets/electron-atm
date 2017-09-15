@@ -8,7 +8,7 @@ img {
 
 .mynetwork {
   width: 940px;
-  height: 600px;
+  height: 565px;
   border: 1px solid;
   border-radius: 5px;
   margin-left: 15px;
@@ -24,7 +24,7 @@ img {
 
 .state-details {
   margin-top:10px;
-  height: 315px;
+  height: 280px;
   color: #575B5E;
   font-size: 10px;
   font-family: monospace;

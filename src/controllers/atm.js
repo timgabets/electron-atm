@@ -111,10 +111,15 @@ function ATM(settings, log) {
       case 'Go in-service':
         this.setStatus('In-Service');
         this.processState('000');
+        this.initBuffers();
+        this.activeFDKs = [];
         break;
       case 'Go out-of-service':
         this.setStatus('Out-Of-Service');
         this.setScreen('001');
+        this.initBuffers();
+        this.activeFDKs = [];
+        this.card = null;
         break;
       case 'Send Configuration ID':
       case 'Send Supply Counters':

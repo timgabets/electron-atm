@@ -52,6 +52,7 @@ Currently only the basic stuff is working, such as:
  * State Navigator: displaying state details when state sleected
 
 Things to be implemented (very) soon:
+ * Auto reconnection
  * Showing text upon the image screen (for interactive transactions)
  * Saving the image path in user settings
  * ICC support

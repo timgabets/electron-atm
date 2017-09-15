@@ -110,10 +110,11 @@ function ATM(settings, log) {
     switch(data.command_code){
       case 'Go in-service':
         this.setStatus('In-Service');
-        //this.processState('000');
+        this.processState('000');
         break;
       case 'Go out-of-service':
         this.setStatus('Out-Of-Service');
+        this.setScreen('001');
         break;
       case 'Send Configuration ID':
       case 'Send Supply Counters':
@@ -318,8 +319,9 @@ function ATM(settings, log) {
   this.processStateA = function(state){
     this.initBuffers();
     this.setScreen(state.screen_number)
-
-    return state.good_read_next_state;
+    
+    if(this.card)
+      return state.good_read_next_state;
   }
 
   /**
@@ -578,6 +580,7 @@ function ATM(settings, log) {
   this.processCloseState = function(state){
     this.setScreen(state.receipt_delivered_screen);
     this.setFDKsActiveMask('000');  // Disable all FDK buttons
+    this.card = null;
     log.info(trace.object(state));
   }
 

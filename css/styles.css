@@ -30,7 +30,7 @@ html, body, .container-fluid {
 }
 
 .buffer-lg {
-  width: 180px !important;
+  width: 300px !important;
 }
 
 .fdk-button-block {
@@ -75,6 +75,11 @@ html, body, .container-fluid {
 .connection-buttons{
   margin-top: 7px;
   margin-right: 15px;
+}
+
+.navbar-nav button {
+ margin-top: 8px;
+ margin-left: 20px;
 }
 
 img {

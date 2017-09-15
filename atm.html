@@ -26,6 +26,7 @@
     <script src="./vendor/jquery-3.1.1.js"></script>
     <script src="./src/listeners/window.js" charset="utf-8"></script>
     <script>window.$ = window.jQuery = nodeRequire('./vendor/jquery-3.1.1.js');</script>
+    <script src="./vendor/bootstrap.min.js" charset="utf-8"></script>
 
   </head>
   <body>
@@ -47,7 +48,7 @@
               <li><a href="states.html">States</a></li>
             </ul>
 
-            <form id="buffers-form buffers" class="navbar-form navbar-center col-md-1">
+            <form id="buffers-form buffers" class="navbar-form navbar-right">
               <div class="form-group">
                 <input type="text" class="form-control buffer-sm" id="current-state" value="" title="State" placeholder="State" disabled></input>
                 <input type="text" class="form-control buffer-sm" id="current-screen" value="" title="Screen" placeholder="Screen" disabled></input>
@@ -112,23 +113,37 @@
           <button type="submit" class="btn btn-default" id="card-inserted" >Read Card</button>
         </form>
       </div>
-
-      <div class="col-md-3 keys-area">
-        <div>
-          <input type="text" class="form-control key" id="master-key" value="" placeholder="Master Key" title="Master Key" disabled></input>
-        </div>
-        <div>
-          <input type="text" class="form-control key" id="comms-key" value="" placeholder="Communications Key" title="Communications Key" disabled></input>
-        </div>
-      </div>
-
-      <div class="col-md-1 kcv-area">
-        <input type="text" class="form-control key-check-value" id="master-key-cv" value="" placeholder="KCV" title="Master Key check value" disabled></input>
-        <input type="text" class="form-control key-check-value" id="comms-key-cv" value="" placeholder="KCV" title="Communications Key check value" disabled></input>
-      </div>
-    
     </div>
 
+    <nav class="navbar navbar-default">
+      <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="dropup">
+          <ul class="nav navbar-nav">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Read Card<span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="cards-selector">
+              <li id='4338259918748135'><a href="#">4338259918748135</a></li>
+              <li id='Another card'><a href="#">Another card</a></li>
+              <li id='Yet another card'><a href="#">Yet another card</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">TODO: Add new card</a></li>
+            </ul>
+          </ul>
+        </div>
+  
+        <form id="keys-form buffers" class="navbar-form navbar-right">
+          <div class="form-group">
+            <input type="text" class="form-control buffer-lg key " id="master-key" value="" placeholder="Master Key" title="Master Key" disabled></input>
+            <input type="text" class="form-control buffer-sm key-check-value" id="master-key-cv" value="" placeholder="KCV" title="Master Key check value" disabled></input>
+            <input type="text" class="form-control buffer-lg key" id="comms-key" value="" placeholder="Communications Key" title="Communications Key" disabled></input>
+            <input type="text" class="form-control buffer-sm key-check-value" id="comms-key-cv" value="" placeholder="KCV" title="Communications Key check value" disabled></input>
+
+          </div>
+        </form>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  </div>
 
   </body>
 </html>

@@ -82,6 +82,9 @@ html, body, .container-fluid {
  margin-left: 20px;
 }
 
+a.disabled {
+ pointer-events: none;
+}
 
 img {
   border:1px solid #021a40;

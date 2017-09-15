@@ -36,8 +36,9 @@ This is a side project of my full-time job and only the features that I currentl
 Currently only the basic stuff is working, such as:
 
  * Connecting to ATM host
+ * Showing ATM connection status icon (Offline, Connected, Out-Of-service, In-Service)
  * Moving through almost all the basic states (ICC states are passed through as well)
- * Showing basic image screens, linked to the state
+ * Showing basic image screens linked to the state
  * Checking the Card's financial institution based on FIT tables
  * Keyboard shortcuts: FDK (A-I), numeric(0-9), Esc, Enter and Backspace
  * Receiving states from host

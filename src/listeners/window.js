@@ -165,13 +165,21 @@ $(function () {
   // On-screen text update
   setInterval(function() {
     var screen_rows = ['at','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
+    // Clear
+    if(atm.current_screen.clear_screen){
+      screen_rows.forEach( (element) => {
+        $( '#' + element + '-screen-row').html('');
+      });
+    }
+
+    // Text
     var text = atm.current_screen.screen_text
     if(text){
       screen_rows.forEach( (element) => {
         $( '#' + element + '-screen-row').html(text[element]);
       });
     }
-  }, 300);
+  }, 400);
 
   // Status button update
   var status = '';

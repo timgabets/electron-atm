@@ -2,15 +2,22 @@
 function DisplayService(screens, log){
   this.screens = screens;
   this.current_screen;
+  this.screen_text
 
   this.setScreen = function(screen){
     this.current_screen = screen;
+
+    // Creating local copies
+    if(this.current_screen.screen_text)
+      this.screen_text = this.current_screen.screen_text;
+
+    log.info('Screen changed to ' + this.current_screen.number);
   }
 
   this.setScreenByNumber = function(screen_number){
-    this.current_screen = this.screens.get(screen_number)
-      if(this.current_screen){
-        log.info('Screen changed to ' + this.current_screen.number);
+    var screen = this.screens.get(screen_number)
+      if(screen){
+        this.setScreen(screen);
       } else {
         log.error('atm.setScreen(): unable to find screen ' + screen_number);
       }
@@ -30,26 +37,30 @@ function DisplayService(screens, log){
       return this.current_screen.image_file;
   };
 
+  /**
+   * [getText description]
+   * @return {[type]} [description]
+   */
   this.getText = function(){
-    if(this.current_screen && this.current_screen.screen_text){
-      var screen_text = {};
+    if(this.screen_text){
+      var converted = {};
 
-      for (var key in this.current_screen.screen_text)
-        if (this.current_screen.screen_text.hasOwnProperty(key)){
-          screen_text[key] = this.current_screen.screen_text[key].split(' ').join('&nbsp');
+      for (var key in this.screen_text)
+        if (this.screen_text.hasOwnProperty(key)){
+          converted[key] = this.screen_text[key].split(' ').join('&nbsp');
         }
 
-      return screen_text;
+      return converted;
     }
   };
 
-  /* TODO:
-    // Replace plain spaces with html-ready &nbsp codes
-    if(this.current_screen.screen_text){
-      }
-    }
-   */
+  this.getCursor = function(){
 
+  };
+
+  this.insertChar = function(char){
+    // Take current position
+  };
 };
 
 module.exports = DisplayService;

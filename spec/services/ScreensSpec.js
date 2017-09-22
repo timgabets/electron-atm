@@ -197,6 +197,19 @@ describe("Screens", function() {
     });
   });
   
+  describe('screenTextEmpty()', function(){
+    it('should return true is text screen is empty', function(){
+      s.initScreenText();
+      expect(s.screenTextEmpty()).toBeTruthy();
+    });
+
+    it('should return false if the text screen is changed', function(){
+      s.initScreenText();
+      s.screen_text['A'] = 'IDDQD                           ';
+      expect(s.screenTextEmpty()).toBeFalsy();
+    })
+  });
+
   describe("parseScreen()", function(){
     it("should return empty object on empty string", function() {
       expect(s.parseScreen('')).toBeFalsy();
@@ -209,13 +222,27 @@ describe("Screens", function() {
       expect(s.parseScreen('778')).toEqual(parsed);
     });
 
-/*
     it("should clear screen and put the text", function() {
       var parsed = {
         number: '039',
         clear_screen: true,
-        text: {
-          '@': 'TEXT',
+        screen_text: { 
+          '@': 'TEXT                            ', 
+          'A': '                                ', 
+          'B': '                                ', 
+          'C': '                                ', 
+          'D': '                                ', 
+          'E': '                                ', 
+          'F': '                                ', 
+          'G': '                                ', 
+          'H': '                                ', 
+          'I': '                                ', 
+          'J': '                                ', 
+          'K': '                                ', 
+          'L': '                                ', 
+          'M': '                                ', 
+          'N': '                                ', 
+          'O': '                                '
         }
       };
       expect(s.parseScreen('039\x0cTEXT')).toEqual(parsed);
@@ -231,6 +258,7 @@ describe("Screens", function() {
       expect(s.parseScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c')).toEqual(parsed);
     });
 
+/*
     it("should parse Screen Blinking and Colour control", function() {
       var parsed = {
         number: '039',

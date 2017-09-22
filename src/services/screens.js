@@ -25,23 +25,23 @@ function ScreensService(settings, log){
    */
   this.initScreenText = function(){
     this.screen_text = { 
-        '@': '                                ', 
-        'A': '                                ', 
-        'B': '                                ', 
-        'C': '                                ', 
-        'D': '                                ', 
-        'E': '                                ', 
-        'F': '                                ', 
-        'G': '                                ', 
-        'H': '                                ', 
-        'I': '                                ', 
-        'J': '                                ', 
-        'K': '                                ', 
-        'L': '                                ', 
-        'M': '                                ', 
-        'N': '                                ', 
-        'O': '                                '
-      };
+      '@': '                                ', 
+      'A': '                                ', 
+      'B': '                                ', 
+      'C': '                                ', 
+      'D': '                                ', 
+      'E': '                                ', 
+      'F': '                                ', 
+      'G': '                                ', 
+      'H': '                                ', 
+      'I': '                                ', 
+      'J': '                                ', 
+      'K': '                                ', 
+      'L': '                                ', 
+      'M': '                                ', 
+      'N': '                                ', 
+      'O': '                                '
+    };
   }
 
   /**
@@ -112,6 +112,19 @@ function ScreensService(settings, log){
   }
 
   /**
+   * [screenTextEmpty description]
+   * @return {[type]} [description]
+   */
+  this.screenTextEmpty = function(){
+    for (var key in this.screen_text) {
+      if (this.screen_text.hasOwnProperty(key))
+        if(this.screen_text[key] !== '                                ')
+          return false;
+    }
+    return true;
+  };
+
+  /**
    * [parseScreen description]
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
@@ -124,7 +137,6 @@ function ScreensService(settings, log){
     parsed.number = data.substr(0, 3);
     var i = 3;
 
-    this.initScreenText();
     while(i < data.length){
       if(data[i] === '\x0c'){
         /**
@@ -139,6 +151,8 @@ function ScreensService(settings, log){
          * ensures the idle sequence is stopped before the
          * next screen is displayed.
          */
+        this.initScreenText();
+        this.initCursor();
         parsed.clear_screen = true;
         i++;
         continue;
@@ -153,7 +167,7 @@ function ScreensService(settings, log){
         parsed.display_image_files_control = true;
         parsed.image_file = data.substr(i+3).split('\x1b\x5c')[0];
 
-        i += (parsed.image_file.length + ('\x1b\x5c').length);
+        i += ('PE'.length + parsed.image_file.length + ('\x1b\x5c').length + 1);
         continue;
       }
 
@@ -172,11 +186,15 @@ function ScreensService(settings, log){
        */
       if(data[i].charCodeAt(0) >= 32 && data[i].charCodeAt(0) <= 127)
       {
-
+        this.addScreenText(data[i]);
+        //console.log(this.screen_text);
       }
 
       i++;
     }
+
+    if(!this.screenTextEmpty())
+      parsed.screen_text = this.screen_text;
 
     return parsed;
   }

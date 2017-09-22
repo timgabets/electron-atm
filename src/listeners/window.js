@@ -108,9 +108,10 @@ $(function () {
   // Current screen update
   var current_screen = '';
   setInterval(function() {
-    if(atm.current_screen.number != current_screen){
-      current_screen = atm.current_screen.number;
-      $("#current-screen").val(atm.current_screen.number);
+    if(atm.display.getScreenNumber() != current_screen){
+      current_screen = atm.display.getScreenNumber();
+      if(current_screen)
+        $("#current-screen").val(current_screen);
     }
   }, 200);
 

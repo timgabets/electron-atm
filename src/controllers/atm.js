@@ -187,6 +187,14 @@ function ATM(settings, log) {
     }
 
     this.current_screen = this.screens.parseDynamicScreenData(data.screen_data_field);
+    
+    // Replace plain spaces with html-ready &nbsp codes
+    if(this.current_screen.screen_text){
+      for (var key in this.current_screen.screen_text) {
+        if (this.current_screen.screen_text.hasOwnProperty(key))
+          this.current_screen.screen_text[key] = this.current_screen.screen_text[key].split(' ').join('&nbsp');
+      }
+    }
 
     return this.replySolicitedStatus('Ready');
   };

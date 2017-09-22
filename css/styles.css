@@ -100,4 +100,105 @@ img {
   border-radius: 5px;
 }
 
+.on-screen-text {
+  font-size: 24px;
+  font-family: monospace;
+  color: white;
+  letter-spacing: 5px;
+}
 
+.at-screen-row {
+  position: absolute;
+  top: 0px;
+  left: 24px
+}
+
+.A-screen-row {
+  position: absolute;
+  top: 30px;
+  left: 24px;
+}
+
+.B-screen-row {
+  position: absolute;
+  top: 60px;
+  left: 24px
+}
+
+.C-screen-row {
+  position: absolute;
+  top: 90px;
+  left: 24px
+}
+
+.D-screen-row {
+  position: absolute;
+  top: 120px;
+  left: 24px
+}
+
+.E-screen-row {
+  position: absolute;
+  top: 150px;
+  left: 24px
+}
+
+.F-screen-row {
+  position: absolute;
+  top: 180px;
+  left: 24px
+}
+
+.G-screen-row {
+  position: absolute;
+  top: 210px;
+  left: 24px
+}
+
+.H-screen-row {
+  position: absolute;
+  top: 240px;
+  left: 24px
+}
+
+.I-screen-row {
+  position: absolute;
+  top: 270px;
+  left: 24px
+}
+
+.J-screen-row {
+  position: absolute;
+  top: 300px;
+  left: 24px
+}
+
+.K-screen-row {
+  position: absolute;
+  top: 330px;
+  left: 24px
+}
+
+.L-screen-row {
+  position: absolute;
+  top: 360px;
+  left: 24px
+}
+
+.M-screen-row {
+  position: absolute;
+  top: 390px;
+  left: 24px
+}
+
+.N-screen-row {
+  position: absolute;
+  top: 420px;
+  left: 24px
+}
+
+.O-screen-row {
+  position: absolute;
+  top: 450px;
+  left: 24px
+}

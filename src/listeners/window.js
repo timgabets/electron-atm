@@ -32,7 +32,25 @@ $(function () {
   // Updating screen image
   ipc.on('ui-change-screen-image', (event, image) => {
     if(image){
-      $("#screen").attr("src", "/home/tim/share/screens/" + image)      
+      var screen_rows = ['at','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
+      
+      // Clear text
+      if(atm.current_screen.clear_screen){
+        screen_rows.forEach( (element) => {
+          $( '#' + element + '-screen-row').html('');
+        });
+      }
+
+      // Replacing on screen text
+      var text = atm.current_screen.screen_text
+      if(text){
+        screen_rows.forEach( (element) => {
+          $( '#' + element + '-screen-row').html(text[element]);
+        });
+      }
+
+      // Changing image
+      $("#screen").attr("src", "/home/tim/share/screens/" + image);
     }
   })
 
@@ -160,26 +178,6 @@ $(function () {
       $("#master-key-cv").val(crypto.getMasterKey()[1]);
     }
   }, 500);
-
-
-  // On-screen text update
-  setInterval(function() {
-    var screen_rows = ['at','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
-    // Clear
-    if(atm.current_screen.clear_screen){
-      screen_rows.forEach( (element) => {
-        $( '#' + element + '-screen-row').html('');
-      });
-    }
-
-    // Text
-    var text = atm.current_screen.screen_text
-    if(text){
-      screen_rows.forEach( (element) => {
-        $( '#' + element + '-screen-row').html(text[element]);
-      });
-    }
-  }, 400);
 
   // Status button update
   var status = '';

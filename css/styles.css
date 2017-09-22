@@ -101,10 +101,9 @@ img {
 }
 
 .on-screen-text {
-  font-size: 24px;
+  font-size: 32px;
   font-family: monospace;
   color: white;
-  letter-spacing: 5px;
 }
 
 .at-screen-row {
@@ -115,90 +114,90 @@ img {
 
 .A-screen-row {
   position: absolute;
-  top: 30px;
+  top: 20px;
   left: 24px;
 }
 
 .B-screen-row {
   position: absolute;
-  top: 60px;
+  top: 50px;
   left: 24px
 }
 
 .C-screen-row {
   position: absolute;
-  top: 90px;
+  top: 80px;
   left: 24px
 }
 
 .D-screen-row {
   position: absolute;
-  top: 120px;
+  top: 110px;
   left: 24px
 }
 
 .E-screen-row {
   position: absolute;
-  top: 150px;
+  top: 140px;
   left: 24px
 }
 
 .F-screen-row {
   position: absolute;
-  top: 180px;
+  top: 170px;
   left: 24px
 }
 
 .G-screen-row {
   position: absolute;
-  top: 210px;
+  top: 200px;
   left: 24px
 }
 
 .H-screen-row {
   position: absolute;
-  top: 240px;
+  top: 230px;
   left: 24px
 }
 
 .I-screen-row {
   position: absolute;
-  top: 270px;
+  top: 260px;
   left: 24px
 }
 
 .J-screen-row {
   position: absolute;
-  top: 300px;
+  top: 290px;
   left: 24px
 }
 
 .K-screen-row {
   position: absolute;
-  top: 330px;
+  top: 320px;
   left: 24px
 }
 
 .L-screen-row {
   position: absolute;
-  top: 360px;
+  top: 350px;
   left: 24px
 }
 
 .M-screen-row {
   position: absolute;
-  top: 390px;
+  top: 380px;
   left: 24px
 }
 
 .N-screen-row {
   position: absolute;
-  top: 420px;
+  top: 410px;
   left: 24px
 }
 
 .O-screen-row {
   position: absolute;
-  top: 450px;
+  top: 440px;
   left: 24px
 }

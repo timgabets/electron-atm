@@ -55,6 +55,39 @@ describe("Screens", function() {
     })
   });
 
+
+  describe('setCursorPosition()', function(){
+    it('should set cursor position to FK', function(){
+      s.initCursor();
+      s.setCursorPosition('FK');
+      expect(s.getCursorPosition()).toEqual({'x': 'K', 'y': 'F'});
+    });
+
+    it('should set cursor position to top left', function(){
+      s.initCursor();
+      s.setCursorPosition('@@');
+      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
+    });
+
+    it('should set cursor position to top right', function(){
+      s.initCursor();
+      s.setCursorPosition('@?');
+      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': '@'});
+    });
+
+    it('should set cursor position to bottom left', function(){
+      s.initCursor();
+      s.setCursorPosition('O@');
+      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': 'O'});
+    });
+
+    it('should set cursor position to bottom right', function(){
+      s.initCursor();
+      s.setCursorPosition('O?');
+      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': 'O'});
+    });
+  })
+
   describe('moveCursor()', function(){
     it('should move cursor position one character right', function(){
       s.initCursor();
@@ -270,7 +303,6 @@ describe("Screens", function() {
     });
 */    
   });
-/*
   describe("addScreen()", function(){
     it("should not add invalid screen", function() {
       expect(s.addScreen('')).toBeFalsy();
@@ -289,7 +321,6 @@ describe("Screens", function() {
       expect(s.add(screens)).toBeTruthy();
     });
   });
-*/
 
   describe('parseDynamicScreenData()', function(){
     /*
@@ -300,13 +331,14 @@ describe("Screens", function() {
       5b 32 37 3b 38 30 6d 1b 28 76 1b 29 76 0f 46 4b         [27;80m.(v.)v.FK
       20 20 20 20 20 20 20 20 20 20 20 20 20 20 43 4f                       CO
       55 50 4f 4e                                             UPON
-    it('should parse', function(){
+    it('should parse dynamic screen', function(){
       var parsed = {
         number: 'DYNAMIC',
+        clear_screen: true,
         display_image_files_control: true,
         image_file: 'PIC235.jpg',
       };
-      expect(s.parseDynamicScreenData('\x1BPEPIC235.jpg\x1B\\x1B[27;80m\x1B(v\x1B)v\x0FFK              COUPON')).toEqual(parsed);
+      expect(s.parseDynamicScreenData('\x0c\x0c\x1BPEPIC235.jpg\x1b\x5c\x0FFK              COUPON')).toEqual(parsed);
     })
    */
   });

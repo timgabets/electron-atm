@@ -86,6 +86,25 @@ function ScreensService(settings, log){
   }
 
   /**
+   * [setCursorPosition description]
+   * @param {[type]} position_string [description]
+   */
+  this.setCursorPosition = function(position_string){
+    var y = position_string[0];
+    var x = position_string[1];
+
+    screen_columns.forEach( (element, i) => {
+      if(x === element)
+        this.cursor_position.x = i;
+    });
+
+    screen_rows.forEach( (element, i) => {
+      if(y === element)
+        this.cursor_position.y = i;
+    });
+  }
+
+  /**
    * [replaceCharAt description]
    * @param  {[type]} string      [description]
    * @param  {[type]} position    [description]

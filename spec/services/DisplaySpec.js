@@ -26,5 +26,14 @@ describe("DisplayService", function() {
       };
       expect(display.getScreenNumber()).toEqual('023');
     })
+  });
+
+  describe('getImage()', function(){
+    it('should get image', function(){
+      display.current_screen = {
+        image_file: 'PIC001.jpg',
+      }
+      expect(display.getImage()).toEqual('PIC001.jpg');
+    });
   })
 });

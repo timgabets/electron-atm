@@ -34,18 +34,19 @@ $(function () {
     if(image){
       var screen_rows = ['at','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
       
+      var screen = atm.display.getScreen();
+
       // Clear text
-      if(atm.current_screen.clear_screen){
+      if(screen && screen.clear_screen){
         screen_rows.forEach( (element) => {
           $( '#' + element + '-screen-row').html('');
         });
       }
 
       // Replacing on screen text
-      var text = atm.current_screen.screen_text
-      if(text){
+      if(screen && screen.screen_text){
         screen_rows.forEach( (element) => {
-          $( '#' + element + '-screen-row').html(text[element]);
+          $( '#' + element + '-screen-row').html(screen.screen_text[element]);
         });
       }
 

@@ -2,6 +2,7 @@ const StatesService = require('../services/states.js');
 const ScreensService = require('../services/screens.js');
 const FITsService = require('../services/fits.js');
 const CryptoService = require('../services/crypto.js');
+const DisplayService = require('../services/display.js');
 const Trace = require('../controllers/trace.js');
 const Pinblock = require('../controllers/pinblock.js');
 const des3 = require('node-cardcrypto').des;
@@ -116,7 +117,7 @@ function ATM(settings, log) {
         break;
       case 'Go out-of-service':
         this.setStatus('Out-Of-Service');
-        this.setScreen('001');
+        this.display.setScreenByNumber('001');
         this.initBuffers();
         this.activeFDKs = [];
         this.card = null;
@@ -185,17 +186,8 @@ function ATM(settings, log) {
     if(data.active_keys){
       this.setFDKsActiveMask(data.active_keys)
     }
-
-    this.current_screen = this.screens.parseDynamicScreenData(data.screen_data_field);
     
-    // Replace plain spaces with html-ready &nbsp codes
-    if(this.current_screen.screen_text){
-      for (var key in this.current_screen.screen_text) {
-        if (this.current_screen.screen_text.hasOwnProperty(key))
-          this.current_screen.screen_text[key] = this.current_screen.screen_text[key].split(' ').join('&nbsp');
-      }
-    }
-
+    this.display.setScreen(this.screens.parseDynamicScreenData(data.screen_data_field));
     return this.replySolicitedStatus('Ready');
   };
 
@@ -312,26 +304,13 @@ function ATM(settings, log) {
   }
 
   /**
-   * [setScreen description]
-   * @param {[type]} screen_number [description]
-   */
-  this.setScreen = function(screen_number){
-    this.current_screen = this.screens.get(screen_number)
-    if(this.current_screen){
-      log.info('Screen changed to ' + this.current_screen.number);
-    } else {
-      log.error('atm.setScreen(): unable to find screen ' + screen_number);
-    }
-  }
-
-  /**
    * [processStateA process the Card Read state]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
   this.processStateA = function(state){
     this.initBuffers();
-    this.setScreen(state.screen_number)
+    this.display.setScreenByNumber(state.screen_number)
     
     if(this.card)
       return state.good_read_next_state;
@@ -351,7 +330,7 @@ function ATM(settings, log) {
      * to the left of the CRT is set) or the Enter key after the last digit has
      * been entered. Pressing the Clear key clears all digits.
      */
-    this.setScreen(state.screen_number)
+    this.display.setScreenByNumber(state.screen_number)
     this.setFDKsActiveMask('001'); // Enabling button 'A' only
     this.max_pin_length = this.FITs.getMaxPINLength(this.card.number)
 
@@ -367,7 +346,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processAmountEntryState = function(state){
-    this.setScreen(state.screen_number);
+    this.display.setScreenByNumber(state.screen_number);
     this.setFDKsActiveMask('015'); // Enabling 'A', 'B', 'C', 'D' buttons
     this.amount_buffer = '000000000000';
 
@@ -450,7 +429,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processFourFDKSelectionState = function(state){
-    this.setScreen(state.screen_number);
+    this.display.setScreenByNumber(state.screen_number);
 
     this.activeFDKs= [];
     ['A', 'B', 'C', 'D'].forEach((element, index) => {
@@ -471,7 +450,7 @@ function ATM(settings, log) {
   }
 
   this.processInformationEntryState = function(state){
-    this.setScreen(state.screen_number);
+    this.display.setScreenByNumber(state.screen_number);
     var active_mask = '0';
     [state.FDK_A_next_state,
      state.FDK_B_next_state,
@@ -513,7 +492,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processTransactionRequestState = function(state){
-    this.setScreen(state.screen_number);
+    this.display.setScreenByNumber(state.screen_number);
 
     var request = {
       message_class: 'Unsolicited',
@@ -591,7 +570,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processCloseState = function(state){
-    this.setScreen(state.receipt_delivered_screen);
+    this.display.setScreenByNumber(state.receipt_delivered_screen);
     this.setFDKsActiveMask('000');  // Disable all FDK buttons
     this.card = null;
     log.info(trace.object(state));
@@ -635,7 +614,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateX = function(state, extension_state){
-    this.setScreen(state.screen_number);
+    this.display.setScreenByNumber(state.screen_number);
     this.setFDKsActiveMask(state.FDK_active_mask);
 
     var button = this.buttons_pressed.shift();
@@ -698,7 +677,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateY = function(state, extension_state){
-    this.setScreen(state.screen_number);
+    this.display.setScreenByNumber(state.screen_number);
     this.setFDKsActiveMask(state.FDK_active_mask);
 
     if(extension_state)
@@ -734,7 +713,7 @@ function ATM(settings, log) {
    */
   this.processStateCompleteICCAppInit = function(state){
     var extension_state = this.states.get(state.extension_state);
-    this.setScreen(state.please_wait_screen_number);
+    this.display.setScreenByNumber(state.please_wait_screen_number);
 
     return extension_state.entries[8]; // Processing not performed
   }
@@ -935,17 +914,16 @@ function ATM(settings, log) {
   this.screens = new ScreensService(settings, log);
   this.FITs = new FITsService(settings, log);
   this.crypto = new CryptoService(settings, log);
+  this.display = new DisplayService(this.screens, log);
   this.pinblock = new Pinblock();
 
   this.setStatus('Offline');
   this.initBuffers();
   this.initCounters();
-  this.current_screen = {};
   this.current_state = {};
   this.buttons_pressed = [];
   this.activeFDKs = [];
   this.transaction_request = null;
-
 }
 
 /**

@@ -37,11 +37,12 @@ ipc.on('atm-network-disconnected', (event) => {
 })
 
 // Updating ATM screen 
-var current_screen = {}
+var image = ''
 setInterval(function() {
-  if(atm.current_screen != current_screen){
-  	current_screen = atm.current_screen;
-    ipc.send('atm-change-screen-image', atm.current_screen.image_file);
+  if(atm.display.getImage() !== image){
+  	image = atm.display.getImage();
+    if(image)
+      ipc.send('atm-change-screen-image', image);
   }
 }, 300);
 

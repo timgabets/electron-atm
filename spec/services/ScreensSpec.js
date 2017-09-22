@@ -276,7 +276,8 @@ describe("Screens", function() {
           'M': '                                ', 
           'N': '                                ', 
           'O': '                                '
-        }
+        },
+        cursor: { x: 'D', y: '@' }
       };
       expect(s.parseScreen('039\x0cTEXT')).toEqual(parsed);
     });
@@ -287,6 +288,7 @@ describe("Screens", function() {
         clear_screen: true,
         display_image_files_control: true,
         image_file: 'PIC000.jpg',
+        cursor: { 'x': '@', 'y': '@' }
       };
       expect(s.parseScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c')).toEqual(parsed);
     });
@@ -346,7 +348,8 @@ describe("Screens", function() {
           'M': '                                ', 
           'N': '                                ', 
           'O': '                                '
-        }
+        },
+        cursor: { 'x': '?', 'y': 'F' },
       };
       expect(s.parseDynamicScreenData('\x0c\x0c\x1BPEPIC235.jpg\x1b\x5c\x0FFK              COUPON')).toEqual(parsed);
     })

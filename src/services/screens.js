@@ -217,6 +217,9 @@ function ScreensService(settings, log){
     if(!this.screenTextEmpty())
       parsed.screen_text = this.screen_text;
 
+    if(this.cursor_position && this.cursor_position.x !== undefined && this.cursor_position.y !== undefined)
+      parsed.cursor = this.getCursorPosition();
+
     return parsed;
   }
 

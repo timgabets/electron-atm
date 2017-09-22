@@ -110,38 +110,93 @@ describe("Screens", function() {
 
   describe('initScreenText()', function(){
     it('should init screen text', function() {
-      var initialized = { '@': '', 'A': '', 'B': '', 'C': '', 'D': '', 'E': '', 'F': '', 'G': '', 'H': '', 'I': '', 'J': '', 'K': '', 'L': '', 'M': '', 'N': '', 'O': '' };
+      var initialized = { 
+        '@': '                                ', 
+        'A': '                                ', 
+        'B': '                                ', 
+        'C': '                                ', 
+        'D': '                                ', 
+        'E': '                                ', 
+        'F': '                                ', 
+        'G': '                                ', 
+        'H': '                                ', 
+        'I': '                                ', 
+        'J': '                                ', 
+        'K': '                                ', 
+        'L': '                                ', 
+        'M': '                                ', 
+        'N': '                                ', 
+        'O': '                                ' };
       expect(s.screen_text).toEqual({});
       s.initScreenText()
       expect(s.screen_text).toEqual(initialized);
     });
   });
 
-/*
-
-  describe('addScreenText()', function(){
-    it('should add one character', function() {
-      s.initScreenText()
-      expect(s.cursor_position).toEqual({'x': '@', 'y': '@'});
-      s.addScreenText('X');
-      expect(s.screen_text['@']).toEqual('X')
+  describe('replaceCharAt()', function(){
+    it('should replace symbol in string', function(){
+      expect(s.replaceCharAt('iddqd', 1, 'x')).toEqual('ixdqd');
     });
 
-    it('should change sursor position', function() {
-      s.initScreenText()
-      expect(s.cursor_position).toEqual({'x': '@', 'y': '@'});
+    it('should replace symbol in string', function(){
+      expect(s.replaceCharAt('                                ', 0, 'X')).toEqual('X                               ');
+    });
+  });
+
+  describe('addScreenText()', function(){
+    beforeEach(function() {
+      s.initCursor();
+      s.initScreenText();
+    });
+
+    it('should add one character', function() {
+      expect(s.screen_text['@'].length).toEqual(32);
       s.addScreenText('X');
-      expect(s.cursor_position).toEqual({'x': 'A', 'y': '@'})
+      expect(s.screen_text['@'].length).toEqual(32);
+      expect(s.screen_text['@']).toEqual('X                               ')
+    });
+
+    it('should replace the character', function() {
+      s.addScreenText('X');
+      expect(s.screen_text['@']).toEqual('X                               ')
+      s.initCursor();
+      s.addScreenText('Z');
+      expect(s.screen_text['@']).toEqual('Z                               ')
+    });
+
+    it('should change cursor position', function() {
+      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
+      s.addScreenText('X');
+      expect(s.getCursorPosition()).toEqual({'x': 'A', 'y': '@'})
     });
 
     it('should add short character string', function() {
-      s.initScreenText()
-      expect(s.cursor_position).toEqual({'x': '@', 'y': '@'});
+      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
       s.addScreenText('IDDQD');
-      expect(s.screen_text['@']).toEqual('IDDQD')
+      expect(s.screen_text['@']).toEqual('IDDQD                           ')
+      expect(s.getCursorPosition()).toEqual({'x': 'E', 'y': '@'});
+    });
+
+    it('should replace previous character string', function() {
+      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
+      s.addScreenText('IDDQD');
+      expect(s.screen_text['@']).toEqual('IDDQD                           ')
+      
+      s.initCursor();
+      s.addScreenText('XYZ');
+      expect(s.screen_text['@']).toEqual('XYZQD                           ')
+    });
+
+    it('should carry the text to the next line', function() {
+      s.cursor_position = {'x': 30, 'y': 0}
+      expect(s.getCursorPosition()).toEqual({'x': '>', 'y': '@'});
+      s.addScreenText('ABCDEFGHI');
+      expect(s.screen_text['@']).toEqual('                              AB')
+      expect(s.screen_text['A']).toEqual('CDEFGHI                         ')
+      expect(s.getCursorPosition()).toEqual({'x': 'G', 'y': 'A'});
     });
   });
-*/
+  
   describe("parseScreen()", function(){
     it("should return empty object on empty string", function() {
       expect(s.parseScreen('')).toBeFalsy();

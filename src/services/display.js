@@ -2,7 +2,8 @@
 function DisplayService(screens, log){
   this.screens = screens;
   this.current_screen;
-  this.screen_text
+  this.screen_text;
+  this.cursor;
 
   this.setScreen = function(screen){
     this.current_screen = screen;
@@ -10,6 +11,9 @@ function DisplayService(screens, log){
     // Creating local copies
     if(this.current_screen.screen_text)
       this.screen_text = this.current_screen.screen_text;
+
+    if(this.current_screen.cursor)
+      this.setCursor(this.current_screen.cursor);
 
     log.info('Screen changed to ' + this.current_screen.number);
   }
@@ -21,6 +25,10 @@ function DisplayService(screens, log){
       } else {
         log.error('atm.setScreen(): unable to find screen ' + screen_number);
       }
+  };
+
+  this.setCursor = function(cursor){
+    this.cursor = cursor;
   };
 
   this.getScreenNumber = function(){
@@ -58,8 +66,36 @@ function DisplayService(screens, log){
 
   };
 
+  /**
+   * [initScreenText description]
+   * @return {[type]} [description]
+   */
+  this.initScreenText = function(){
+    this.screen_text = { 
+      '@': '                                ', 
+      'A': '                                ', 
+      'B': '                                ', 
+      'C': '                                ', 
+      'D': '                                ', 
+      'E': '                                ', 
+      'F': '                                ', 
+      'G': '                                ', 
+      'H': '                                ', 
+      'I': '                                ', 
+      'J': '                                ', 
+      'K': '                                ', 
+      'L': '                                ', 
+      'M': '                                ', 
+      'N': '                                ', 
+      'O': '                                '
+    };
+  };
+
+
   this.insertChar = function(char){
     // Take current position
+    if(!this.screen_text)
+      this.initScreenText();
   };
 };
 

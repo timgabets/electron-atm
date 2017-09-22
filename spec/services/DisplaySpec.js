@@ -103,4 +103,31 @@ describe("DisplayService", function() {
     });
   });
 
+  describe('initScreenText()', function(){
+    it('should init screen text image', function(){
+      var initialized = { 
+        '@': '                                ', 
+        'A': '                                ', 
+        'B': '                                ', 
+        'C': '                                ', 
+        'D': '                                ', 
+        'E': '                                ', 
+        'F': '                                ', 
+        'G': '                                ', 
+        'H': '                                ', 
+        'I': '                                ', 
+        'J': '                                ', 
+        'K': '                                ', 
+        'L': '                                ', 
+        'M': '                                ', 
+        'N': '                                ', 
+        'O': '                                '
+      };
+
+      expect(display.screen_text).toBeUndefined();
+      display.initScreenText();
+      expect(display.screen_text).toEqual(initialized);
+    });
+  });
+
 });

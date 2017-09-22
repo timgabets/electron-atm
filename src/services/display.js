@@ -30,12 +30,22 @@ function DisplayService(screens, log){
       return this.current_screen.image_file;
   };
 
+  this.getText = function(){
+    if(this.current_screen && this.current_screen.screen_text){
+      var screen_text = {};
+
+      for (var key in this.current_screen.screen_text)
+        if (this.current_screen.screen_text.hasOwnProperty(key)){
+          screen_text[key] = this.current_screen.screen_text[key].split(' ').join('&nbsp');
+        }
+
+      return screen_text;
+    }
+  };
+
   /* TODO:
     // Replace plain spaces with html-ready &nbsp codes
     if(this.current_screen.screen_text){
-      for (var key in this.current_screen.screen_text) {
-        if (this.current_screen.screen_text.hasOwnProperty(key))
-          this.current_screen.screen_text[key] = this.current_screen.screen_text[key].split(' ').join('&nbsp');
       }
     }
    */

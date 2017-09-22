@@ -196,7 +196,9 @@ function ScreensService(settings, log){
        * 
        */
       if(data[i] === '\x0F'){
-
+        this.setCursorPosition(data.substr(i+1, 2));
+        i += 3;
+        continue;
       };
 
       /**

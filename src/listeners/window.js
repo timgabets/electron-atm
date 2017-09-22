@@ -44,9 +44,10 @@ $(function () {
       }
 
       // Replacing on screen text
-      if(screen && screen.screen_text){
+      var screen_text = atm.display.getText();
+      if(screen_text){
         screen_rows.forEach( (element) => {
-          $( '#' + element + '-screen-row').html(screen.screen_text[element]);
+          $( '#' + element + '-screen-row').html(screen_text[element]);
         });
       }
 

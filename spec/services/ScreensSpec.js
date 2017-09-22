@@ -108,18 +108,16 @@ describe("Screens", function() {
   
   });
 
-/*
   describe('initScreenText()', function(){
     it('should init screen text', function() {
       var initialized = { '@': '', 'A': '', 'B': '', 'C': '', 'D': '', 'E': '', 'F': '', 'G': '', 'H': '', 'I': '', 'J': '', 'K': '', 'L': '', 'M': '', 'N': '', 'O': '' };
       expect(s.screen_text).toEqual({});
-      expect(s.cursor_position).toEqual({});
       s.initScreenText()
       expect(s.screen_text).toEqual(initialized);
-      expect(s.cursor_position).toEqual({'x': '@', 'y': '@'});
     });
   });
 
+/*
 
   describe('addScreenText()', function(){
     it('should add one character', function() {

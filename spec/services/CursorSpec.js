@@ -8,7 +8,7 @@ describe("CursorService", function() {
 
   describe('insertChar()', function(){
     it('should init cursor position', function(){
-      expect(c.cursor_position).toBeUndefined();
+      expect(c.cursor_position).toEqual({});
       c.initCursor();
       expect(c.cursor_position).toEqual({'x': 0, 'y': 0});
     });

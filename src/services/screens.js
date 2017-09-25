@@ -21,6 +21,7 @@ function ScreensService(settings, log){
 
   this.screen_text = {};
   this.cursor.cursor_position = {};
+  
   /**
    * [initScreenText description]
    * @return {[type]} [description]
@@ -47,26 +48,6 @@ function ScreensService(settings, log){
   }
 
   /**
-   * [initCursor description]
-   * @return {[type]} [description]
-   */
-  this.initCursor = function(){
-    //this.cursor.cursor_position = { 'x': 0, 'y': 0 };
-    this.cursor.initCursor();
-  }
-
-  /**
-   * [getCursorPosition description]
-   * @return {[type]} [description]
-   */
-  this.getCursorPosition = function(){
-    return {
-      'x': screen_columns[this.cursor.cursor_position.x], 
-      'y': screen_rows[this.cursor.cursor_position.y]
-    };
-  }
-
-  /**
    * [replaceCharAt description]
    * @param  {[type]} string      [description]
    * @param  {[type]} position    [description]
@@ -84,7 +65,7 @@ function ScreensService(settings, log){
   this.addScreenText = function(text){
     for(var i = 0; i < text.length; i++){
       var char = text[i];
-      var row = this.getCursorPosition()['y'];
+      var row = this.cursor.getCursorPosition()['y'];
       var column = this.cursor.cursor_position['x'];
 
       this.screen_text[row] = this.replaceCharAt(this.screen_text[row], column, char);
@@ -180,7 +161,7 @@ function ScreensService(settings, log){
       parsed.screen_text = this.screen_text;
 
     if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)
-      parsed.cursor = this.getCursorPosition();
+      parsed.cursor = this.cursor.getCursorPosition();
 
     return parsed;
   }

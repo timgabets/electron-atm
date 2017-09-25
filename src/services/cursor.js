@@ -4,7 +4,7 @@ var screen_columns = ['@','A','B','C','D','E','F','G','H','I','J','K','L','M','N
 var screen_rows = ['@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
 
 function CursorService(){
-  this.cursor_position;
+  this.cursor_position = {};
 
   /**
    * [initCursor description]

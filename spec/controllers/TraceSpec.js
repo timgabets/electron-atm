@@ -17,14 +17,33 @@ describe("Trace", function() {
   });
 
   describe("object()", function(){
-      it("should trace the object properties", function() {
-        var obj = { 
-          message_class: 'Terminal Command',
-          LUNO: '000',
-          message_sequence_number: '000',
-          command_code: 'Go in-service'
-        };
-        expect(t.object(obj)).toEqual('\n    [message_class          ]: [Terminal Command]\n    [LUNO                   ]: [000]\n    [message_sequence_number]: [000]\n    [command_code           ]: [Go in-service]\n');
-      });
+    it("should trace the object properties", function() {
+      var obj = { 
+        message_class: 'Terminal Command',
+        LUNO: '000',
+        message_sequence_number: '000',
+        command_code: 'Go in-service'
+      };
+      expect(t.object(obj)).toEqual('\n    [message_class          ]: [Terminal Command]\n    [LUNO                   ]: [000]\n    [message_sequence_number]: [000]\n    [command_code           ]: [Go in-service]\n');
+    });
+
+    it("should trace array object", function() {
+      var obj = {
+        states: ['003', '744', '987'],
+      };
+      expect(t.object(obj)).toEqual('\n    [states]: [["003","744","987"]]\n');
+    });
+
+
+    it("should trace array nested object properties", function() {
+      var obj = {
+        data: {
+          alpha: '744321',
+          beta:  '98765',
+        },
+      };
+      expect(t.object(obj)).toEqual('\n    [data]: [{"alpha":"744321","beta":"98765"}]\n');
+    });
+
   });  
 });

@@ -61,23 +61,28 @@ Trace.prototype.trace = function(data, title){
  * @return {[type]}       [description]
  */
 Trace.prototype.object = function(data){
-    if(!data)
-        return '';
+  if(!data)
+    return '';
 
-    var dump = '\n';
+  var dump = '\n';
 
-    var maxLen = 0;
-    for (var property in data)
-        if (property.length > maxLen)
-            maxLen = property.length
+  var maxLen = 0;
+  for (var property in data)
+    if (property.length > maxLen)
+      maxLen = property.length
 
-    for (var property in data) {
-        var property_name = property;
-        while(property_name.length < maxLen)
-            property_name += ' ';
-        dump += '    [' + property_name + ']: [' + data[property].toString().replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
+  for (var property in data) {
+    var property_name = property;
+    while(property_name.length < maxLen)
+      property_name += ' ';
+
+    if(typeof(data[property]) === 'object'){
+      dump += '    [' + property_name + ']: [' + JSON.stringify(data[property]).replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
+    } else {
+      dump += '    [' + property_name + ']: [' + data[property].toString().replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
     }
-    return dump;
+  }
+  return dump;
 };
 
 module.exports = Trace

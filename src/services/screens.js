@@ -17,14 +17,62 @@ function ScreensService(settings, log){
   this.text = new ScreenTextService(this.cursor);
 
   this.getColourControlCommandCode = function(code){
-    switch(code){
-      case '27':
-        return {'foreground': 'white'};
-      case '80':
-        return {'background': 'transparent'};
-      default:
+    if(code === '80')
+      return {'background': 'transparent'};
+
+    switch(code[0]){
+      // Foreground colour
+      case 'B':
+      case '2':
+        switch(code[1]){
+          case '0':
+            return {'foreground': 'black'}
+          case '1':
+            return {'foreground': 'red'}
+          case '2':
+            return {'foreground': 'green'}
+          case '3':
+            return {'foreground': 'yellow'}
+          case '4':
+            return {'foreground': 'blue'}
+          case '5':
+            return {'foreground': 'magenta'}
+          case '6':
+            return {'foreground': 'cyan'}
+          case '7':
+            return {'foreground': 'white'}
+          default:
+            log.error('Unsupported colour code ' + code[1]);
+        }
+
+      // Background colour
+      case '3':
+      case 'C':
+        switch(code[1]){
+          case '0':
+            return {'background': 'black'}
+          case '1':
+            return {'background': 'red'}
+          case '2':
+            return {'background': 'green'}
+          case '3':
+            return {'background': 'yellow'}
+          case '4':
+            return {'background': 'blue'}
+          case '5':
+            return {'background': 'magenta'}
+          case '6':
+            return {'background': 'cyan'}
+          case '7':
+            return {'background': 'white'}
+          default:
+            log.error('Unsupported colour code ' + code[1]);
+        }
         break;
-    }
+
+      default:
+        log.error('Unsupported colour control ' + code);
+    };
   };
 
   /**

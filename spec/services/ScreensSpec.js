@@ -5,6 +5,8 @@ describe("Screens", function() {
   beforeEach(function() {
     log = {
       info: function() {
+      },
+      error: function() {
       }
     };
     
@@ -23,11 +25,136 @@ describe("Screens", function() {
 
   describe('getColourControlCommandCode()', function(){
     it('should get colour control command code 27', function(){
-      expect(s.getColourControlCommandCode('27')).toEqual({'foreground': 'white'});
+      expect(s.getColourControlCommandCode('80')).toEqual({'background': 'transparent'});
+    });
+
+    it('should get colour control command code 20', function(){
+      expect(s.getColourControlCommandCode('20')).toEqual({'foreground': 'black'});
+    });
+
+    it('should get colour control command code B0', function(){
+      expect(s.getColourControlCommandCode('B0')).toEqual({'foreground': 'black'});
+    });
+
+    it('should get colour control command code 21', function(){
+      expect(s.getColourControlCommandCode('21')).toEqual({'foreground': 'red'});
+    });
+
+    it('should get colour control command code B1', function(){
+      expect(s.getColourControlCommandCode('B1')).toEqual({'foreground': 'red'});
+    });
+
+    it('should get colour control command code 22', function(){
+      expect(s.getColourControlCommandCode('22')).toEqual({'foreground': 'green'});
+    });
+
+    it('should get colour control command code B2', function(){
+      expect(s.getColourControlCommandCode('B2')).toEqual({'foreground': 'green'});
+    });
+
+    it('should get colour control command code 23', function(){
+      expect(s.getColourControlCommandCode('23')).toEqual({'foreground': 'yellow'});
+    });
+
+    it('should get colour control command code B3', function(){
+      expect(s.getColourControlCommandCode('B3')).toEqual({'foreground': 'yellow'});
+    });
+
+    it('should get colour control command code 24', function(){
+      expect(s.getColourControlCommandCode('24')).toEqual({'foreground': 'blue'});
+    });
+
+    it('should get colour control command code B4', function(){
+      expect(s.getColourControlCommandCode('B4')).toEqual({'foreground': 'blue'});
+    });
+
+    it('should get colour control command code 25', function(){
+      expect(s.getColourControlCommandCode('25')).toEqual({'foreground': 'magenta'});
+    });
+
+    it('should get colour control command code B5', function(){
+      expect(s.getColourControlCommandCode('B5')).toEqual({'foreground': 'magenta'});
+    });
+
+    it('should get colour control command code 26', function(){
+      expect(s.getColourControlCommandCode('26')).toEqual({'foreground': 'cyan'});
+    });
+
+    it('should get colour control command code B6', function(){
+      expect(s.getColourControlCommandCode('B6')).toEqual({'foreground': 'cyan'});
     });
 
     it('should get colour control command code 27', function(){
-      expect(s.getColourControlCommandCode('80')).toEqual({'background': 'transparent'});
+      expect(s.getColourControlCommandCode('27')).toEqual({'foreground': 'white'});
+    });
+
+    it('should get colour control command code B7', function(){
+      expect(s.getColourControlCommandCode('B7')).toEqual({'foreground': 'white'});
+    });
+
+
+    it('should get colour control command code 30', function(){
+      expect(s.getColourControlCommandCode('30')).toEqual({'background': 'black'});
+    });
+
+    it('should get colour control command code C0', function(){
+      expect(s.getColourControlCommandCode('C0')).toEqual({'background': 'black'});
+    });
+
+    it('should get colour control command code 31', function(){
+      expect(s.getColourControlCommandCode('31')).toEqual({'background': 'red'});
+    });
+
+    it('should get colour control command code C1', function(){
+      expect(s.getColourControlCommandCode('C1')).toEqual({'background': 'red'});
+    });
+
+    it('should get colour control command code 32', function(){
+      expect(s.getColourControlCommandCode('32')).toEqual({'background': 'green'});
+    });
+
+    it('should get colour control command code C2', function(){
+      expect(s.getColourControlCommandCode('C2')).toEqual({'background': 'green'});
+    });
+
+    it('should get colour control command code 33', function(){
+      expect(s.getColourControlCommandCode('33')).toEqual({'background': 'yellow'});
+    });
+
+    it('should get colour control command code C3', function(){
+      expect(s.getColourControlCommandCode('C3')).toEqual({'background': 'yellow'});
+    });
+
+    it('should get colour control command code 34', function(){
+      expect(s.getColourControlCommandCode('34')).toEqual({'background': 'blue'});
+    });
+
+    it('should get colour control command code C4', function(){
+      expect(s.getColourControlCommandCode('C4')).toEqual({'background': 'blue'});
+    });
+
+    it('should get colour control command code 35', function(){
+      expect(s.getColourControlCommandCode('35')).toEqual({'background': 'magenta'});
+    });
+
+    it('should get colour control command code C5', function(){
+      expect(s.getColourControlCommandCode('C5')).toEqual({'background': 'magenta'});
+    });
+
+    it('should get colour control command code 36', function(){
+      expect(s.getColourControlCommandCode('36')).toEqual({'background': 'cyan'});
+    });
+
+    it('should get colour control command code C6', function(){
+      expect(s.getColourControlCommandCode('C6')).toEqual({'background': 'cyan'});
+    });
+
+    it('should get colour control command code 37', function(){
+      expect(s.getColourControlCommandCode('37')).toEqual({'background': 'white'});
+    });
+
+    it('should get colour control command code C7', function(){
+      expect(s.getColourControlCommandCode('C7')).toEqual({'background': 'white'});
     });
   });
 

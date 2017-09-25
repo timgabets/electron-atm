@@ -100,11 +100,22 @@ img {
   border-radius: 5px;
 }
 
+.coordinates-row {
+  position: absolute;
+  top: -18px;
+  left: 24px;
+  color: lightgrey;
+  font-family: monospace;
+  font-size: 13px;
+  letter-spacing: 12px;
+}
+
 .on-screen-text {
   font-size: 32px;
   font-family: monospace;
   color: white;
 }
+
 
 .at-screen-row {
   position: absolute;

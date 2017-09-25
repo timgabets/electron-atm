@@ -5,7 +5,6 @@ const ScreenTextService = require('../services/screentext.js');
 function DisplayService(screens, log){
   this.screens = screens;
   this.current_screen;
-  this.screen_text;
   this.cursor = new CursorService();
   this.text = new ScreenTextService(this.cursor);
 
@@ -14,7 +13,7 @@ function DisplayService(screens, log){
 
     // Creating local copies
     if(this.current_screen.screen_text)
-      this.screen_text = this.current_screen.screen_text;
+      this.text.copy(this.current_screen.screen_text);
 
     if(this.current_screen.cursor)
       this.cursor.copy(this.current_screen.cursor)
@@ -50,47 +49,10 @@ function DisplayService(screens, log){
    * @return {[type]} [description]
    */
   this.getText = function(){
-    if(this.screen_text){
-      var converted = {};
-
-      for (var key in this.screen_text)
-        if (this.screen_text.hasOwnProperty(key)){
-          converted[key] = this.screen_text[key].split(' ').join('&nbsp');
-        }
-
-      return converted;
-    }
-  };
-
-  /**
-   * [initScreenText description]
-   * @return {[type]} [description]
-   */
-  this.initScreenText = function(){
-    this.screen_text = { 
-      '@': '                                ', 
-      'A': '                                ', 
-      'B': '                                ', 
-      'C': '                                ', 
-      'D': '                                ', 
-      'E': '                                ', 
-      'F': '                                ', 
-      'G': '                                ', 
-      'H': '                                ', 
-      'I': '                                ', 
-      'J': '                                ', 
-      'K': '                                ', 
-      'L': '                                ', 
-      'M': '                                ', 
-      'N': '                                ', 
-      'O': '                                '
-    };
+    return this.text.getHTML();
   };
 
   this.insertChar = function(char){
-    if(!this.screen_text)
-      this.initScreenText();
-
     this.cursor.getPosition();
   };
 };

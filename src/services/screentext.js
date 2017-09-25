@@ -43,7 +43,24 @@ function ScreenTextService(cursor){
    */
   this.get = function(){
     return this.screen_text;
-  }
+  };
+
+  /**
+   * [getHTML description]
+   * @return {[type]} [description]
+   */
+  this.getHTML = function(){
+    if(this.screen_text){
+      var converted = {};
+
+      for (var key in this.screen_text)
+        if (this.screen_text.hasOwnProperty(key)){
+          converted[key] = this.screen_text[key].split(' ').join('&nbsp');
+        }
+
+      return converted;
+    }
+  };
 
   /**
    * [replaceCharAt description]

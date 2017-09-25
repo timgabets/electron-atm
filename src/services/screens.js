@@ -1,5 +1,6 @@
 const Trace = require('../controllers/trace.js');
 const CursorService = require('../services/cursor.js');
+const ScreenTextService = require('../services/screentext.js');
 
 // X:
 var screen_columns = ['@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','0','1','2','3','4','5','6','7','8','9',':',';','<','=','>','?'];
@@ -18,33 +19,9 @@ function ScreensService(settings, log){
 
   this.trace = new Trace();
   this.cursor = new CursorService();
+  this.text = new ScreenTextService();
 
-  this.screen_text = {};
-  
-  /**
-   * [initScreenText description]
-   * @return {[type]} [description]
-   */
-  this.initScreenText = function(){
-    this.screen_text = { 
-      '@': '                                ', 
-      'A': '                                ', 
-      'B': '                                ', 
-      'C': '                                ', 
-      'D': '                                ', 
-      'E': '                                ', 
-      'F': '                                ', 
-      'G': '                                ', 
-      'H': '                                ', 
-      'I': '                                ', 
-      'J': '                                ', 
-      'K': '                                ', 
-      'L': '                                ', 
-      'M': '                                ', 
-      'N': '                                ', 
-      'O': '                                '
-    };
-  }
+  this.text.screen_text = this.text.screen_text;
 
   /**
    * [replaceCharAt description]
@@ -67,7 +44,7 @@ function ScreensService(settings, log){
       var row = this.cursor.getPosition()['y'];
       var column = this.cursor.cursor_position['x'];
 
-      this.screen_text[row] = this.replaceCharAt(this.screen_text[row], column, char);
+      this.text.screen_text[row] = this.replaceCharAt(this.text.screen_text[row], column, char);
       this.cursor.move();
     }
   }
@@ -77,9 +54,9 @@ function ScreensService(settings, log){
    * @return {[type]} [description]
    */
   this.screenTextEmpty = function(){
-    for (var key in this.screen_text) {
-      if (this.screen_text.hasOwnProperty(key))
-        if(this.screen_text[key] !== '                                ')
+    for (var key in this.text.screen_text) {
+      if (this.text.screen_text.hasOwnProperty(key))
+        if(this.text.screen_text[key] !== '                                ')
           return false;
     }
     return true;
@@ -112,7 +89,7 @@ function ScreensService(settings, log){
          * ensures the idle sequence is stopped before the
          * next screen is displayed.
          */
-        this.initScreenText();
+        this.text.initScreenText();
         this.cursor.init();
         parsed.clear_screen = true;
         i++;
@@ -150,14 +127,14 @@ function ScreensService(settings, log){
       if(data[i].charCodeAt(0) >= 32 && data[i].charCodeAt(0) <= 127)
       {
         this.addScreenText(data[i]);
-        //console.log(this.screen_text);
+        //console.log(this.text.screen_text);
       }
 
       i++;
     }
 
     if(!this.screenTextEmpty())
-      parsed.screen_text = this.screen_text;
+      parsed.screen_text = this.text.screen_text;
 
     if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)
       parsed.cursor = this.cursor.getPosition();

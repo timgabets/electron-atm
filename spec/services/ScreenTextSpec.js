@@ -97,6 +97,48 @@ describe("ScreenTextService", function() {
     });
   });
 
+  describe('put()', function(){
+    beforeEach(function() {
+      s.cursor.init();
+      s.init();
+    });
+
+    it('should put one character', function() {
+      expect(s.get()['@'].length).toEqual(32);
+      expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
+      s.put('X');
+      expect(s.get()['@'].length).toEqual(32);
+      expect(s.get()['@']).toEqual('X                               ')
+      expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
+    });
+
+    it('should put a short character string', function() {
+      expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
+      s.put('IDDQD');
+      expect(s.get()['@']).toEqual('IDDQD                           ')
+      expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
+    });
+
+    it('should replace previous character string', function() {
+      expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
+      s.put('IDDQD');
+      expect(s.get()['@']).toEqual('IDDQD                           ')
+      
+      s.cursor.init();
+      s.put('XYZ');
+      expect(s.get()['@']).toEqual('XYZQD                           ')
+    });
+
+    it('should carry the text to the next line', function() {
+      s.cursor.cursor_position = {'x': 30, 'y': 0}
+      expect(s.cursor.getPosition()).toEqual({'x': '>', 'y': '@'});
+      s.put('ABCDEFGHI');
+      expect(s.get()['@']).toEqual('                              AB')
+      expect(s.get()['A']).toEqual('CDEFGHI                         ')
+      expect(s.cursor.getPosition()).toEqual({'x': '>', 'y': '@'});
+    });
+  });
+
   describe('isEmpty()', function(){
     it('should return true is text screen is empty', function(){
       s.init();

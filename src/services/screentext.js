@@ -93,6 +93,16 @@ function ScreenTextService(cursor){
     }
   };
 
+  /**
+   * [put insert the character and don't move the cursor]
+   * @return {[type]} [description]
+   */
+  this.put = function(text){
+    var stored_cursor_position = this.cursor.getPosition();
+    this.add(text);
+    this.cursor.setPosition(stored_cursor_position['y'] + stored_cursor_position['x']);
+  };
+
     /**
    * [isEmpty description]
    * @return {[type]} [description]

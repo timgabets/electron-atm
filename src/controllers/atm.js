@@ -1013,6 +1013,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
           break;
 
         default:
+          this.display.insertText(button);
           this.amount_buffer = this.amount_buffer.substr(1) + button;
           break;
       }
@@ -1027,6 +1028,8 @@ ATM.prototype.processPinpadButtonPressed = function(button){
             this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1)
             break;
           default:
+            // TODO:
+            this.display.insertText(button);
             if(this.buffer_C.length < 12)
               this.buffer_C += button;
             break;

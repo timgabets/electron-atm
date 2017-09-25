@@ -16,6 +16,17 @@ function ScreensService(settings, log){
   this.cursor = new CursorService();
   this.text = new ScreenTextService(this.cursor);
 
+  this.getColourControlCommandCode = function(code){
+    switch(code){
+      case '27':
+        return 'White Foreground';
+      case '80':
+        return 'Transparent Background';
+      default:
+        break;
+    }
+  };
+
   /**
    * [parseScreen description]
    * @param  {[type]} data [description]
@@ -61,6 +72,46 @@ function ScreensService(settings, log){
 
         i += ('PE'.length + parsed.image_file.length + ('\x1b\x5c').length + 1);
         continue;
+      }
+
+      if(data.substr(i, 2) === '\x1b['){
+        /**
+         * ESC [ m  Screen blinking and colour control 
+         * ESC [ z  Changing display in idle
+         * ESC [ p  Left margin control
+         */
+
+        var j = i + 2;
+        var esc_modifier;
+        while(j < data.length){
+          if(data[j] === 'm' || data[j] === 'z'){
+            esc_modifier = data[j];
+            break;
+          }
+          j++;
+        }
+
+        switch(esc_modifier){
+          case 'm':
+            /**
+             * ESC [ m  Screen blinking and colour control 
+             *
+             * The variable length field, separated by ; field separators, can be repeaated up to three times.
+             * There should not be a field separator after the last parameter
+             */
+            parsed.colour_control_commands = [];
+            data.substr(i + 2, j - i - 2).split(';').forEach( (element) => {
+              parsed.colour_control_commands.push(this.getColourControlCommandCode(element));
+            });
+            i = j + 1;
+            break;
+
+          case 'z':
+            break;
+
+          default:
+            break;
+        }
       }
 
       /**

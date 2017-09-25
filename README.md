@@ -51,6 +51,7 @@ Currently only the basic stuff is working, such as:
  * State Navigator: displaying state details when state sleected
 
 Things to be implemented (very) soon:
+ * Touch area support (pressing touch areas, not only FDK buttons)
  * Auto reconnection
  * Saving the image path in user settings
  * ICC support

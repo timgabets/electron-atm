@@ -19,35 +19,9 @@ function ScreensService(settings, log){
 
   this.trace = new Trace();
   this.cursor = new CursorService();
-  this.text = new ScreenTextService();
+  this.text = new ScreenTextService(this.cursor);
 
   this.text.screen_text = this.text.screen_text;
-
-  /**
-   * [replaceCharAt description]
-   * @param  {[type]} string      [description]
-   * @param  {[type]} position    [description]
-   * @param  {[type]} replacement [description]
-   * @return {[type]}             [description]
-   */
-  this.replaceCharAt = function(string, position, replacement){
-    return string.substr(0, position) + replacement + string.substr(position + 1);
-  };
-
-  /**
-   * [addScreenText description]
-   * @param {[type]} text [description]
-   */
-  this.addScreenText = function(text){
-    for(var i = 0; i < text.length; i++){
-      var char = text[i];
-      var row = this.cursor.getPosition()['y'];
-      var column = this.cursor.cursor_position['x'];
-
-      this.text.screen_text[row] = this.replaceCharAt(this.text.screen_text[row], column, char);
-      this.cursor.move();
-    }
-  }
 
   /**
    * [screenTextEmpty description]
@@ -126,7 +100,7 @@ function ScreensService(settings, log){
        */
       if(data[i].charCodeAt(0) >= 32 && data[i].charCodeAt(0) <= 127)
       {
-        this.addScreenText(data[i]);
+        this.text.addScreenText(data[i]);
         //console.log(this.text.screen_text);
       }
 

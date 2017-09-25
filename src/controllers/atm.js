@@ -992,8 +992,8 @@ ATM.prototype.processPinpadButtonPressed = function(button){
           break;
 
         default:
-          this.display.insertText('*');
           this.PIN_buffer += button;
+          this.display.insertText(this.PIN_buffer, '*');
           //log.info(this.PIN_buffer);
           if(this.PIN_buffer.length == this.max_pin_length)
             this.processState(this.current_state.number)
@@ -1013,37 +1013,49 @@ ATM.prototype.processPinpadButtonPressed = function(button){
           break;
 
         default:
-          this.display.insertText(button);
           this.amount_buffer = this.amount_buffer.substr(1) + button;
+          this.display.insertText(this.amount_buffer);
           break;
       }
       break;
 
     case 'H':
       if( this.current_state.buffer_and_display_params[2] === '0' || this.current_state.buffer_and_display_params[2] === '1'){
-        // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-        // 1 - Display data as keyed in. Store data in general-purpose Buffer C
         switch(button){
           case 'backspace':
             this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1)
             break;
           default:
-            // TODO:
-            this.display.insertText(button);
-            if(this.buffer_C.length < 12)
+            if(this.buffer_C.length < 12){
               this.buffer_C += button;
+
+              if(this.current_state.buffer_and_display_params[2] === '0'){
+                // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+                this.display.insertText(this.buffer_C, 'X');
+              } else if(this.current_state.buffer_and_display_params[2] === '1'){
+                // 1 - Display data as keyed in. Store data in general-purpose Buffer C
+                this.display.insertText(this.buffer_C);
+              }
+            }
             break;
         }
       } else if(  this.current_state.buffer_and_display_params[2] === '2' || this.current_state.buffer_and_display_params[2] === '3'){
-        // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
-        // 3 - Display data as keyed in. Store data in general-purpose Buffer B
         switch(button){
           case 'backspace':
             this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1)
             break;
           default:
-            if(this.buffer_B.length < 12)
+            if(this.buffer_B.length < 12){
               this.buffer_B += button;
+
+              if(  this.current_state.buffer_and_display_params[2] === '2'){
+                // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+                this.display.insertText(this.buffer_B, 'X');
+              } else if(this.current_state.buffer_and_display_params[2] === '3'){
+                // 3 - Display data as keyed in. Store data in general-purpose Buffer B
+                this.display.insertText(this.buffer_B);
+              }
+            }
             break;
         }
       } else

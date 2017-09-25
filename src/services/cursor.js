@@ -42,8 +42,8 @@ function CursorService(){
    */
   this.setPosition = function(position_string){
     // row selected first, column selected second
-    var row = position_string[0].toString();
-    var column = position_string[1].toString();
+    var row = position_string[0];
+    var column = position_string[1];
 
     screen_columns.forEach( (element, i) => {
       if(column === element)

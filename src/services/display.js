@@ -68,10 +68,14 @@ function DisplayService(screens, log){
   /**
    * [insertText description]
    * @param  {[type]} text [description]
+   * @param  {[type]}      [description]
    * @return {[type]}      [description]
    */
-  this.insertText = function(text){
-    this.text.add(text);
+  this.insertText = function(text, masking_symbol){
+    if(masking_symbol)
+      text = text.replace(/./gi, masking_symbol);
+
+    this.text.put(text);
   };
 };
 

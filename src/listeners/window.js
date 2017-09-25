@@ -42,12 +42,19 @@ $(function () {
         });
       }
 
+      // Replacing on screen text
+      var screen_text = atm.display.getHTML();
+      if(screen_text){
+        screen_rows.forEach( (element) => {
+          $( '#' + element + '-screen-row').html(screen_text[element]);
+        });
+      }
+
       // Changing image
       $("#screen").attr("src", "/home/tim/share/screens/" + image);
     }
   })
 
-  var activeFDKs = [];
   setInterval(function() {
     // Replacing on screen text
     var screen_text = atm.display.getHTML();

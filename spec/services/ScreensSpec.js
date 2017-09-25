@@ -98,11 +98,34 @@ describe("Screens", function() {
 
     it('should parse Screen Blinking and Colour control', function(){
       var parsed = {
-        number: '000',
+        number: '060',
         clear_screen: true,
         display_image_files_control: true,
         image_file: 'PIC060.jpg',
-        colour_control_commands: [ {'foreground': 'white'}, {'background': 'transparent'} ]
+        colour_control_commands: [ {'foreground': 'white'}, {'background': 'transparent'} ],
+        insert_screen: '963',
+        screen_text: { 
+          '@': '                                ', 
+          'A': '                                ', 
+          'B': '                                ', 
+          'C': '                                ', 
+          'D': '                                ', 
+          'E': '                                ', 
+          'F': '                                ', 
+          'G': '        USD                     ', 
+          'H': '                                ', 
+          'I': '                                ', 
+          'J': '                                ', 
+          'K': '                                ', 
+          'L': '                                ', 
+          'M': '                                ', 
+          'N': '                                ', 
+          'O': '                                '
+        },
+        cursor: { 
+          'x': 'H', 
+          'y': 'H',
+        },
       };
       /*
       0c 1b 50 45 50 49 43 30 36 30 2e 6a 70 67 1b 5c     ..PEPIC060.jpg.\

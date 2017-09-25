@@ -125,6 +125,16 @@ function ScreensService(settings, log){
         continue;
       };
 
+
+      /**
+       * Insert the screen control sequence
+       */
+      if(data[i] === '\x0e'){
+        parsed.insert_screen = data.substr(i + 1, 3);
+        i += 4;
+        continue;
+      }
+
       /**
        * ASCII character 
        * 

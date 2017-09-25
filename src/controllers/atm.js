@@ -980,6 +980,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
       switch(button){
         case 'backspace':
           this.PIN_buffer = this.PIN_buffer.slice(0, -1);
+          this.display.insertText(this.PIN_buffer, '*');
           break;
 
         case 'enter':
@@ -1009,7 +1010,8 @@ ATM.prototype.processPinpadButtonPressed = function(button){
           break;
 
         case 'backspace':
-          this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1)
+          this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1);
+          this.display.insertText(this.amount_buffer);
           break;
 
         default:
@@ -1023,7 +1025,14 @@ ATM.prototype.processPinpadButtonPressed = function(button){
       if( this.current_state.buffer_and_display_params[2] === '0' || this.current_state.buffer_and_display_params[2] === '1'){
         switch(button){
           case 'backspace':
-            this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1)
+            this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
+            if(this.current_state.buffer_and_display_params[2] === '0'){
+              // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+              this.display.insertText(this.buffer_C, 'X');
+            } else if(this.current_state.buffer_and_display_params[2] === '1'){
+              // 1 - Display data as keyed in. Store data in general-purpose Buffer C
+              this.display.insertText(this.buffer_C);
+            };
             break;
           default:
             if(this.buffer_C.length < 12){
@@ -1043,6 +1052,13 @@ ATM.prototype.processPinpadButtonPressed = function(button){
         switch(button){
           case 'backspace':
             this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1)
+            if(  this.current_state.buffer_and_display_params[2] === '2'){
+              // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+              this.display.insertText(this.buffer_B, 'X');
+            } else if(this.current_state.buffer_and_display_params[2] === '3'){
+              // 3 - Display data as keyed in. Store data in general-purpose Buffer B
+              this.display.insertText(this.buffer_B);
+            }
             break;
           default:
             if(this.buffer_B.length < 12){

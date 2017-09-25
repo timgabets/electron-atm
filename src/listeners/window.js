@@ -63,7 +63,7 @@ $(function () {
         $( '#' + element + '-screen-row').html(screen_text[element]);
       });
     }
-  }, 300);
+  }, 200);
 
   // FDKs shortcuts
   var FDKs = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'i'];

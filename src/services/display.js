@@ -75,6 +75,7 @@ function DisplayService(screens, log){
     if(masking_symbol)
       text = text.replace(/./gi, masking_symbol);
 
+    this.text.init();
     this.text.put(text);
   };
 };

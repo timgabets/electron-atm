@@ -77,7 +77,7 @@ Trace.prototype.object = function(data){
       property_name += ' ';
 
     if(typeof(data[property]) === 'object'){
-      dump += '    [' + property_name + ']: [' + JSON.stringify(data[property]).replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
+      dump += '    [' + property_name + ']: ' + JSON.stringify(data[property]).replace(/[^\x20-\x7E]+/g, '.') + '\n'; 
     } else {
       dump += '    [' + property_name + ']: [' + data[property].toString().replace(/[^\x20-\x7E]+/g, '.') + ']\n'; 
     }

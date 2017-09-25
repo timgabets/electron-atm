@@ -31,7 +31,7 @@ describe("Trace", function() {
       var obj = {
         states: ['003', '744', '987'],
       };
-      expect(t.object(obj)).toEqual('\n    [states]: [["003","744","987"]]\n');
+      expect(t.object(obj)).toEqual('\n    [states]: ["003","744","987"]\n');
     });
 
 
@@ -42,7 +42,7 @@ describe("Trace", function() {
           beta:  '98765',
         },
       };
-      expect(t.object(obj)).toEqual('\n    [data]: [{"alpha":"744321","beta":"98765"}]\n');
+      expect(t.object(obj)).toEqual('\n    [data]: {"alpha":"744321","beta":"98765"}\n');
     });
 
   });  

@@ -1,4 +1,5 @@
 September 2017
+	0.6.8 CursorService() and ScreentTextService()
 	0.6.7 Showing on-screen text
 	0.6.6 Changing screens when ATM goes In-Service/Out-Of-service
 	0.6.5 Navbar bottom, containing Read Card form and ATM keys

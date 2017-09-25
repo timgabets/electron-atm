@@ -15,10 +15,10 @@ function CursorService(){
   };
 
   /**
-   * [getCursorPosition description]
+   * [getPosition description]
    * @return {[type]} [description]
    */
-  this.getCursorPosition = function(){
+  this.getPosition = function(){
     return {
       'x': screen_columns[this.cursor_position.x], 
       'y': screen_rows[this.cursor_position.y]

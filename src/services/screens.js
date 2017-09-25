@@ -65,7 +65,7 @@ function ScreensService(settings, log){
   this.addScreenText = function(text){
     for(var i = 0; i < text.length; i++){
       var char = text[i];
-      var row = this.cursor.getCursorPosition()['y'];
+      var row = this.cursor.getPosition()['y'];
       var column = this.cursor.cursor_position['x'];
 
       this.screen_text[row] = this.replaceCharAt(this.screen_text[row], column, char);
@@ -161,7 +161,7 @@ function ScreensService(settings, log){
       parsed.screen_text = this.screen_text;
 
     if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)
-      parsed.cursor = this.cursor.getCursorPosition();
+      parsed.cursor = this.cursor.getPosition();
 
     return parsed;
   }

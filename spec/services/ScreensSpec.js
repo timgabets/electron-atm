@@ -78,20 +78,20 @@ describe("Screens", function() {
     });
 
     it('should change cursor position', function() {
-      expect(s.cursor.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
+      expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
       s.addScreenText('X');
-      expect(s.cursor.getCursorPosition()).toEqual({'x': 'A', 'y': '@'})
+      expect(s.cursor.getPosition()).toEqual({'x': 'A', 'y': '@'})
     });
 
     it('should add short character string', function() {
-      expect(s.cursor.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
+      expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
       s.addScreenText('IDDQD');
       expect(s.screen_text['@']).toEqual('IDDQD                           ')
-      expect(s.cursor.getCursorPosition()).toEqual({'x': 'E', 'y': '@'});
+      expect(s.cursor.getPosition()).toEqual({'x': 'E', 'y': '@'});
     });
 
     it('should replace previous character string', function() {
-      expect(s.cursor.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
+      expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
       s.addScreenText('IDDQD');
       expect(s.screen_text['@']).toEqual('IDDQD                           ')
       
@@ -102,11 +102,11 @@ describe("Screens", function() {
 
     it('should carry the text to the next line', function() {
       s.cursor.cursor_position = {'x': 30, 'y': 0}
-      expect(s.cursor.getCursorPosition()).toEqual({'x': '>', 'y': '@'});
+      expect(s.cursor.getPosition()).toEqual({'x': '>', 'y': '@'});
       s.addScreenText('ABCDEFGHI');
       expect(s.screen_text['@']).toEqual('                              AB')
       expect(s.screen_text['A']).toEqual('CDEFGHI                         ')
-      expect(s.cursor.getCursorPosition()).toEqual({'x': 'G', 'y': 'A'});
+      expect(s.cursor.getPosition()).toEqual({'x': 'G', 'y': 'A'});
     });
   });
   

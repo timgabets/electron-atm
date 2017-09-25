@@ -1,4 +1,5 @@
 September 2017
+	0.7.1 Parsing 'ESC [ m' screen blinking and colour control
 	0.7.0 Showing dynamic on-screen data received from host
 	0.6.9 screen text coordinates 
 	0.6.8 CursorService() and ScreentTextService()

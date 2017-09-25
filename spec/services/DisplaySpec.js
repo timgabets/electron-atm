@@ -130,4 +130,12 @@ describe("DisplayService", function() {
     });
   });
 
+  describe('insertChar()', function(){
+    it('should init screen text', function(){
+      expect(display.screen_text).toBeUndefined();
+      display.insertChar();
+      expect(display.screen_text).not.toBeUndefined();
+    });
+  });
+
 });

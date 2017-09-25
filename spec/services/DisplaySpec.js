@@ -138,4 +138,10 @@ describe("DisplayService", function() {
     });
   });
 
+  it('should init cursor position', function(){
+      expect(display.cursor).toBeUndefined();
+      display.insertChar();
+      expect(display.cursor).not.toBeUndefined();
+    });
+
 });

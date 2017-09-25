@@ -27,9 +27,16 @@ function DisplayService(screens, log){
       }
   };
 
+
+  this.initCursor = function(){
+    this.cursor = {'x': 0, 'y': 0};
+  }
+
+
   this.setCursor = function(cursor){
     this.cursor = cursor;
   };
+
 
   this.getScreenNumber = function(){
     if(this.current_screen)
@@ -96,6 +103,10 @@ function DisplayService(screens, log){
     // Take current position
     if(!this.screen_text)
       this.initScreenText();
+
+    if(!this.cursor)
+      this.initCursor();
+
   };
 };
 

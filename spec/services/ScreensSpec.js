@@ -58,7 +58,7 @@ describe("Screens", function() {
 
   describe('addScreenText()', function(){
     beforeEach(function() {
-      s.cursor.initCursor();
+      s.cursor.init();
       s.initScreenText();
     });
 
@@ -72,7 +72,7 @@ describe("Screens", function() {
     it('should replace the character', function() {
       s.addScreenText('X');
       expect(s.screen_text['@']).toEqual('X                               ')
-      s.cursor.initCursor();
+      s.cursor.init();
       s.addScreenText('Z');
       expect(s.screen_text['@']).toEqual('Z                               ')
     });
@@ -95,7 +95,7 @@ describe("Screens", function() {
       s.addScreenText('IDDQD');
       expect(s.screen_text['@']).toEqual('IDDQD                           ')
       
-      s.cursor.initCursor();
+      s.cursor.init();
       s.addScreenText('XYZ');
       expect(s.screen_text['@']).toEqual('XYZQD                           ')
     });

@@ -7,10 +7,10 @@ function CursorService(){
   this.cursor_position = {};
 
   /**
-   * [initCursor description]
+   * [init description]
    * @return {[type]} [description]
    */
-  this.initCursor = function(){
+  this.init = function(){
     this.cursor_position = {'x': 0, 'y': 0};
   };
 

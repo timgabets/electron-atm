@@ -114,7 +114,7 @@ function ScreensService(settings, log){
          * next screen is displayed.
          */
         this.initScreenText();
-        this.cursor.initCursor();
+        this.cursor.init();
         parsed.clear_screen = true;
         i++;
         continue;

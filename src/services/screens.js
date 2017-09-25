@@ -91,7 +91,7 @@ function ScreensService(settings, log){
       i++;
     }
 
-    if(!this.text.screenTextEmpty())
+    if(!this.text.isEmpty())
       parsed.screen_text = this.text.get();
 
     if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)

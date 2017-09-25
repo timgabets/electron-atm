@@ -97,16 +97,16 @@ describe("ScreenTextService", function() {
     });
   });
 
-  describe('screenTextEmpty()', function(){
+  describe('isEmpty()', function(){
     it('should return true is text screen is empty', function(){
       s.init();
-      expect(s.screenTextEmpty()).toBeTruthy();
+      expect(s.isEmpty()).toBeTruthy();
     });
 
     it('should return false if the text screen is changed', function(){
       s.init();
       s.get()['A'] = 'IDDQD                           ';
-      expect(s.screenTextEmpty()).toBeFalsy();
+      expect(s.isEmpty()).toBeFalsy();
     })
   });
 });

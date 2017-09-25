@@ -62,10 +62,10 @@ function ScreenTextService(cursor){
   };
 
     /**
-   * [screenTextEmpty description]
+   * [isEmpty description]
    * @return {[type]} [description]
    */
-  this.screenTextEmpty = function(){
+  this.isEmpty = function(){
     for (var key in this.screen_text) {
       if (this.screen_text.hasOwnProperty(key))
         if(this.screen_text[key] !== '                                ')

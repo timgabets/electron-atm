@@ -89,7 +89,7 @@ function ScreensService(settings, log){
          * ensures the idle sequence is stopped before the
          * next screen is displayed.
          */
-        this.text.initScreenText();
+        this.text.init();
         this.cursor.init();
         parsed.clear_screen = true;
         i++;

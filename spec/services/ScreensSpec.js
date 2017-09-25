@@ -34,7 +34,7 @@ describe("Screens", function() {
   describe('addScreenText()', function(){
     beforeEach(function() {
       s.cursor.init();
-      s.text.initScreenText();
+      s.text.init();
     });
 
     it('should add one character', function() {
@@ -87,12 +87,12 @@ describe("Screens", function() {
   
   describe('screenTextEmpty()', function(){
     it('should return true is text screen is empty', function(){
-      s.text.initScreenText();
+      s.text.init();
       expect(s.screenTextEmpty()).toBeTruthy();
     });
 
     it('should return false if the text screen is changed', function(){
-      s.text.initScreenText();
+      s.text.init();
       s.text.screen_text['A'] = 'IDDQD                           ';
       expect(s.screenTextEmpty()).toBeFalsy();
     })

@@ -6,7 +6,7 @@ describe("ScreenTextService", function() {
     s = new ScreenTextService();
   });
 
-  describe('initScreenText()', function(){
+  describe('init()', function(){
     it('should init screen text', function() {
       var initialized = { 
         '@': '                                ', 
@@ -26,7 +26,7 @@ describe("ScreenTextService", function() {
         'N': '                                ', 
         'O': '                                ' };
       expect(s.screen_text).toEqual({});
-      s.initScreenText();
+      s.init();
       expect(s.screen_text).toEqual(initialized);
     });
   });

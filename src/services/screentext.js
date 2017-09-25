@@ -2,10 +2,10 @@ function ScreenTextService(){
   this.screen_text = {};
 
   /**
-   * [initScreenText description]
+   * [init description]
    * @return {[type]} [description]
    */
-  this.initScreenText = function(){
+  this.init = function(){
     this.screen_text = { 
       '@': '                                ', 
       'A': '                                ', 

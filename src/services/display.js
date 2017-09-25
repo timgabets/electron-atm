@@ -1,14 +1,11 @@
 
-// X:
-var screen_columns = ['@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','0','1','2','3','4','5','6','7','8','9',':',';','<','=','>','?'];
-// Y:
-var screen_rows = ['@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
+const CursorService = require('../services/cursor.js');
 
 function DisplayService(screens, log){
   this.screens = screens;
   this.current_screen;
   this.screen_text;
-  this.cursor;
+  this.cursor = new CursorService();
 
   this.setScreen = function(screen){
     this.current_screen = screen;
@@ -31,12 +28,6 @@ function DisplayService(screens, log){
         log.error('atm.setScreen(): unable to find screen ' + screen_number);
       }
   };
-
-
-  this.initCursor = function(){
-    this.cursor = {'x': 0, 'y': 0};
-  }
-
 
   this.setCursor = function(cursor){
     this.cursor = cursor;

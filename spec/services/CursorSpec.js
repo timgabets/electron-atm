@@ -71,7 +71,16 @@ describe("CursorService", function() {
       c.setPosition('O?');
       expect(c.getPosition()).toEqual({'x': '?', 'y': 'O'});
     });
-  })
+  });
+
+  describe('copy()', function(){
+    it('should copy cursor position from input data', function(){
+      c.init();
+      expect(c.getPosition()).toEqual({'x': '@', 'y': '@'});
+      c.copy({'x': 17, 'y': 13});
+      expect(c.getPosition()).toEqual({'x': '1', 'y': 'M'});
+    });
+  });
 
 
 });

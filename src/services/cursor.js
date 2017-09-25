@@ -26,6 +26,14 @@ function CursorService(){
   }
 
   /**
+   * [set description]
+   * @param {[type]} cursor_position [description]
+   */
+  this.copy = function(cursor_position){
+    this.cursor_position = cursor_position;
+  };  
+
+  /**
    * [setPosition description]
    * @param {[type]} position_string [description]
    */

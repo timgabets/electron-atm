@@ -980,7 +980,6 @@ ATM.prototype.processPinpadButtonPressed = function(button){
       switch(button){
         case 'backspace':
           this.PIN_buffer = this.PIN_buffer.slice(0, -1);
-          this.display.insertText(this.PIN_buffer, '*');
           break;
 
         case 'enter':
@@ -994,11 +993,10 @@ ATM.prototype.processPinpadButtonPressed = function(button){
 
         default:
           this.PIN_buffer += button;
-          this.display.insertText(this.PIN_buffer, '*');
-          //log.info(this.PIN_buffer);
           if(this.PIN_buffer.length == this.max_pin_length)
             this.processState(this.current_state.number)
       }
+      this.display.insertText(this.PIN_buffer, '*');
       break;
 
     case 'F':
@@ -1012,6 +1010,10 @@ ATM.prototype.processPinpadButtonPressed = function(button){
         case 'backspace':
           this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1);
           this.display.insertText(this.amount_buffer);
+          break;
+
+        case 'esc':
+          // TODO: clear buffer
           break;
 
         default:
@@ -1034,6 +1036,11 @@ ATM.prototype.processPinpadButtonPressed = function(button){
               this.display.insertText(this.buffer_C);
             };
             break;
+
+          case 'esc':
+            // TODO: clear buffer
+            break;
+
           default:
             if(this.buffer_C.length < 12){
               this.buffer_C += button;
@@ -1060,6 +1067,11 @@ ATM.prototype.processPinpadButtonPressed = function(button){
               this.display.insertText(this.buffer_B);
             }
             break;
+
+          case 'esc':
+            // TODO: clear buffer
+            break;
+
           default:
             if(this.buffer_B.length < 12){
               this.buffer_B += button;

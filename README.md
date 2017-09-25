@@ -41,11 +41,10 @@ Currently only the basic stuff is working, such as:
  * Showing basic image screens linked to the state
  * Checking the Card's financial institution based on FIT tables
  * Keyboard shortcuts: FDK (A-I), numeric(0-9), Esc, Enter and Backspace
- * Receiving states from host
- * Receiving screens from host
- * Receiving FITs (financial insitution tables) from host
+ * Receiving and processing states, screens and FITs (financial insitution tables) from host
  * Showing traces in a log area
  * Saving ATM configuration data (such as states, screens, FITs, ConfigID, counters etc) and restoring it on application start
+ * Showing dynamic on-screen data received from host
  * Crypto support: PIN block encryption, dynamic key exchange etc. (Triple DES double length key only)
  * State Navigator: showing graph of states
  * State Navigator: updating screen image when jumping through the states
@@ -53,7 +52,6 @@ Currently only the basic stuff is working, such as:
 
 Things to be implemented (very) soon:
  * Auto reconnection
- * Showing text upon the image screen (for interactive transactions)
  * Saving the image path in user settings
  * ICC support
 

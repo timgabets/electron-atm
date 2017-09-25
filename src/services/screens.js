@@ -69,7 +69,7 @@ function ScreensService(settings, log){
       var column = this.cursor.cursor_position['x'];
 
       this.screen_text[row] = this.replaceCharAt(this.screen_text[row], column, char);
-      this.cursor.moveCursor();
+      this.cursor.move();
     }
   }
 

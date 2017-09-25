@@ -45,10 +45,10 @@ function CursorService(){
   }
 
   /**
-   * [moveCursor move screen cursor {count} positions to the right and carry to the next line if needed]
+   * [move move screen cursor {count} positions to the right and carry to the next line if needed]
    * @return {[type]} [description]
    */
-  this.moveCursor = function(count){
+  this.move = function(count){
     if(!count)
       count = 1;
 

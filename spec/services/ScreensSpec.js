@@ -21,126 +21,6 @@ describe("Screens", function() {
     s = new ScreensService(settings, log);
   });
 
-  describe('initCursor()', function(){
-    it('should init cursor position', function(){
-      s.initCursor();
-      expect(s.cursor_position).toEqual({'x': 0, 'y': 0});
-    })
-  });
-
-  describe('getCursorPosition()', function(){
-    it('should get left top cursor position', function(){
-      s.initCursor();
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
-    })
-
-    it('should get right top cursor position', function(){
-      s.cursor_position = {'x': 31, 'y': 0};
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': '@'});
-    })
-
-    it('should get bottom left cursor position', function(){
-      s.cursor_position = {'x': 0, 'y': 15};
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': 'O'});
-    })
-
-    it('should get bottom right cursor position', function(){
-      s.cursor_position = {'x': 31, 'y': 15};
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': 'O'});
-    })
-
-    it('should get center cursor position', function(){
-      s.cursor_position = {'x': 15, 'y': 7};
-      expect(s.getCursorPosition()).toEqual({'x': 'O', 'y': 'G'});
-    })
-  });
-
-
-  describe('setCursorPosition()', function(){
-    it('should set cursor position to FK', function(){
-      s.initCursor();
-      s.setCursorPosition('FK');
-      expect(s.getCursorPosition()).toEqual({'x': 'K', 'y': 'F'});
-    });
-
-    it('should set cursor position to top left', function(){
-      s.initCursor();
-      s.setCursorPosition('@@');
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
-    });
-
-    it('should set cursor position to top right', function(){
-      s.initCursor();
-      s.setCursorPosition('@?');
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': '@'});
-    });
-
-    it('should set cursor position to bottom left', function(){
-      s.initCursor();
-      s.setCursorPosition('O@');
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': 'O'});
-    });
-
-    it('should set cursor position to bottom right', function(){
-      s.initCursor();
-      s.setCursorPosition('O?');
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': 'O'});
-    });
-  })
-
-  describe('moveCursor()', function(){
-    it('should move cursor position one character right', function(){
-      s.initCursor();
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
-      s.moveCursor();
-      expect(s.getCursorPosition()).toEqual({'x': 'A', 'y': '@'});
-    })
-
-    it('should move cursor position five characters right', function(){
-      s.initCursor();
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
-      s.moveCursor(5);
-      expect(s.getCursorPosition()).toEqual({'x': 'E', 'y': '@'});
-    })
-
-    it('should move cursor to the end of top line', function(){
-      s.initCursor();
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
-      s.moveCursor(31);
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': '@'});
-    })
-
-    it('should move cursor position to the next line', function(){
-      s.initCursor();
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
-      s.moveCursor(32);
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': 'A'});
-    })
-
-    it('should move cursor to the bottom right in case of very large value', function(){
-      s.initCursor();
-      s.moveCursor(600);
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': 'O'});
-    })
-
-    it('should move cursor position to the next line', function(){
-      s.initCursor();
-      s.cursor_position = {'x': 31, 'y': 7};
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': 'G'});
-      s.moveCursor();
-      expect(s.getCursorPosition()).toEqual({'x': '@', 'y': 'H'});
-    })
-
-    it('should not move cursor if already in bottom right corner', function(){
-      s.initCursor();
-      s.cursor_position = {'x': 31, 'y': 15};
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': 'O'});
-      s.moveCursor();
-      expect(s.getCursorPosition()).toEqual({'x': '?', 'y': 'O'});
-    })    
-  
-  });
-
   describe('initScreenText()', function(){
     it('should init screen text', function() {
       var initialized = { 
@@ -221,7 +101,7 @@ describe("Screens", function() {
     });
 
     it('should carry the text to the next line', function() {
-      s.cursor_position = {'x': 30, 'y': 0}
+      s.cursor.cursor_position = {'x': 30, 'y': 0}
       expect(s.getCursorPosition()).toEqual({'x': '>', 'y': '@'});
       s.addScreenText('ABCDEFGHI');
       expect(s.screen_text['@']).toEqual('                              AB')

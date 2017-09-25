@@ -1,4 +1,5 @@
 const Trace = require('../controllers/trace.js');
+const CursorService = require('../services/cursor.js');
 
 // X:
 var screen_columns = ['@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','0','1','2','3','4','5','6','7','8','9',':',';','<','=','>','?'];
@@ -16,9 +17,10 @@ function ScreensService(settings, log){
     this.screens = {};
 
   this.trace = new Trace();
+  this.cursor = new CursorService();
 
   this.screen_text = {};
-  this.cursor_position = {};
+  this.cursor.cursor_position = {};
   /**
    * [initScreenText description]
    * @return {[type]} [description]
@@ -49,29 +51,8 @@ function ScreensService(settings, log){
    * @return {[type]} [description]
    */
   this.initCursor = function(){
-    this.cursor_position = { 'x': 0, 'y': 0 };
-  }
-
-  /**
-   * [moveCursor move screen cursor {count} positions to the right and carry to the next line if needed]
-   * @return {[type]} [description]
-   */
-  this.moveCursor = function(count){
-    if(!count)
-      count = 1;
-
-    this.cursor_position.y += Math.floor(count / screen_columns.length);
-    this.cursor_position.x += count % screen_columns.length;
-
-    if(this.cursor_position.x >= screen_columns.length){
-      this.cursor_position.x = 0;
-      this.cursor_position.y += 1;
-    }
-
-    if(this.cursor_position.y >= screen_rows.length){
-      this.cursor_position.x = screen_columns.length - 1;
-      this.cursor_position.y = screen_rows.length - 1;
-    }    
+    //this.cursor.cursor_position = { 'x': 0, 'y': 0 };
+    this.cursor.initCursor();
   }
 
   /**
@@ -80,8 +61,8 @@ function ScreensService(settings, log){
    */
   this.getCursorPosition = function(){
     return {
-      'x': screen_columns[this.cursor_position.x], 
-      'y': screen_rows[this.cursor_position.y]
+      'x': screen_columns[this.cursor.cursor_position.x], 
+      'y': screen_rows[this.cursor.cursor_position.y]
     };
   }
 
@@ -95,12 +76,12 @@ function ScreensService(settings, log){
 
     screen_columns.forEach( (element, i) => {
       if(x === element)
-        this.cursor_position.x = i;
+        this.cursor.cursor_position.x = i;
     });
 
     screen_rows.forEach( (element, i) => {
       if(y === element)
-        this.cursor_position.y = i;
+        this.cursor.cursor_position.y = i;
     });
   }
 
@@ -123,10 +104,10 @@ function ScreensService(settings, log){
     for(var i = 0; i < text.length; i++){
       var char = text[i];
       var row = this.getCursorPosition()['y'];
-      var column = this.cursor_position['x'];
+      var column = this.cursor.cursor_position['x'];
 
       this.screen_text[row] = this.replaceCharAt(this.screen_text[row], column, char);
-      this.moveCursor();
+      this.cursor.moveCursor();
     }
   }
 
@@ -217,7 +198,7 @@ function ScreensService(settings, log){
     if(!this.screenTextEmpty())
       parsed.screen_text = this.screen_text;
 
-    if(this.cursor_position && this.cursor_position.x !== undefined && this.cursor_position.y !== undefined)
+    if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)
       parsed.cursor = this.getCursorPosition();
 
     return parsed;

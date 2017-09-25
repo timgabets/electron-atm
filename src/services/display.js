@@ -16,7 +16,7 @@ function DisplayService(screens, log){
       this.text.copy(this.current_screen.screen_text);
 
     if(this.current_screen.cursor)
-      this.cursor.copy(this.current_screen.cursor)
+      this.text.setCursorPosition(this.current_screen.cursor);
 
     log.info('Screen changed to ' + this.current_screen.number);
   }
@@ -45,15 +45,29 @@ function DisplayService(screens, log){
   };
 
   /**
+   * [getHTML description]
+   * @return {[type]} [description]
+   */
+  this.getHTML = function(){
+    return this.text.getHTML();
+  };
+
+
+  /**
    * [getText description]
    * @return {[type]} [description]
    */
   this.getText = function(){
-    return this.text.getHTML();
+    return this.text.get();
   };
 
-  this.insertChar = function(char){
-    this.cursor.getPosition();
+  /**
+   * [insertText description]
+   * @param  {[type]} text [description]
+   * @return {[type]}      [description]
+   */
+  this.insertText = function(text){
+    this.text.add(text);
   };
 };
 

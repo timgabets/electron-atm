@@ -53,9 +53,36 @@ describe("DisplayService", function() {
     });
   });
 
-  describe('insertChar()', function(){
-    it('should init screen text', function(){
-      display.insertChar();
+  describe('insertText()', function(){
+    it('should insert text into left corner', function(){
+      var screen = {
+        number: '039',
+        clear_screen: true,
+        screen_text: { 
+          '@': '                                ', 
+          'A': '                                ', 
+          'B': '                                ', 
+          'C': '                                ', 
+          'D': '                                ', 
+          'E': '                                ', 
+          'F': '                                ', 
+          'G': '                                ', 
+          'H': '                                ', 
+          'I': '                                ', 
+          'J': '                                ', 
+          'K': '                                ', 
+          'L': '                                ', 
+          'M': '                                ', 
+          'N': '                                ', 
+          'O': '                                '
+        },
+      };
+
+      display.setScreen(screen);
+      expect(display.getText()).toEqual(screen.screen_text);
+      
+      display.insertText('IDDQD');
+      expect(display.getText()['@']).toEqual('IDDQD                           ');
     });
   });
 });

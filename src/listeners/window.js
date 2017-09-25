@@ -44,7 +44,7 @@ $(function () {
       }
 
       // Replacing on screen text
-      var screen_text = atm.display.getText();
+      var screen_text = atm.display.getHTML();
       if(screen_text){
         screen_rows.forEach( (element) => {
           $( '#' + element + '-screen-row').html(screen_text[element]);

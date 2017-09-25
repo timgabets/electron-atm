@@ -34,6 +34,7 @@ function ScreenTextService(cursor){
    */
   this.copy = function(screen_text){
     this.screen_text = screen_text;
+    this.cursor.init();
   };
 
 
@@ -101,6 +102,13 @@ function ScreenTextService(cursor){
     return true;
   };
 
+  /**
+   * [setCursorPosition description]
+   * @param {[type]} cursor_position [description]
+   */
+  this.setCursorPosition = function(cursor_position){
+    this.cursor.copy(cursor_position);
+  };
 };
 
 module.exports = ScreenTextService;

@@ -20,7 +20,6 @@ function ScreensService(settings, log){
   this.cursor = new CursorService();
 
   this.screen_text = {};
-  this.cursor.cursor_position = {};
   
   /**
    * [initScreenText description]

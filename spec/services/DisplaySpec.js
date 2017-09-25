@@ -136,5 +136,7 @@ describe("DisplayService", function() {
       display.insertChar();
       expect(display.screen_text).not.toBeUndefined();
     });
+
+    
   });
 });

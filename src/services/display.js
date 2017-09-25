@@ -15,7 +15,7 @@ function DisplayService(screens, log){
       this.screen_text = this.current_screen.screen_text;
 
     if(this.current_screen.cursor)
-      this.setCursor(this.current_screen.cursor);
+      this.cursor.copy(this.current_screen.cursor)
 
     log.info('Screen changed to ' + this.current_screen.number);
   }
@@ -28,11 +28,6 @@ function DisplayService(screens, log){
         log.error('atm.setScreen(): unable to find screen ' + screen_number);
       }
   };
-
-  this.setCursor = function(cursor){
-    this.cursor = cursor;
-  };
-
 
   this.getScreenNumber = function(){
     if(this.current_screen)
@@ -65,41 +60,6 @@ function DisplayService(screens, log){
     }
   };
 
-
-  /**
-   * [moveCursor move screen cursor {count} positions to the right and carry to the next line if needed]
-   * @return {[type]} [description]
-   */
-  this.moveCursor = function(count){
-    if(!count)
-      count = 1;
-
-    this.cursor_position.y += Math.floor(count / screen_columns.length);
-    this.cursor_position.x += count % screen_columns.length;
-
-    if(this.cursor_position.x >= screen_columns.length){
-      this.cursor_position.x = 0;
-      this.cursor_position.y += 1;
-    }
-
-    if(this.cursor_position.y >= screen_rows.length){
-      this.cursor_position.x = screen_columns.length - 1;
-      this.cursor_position.y = screen_rows.length - 1;
-    }    
-  }
-
-  /**
-   * [getCursorPosition description]
-   * @return {[type]} [description]
-   */
-  this.getCursorPosition = function(){
-    return {
-      'x': screen_columns[this.cursor_position.x], 
-      'y': screen_rows[this.cursor_position.y]
-    };
-  }
-
-
   /**
    * [initScreenText description]
    * @return {[type]} [description]
@@ -125,16 +85,11 @@ function DisplayService(screens, log){
     };
   };
 
-
   this.insertChar = function(char){
     if(!this.screen_text)
       this.initScreenText();
 
-    if(!this.cursor)
-      this.initCursor();
-
-
-
+    this.cursor.getPosition();
   };
 };
 

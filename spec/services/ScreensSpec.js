@@ -79,11 +79,11 @@ describe("Screens", function() {
         image_file: 'PIC000.jpg',
         // row selected first, column selected second
         cursor: { 
-          'y': 'E', // Rows
-          'x': '2', // Columns 
+          'y': 'F', // Rows
+          'x': 'O', // Columns 
         }
       };
-      expect(s.parseScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c\x0FE2')).toEqual(parsed);
+      expect(s.parseScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c\x0FFO')).toEqual(parsed);
     });
 
   });

@@ -111,6 +111,7 @@ img {
   font-size: 26px;
   font-family: monospace;
   color: white;
+  letter-spacing: 4px;
 }
 
 .coordinates {

@@ -33,7 +33,10 @@ function ScreenTextService(cursor){
    * @return {[type]}             [description]
    */
   this.copy = function(screen_text){
-    this.screen_text = screen_text;
+    for (var key in screen_text)
+      if (screen_text.hasOwnProperty(key)){
+        this.screen_text[key] = screen_text[key];
+    }
     this.cursor.init();
   };
 
@@ -71,7 +74,8 @@ function ScreenTextService(cursor){
    * @return {[type]}             [description]
    */
   this.replaceCharAt = function(string, position, replacement){
-    return string.substr(0, position) + replacement + string.substr(position + 1);
+    if(string)
+      return string.substr(0, position) + replacement + string.substr(position + 1);
   };
 
   /**
@@ -107,7 +111,7 @@ function ScreenTextService(cursor){
    * @param {[type]} cursor_position [description]
    */
   this.setCursorPosition = function(cursor_position){
-    this.cursor.setPosition(cursor_position['x'] + cursor_position['y']);
+    this.cursor.setPosition(cursor_position['y'] + cursor_position['x']);
   };
 };
 

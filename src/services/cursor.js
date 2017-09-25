@@ -41,16 +41,17 @@ function CursorService(){
    * @param {[type]} position_string [description]
    */
   this.setPosition = function(position_string){
-    var y = position_string[0];
-    var x = position_string[1];
+    // row selected first, column selected second
+    var row = position_string[0].toString();
+    var column = position_string[1].toString();
 
     screen_columns.forEach( (element, i) => {
-      if(x === element)
+      if(column === element)
         this.cursor_position.x = i;
     });
 
     screen_rows.forEach( (element, i) => {
-      if(y === element)
+      if(row === element)
         this.cursor_position.y = i;
     });
   }

@@ -107,14 +107,14 @@ describe("DisplayService", function() {
           'N': '                                ', 
           'O': '                                '
         },
-        cursor: { x: 'G', y: 'F' }
+        cursor: { x: 'B', y: 'F' }
       };
 
       display.setScreen(screen);
       expect(display.getText()).toEqual(screen.screen_text);
       
       display.insertText('LEGIO PATRIA NOSTRA');
-      expect(display.getText()['G']).toEqual('      LEGIO PATRIA NOSTRA       ');
+      expect(display.getText()['F']).toEqual('  LEGIO PATRIA NOSTRA           ');
     });
   });
 });

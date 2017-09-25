@@ -67,25 +67,6 @@ function ScreensService(settings, log){
   }
 
   /**
-   * [setCursorPosition description]
-   * @param {[type]} position_string [description]
-   */
-  this.setCursorPosition = function(position_string){
-    var y = position_string[0];
-    var x = position_string[1];
-
-    screen_columns.forEach( (element, i) => {
-      if(x === element)
-        this.cursor.cursor_position.x = i;
-    });
-
-    screen_rows.forEach( (element, i) => {
-      if(y === element)
-        this.cursor.cursor_position.y = i;
-    });
-  }
-
-  /**
    * [replaceCharAt description]
    * @param  {[type]} string      [description]
    * @param  {[type]} position    [description]
@@ -152,7 +133,7 @@ function ScreensService(settings, log){
          * next screen is displayed.
          */
         this.initScreenText();
-        this.initCursor();
+        this.cursor.initCursor();
         parsed.clear_screen = true;
         i++;
         continue;
@@ -177,7 +158,7 @@ function ScreensService(settings, log){
        * 
        */
       if(data[i] === '\x0F'){
-        this.setCursorPosition(data.substr(i+1, 2));
+        this.cursor.setCursorPosition(data.substr(i+1, 2));
         i += 3;
         continue;
       };

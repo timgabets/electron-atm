@@ -11,6 +11,10 @@ function DisplayService(screens, log){
   this.setScreen = function(screen){
     this.current_screen = screen;
 
+    if(this.current_screen.clear_screen){
+      this.text.init()
+    }
+    
     // Creating local copies
     if(this.current_screen.screen_text)
       this.text.copy(this.current_screen.screen_text);
@@ -18,11 +22,6 @@ function DisplayService(screens, log){
     if(this.current_screen.cursor)
       this.text.setCursorPosition(this.current_screen.cursor);
 
-    /*
-    if(this.current_screen.clear_screen){
-      this.text.init()
-    }
-    */
 
     log.info('Screen changed to ' + this.current_screen.number);
     if(this.current_screen.cursor){

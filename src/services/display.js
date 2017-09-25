@@ -18,7 +18,17 @@ function DisplayService(screens, log){
     if(this.current_screen.cursor)
       this.text.setCursorPosition(this.current_screen.cursor);
 
+    /*
+    if(this.current_screen.clear_screen){
+      this.text.init()
+    }
+    */
+
     log.info('Screen changed to ' + this.current_screen.number);
+    if(this.current_screen.cursor){
+      log.info('X: ' + this.current_screen.cursor.x);
+      log.info('Y: ' + this.current_screen.cursor.y);
+    }
   }
 
   this.setScreenByNumber = function(screen_number){

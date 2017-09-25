@@ -30,10 +30,9 @@ $(function () {
   });
 
   // Updating screen image
+  var screen_rows = ['at','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];  
   ipc.on('ui-change-screen-image', (event, image) => {
     if(image){
-      var screen_rows = ['at','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
-      
       var screen = atm.display.getScreen();
 
       // Clear text
@@ -43,18 +42,21 @@ $(function () {
         });
       }
 
-      // Replacing on screen text
-      var screen_text = atm.display.getHTML();
-      if(screen_text){
-        screen_rows.forEach( (element) => {
-          $( '#' + element + '-screen-row').html(screen_text[element]);
-        });
-      }
-
       // Changing image
       $("#screen").attr("src", "/home/tim/share/screens/" + image);
     }
   })
+
+  var activeFDKs = [];
+  setInterval(function() {
+    // Replacing on screen text
+    var screen_text = atm.display.getHTML();
+    if(screen_text){
+      screen_rows.forEach( (element) => {
+        $( '#' + element + '-screen-row').html(screen_text[element]);
+      });
+    }
+  }, 200);
 
   // FDKs shortcuts
   var FDKs = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'i'];

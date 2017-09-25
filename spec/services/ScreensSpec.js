@@ -71,17 +71,21 @@ describe("Screens", function() {
       expect(s.parseScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c')).toEqual(parsed);
     });
 
-/*
-    it("should parse Screen Blinking and Colour control", function() {
+    it("should parse Set Cursor Position control", function() {
       var parsed = {
-        number: '039',
+        number: '000',
         clear_screen: true,
         display_image_files_control: true,
-        image_file: 'PIC039.jpg',
+        image_file: 'PIC000.jpg',
+        // row selected first, column selected second
+        cursor: { 
+          'y': 'G', // Rows
+          'x': 'N', // Columns 
+        }
       };
-      expect(s.parseScreen('039\x0c\x1bPEPIC039.jpg\x1b\x5c\x1b[27;80m')).toEqual(parsed);
+      expect(s.parseScreen('000\x0c\x1bPEPIC000.jpg\x1b\x5c\x0FGN')).toEqual(parsed);
     });
-*/    
+
   });
   describe("addScreen()", function(){
     it("should not add invalid screen", function() {

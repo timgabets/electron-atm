@@ -992,6 +992,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
           break;
 
         default:
+          //this.display.insertText(button);
           this.PIN_buffer += button;
           //log.info(this.PIN_buffer);
           if(this.PIN_buffer.length == this.max_pin_length)

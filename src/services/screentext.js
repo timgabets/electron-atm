@@ -107,7 +107,7 @@ function ScreenTextService(cursor){
    * @param {[type]} cursor_position [description]
    */
   this.setCursorPosition = function(cursor_position){
-    this.cursor.copy(cursor_position);
+    this.cursor.setPosition(cursor_position['x'] + cursor_position['y']);
   };
 };
 

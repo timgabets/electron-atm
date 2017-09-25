@@ -84,5 +84,37 @@ describe("DisplayService", function() {
       display.insertText('IDDQD');
       expect(display.getText()['@']).toEqual('IDDQD                           ');
     });
+
+    it('should insert text into the center of display', function(){
+      var screen = {
+        number: '039',
+        clear_screen: true,
+        screen_text: { 
+          '@': 'TEXT                            ', 
+          'A': '                                ', 
+          'B': '                                ', 
+          'C': '                                ', 
+          'D': '                                ', 
+          'E': '                                ', 
+          'F': '                                ', 
+          'G': '                                ', 
+          'H': '                                ', 
+          'I': '                                ', 
+          'J': '                                ', 
+          'K': '                                ', 
+          'L': '                                ', 
+          'M': '                                ', 
+          'N': '                                ', 
+          'O': '                                '
+        },
+        cursor: { x: 'G', y: 'F' }
+      };
+
+      display.setScreen(screen);
+      expect(display.getText()).toEqual(screen.screen_text);
+      
+      display.insertText('LEGIO PATRIA NOSTRA');
+      expect(display.getText()['G']).toEqual('      LEGIO PATRIA NOSTRA       ');
+    });
   });
 });

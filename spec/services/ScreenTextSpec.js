@@ -27,9 +27,9 @@ describe("ScreenTextService", function() {
         'M': '                                ', 
         'N': '                                ', 
         'O': '                                ' };
-      expect(s.screen_text).toEqual({});
+      expect(s.get()).toEqual({});
       s.init();
-      expect(s.screen_text).toEqual(initialized);
+      expect(s.get()).toEqual(initialized);
     });
   });
 
@@ -50,18 +50,18 @@ describe("ScreenTextService", function() {
     });
 
     it('should add one character', function() {
-      expect(s.screen_text['@'].length).toEqual(32);
+      expect(s.get()['@'].length).toEqual(32);
       s.addScreenText('X');
-      expect(s.screen_text['@'].length).toEqual(32);
-      expect(s.screen_text['@']).toEqual('X                               ')
+      expect(s.get()['@'].length).toEqual(32);
+      expect(s.get()['@']).toEqual('X                               ')
     });
 
     it('should replace the character', function() {
       s.addScreenText('X');
-      expect(s.screen_text['@']).toEqual('X                               ')
+      expect(s.get()['@']).toEqual('X                               ')
       s.cursor.init();
       s.addScreenText('Z');
-      expect(s.screen_text['@']).toEqual('Z                               ')
+      expect(s.get()['@']).toEqual('Z                               ')
     });
 
     it('should change cursor position', function() {
@@ -73,26 +73,26 @@ describe("ScreenTextService", function() {
     it('should add short character string', function() {
       expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
       s.addScreenText('IDDQD');
-      expect(s.screen_text['@']).toEqual('IDDQD                           ')
+      expect(s.get()['@']).toEqual('IDDQD                           ')
       expect(s.cursor.getPosition()).toEqual({'x': 'E', 'y': '@'});
     });
 
     it('should replace previous character string', function() {
       expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
       s.addScreenText('IDDQD');
-      expect(s.screen_text['@']).toEqual('IDDQD                           ')
+      expect(s.get()['@']).toEqual('IDDQD                           ')
       
       s.cursor.init();
       s.addScreenText('XYZ');
-      expect(s.screen_text['@']).toEqual('XYZQD                           ')
+      expect(s.get()['@']).toEqual('XYZQD                           ')
     });
 
     it('should carry the text to the next line', function() {
       s.cursor.cursor_position = {'x': 30, 'y': 0}
       expect(s.cursor.getPosition()).toEqual({'x': '>', 'y': '@'});
       s.addScreenText('ABCDEFGHI');
-      expect(s.screen_text['@']).toEqual('                              AB')
-      expect(s.screen_text['A']).toEqual('CDEFGHI                         ')
+      expect(s.get()['@']).toEqual('                              AB')
+      expect(s.get()['A']).toEqual('CDEFGHI                         ')
       expect(s.cursor.getPosition()).toEqual({'x': 'G', 'y': 'A'});
     });
   });
@@ -105,7 +105,7 @@ describe("ScreenTextService", function() {
 
     it('should return false if the text screen is changed', function(){
       s.init();
-      s.screen_text['A'] = 'IDDQD                           ';
+      s.get()['A'] = 'IDDQD                           ';
       expect(s.screenTextEmpty()).toBeFalsy();
     })
   });

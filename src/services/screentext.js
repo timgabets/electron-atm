@@ -28,6 +28,14 @@ function ScreenTextService(cursor){
   };
 
   /**
+   * [get description]
+   * @return {[type]} [description]
+   */
+  this.get = function(){
+    return this.screen_text;
+  }
+
+  /**
    * [replaceCharAt description]
    * @param  {[type]} string      [description]
    * @param  {[type]} position    [description]

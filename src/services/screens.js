@@ -88,7 +88,6 @@ function ScreensService(settings, log){
       if(data[i].charCodeAt(0) >= 32 && data[i].charCodeAt(0) <= 127)
       {
         this.text.addScreenText(data[i]);
-        //console.log(this.text.screen_text);
       }
 
       i++;

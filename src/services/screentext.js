@@ -28,6 +28,16 @@ function ScreenTextService(cursor){
   };
 
   /**
+   * [copy description]
+   * @param  {[type]} screen_text [description]
+   * @return {[type]}             [description]
+   */
+  this.copy = function(screen_text){
+    this.screen_text = screen_text;
+  };
+
+
+  /**
    * [get description]
    * @return {[type]} [description]
    */

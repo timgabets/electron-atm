@@ -109,4 +109,31 @@ describe("ScreenTextService", function() {
       expect(s.isEmpty()).toBeFalsy();
     })
   });
+
+  describe('copy()', function(){
+    it('should copy screen text', function(){
+      var original = { 
+        '@': '                                ', 
+        'A': '                                ', 
+        'B': '    IDDQD                       ', 
+        'C': '                                ', 
+        'D': '                                ', 
+        'E': '         HGAKJSDH               ', 
+        'F': '                                ', 
+        'G': '                                ', 
+        'H': '                ASASD           ', 
+        'I': '                                ', 
+        'J': '                                ', 
+        'K': '                                ', 
+        'L': '                                ', 
+        'M': '   126387YAIJSHD98JCLKNALDKS    ', 
+        'N': '                        AKJSD2  ', 
+        'O': '                               X' ,
+      };
+
+      expect(s.get()).toEqual({});
+      s.copy(original);
+      expect(s.get()).toEqual(original);
+    });
+  })
 });

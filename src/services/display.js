@@ -1,11 +1,13 @@
 
 const CursorService = require('../services/cursor.js');
+const ScreenTextService = require('../services/screentext.js');
 
 function DisplayService(screens, log){
   this.screens = screens;
   this.current_screen;
   this.screen_text;
   this.cursor = new CursorService();
+  this.text = new ScreenTextService(this.cursor);
 
   this.setScreen = function(screen){
     this.current_screen = screen;

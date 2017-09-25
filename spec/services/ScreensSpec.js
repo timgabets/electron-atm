@@ -23,11 +23,11 @@ describe("Screens", function() {
 
   describe('getColourControlCommandCode()', function(){
     it('should get colour control command code 27', function(){
-      expect(s.getColourControlCommandCode('27')).toEqual('White Foreground');
+      expect(s.getColourControlCommandCode('27')).toEqual({'foreground': 'white'});
     });
 
     it('should get colour control command code 27', function(){
-      expect(s.getColourControlCommandCode('80')).toEqual('Transparent Background');
+      expect(s.getColourControlCommandCode('80')).toEqual({'background': 'transparent'});
     });
   });
 
@@ -102,7 +102,7 @@ describe("Screens", function() {
         clear_screen: true,
         display_image_files_control: true,
         image_file: 'PIC060.jpg',
-        colour_control_commands: [ 'White Foreground', 'Transparent Background' ]
+        colour_control_commands: [ {'foreground': 'white'}, {'background': 'transparent'} ]
       };
       /*
       0c 1b 50 45 50 49 43 30 36 30 2e 6a 70 67 1b 5c     ..PEPIC060.jpg.\

@@ -19,9 +19,9 @@ function ScreensService(settings, log){
   this.getColourControlCommandCode = function(code){
     switch(code){
       case '27':
-        return 'White Foreground';
+        return {'foreground': 'white'};
       case '80':
-        return 'Transparent Background';
+        return {'background': 'transparent'};
       default:
         break;
     }

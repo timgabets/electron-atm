@@ -51,7 +51,20 @@ function ScreenTextService(cursor){
       this.screen_text[row] = this.replaceCharAt(this.screen_text[row], column, char);
       this.cursor.move();
     }
-  }
+  };
+
+    /**
+   * [screenTextEmpty description]
+   * @return {[type]} [description]
+   */
+  this.screenTextEmpty = function(){
+    for (var key in this.screen_text) {
+      if (this.screen_text.hasOwnProperty(key))
+        if(this.screen_text[key] !== '                                ')
+          return false;
+    }
+    return true;
+  };
 
 };
 

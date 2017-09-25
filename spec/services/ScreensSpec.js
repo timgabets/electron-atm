@@ -20,19 +20,6 @@ describe("Screens", function() {
 
     s = new ScreensService(settings, log);
   });
-  
-  describe('screenTextEmpty()', function(){
-    it('should return true is text screen is empty', function(){
-      s.text.init();
-      expect(s.screenTextEmpty()).toBeTruthy();
-    });
-
-    it('should return false if the text screen is changed', function(){
-      s.text.init();
-      s.text.screen_text['A'] = 'IDDQD                           ';
-      expect(s.screenTextEmpty()).toBeFalsy();
-    })
-  });
 
   describe("parseScreen()", function(){
     it("should return empty object on empty string", function() {

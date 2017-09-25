@@ -24,19 +24,6 @@ function ScreensService(settings, log){
   this.text.screen_text = this.text.screen_text;
 
   /**
-   * [screenTextEmpty description]
-   * @return {[type]} [description]
-   */
-  this.screenTextEmpty = function(){
-    for (var key in this.text.screen_text) {
-      if (this.text.screen_text.hasOwnProperty(key))
-        if(this.text.screen_text[key] !== '                                ')
-          return false;
-    }
-    return true;
-  };
-
-  /**
    * [parseScreen description]
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
@@ -107,7 +94,7 @@ function ScreensService(settings, log){
       i++;
     }
 
-    if(!this.screenTextEmpty())
+    if(!this.text.screenTextEmpty())
       parsed.screen_text = this.text.screen_text;
 
     if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)

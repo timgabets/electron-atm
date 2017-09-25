@@ -43,7 +43,7 @@ describe("ScreenTextService", function() {
     });
   });
 
-  describe('addScreenText()', function(){
+  describe('add()', function(){
     beforeEach(function() {
       s.cursor.init();
       s.init();
@@ -51,46 +51,46 @@ describe("ScreenTextService", function() {
 
     it('should add one character', function() {
       expect(s.get()['@'].length).toEqual(32);
-      s.addScreenText('X');
+      s.add('X');
       expect(s.get()['@'].length).toEqual(32);
       expect(s.get()['@']).toEqual('X                               ')
     });
 
     it('should replace the character', function() {
-      s.addScreenText('X');
+      s.add('X');
       expect(s.get()['@']).toEqual('X                               ')
       s.cursor.init();
-      s.addScreenText('Z');
+      s.add('Z');
       expect(s.get()['@']).toEqual('Z                               ')
     });
 
     it('should change cursor position', function() {
       expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
-      s.addScreenText('X');
+      s.add('X');
       expect(s.cursor.getPosition()).toEqual({'x': 'A', 'y': '@'})
     });
 
     it('should add short character string', function() {
       expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
-      s.addScreenText('IDDQD');
+      s.add('IDDQD');
       expect(s.get()['@']).toEqual('IDDQD                           ')
       expect(s.cursor.getPosition()).toEqual({'x': 'E', 'y': '@'});
     });
 
     it('should replace previous character string', function() {
       expect(s.cursor.getPosition()).toEqual({'x': '@', 'y': '@'});
-      s.addScreenText('IDDQD');
+      s.add('IDDQD');
       expect(s.get()['@']).toEqual('IDDQD                           ')
       
       s.cursor.init();
-      s.addScreenText('XYZ');
+      s.add('XYZ');
       expect(s.get()['@']).toEqual('XYZQD                           ')
     });
 
     it('should carry the text to the next line', function() {
       s.cursor.cursor_position = {'x': 30, 'y': 0}
       expect(s.cursor.getPosition()).toEqual({'x': '>', 'y': '@'});
-      s.addScreenText('ABCDEFGHI');
+      s.add('ABCDEFGHI');
       expect(s.get()['@']).toEqual('                              AB')
       expect(s.get()['A']).toEqual('CDEFGHI                         ')
       expect(s.cursor.getPosition()).toEqual({'x': 'G', 'y': 'A'});
@@ -109,5 +109,4 @@ describe("ScreenTextService", function() {
       expect(s.screenTextEmpty()).toBeFalsy();
     })
   });
-
 });

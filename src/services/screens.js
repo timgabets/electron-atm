@@ -21,8 +21,6 @@ function ScreensService(settings, log){
   this.cursor = new CursorService();
   this.text = new ScreenTextService(this.cursor);
 
-  this.text.screen_text = this.text.screen_text;
-
   /**
    * [parseScreen description]
    * @param  {[type]} data [description]
@@ -87,14 +85,14 @@ function ScreensService(settings, log){
        */
       if(data[i].charCodeAt(0) >= 32 && data[i].charCodeAt(0) <= 127)
       {
-        this.text.addScreenText(data[i]);
+        this.text.add(data[i]);
       }
 
       i++;
     }
 
     if(!this.text.screenTextEmpty())
-      parsed.screen_text = this.text.screen_text;
+      parsed.screen_text = this.text.get();
 
     if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)
       parsed.cursor = this.cursor.getPosition();

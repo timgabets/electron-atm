@@ -47,10 +47,10 @@ function ScreenTextService(cursor){
   };
 
   /**
-   * [addScreenText description]
+   * [add description]
    * @param {[type]} text [description]
    */
-  this.addScreenText = function(text){
+  this.add = function(text){
     for(var i = 0; i < text.length; i++){
       var char = text[i];
       var row = this.cursor.getPosition()['y'];

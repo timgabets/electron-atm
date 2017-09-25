@@ -42,6 +42,12 @@ describe("CursorService", function() {
   });
 
   describe('setPosition()', function(){
+    it('should set cursor position to 2G', function(){
+      c.init();
+      c.setPosition('G2');
+      expect(c.getPosition()).toEqual({'x': '2', 'y': 'G'});
+    });
+
     it('should set cursor position to FK', function(){
       c.init();
       c.setPosition('FK');

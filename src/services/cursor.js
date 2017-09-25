@@ -26,10 +26,10 @@ function CursorService(){
   }
 
   /**
-   * [setCursorPosition description]
+   * [setPosition description]
    * @param {[type]} position_string [description]
    */
-  this.setCursorPosition = function(position_string){
+  this.setPosition = function(position_string){
     var y = position_string[0];
     var x = position_string[1];
 

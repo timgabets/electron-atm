@@ -41,34 +41,34 @@ describe("CursorService", function() {
     })
   });
 
-  describe('setCursorPosition()', function(){
+  describe('setPosition()', function(){
     it('should set cursor position to FK', function(){
       c.init();
-      c.setCursorPosition('FK');
+      c.setPosition('FK');
       expect(c.getCursorPosition()).toEqual({'x': 'K', 'y': 'F'});
     });
 
     it('should set cursor position to top left', function(){
       c.init();
-      c.setCursorPosition('@@');
+      c.setPosition('@@');
       expect(c.getCursorPosition()).toEqual({'x': '@', 'y': '@'});
     });
 
     it('should set cursor position to top right', function(){
       c.init();
-      c.setCursorPosition('@?');
+      c.setPosition('@?');
       expect(c.getCursorPosition()).toEqual({'x': '?', 'y': '@'});
     });
 
     it('should set cursor position to bottom left', function(){
       c.init();
-      c.setCursorPosition('O@');
+      c.setPosition('O@');
       expect(c.getCursorPosition()).toEqual({'x': '@', 'y': 'O'});
     });
 
     it('should set cursor position to bottom right', function(){
       c.init();
-      c.setCursorPosition('O?');
+      c.setPosition('O?');
       expect(c.getCursorPosition()).toEqual({'x': '?', 'y': 'O'});
     });
   })

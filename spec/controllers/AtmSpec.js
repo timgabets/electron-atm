@@ -1092,7 +1092,6 @@ describe("ATM", function() {
 
       expect(reply.message_class).toEqual('Solicited');
       expect(reply.message_subclass).toEqual('Status');
-      expect(reply.message_subclass).toEqual('Status');
 
       expect(reply.tsn).toEqual('0000');
       expect(reply.transaction_count).toEqual('0000000');
@@ -1105,5 +1104,17 @@ describe("ATM", function() {
       expect(reply.camera_film_remaining).toEqual('00000');
       expect(reply.last_envelope_serial).toEqual('00000');
     });
-  });  
+
+    it('should get reply to \'Send Configuration ID\' terminal command', function(){
+      atm.setConfigID('0007');
+      var reply = atm.replySolicitedStatus('Terminal State', 'Send Configuration ID');
+      
+      expect(reply.message_class).toEqual('Solicited');
+      expect(reply.message_subclass).toEqual('Status');
+
+      expect(reply.config_id).toEqual('0007');
+
+    });
+  });
+
 });

@@ -163,16 +163,14 @@ function ATM(settings, log) {
           this.setConfigID(data.config_id);
           return this.replySolicitedStatus('Ready');
         }else{
-          log.info('ATM.processDataCommand(): wrong Config ID');
+          log.info('ATM.processDataCommand(): no Config ID provided');
           return this.replySolicitedStatus('Command Reject');
         }
-        break;
 
       default:
         log.error('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
         return this.replySolicitedStatus('Command Reject');
     }
-    return this.replySolicitedStatus('Command Reject');
   };
 
   /**

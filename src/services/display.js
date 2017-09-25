@@ -1,4 +1,9 @@
 
+// X:
+var screen_columns = ['@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','0','1','2','3','4','5','6','7','8','9',':',';','<','=','>','?'];
+// Y:
+var screen_rows = ['@','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
+
 function DisplayService(screens, log){
   this.screens = screens;
   this.current_screen;
@@ -69,9 +74,40 @@ function DisplayService(screens, log){
     }
   };
 
-  this.getCursor = function(){
 
-  };
+  /**
+   * [moveCursor move screen cursor {count} positions to the right and carry to the next line if needed]
+   * @return {[type]} [description]
+   */
+  this.moveCursor = function(count){
+    if(!count)
+      count = 1;
+
+    this.cursor_position.y += Math.floor(count / screen_columns.length);
+    this.cursor_position.x += count % screen_columns.length;
+
+    if(this.cursor_position.x >= screen_columns.length){
+      this.cursor_position.x = 0;
+      this.cursor_position.y += 1;
+    }
+
+    if(this.cursor_position.y >= screen_rows.length){
+      this.cursor_position.x = screen_columns.length - 1;
+      this.cursor_position.y = screen_rows.length - 1;
+    }    
+  }
+
+  /**
+   * [getCursorPosition description]
+   * @return {[type]} [description]
+   */
+  this.getCursorPosition = function(){
+    return {
+      'x': screen_columns[this.cursor_position.x], 
+      'y': screen_rows[this.cursor_position.y]
+    };
+  }
+
 
   /**
    * [initScreenText description]
@@ -100,12 +136,13 @@ function DisplayService(screens, log){
 
 
   this.insertChar = function(char){
-    // Take current position
     if(!this.screen_text)
       this.initScreenText();
 
     if(!this.cursor)
       this.initCursor();
+
+
 
   };
 };

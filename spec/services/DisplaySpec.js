@@ -139,9 +139,8 @@ describe("DisplayService", function() {
   });
 
   it('should init cursor position', function(){
-      expect(display.cursor).toBeUndefined();
-      display.insertChar();
-      expect(display.cursor).not.toBeUndefined();
-    });
-
+    expect(display.cursor).toBeUndefined();
+    display.insertChar();
+    expect(display.cursor).toEqual({'x': 0, 'y': 0});
+  });
 });

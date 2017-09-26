@@ -234,9 +234,12 @@ function ATM(settings, log) {
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
-  this.processTransactionReply = function(data){
-    // TODO: processing next_state
+  this.processTransactionReply = function(data){    
     this.processState(data.next_state);
+
+    if(data.screen_display_update)
+      this.screens.parseScreenDisplayUpdate(data.screen_display_update);
+
     return this.replySolicitedStatus('Ready');
   };
 

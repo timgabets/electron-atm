@@ -220,6 +220,7 @@ describe("Screens", function() {
       };
       expect(s.parseScreen('039\x0cTEXT')).toEqual(parsed);
     });
+
     it("should parse Display Image File control", function() {
       var parsed = {
         number: '000',
@@ -363,5 +364,47 @@ describe("Screens", function() {
       };
       expect(s.parseDynamicScreenData('\x0c\x0c\x1BPEPIC235.jpg\x1b\x5c\x0FFK              COUPON')).toEqual(parsed);
     })
+  });
+
+  describe('parseScreenDisplayUpdate()', function(){
+    it('should parse screen display update data', function(){
+      expect(s.get('123')).toBeUndefined();
+
+      var screen = {
+        number: '123',
+        actions: [ 
+          Object({ add_text: 
+            Object({ 
+              '@': 'SCREEN DATA                     ', 
+              'A': '                                ', 
+              'B': '                                ', 
+              'C': '                                ', 
+              'D': '                                ', 
+              'E': '                                ', 
+              'F': '                                ', 
+              'G': '                                ', 
+              'H': '                                ', 
+              'I': '                                ', 
+              'J': '                                ', 
+              'K': '                                ', 
+              'L': '                                ', 
+              'M': '                                ', 
+              'N': '                                ', 
+              'O': '                                ' 
+            }) 
+          }), 
+          Object({ move_cursor: 
+            Object({ x: '1', y: 'B' }) 
+          }) 
+        ]
+      };
+
+      // expect(s.addScreen('123\x0c\x1BPEPIC235.jpg\x1b\x5c\x0FFK              COUPON\x0FB1')).toBeTruthy();
+
+      var parsed;
+      //expect(s.parseScreenDisplayUpdate('u09621000\x1d0000123SCREEN DATA')).toEqual(parsed);
+      //expect(s.get('123')).toEqual(screen);
+
+    });
   });
 });

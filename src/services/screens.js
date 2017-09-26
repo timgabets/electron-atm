@@ -241,6 +241,47 @@ function ScreensService(settings, log){
       parsed.number = 'DYNAMIC';
     return parsed;
   };
+
+  /**
+   * [parseScreenDisplayUpdate description]
+   * @return {[type]} [description]
+   */
+  this.parseScreenDisplayUpdate = function(data){
+    /**
+     * Screen Display Update. Contains screen numbers and new screen
+     * data which can replace existing screen data. The new screen data is
+     * displayed when its screen number is referenced during transaction
+     * processing.
+     * To immediately update a displayed screen, the displayed screen must
+     * be the first screen in the screen update data.
+     *
+     * Screen numbers in the screen update can be specified as four digit
+     * numbers in group ʹuʹ (u1234) to load a screen independent of
+     * language group. A screen number from group ʹlʹ (l1234) can be
+     * specified to load a screen in the current language group. A screen
+     * number specified with three decimal digits (123) will be language
+     * independent, unless a language has been selected with a group size of
+     * 1000 or greater, in which case the screen number will be adjusted for
+     * language.
+     * The screen update data is in the following format:
+     *
+     * No.Of Bytes    Content
+     * 3, 5 or 6      Screen number
+     * Var            Screen data
+     * 1              Group separator
+     * 4              Reserved
+     * 3              Screen number
+     * Var            Screen data
+     */
+      data.split('\x1d').forEach((element) => {
+        if(element[0] === 'u' || element[1] === 'l'){
+          log.error(element[0] + '-type screen processing is not supported');
+        } else {
+          this.addScreen(element.substr(4));
+        }
+
+      });
+  }
 };
 
 

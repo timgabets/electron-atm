@@ -152,6 +152,8 @@ function Parser(){
           parsed.transaction_serial_number = splitted[5].substring(0, 4)
           parsed.function_identifier = this.getFunctionIdentifierDescription(splitted[5].substring(4, 5))
           parsed.screen_number = splitted[5].substring(5, 8)
+          if(splitted[5].substring(8))
+            parsed.screen_display_update = splitted[5].substring(8)
         }
 
         if(splitted[6]){ 
@@ -171,8 +173,7 @@ function Parser(){
                 break;
               case '3':
                 // Print on receipt and journal printer
-                parsed.receipt_printer_data = element.substr(1);
-                parsed.journal_printer_data = element.substr(1);
+                parsed.receipt_printer_data = parsed.journal_printer_data = element.substr(1);
                 break;
             }
           });

@@ -136,6 +136,21 @@ describe("Parser", function() {
         };
         expect(p.parse('40\x1c000\x1c\x1c142\x1c\x1c28355025\x1cG03RECEIPT PRINTER AND JOURNAL PRINTER DATA')).toEqual(parsed);
       });
+
+      it("should be able to parse 'print on receipt and journal printer' flag in 'Transaction reply' message", function() {
+        var parsed = { 
+          message_class: 'Transaction Reply Command', 
+          LUNO: '000', 
+          message_sequence_number: '', 
+          next_state: '142', 
+          notes_to_dispense: '',
+          transaction_serial_number: '2880',
+          function_identifier: { 5: 'Set next state and print' },
+          screen_number: '025',
+          screen_display_update: 'u09621000\x1d0000078SCREEN DATA'
+        };
+        expect(p.parse('40\x1c000\x1c\x1c142\x1c\x1c28805025u09621000\x1d0000078SCREEN DATA')).toEqual(parsed);
+      });
   });  
 
   describe("parseDataCommands - Load States", function(){

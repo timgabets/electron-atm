@@ -24,7 +24,19 @@ describe("Screens", function() {
   });
 
   describe('getColourControlCommandCode()', function(){
-    it('should get colour control command code 27', function(){
+    it('should get colour control command code 00', function(){
+      expect(s.getColourControlCommandCode('00')).toEqual({'blinking': 'off', 'colors': 'default'});
+    });
+
+    it('should get colour control command code 10', function(){
+      expect(s.getColourControlCommandCode('10')).toEqual({'blinking': 'on'});
+    });
+
+    it('should get colour control command code 11', function(){
+      expect(s.getColourControlCommandCode('11')).toEqual({'blinking': 'off'});
+    });
+
+    it('should get colour control command code 80', function(){
       expect(s.getColourControlCommandCode('80')).toEqual({'background': 'transparent'});
     });
 

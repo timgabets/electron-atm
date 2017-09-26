@@ -17,8 +17,14 @@ function ScreensService(settings, log){
   this.text = new ScreenTextService(this.cursor);
 
   this.getColourControlCommandCode = function(code){
-    if(code === '80')
-      return {'background': 'transparent'};
+    if(code === '00')
+      return {'blinking': 'off', 'colors': 'default'}
+    else if (code === '10')
+      return {'blinking': 'on'}
+    else if (code === '11')
+      return {'blinking': 'off'}
+    else if(code === '80')
+      return {'background': 'transparent'}
 
     var type;
     switch(code[0]){
@@ -31,7 +37,7 @@ function ScreensService(settings, log){
         type = 'background';
         break;
       default:
-        log.error('Unsupported colour control ' + code);
+        log.error('Unsupported colour control ' + code[0] + ' in control ' + code);
         return;
     }    
 
@@ -62,7 +68,7 @@ function ScreensService(settings, log){
         color = 'white';
         break;
       default:
-        log.error('Unsupported colour code ' + code[1]);
+        log.error('Unsupported colour ' + code[1] + ' in control ' + code);
     }
 
     if(type && color)
@@ -146,7 +152,7 @@ function ScreensService(settings, log){
               parsed.colour_control_commands.push(this.getColourControlCommandCode(element));
             });
             i = j + 1;
-            break;
+            continue;
 
           case 'z':
             break;

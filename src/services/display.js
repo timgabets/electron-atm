@@ -20,7 +20,6 @@ function DisplayService(screens, log){
       } else if( element['move_cursor'] ){
         this.text.setCursorPosition(element['move_cursor']);
       } else if(element['add_text']){
-        console.log(element['add_text']);
         this.text.copy(element['add_text']);
       }
     });

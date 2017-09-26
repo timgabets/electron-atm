@@ -89,7 +89,7 @@ describe("DisplayService", function() {
             'N': '                                ', 
             'O': '                                '}) 
           }), 
-          Object({ move_cursor: Object({ x: 'H', y: 'H' }) }) 
+          Object({ move_cursor: Object({ x: '@', y: '@' }) }) 
         ]
       };
 
@@ -97,8 +97,8 @@ describe("DisplayService", function() {
       var original_text = screen.actions[1]['add_text'];
       expect(display.getText()).toEqual(original_text);
       
-      //display.insertText('IDDQD');
-      //expect(display.getText()['@']).toEqual('IDDQD                           ');
+      display.insertText('IDDQD');
+      expect(display.getText()['@']).toEqual('IDDQD                           ');
     });
 
 /*

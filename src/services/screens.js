@@ -244,7 +244,8 @@ function ScreensService(settings, log){
 
   /**
    * [parseScreenDisplayUpdate description]
-   * @return {[type]} [description]
+   * @param  {[type]} data [description]
+   * @return {[type]}      [description]
    */
   this.parseScreenDisplayUpdate = function(data){
     /**
@@ -276,11 +277,12 @@ function ScreensService(settings, log){
       data.split('\x1d').forEach((element) => {
         if(element[0] === 'u' || element[1] === 'l'){
           log.error(element[0] + '-type screen processing is not supported');
+          return false;
         } else {
-          this.addScreen(element.substr(4));
+          return this.addScreen(element.substr(4));
         }
-
       });
+    return true;
   }
 };
 

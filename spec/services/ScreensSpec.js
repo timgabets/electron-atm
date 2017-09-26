@@ -370,9 +370,10 @@ describe("Screens", function() {
     it('should parse screen display update data', function(){
       expect(s.get('123')).toBeUndefined();
 
-      var screen = {
-        number: '123',
+      var screen = { 
+        number: '123', 
         actions: [ 
+          'clear_screen', 
           Object({ add_text: 
             Object({ 
               '@': 'SCREEN DATA                     ', 
@@ -394,17 +395,14 @@ describe("Screens", function() {
             }) 
           }), 
           Object({ move_cursor: 
-            Object({ x: '1', y: 'B' }) 
+            Object({ x: 'K', y: '@' }) 
           }) 
-        ]
+        ] 
       };
 
-      // expect(s.addScreen('123\x0c\x1BPEPIC235.jpg\x1b\x5c\x0FFK              COUPON\x0FB1')).toBeTruthy();
-
       var parsed;
-      //expect(s.parseScreenDisplayUpdate('u09621000\x1d0000123SCREEN DATA')).toEqual(parsed);
-      //expect(s.get('123')).toEqual(screen);
-
+      expect(s.parseScreenDisplayUpdate('u09621000\x1d0000123\x0cSCREEN DATA')).toBeTruthy();
+      expect(s.get('123')).toEqual(screen);
     });
   });
 });

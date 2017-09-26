@@ -153,11 +153,23 @@ function Parser(){
         parsed.screen_number = splitted[5].substring(5, 8)
 
         parsed.message_coordination_number = splitted[6].substring(0, 1)
-        parsed.card_return_flag = splitted[6].substring(1, 2)
+        parsed.card_return_flag = this.getCardReturnFlagDescription(splitted[6].substring(1, 2))
         parsed.printer_flag = splitted[6].substring(2, 3)
 
         return parsed;
-    }
+    };
+
+    this.getCardReturnFlagDescription = function(card_return_flag){
+      switch(card_return_flag){
+        case '0':
+          return {'0': 'Return card during the Close state'};
+        case '1':
+          return {'1': 'Retain card during the Close state'};
+        case '4':
+          return {'4': 'Return card while processing the transaction reply'};
+      }
+    };
+
 };
 
 Parser.prototype.parseHostMessage = function(message){

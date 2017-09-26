@@ -58,7 +58,9 @@ describe("Parser", function() {
           function_identifier: '9', 
           screen_number: '064', 
           message_coordination_number: '2', 
-          card_return_flag: '0', 
+          card_return_flag: {
+            '0': 'Return card during the Close state'
+          }, 
           printer_flag: '0' 
         };
         expect(p.parse('40\x1c000\x1c\x1c133\x1c\x1c07759064\x1c200', 25)).toEqual(parsed);
@@ -297,6 +299,20 @@ describe("Parser", function() {
        */
       expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c4')).toEqual(parsed);
     });
-
   });
+
+  describe('getCardReturnFlagDescription()', function(){
+    it('should parse card return flag 0', function(){
+      expect(p.getCardReturnFlagDescription('0')).toEqual({'0': 'Return card during the Close state'});
+    });
+
+    it('should parse card return flag 1', function(){
+      expect(p.getCardReturnFlagDescription('1')).toEqual({'1': 'Retain card during the Close state'});
+    });
+
+    it('should parse card return flag 4', function(){
+      expect(p.getCardReturnFlagDescription('4')).toEqual({'4': 'Return card while processing the transaction reply'});
+    });
+  });
+
 });

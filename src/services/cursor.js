@@ -19,9 +19,6 @@ function CursorService(){
    * @return {[type]} [description]
    */
   this.getPosition = function(){
-    if(this.cursor_position === {})
-      this.init();
-
     return {
       'x': screen_columns[this.cursor_position.x], 
       'y': screen_rows[this.cursor_position.y]

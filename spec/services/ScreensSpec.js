@@ -288,13 +288,23 @@ describe("Screens", function() {
     it('should parse Changing Display During the Idle Loop control', function(){
       var parsed = {
         number: '970',
+        actions: [ 
+          Object({ insert_screen: '010' }), 
+          Object({ delay: 3000 }), 
+          Object({ insert_screen: '011' }), 
+          Object({ delay: 3000 }), 
+          Object({ insert_screen: '012' }), 
+          Object({ delay: 3000 }), 
+          Object({ insert_screen: '013' }), 
+          Object({ delay: 3000 })
+        ]
       };
       /*
                      39 37 30 0e 30 31 30 1b 5b 30 33          970.010.[03
       30 7a 0e 30 31 31 1b 5b 30 33 30 7a 0e 30 31 32     0z.011.[030z.012
       1b 5b 30 33 30 7a 0e 30 31 33 1b 5b 30 33 30 7a     .[030z.013.[030z
        */
-      //expect(s.parseScreen('970\x0e010\x1b[030z\x0e011\x1b[030z\x0e012\x1b[030z\x0e013\x1b[030z')).toEqual(parsed);
+      expect(s.parseScreen('970\x0e010\x1b[030z\x0e011\x1b[030z\x0e012\x1b[030z\x0e013\x1b[030z')).toEqual(parsed);
     });
 
   });

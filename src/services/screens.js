@@ -158,7 +158,13 @@ function ScreensService(settings, log){
             continue;
 
           case 'z':
-            break;
+            /**
+             * ESC [ z  Changing display in idle
+             */
+            var delay_time = parseInt(data.substr(i + 2, 3)) * 100;   // Delay time in 100 milliseconds interval
+            parsed.actions.push({'delay': delay_time});
+            i = j + 1;
+            continue;
 
           default:
             break;
@@ -198,15 +204,11 @@ function ScreensService(settings, log){
       i++;
     }
 
-    if(!this.text.isEmpty()){
-      // parsed.screen_text = this.text.get();
+    if(!this.text.isEmpty())
       parsed.actions.push({'add_text': this.text.get()});
-    }
 
-    if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined){
-      // parsed.cursor = this.cursor.getPosition();
+    if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)
       parsed.actions.push({'move_cursor': this.cursor.getPosition()});
-    }
 
     return parsed;
   }

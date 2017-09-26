@@ -59,9 +59,11 @@ describe("Parser", function() {
           screen_number: '064', 
           message_coordination_number: '2', 
           card_return_flag: {
-            '0': 'Return card during the Close state'
+            '0': 'Return card during the Close state',
           }, 
-          printer_flag: '0' 
+          printer_flag: {
+            '0': 'Do not print',
+          },
         };
         expect(p.parse('40\x1c000\x1c\x1c133\x1c\x1c07759064\x1c200', 25)).toEqual(parsed);
       });
@@ -312,6 +314,24 @@ describe("Parser", function() {
 
     it('should parse card return flag 4', function(){
       expect(p.getCardReturnFlagDescription('4')).toEqual({'4': 'Return card while processing the transaction reply'});
+    });
+  });
+
+  describe('getPrinterFlagDescription()', function(){
+    it('should parse printer flag 0', function(){
+      expect(p.getPrinterFlagDescription('0')).toEqual({'0': 'Do not print'});
+    });
+
+    it('should parse printer flag 1', function(){
+      expect(p.getPrinterFlagDescription('1')).toEqual({'1': 'Print on journal printer only'});
+    });
+
+    it('should parse printer flag 2', function(){
+      expect(p.getPrinterFlagDescription('2')).toEqual({'2': 'Print on receipt printer only'});
+    });
+
+    it('should parse printer flag 3', function(){
+      expect(p.getPrinterFlagDescription('3')).toEqual({'3': 'Print on receipt and journal printer'});
     });
   });
 

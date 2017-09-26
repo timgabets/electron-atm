@@ -154,11 +154,16 @@ function Parser(){
 
         parsed.message_coordination_number = splitted[6].substring(0, 1)
         parsed.card_return_flag = this.getCardReturnFlagDescription(splitted[6].substring(1, 2))
-        parsed.printer_flag = splitted[6].substring(2, 3)
+        parsed.printer_flag = this.getPrinterFlagDescription(splitted[6].substring(2, 3))
 
         return parsed;
     };
 
+    /**
+     * [getCardReturnFlagDescription description]
+     * @param  {[type]} card_return_flag [description]
+     * @return {[type]}                  [description]
+     */
     this.getCardReturnFlagDescription = function(card_return_flag){
       switch(card_return_flag){
         case '0':
@@ -167,6 +172,24 @@ function Parser(){
           return {'1': 'Retain card during the Close state'};
         case '4':
           return {'4': 'Return card while processing the transaction reply'};
+      }
+    };
+
+    /**
+     * [getPrinterFlagDescription description]
+     * @param  {[type]} printer_flag [description]
+     * @return {[type]}              [description]
+     */
+    this.getPrinterFlagDescription = function(printer_flag){
+      switch(printer_flag){
+        case '0':
+          return {'0': 'Do not print'};
+        case '1':
+          return {'1': 'Print on journal printer only'};
+        case '2':
+          return {'2': 'Print on receipt printer only'};
+        case '3':
+          return {'3': 'Print on receipt and journal printer'};
       }
     };
 

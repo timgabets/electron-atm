@@ -88,5 +88,30 @@ describe("CursorService", function() {
     });
   });
 
+  describe('move()', function(){
+    it('should move cursor one position to the right', function(){
+      c.init();
+      expect(c.getPosition()).toEqual({'x': '@', 'y': '@'});
+      c.move();
+      expect(c.getPosition()).toEqual({'x': 'A', 'y': '@'});
+    });
+
+    it('should carry cursor to the next line', function(){
+      c.init();
+      c.setPosition('B?');
+      expect(c.getPosition()).toEqual({'x': '?', 'y': 'B'});
+      c.move();
+      expect(c.getPosition()).toEqual({'x': '@', 'y': 'C'});
+    });
+
+    it('should stay in the right corner in case of screen overflow', function(){
+      c.init();
+      c.setPosition('O?');
+      expect(c.getPosition()).toEqual({'x': '?', 'y': 'O'});
+      c.move();
+      expect(c.getPosition()).toEqual({'x': '?', 'y': 'O'});
+    });
+  })
+
 
 });

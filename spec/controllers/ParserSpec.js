@@ -55,7 +55,9 @@ describe("Parser", function() {
           next_state: '133', 
           notes_to_dispense: '',
           transaction_serial_number: '0775', 
-          function_identifier: '9', 
+          function_identifier: { 
+            '9': 'Display and print' 
+          }, 
           screen_number: '064', 
           message_coordination_number: '2', 
           card_return_flag: {
@@ -301,6 +303,52 @@ describe("Parser", function() {
        */
       expect(p.parseHostMessage('\x00\x0c10\x1c000\x1c000\x1c4')).toEqual(parsed);
     });
+  });
+
+  describe('getFunctionIdentifierDescription()', function(){
+    it('should parse function identifier 1', function(){
+      expect(p.getFunctionIdentifierDescription('1')).toEqual({'1': 'Deposit and print'});
+    });
+
+    it('should parse function identifier 2', function(){
+      expect(p.getFunctionIdentifierDescription('2')).toEqual({'2': 'Dispense and print'});
+    });
+
+    it('should parse function identifier 3', function(){
+      expect(p.getFunctionIdentifierDescription('3')).toEqual({'3': 'Display and print'});
+    });
+
+    it('should parse function identifier 4', function(){
+      expect(p.getFunctionIdentifierDescription('4')).toEqual({'4': 'Print immediate'});
+    });
+
+    it('should parse function identifier 5', function(){
+      expect(p.getFunctionIdentifierDescription('5')).toEqual({'5': 'Set next state and print'});
+    });
+
+    it('should parse function identifier 7', function(){
+      expect(p.getFunctionIdentifierDescription('7')).toEqual({'7': 'Deposit and print'});
+    });
+
+    it('should parse function identifier 8', function(){
+      expect(p.getFunctionIdentifierDescription('8')).toEqual({'8': 'Dispense and print'});
+    });
+
+    it('should parse function identifier 9', function(){
+      expect(p.getFunctionIdentifierDescription('9')).toEqual({'9': 'Display and print'});
+    });
+
+    it('should parse function identifier A', function(){
+      expect(p.getFunctionIdentifierDescription('A')).toEqual({'A': 'Eject card and dispense and print (card before cash)'});
+    });
+
+    it('should parse function identifier B', function(){
+      expect(p.getFunctionIdentifierDescription('B')).toEqual({'B': 'Parallel dispense and print and card eject'});
+    });    
+
+    it('should parse function identifier C', function(){
+      expect(p.getFunctionIdentifierDescription('C')).toEqual({'C': 'Parallel dispense and print and card eject'});
+    });    
   });
 
   describe('getCardReturnFlagDescription()', function(){

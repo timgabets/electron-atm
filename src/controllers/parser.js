@@ -149,7 +149,7 @@ function Parser(){
         parsed.notes_to_dispense = splitted[4];
 
         parsed.transaction_serial_number = splitted[5].substring(0, 4)
-        parsed.function_identifier = splitted[5].substring(4, 5)
+        parsed.function_identifier = this.getFunctionIdentifierDescription(splitted[5].substring(4, 5))
         parsed.screen_number = splitted[5].substring(5, 8)
 
         parsed.message_coordination_number = splitted[6].substring(0, 1)
@@ -157,6 +157,34 @@ function Parser(){
         parsed.printer_flag = this.getPrinterFlagDescription(splitted[6].substring(2, 3))
 
         return parsed;
+    };
+
+    /**
+     * [getFunctionIdentifierDescription description]
+     * @param  {[type]} function_identifier [description]
+     * @return {[type]}                     [description]
+     */
+    this.getFunctionIdentifierDescription = function(function_identifier){
+      switch(function_identifier){
+        case '1':
+        case '7':
+          return {[function_identifier]: 'Deposit and print'};
+        case '2':
+        case '8':
+          return {[function_identifier]: 'Dispense and print'};
+        case '3':
+        case '9':
+          return {[function_identifier]: 'Display and print'};
+        case '4':
+          return {[function_identifier]: 'Print immediate'};
+        case '5':
+          return {[function_identifier]: 'Set next state and print'};
+        case 'A':
+          return {[function_identifier]: 'Eject card and dispense and print (card before cash)'};
+        case 'B':
+        case 'C':
+          return {[function_identifier]: 'Parallel dispense and print and card eject'};
+      };
     };
 
     /**

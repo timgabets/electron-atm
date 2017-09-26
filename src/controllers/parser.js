@@ -148,13 +148,35 @@ function Parser(){
 
         parsed.notes_to_dispense = splitted[4];
 
-        parsed.transaction_serial_number = splitted[5].substring(0, 4)
-        parsed.function_identifier = this.getFunctionIdentifierDescription(splitted[5].substring(4, 5))
-        parsed.screen_number = splitted[5].substring(5, 8)
+        if(splitted[5]){
+          parsed.transaction_serial_number = splitted[5].substring(0, 4)
+          parsed.function_identifier = this.getFunctionIdentifierDescription(splitted[5].substring(4, 5))
+          parsed.screen_number = splitted[5].substring(5, 8)
+        }
 
-        parsed.message_coordination_number = splitted[6].substring(0, 1)
-        parsed.card_return_flag = this.getCardReturnFlagDescription(splitted[6].substring(1, 2))
-        parsed.printer_flag = this.getPrinterFlagDescription(splitted[6].substring(2, 3))
+        if(splitted[6]){ 
+          parsed.message_coordination_number = splitted[6].substring(0, 1)
+          parsed.card_return_flag = this.getCardReturnFlagDescription(splitted[6].substring(1, 2))
+
+          // q and r sub fields
+          splitted[6].substring(2).split('\x1d').forEach( (element, i) => {
+            switch(element[0]){
+              case '1':
+                // Print on journal printer only
+                parsed.journal_printer_data = element.substr(1);
+                break;
+              case '2':
+                // Print on receipt printer only
+                parsed.receipt_printer_data = element.substr(1);
+                break;
+              case '3':
+                // Print on receipt and journal printer
+                parsed.receipt_printer_data = element.substr(1);
+                parsed.journal_printer_data = element.substr(1);
+                break;
+            }
+          });
+        }
 
         return parsed;
     };

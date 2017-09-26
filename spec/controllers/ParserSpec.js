@@ -62,12 +62,79 @@ describe("Parser", function() {
           message_coordination_number: '2', 
           card_return_flag: {
             '0': 'Return card during the Close state',
-          }, 
-          printer_flag: {
-            '0': 'Do not print',
-          },
+          }
         };
         expect(p.parse('40\x1c000\x1c\x1c133\x1c\x1c07759064\x1c200', 25)).toEqual(parsed);
+      });
+
+      it("should be able to parse Receipt Printer Data field in 'Transaction reply' message", function() {
+        var parsed = { 
+          message_class: 'Transaction Reply Command', 
+          LUNO: '000', 
+          message_sequence_number: '', 
+          next_state: '142', 
+          notes_to_dispense: '',
+          transaction_serial_number: '2835',
+          function_identifier: { 5: 'Set next state and print' },
+          screen_number: '025',
+          message_coordination_number: 'G',
+          card_return_flag: { 0: 'Return card during the Close state' },
+          receipt_printer_data: 'RECEIPT PRINTER DATA',
+        };
+        expect(p.parse('40\x1c000\x1c\x1c142\x1c\x1c28355025\x1cG02RECEIPT PRINTER DATA')).toEqual(parsed);
+      });
+
+      it("should be able to parse Journal Printer Data field in 'Transaction reply' message", function() {
+        var parsed = { 
+          message_class: 'Transaction Reply Command', 
+          LUNO: '000', 
+          message_sequence_number: '', 
+          next_state: '142', 
+          notes_to_dispense: '',
+          transaction_serial_number: '2835',
+          function_identifier: { 5: 'Set next state and print' },
+          screen_number: '025',
+          message_coordination_number: 'G',
+          card_return_flag: { 0: 'Return card during the Close state' },
+          journal_printer_data: 'JOURNAL PRINTER DATA',
+        };
+        expect(p.parse('40\x1c000\x1c\x1c142\x1c\x1c28355025\x1cG01JOURNAL PRINTER DATA')).toEqual(parsed);
+      });
+
+      it("should be able to parse Receipt and Journal Printer Data fields in 'Transaction reply' message", function() {
+        var parsed = { 
+          message_class: 'Transaction Reply Command', 
+          LUNO: '000', 
+          message_sequence_number: '', 
+          next_state: '142', 
+          notes_to_dispense: '',
+          transaction_serial_number: '2835',
+          function_identifier: { 5: 'Set next state and print' },
+          screen_number: '025',
+          message_coordination_number: 'G',
+          card_return_flag: { 0: 'Return card during the Close state' },
+          receipt_printer_data: 'RECEIPT PRINTER DATA',
+          journal_printer_data: 'JOURNAL PRINTER DATA',
+        };
+        expect(p.parse('40\x1c000\x1c\x1c142\x1c\x1c28355025\x1cG02RECEIPT PRINTER DATA\x1d1JOURNAL PRINTER DATA')).toEqual(parsed);
+      });
+
+      it("should be able to parse 'print on receipt and journal printer' flag in 'Transaction reply' message", function() {
+        var parsed = { 
+          message_class: 'Transaction Reply Command', 
+          LUNO: '000', 
+          message_sequence_number: '', 
+          next_state: '142', 
+          notes_to_dispense: '',
+          transaction_serial_number: '2835',
+          function_identifier: { 5: 'Set next state and print' },
+          screen_number: '025',
+          message_coordination_number: 'G',
+          card_return_flag: { 0: 'Return card during the Close state' },
+          receipt_printer_data: 'RECEIPT PRINTER AND JOURNAL PRINTER DATA',
+          journal_printer_data: 'RECEIPT PRINTER AND JOURNAL PRINTER DATA',
+        };
+        expect(p.parse('40\x1c000\x1c\x1c142\x1c\x1c28355025\x1cG03RECEIPT PRINTER AND JOURNAL PRINTER DATA')).toEqual(parsed);
       });
   });  
 

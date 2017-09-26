@@ -165,9 +165,6 @@ function ScreensService(settings, log){
             parsed.actions.push({'delay': delay_time});
             i = j + 1;
             continue;
-
-          default:
-            break;
         }
       }
 

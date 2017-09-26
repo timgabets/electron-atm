@@ -168,6 +168,14 @@ describe("Screens", function() {
     it('should get colour control command code C7', function(){
       expect(s.getColourControlCommandCode('C7')).toEqual({'set_background_color': 'white'});
     });
+
+    it('should return undefined on unsupported colour control', function(){
+      expect(s.getColourControlCommandCode('X1')).toBeUndefined();
+    });
+
+    it('should return undefined on unsupported colour code', function(){
+      expect(s.getColourControlCommandCode('C9')).toBeUndefined();
+    });
   });
 
   describe("parseScreen()", function(){

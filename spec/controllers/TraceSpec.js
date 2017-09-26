@@ -45,5 +45,11 @@ describe("Trace", function() {
       expect(t.object(obj)).toEqual('\n    [data]: {"alpha":"744321","beta":"98765"}\n');
     });
 
+    it("should trace string with new line character unchanged", function() {
+      var obj = {
+        data: 'iddqd\npqrst',
+      };
+      expect(t.object(obj)).toEqual('\n    [data]: [iddqd\npqrst]\n');
+    });
   });  
 });

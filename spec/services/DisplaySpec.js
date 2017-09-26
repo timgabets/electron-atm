@@ -149,7 +149,7 @@ describe("DisplayService", function() {
             'D': '                                ', 
             'E': '                                ', 
             'F': '                                ', 
-            'G': '        TEXT                    ', 
+            'G': '                                ', 
             'H': '                                ', 
             'I': '                                ', 
             'J': '                                ', 

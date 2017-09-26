@@ -135,5 +135,40 @@ describe("DisplayService", function() {
       display.insertText('LEGIO PATRIA NOSTRA');
       expect(display.getText()['F']).toEqual('     LEGIO PATRIA NOSTRA        ');
     });
+
+    it('should insert masked text', function(){
+      var screen = {
+        number: '060',
+        actions: [ 
+          'clear_screen', 
+          Object({ add_text: Object({ 
+            '@': '                                ', 
+            'A': '                                ', 
+            'B': '                                ', 
+            'C': '                                ', 
+            'D': '                                ', 
+            'E': '                                ', 
+            'F': '                                ', 
+            'G': '        TEXT                    ', 
+            'H': '                                ', 
+            'I': '                                ', 
+            'J': '                                ', 
+            'K': '                                ', 
+            'L': '                                ', 
+            'M': '                                ', 
+            'N': '                                ', 
+            'O': '                                '}) 
+          }), 
+          Object({ move_cursor: Object({ x: '5', y: 'G' }) }) 
+        ]
+      };
+
+      display.setScreen(screen);
+      var original_text = screen.actions[1]['add_text'];
+      expect(display.getText()).toEqual(original_text);
+      
+      display.insertText('IDDQD', '*');
+      expect(display.getText()['G']).toEqual('                     *****      ');
+    });
   });
 });

@@ -335,6 +335,18 @@ describe("Screens", function() {
       screens = [];
       expect(s.add(screens)).toBeTruthy();
     });
+
+    it("should add single screen passed as a string", function() {
+      expect(s.add('000\x0c\x1bPEPIC000.jpg\x1b\x5c')).toBeTruthy();
+    });
+
+    it("should add multiple screens", function() {
+      expect(s.add(['000\x0c\x1bPEPIC000.jpg\x1b\x5c', '001\x0c\x1bPEPIC001.jpg\x1b\x5c'])).toBeTruthy();
+    });
+
+    it("should not add multiple erroneus screens", function() {
+      expect(s.add(['', ''])).toBeFalsy();
+    });
   });
 
   describe('parseDynamicScreenData()', function(){

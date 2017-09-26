@@ -86,6 +86,7 @@ function ScreensService(settings, log){
       return false;
 
     parsed.number = data.substr(0, 3);
+
     var i = 3;
 
     parsed.actions = []

@@ -140,6 +140,11 @@ describe("ScreenTextService", function() {
   });
 
   describe('isEmpty()', function(){
+    it('should return false if not initialized', function(){
+      expect(s.screen_text).toEqual({});
+      expect(s.isEmpty()).toBeTruthy();
+    });
+
     it('should return true is text screen is empty', function(){
       s.init();
       expect(s.isEmpty()).toBeTruthy();

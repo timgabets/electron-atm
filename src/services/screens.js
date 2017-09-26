@@ -18,23 +18,23 @@ function ScreensService(settings, log){
 
   this.getColourControlCommandCode = function(code){
     if(code === '00')
-      return {'blinking': 'off', 'colors': 'default'}
+      return {'set_blinking': 'off', 'colors': 'default'}
     else if (code === '10')
-      return {'blinking': 'on'}
+      return {'set_blinking': 'on'}
     else if (code === '11')
-      return {'blinking': 'off'}
+      return {'set_blinking': 'off'}
     else if(code === '80')
-      return {'background': 'transparent'}
+      return {'set_background_color': 'transparent'}
 
     var type;
     switch(code[0]){
       case 'B':
       case '2':
-        type = 'foreground';
+        type = 'set_font_color';
         break;
       case '3':
       case 'C':
-        type = 'background';
+        type = 'set_background_color';
         break;
       default:
         log.error('Unsupported colour control ' + code[0] + ' in control ' + code);
@@ -88,6 +88,8 @@ function ScreensService(settings, log){
     parsed.number = data.substr(0, 3);
     var i = 3;
 
+    parsed.actions = []
+
     while(i < data.length){
       if(data[i] === '\x0c'){
         /**
@@ -104,7 +106,7 @@ function ScreensService(settings, log){
          */
         this.text.init();
         this.cursor.init();
-        parsed.clear_screen = true;
+        parsed.actions.push('clear_screen');
         i++;
         continue;
       }
@@ -115,10 +117,12 @@ function ScreensService(settings, log){
          * This control code allows you to display pictures on the screen, using
          * the following control string
          */
-        parsed.display_image_files_control = true;
-        parsed.image_file = data.substr(i+3).split('\x1b\x5c')[0];
+        // parsed.display_image_files_control = true;
+        // parsed.image_file = data.substr(i+3).split('\x1b\x5c')[0];
+        var image_file = data.substr(i+3).split('\x1b\x5c')[0];
+        parsed.actions.push({'display_image': image_file});
 
-        i += ('PE'.length + parsed.image_file.length + ('\x1b\x5c').length + 1);
+        i += ('PE'.length + image_file.length + ('\x1b\x5c').length + 1);
         continue;
       }
 
@@ -147,15 +151,20 @@ function ScreensService(settings, log){
              * The variable length field, separated by ; field separators, can be repeaated up to three times.
              * There should not be a field separator after the last parameter
              */
-            parsed.colour_control_commands = [];
             data.substr(i + 2, j - i - 2).split(';').forEach( (element) => {
-              parsed.colour_control_commands.push(this.getColourControlCommandCode(element));
+              parsed.actions.push(this.getColourControlCommandCode(element));
             });
             i = j + 1;
             continue;
 
           case 'z':
-            break;
+            /**
+             * ESC [ z  Changing display in idle
+             */
+            var delay_time = parseInt(data.substr(i + 2, 3)) * 100;   // Delay time in 100 milliseconds interval
+            parsed.actions.push({'delay': delay_time});
+            i = j + 1;
+            continue;
 
           default:
             break;
@@ -178,7 +187,7 @@ function ScreensService(settings, log){
        * Insert the screen control sequence
        */
       if(data[i] === '\x0e'){
-        parsed.insert_screen = data.substr(i + 1, 3);
+        parsed.actions.push({'insert_screen': data.substr(i + 1, 3)})
         i += 4;
         continue;
       }
@@ -196,10 +205,10 @@ function ScreensService(settings, log){
     }
 
     if(!this.text.isEmpty())
-      parsed.screen_text = this.text.get();
+      parsed.actions.push({'add_text': this.text.get()});
 
     if(this.cursor.cursor_position && this.cursor.cursor_position.x !== undefined && this.cursor.cursor_position.y !== undefined)
-      parsed.cursor = this.cursor.getPosition();
+      parsed.actions.push({'move_cursor': this.cursor.getPosition()});
 
     return parsed;
   }

@@ -5,22 +5,24 @@ const ScreenTextService = require('../services/screentext.js');
 function DisplayService(screens, log){
   this.screens = screens;
   this.current_screen;
+  this.image_file;
   this.cursor = new CursorService();
   this.text = new ScreenTextService(this.cursor);
 
   this.setScreen = function(screen){
     this.current_screen = screen;
 
-    if(this.current_screen.clear_screen){
-      this.text.init()
-    }
-    
-    // Creating local copies
-    if(this.current_screen.screen_text)
-      this.text.copy(this.current_screen.screen_text);
-
-    if(this.current_screen.cursor)
-      this.text.setCursorPosition(this.current_screen.cursor);
+    this.current_screen.actions.forEach((element) => {
+      if(element === 'clear_screen'){
+        this.text.init()        
+      } else if( element['display_image'] ) {
+        this.image_file = element['display_image'];
+      } else if( element['move_cursor'] ){
+        this.text.setCursorPosition(element['move_cursor']);
+      } else if(element['add_text']){
+        this.text.copy(element['add_text']);
+      }
+    });
 
     log.info('Screen changed to ' + this.current_screen.number);
   }
@@ -44,8 +46,7 @@ function DisplayService(screens, log){
   };
 
   this.getImage = function(){
-    if(this.current_screen)
-      return this.current_screen.image_file;
+    return this.image_file;
   };
 
   /**

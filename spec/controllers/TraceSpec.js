@@ -24,14 +24,14 @@ describe("Trace", function() {
         message_sequence_number: '000',
         command_code: 'Go in-service'
       };
-      expect(t.object(obj)).toEqual('\n    [message_class          ]: [Terminal Command]\n    [LUNO                   ]: [000]\n    [message_sequence_number]: [000]\n    [command_code           ]: [Go in-service]\n');
+      expect(t.object(obj)).toEqual('\n  [message_class          ]: [Terminal Command]\n  [LUNO                   ]: [000]\n  [message_sequence_number]: [000]\n  [command_code           ]: [Go in-service]\n');
     });
 
     it("should trace array object", function() {
       var obj = {
         states: ['003', '744', '987'],
       };
-      expect(t.object(obj)).toEqual('\n    [states]: ["003","744","987"]\n');
+      expect(t.object(obj)).toEqual('\n  [states]: ["003","744","987"]\n');
     });
 
 
@@ -42,14 +42,14 @@ describe("Trace", function() {
           beta:  '98765',
         },
       };
-      expect(t.object(obj)).toEqual('\n    [data]: {"alpha":"744321","beta":"98765"}\n');
+      expect(t.object(obj)).toEqual('\n  [data]: {"alpha":"744321","beta":"98765"}\n');
     });
 
     it("should trace string with new line character unchanged", function() {
       var obj = {
         data: 'iddqd\npqrst',
       };
-      expect(t.object(obj)).toEqual('\n    [data]: [iddqd\npqrst]\n');
+      expect(t.object(obj)).toEqual('\n  [data]: [iddqd\npqrst]\n');
     });
   });  
 });

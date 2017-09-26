@@ -101,38 +101,39 @@ describe("DisplayService", function() {
       expect(display.getText()['@']).toEqual('IDDQD                           ');
     });
 
-/*
     it('should insert text into the center of display', function(){
       var screen = {
-        number: '039',
-        clear_screen: true,
-        screen_text: { 
-          '@': 'TEXT                            ', 
-          'A': '                                ', 
-          'B': '                                ', 
-          'C': '                                ', 
-          'D': '                                ', 
-          'E': '                                ', 
-          'F': '                                ', 
-          'G': '                                ', 
-          'H': '                                ', 
-          'I': '                                ', 
-          'J': '                                ', 
-          'K': '                                ', 
-          'L': '                                ', 
-          'M': '                                ', 
-          'N': '                                ', 
-          'O': '                                '
-        },
-        cursor: { x: 'B', y: 'F' }
+        number: '060',
+        actions: [ 
+          'clear_screen', 
+          Object({ add_text: Object({ 
+            '@': '                                ', 
+            'A': '                                ', 
+            'B': '                                ', 
+            'C': '                                ', 
+            'D': '                                ', 
+            'E': '                                ', 
+            'F': '                                ', 
+            'G': '        TEXT                    ', 
+            'H': '                                ', 
+            'I': '                                ', 
+            'J': '                                ', 
+            'K': '                                ', 
+            'L': '                                ', 
+            'M': '                                ', 
+            'N': '                                ', 
+            'O': '                                '}) 
+          }), 
+          Object({ move_cursor: Object({ x: 'E', y: 'F' }) }) 
+        ]
       };
 
       display.setScreen(screen);
-      expect(display.getText()).toEqual(screen.screen_text);
+      var original_text = screen.actions[1]['add_text'];
+      expect(display.getText()).toEqual(original_text);
       
       display.insertText('LEGIO PATRIA NOSTRA');
-      expect(display.getText()['F']).toEqual('  LEGIO PATRIA NOSTRA           ');
+      expect(display.getText()['F']).toEqual('     LEGIO PATRIA NOSTRA        ');
     });
-*/  
   });
 });

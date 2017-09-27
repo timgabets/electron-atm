@@ -423,7 +423,6 @@ describe("Screens", function() {
       var screen = { 
         number: '123', 
         actions: [ 
-          'clear_screen', 
           Object({ add_text: 
             Object({ 
               '@': 'SCREEN DATA                     ', 
@@ -451,7 +450,7 @@ describe("Screens", function() {
       };
 
       var parsed;
-      expect(s.parseScreenDisplayUpdate('u09621000\x1d0000123\x0cSCREEN DATA')).toBeTruthy();
+      expect(s.parseScreenDisplayUpdate('u09621000\x1d0000123SCREEN DATA')).toBeTruthy();
       expect(s.get('123')).toEqual(screen);
     });
   });

@@ -191,6 +191,36 @@ describe("Screens", function() {
       expect(s.parseScreen('778')).toEqual(parsed);
     });
 
+    it("should parse the screen and put the text", function() {
+      var parsed = {
+        number: '942',
+        actions: [ 
+          Object({ 
+            add_text: Object({ 
+              '@': 'TESTTEXT                        ', 
+              'A': '                                ', 
+              'B': '                                ', 
+              'C': '                                ', 
+              'D': '                                ', 
+              'E': '                                ', 
+              'F': '                                ', 
+              'G': '                                ', 
+              'H': '                                ', 
+              'I': '                                ', 
+              'J': '                                ', 
+              'K': '                                ', 
+              'L': '                                ', 
+              'M': '                                ', 
+              'N': '                                ', 
+              'O': '                                '
+              }) 
+          }), 
+          Object({ move_cursor: Object({ x: 'H', y: '@' }) }) 
+        ]
+      };
+      expect(s.parseScreen('942TESTTEXT')).toEqual(parsed);
+    });
+
     it("should clear screen and put the text", function() {
       var parsed = {
         number: '039',

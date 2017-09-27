@@ -15,6 +15,10 @@ describe("CursorService", function() {
   });
 
   describe('getPosition()', function(){
+    it('should call init() if cursor position is uninitialized', function(){
+      expect(c.getPosition()).toEqual({'x': '@', 'y': '@'});
+    })
+
     it('should get left top cursor position', function(){
       c.init();
       expect(c.getPosition()).toEqual({'x': '@', 'y': '@'});

@@ -83,6 +83,9 @@ function ScreenTextService(cursor){
    * @param {[type]} text [description]
    */
   this.add = function(text){
+    if(this.screen_text['@'] === undefined)
+      this.init();
+
     for(var i = 0; i < text.length; i++){
       var char = text[i];
       var row = this.cursor.getPosition()['y'];

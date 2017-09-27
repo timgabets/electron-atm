@@ -43,6 +43,33 @@ describe("ScreenTextService", function() {
     });
   });
 
+  describe('add() uninitialized', function(){
+    it('should should add one character to uninitialized screen text', function(){
+      expect(s.screen_text).toEqual({});
+      s.add('X');
+
+      var result = { 
+        '@': 'X                               ', 
+        'A': '                                ', 
+        'B': '                                ', 
+        'C': '                                ', 
+        'D': '                                ', 
+        'E': '                                ', 
+        'F': '                                ', 
+        'G': '                                ', 
+        'H': '                                ', 
+        'I': '                                ', 
+        'J': '                                ', 
+        'K': '                                ', 
+        'L': '                                ', 
+        'M': '                                ', 
+        'N': '                                ', 
+        'O': '                                ' ,
+      };
+      expect(s.get()).toEqual(result)
+    })
+  });
+
   describe('add()', function(){
     beforeEach(function() {
       s.cursor.init();

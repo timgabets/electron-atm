@@ -1,4 +1,5 @@
 September 2017
+	0.7.5 Buffer B max size changed to 32 bytes according to specification
 	0.7.4 screen.actions - processing screen as a sequence of actions (e.g. 'clear_screen', 'insert_image' etc.)
 	0.7.3 Parsing journal printer and receipt printer data in Transaction Reply
 	0.7.2 Fixed "ISSUE-2: Nested objects are traced as [[object Object]]" 

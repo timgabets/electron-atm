@@ -733,7 +733,7 @@ describe("ATM", function() {
       expect(atm.buffer_C).toEqual('123456789012');
     });
 
-    it("should not overflow buffer B", function(){
+    it("should not overflow buffer B (32 bytes max)", function(){
       atm.current_state.buffer_and_display_params = '003';
       expect(atm.buffer_B).toEqual('');
 
@@ -747,12 +747,38 @@ describe("ATM", function() {
       atm.processPinpadButtonPressed('8');
       atm.processPinpadButtonPressed('9');
       atm.processPinpadButtonPressed('0');
+      // 10
       atm.processPinpadButtonPressed('1');
       atm.processPinpadButtonPressed('2');
       atm.processPinpadButtonPressed('3');
       atm.processPinpadButtonPressed('4');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('6');
+      atm.processPinpadButtonPressed('7');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('0');
+      // 20
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('2');
+      atm.processPinpadButtonPressed('3');
+      atm.processPinpadButtonPressed('4');
+      atm.processPinpadButtonPressed('5');
+      atm.processPinpadButtonPressed('6');
+      atm.processPinpadButtonPressed('7');
+      atm.processPinpadButtonPressed('8');
+      atm.processPinpadButtonPressed('9');
+      atm.processPinpadButtonPressed('0');
+      // 30
+      atm.processPinpadButtonPressed('1');
+      atm.processPinpadButtonPressed('2');
+      // 32. The rest must be trimmed
+      atm.processPinpadButtonPressed('0');
+      atm.processPinpadButtonPressed('0');
+      atm.processPinpadButtonPressed('0');
+      atm.processPinpadButtonPressed('0');
 
-      expect(atm.buffer_B).toEqual('123456789012');
+      expect(atm.buffer_B).toEqual('12345678901234567890123456789012');
     });
 
   });

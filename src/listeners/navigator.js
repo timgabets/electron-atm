@@ -69,8 +69,11 @@ $(function () {
    * @return {[type]}        [description]
    */
   function updateScreen(screen){
-    if(screen && screen.image_file){
-      $('#states-screen').attr('src', '/home/tim/share/screens/' + screen.image_file);
+    if(screen && screen.actions){      
+      screen.actions.forEach((element) => {
+        if(element.display_image)
+          $('#states-screen').attr('src', '/home/tim/share/screens/' + element.display_image);
+      });
     }
   };
 

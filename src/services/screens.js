@@ -274,9 +274,9 @@ function ScreensService(settings, log){
      */
       data.split('\x1d').forEach((element) => {
         if(element[0] === 'u' || element[1] === 'l'){
-          log.error(element[0] + '-type screen processing is not supported');
+          log.error('Error processing screen ' + element.substr(0, 6) + ': ' + element[0] + '-type screen processing is not supported');
           return false;
-        } else {
+        } else {  
           return this.addScreen(element.substr(4));
         }
       });

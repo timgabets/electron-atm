@@ -58,7 +58,7 @@
         </div><!-- /.container-fluid -->
       </nav>
 
-      <div class="row">
+      <div class="row" id="states-page">
         <div id="mynetwork" class="col-md-8 mynetwork"></div>
 
         <div class="col-md-4">  
@@ -66,6 +66,107 @@
           <pre id="state-details" class="state-details" type="text"></pre>
         </div>
       </div>
+
+      <div class="row main-area" id="atm-page">
+        <div class="col-md-1 fdk-button-block">
+          <button id="FDK-I" type="submit" class="btn btn-lg btn-block fdk-button" disabled>I</button>
+          <button id="FDK-H" type="submit" class="btn btn-lg btn-block fdk-button" disabled>H</button>
+          <button id="FDK-G" type="submit" class="btn btn-lg btn-block fdk-button" disabled>G</button>
+          <button id="FDK-F" type="submit" class="btn btn-lg btn-block fdk-button" disabled>F</button>
+        </div>
+        
+        <!-- ATM Screen-->
+        <div id="screen-container" class="col-md-5 terminal-screen">
+          <img id="screen" src="/home/tim/share/screens/PIC010.jpg" width="640" height="480">          
+          <div id="coordinates-row" class="coordinates-row coordinates">@ABCDEFGHIJKLMNO0123456789:;<=>?</div>
+          <div class="on-screen-text">
+            <div id="at-coordinate-row" class="at-coordinate-row coordinates">@</div>
+            <div id="at-screen-row" class="at-screen-row"></div>
+
+            <div id="A-coordinate-row" class="A-coordinate-row coordinates">A</div>
+            <div id="A-screen-row" class="A-screen-row"></div>
+
+            <div id="B-coordinate-row" class="B-coordinate-row coordinates">B</div>
+            <div id="B-screen-row" class="B-screen-row"></div>
+            
+            <div id="C-coordinate-row" class="C-coordinate-row coordinates">C</div>            
+            <div id="C-screen-row" class="C-screen-row"></div>
+            
+            <div id="D-coordinate-row" class="D-coordinate-row coordinates">D</div>            
+            <div id="D-screen-row" class="D-screen-row"></div>
+            
+            <div id="E-coordinate-row" class="E-coordinate-row coordinates">E</div>            
+            <div id="E-screen-row" class="E-screen-row"></div>
+
+            <div id="F-coordinate-row" class="F-coordinate-row coordinates">F</div>            
+            <div id="F-screen-row" class="F-screen-row"></div>
+
+            <div id="G-coordinate-row" class="G-coordinate-row coordinates">G</div>            
+            <div id="G-screen-row" class="G-screen-row"></div>
+
+            <div id="H-coordinate-row" class="H-coordinate-row coordinates">H</div>            
+            <div id="H-screen-row" class="H-screen-row"></div>
+
+            <div id="I-coordinate-row" class="I-coordinate-row coordinates">I</div>            
+            <div id="I-screen-row" class="I-screen-row"></div>
+
+            <div id="J-coordinate-row" class="J-coordinate-row coordinates">J</div>            
+            <div id="J-screen-row" class="J-screen-row"></div>
+
+            <div id="K-coordinate-row" class="K-coordinate-row coordinates">K</div>            
+            <div id="K-screen-row" class="K-screen-row"></div>
+
+            <div id="L-coordinate-row" class="L-coordinate-row coordinates">L</div>            
+            <div id="L-screen-row" class="L-screen-row"></div>
+
+            <div id="M-coordinate-row" class="M-coordinate-row coordinates">M</div>            
+            <div id="M-screen-row" class="M-screen-row"></div>
+
+            <div id="N-coordinate-row" class="N-coordinate-row coordinates">N</div>            
+            <div id="N-screen-row" class="N-screen-row"></div>
+
+            <div id="O-coordinate-row" class="O-coordinate-row coordinates">O</div>            
+            <div id="O-screen-row" class="O-screen-row"></div>
+          </div>
+        </div>
+
+        <div id="FDK-block-right" class="col-md-1 fdk-button-block">
+          <button id="FDK-A" type="submit" class="btn btn-lg btn-block fdk-button" disabled>A</button>
+          <button id="FDK-B" type="submit" class="btn btn-lg btn-block fdk-button" disabled>B</button>
+          <button id="FDK-C" type="submit" class="btn btn-lg btn-block fdk-button" disabled>C</button>
+          <button id="FDK-D" type="submit" class="btn btn-lg btn-block fdk-button" disabled>D</button>
+        </div>
+
+        <div class="col-md-5">
+          <pre id="log-output" class="log-output" type="text"></pre>
+        </div>
+      </div>
+
+      <nav class="navbar navbar-default" id="atm-bottom-navbar">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form id="card-read-form" class="navbar-form navbar-left">
+              <div class="form-group">
+                <input type="text" class="form-control" id="cardnumber" value="4338259918748135" placeholder="Card Number"></input>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="track2" value="20062211001668600001" placeholder="Track2"></input>
+              </div>
+              <button type="submit" class="btn btn-default" id="card-inserted" >Read Card</button>
+            </form>
+      
+            <form id="keys-form buffers" class="navbar-form navbar-right keys-form ">
+              <div class="form-group">
+                <input type="text" class="form-control buffer-32" id="master-key" value="" placeholder="Master Key" title="Master Key Clear Value" disabled></input>
+                <input type="text" class="form-control buffer-6" id="master-key-cv" value="" placeholder="KCV" title="Master Key Check Value" disabled></input>
+                <input type="text" class="form-control buffer-32" id="comms-key" value="" placeholder="Communications Key Clear Value" title="Communications Key" disabled></input>
+                <input type="text" class="form-control buffer-6" id="comms-key-cv" value="" placeholder="KCV" title="Communications Key Check Value" disabled></input>
+              </div>
+            </form>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
 
     </div>
 

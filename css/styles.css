@@ -5,6 +5,41 @@ html, body, .container-fluid {
   font-size: 16px;
 }
 
+.nav-button {
+  display: block;
+  width: 100%;
+  padding: .3rem;
+  line-height: 2;
+  text-align: center;
+  color: inherit;
+  border: none;
+  background-color: transparent;
+  cursor: default;
+  outline: none;
+}
+
+.nav-button:hover,
+.nav-button:focus:not(.is-selected) {
+  background-color: hsla(0,0%,0%,.1);
+}
+.nav-button.is-selected {
+  background-color: var(--color-accent);
+}
+.nav-button.is-selected,
+.nav-button.is-selected em {
+  color: #fff;
+}
+.nav-button.is-selected:focus {
+  opacity: .8;
+}
+
+.nav-button em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--color-strong);
+  pointer-events: none; /* makes it invisible to clicks */
+}
+
 .mynetwork {
   width: 940px;
   height: 565px;

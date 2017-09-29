@@ -33,12 +33,12 @@
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li><a href="atm.html">ATM</a></li>
-              <li class="active"><a href="#">States <span class="sr-only">(current)</span></a></li>
-              <li><a href="#" title="TODO">Screens</a></li>
-              <li><a href="#" title="TODO">FITs</a></li>
-              <li><a href="#" title="TODO">EMV</a></li>
+            <ul class="nav navbar-nav">              
+              <li><button type="button" id="atm-button-menu" data-section="menus" class="nav-button">ATM</button></li>
+              <li><button type="button" id="states-button-menu" data-section="menus" class="nav-button">States</button></li>
+              <li><button type="button" id="screens-button-menu" data-section="menus" class="nav-button">Screens</button></li>
+              <li><button type="button" id="fits-button-menu" data-section="menus" class="nav-button">FITs</button></li>
+              <li><button type="button" id="emv-button-menu" data-section="menus" class="nav-button">EMV</button></li>
             </ul>
 
             <form id="search-state-form" class="navbar-form navbar-left">
@@ -58,7 +58,7 @@
         </div><!-- /.container-fluid -->
       </nav>
 
-      <div class="row" id="states-page">
+      <div class="row" id="states-page" hidden="true">
         <div id="mynetwork" class="col-md-8 mynetwork"></div>
 
         <div class="col-md-4">  

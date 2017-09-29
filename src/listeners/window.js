@@ -9,6 +9,20 @@ $(function () {
   const mousetrap = nodeRequire('mousetrap');
 
   /**
+   * Navigation
+   */
+  
+  $("#atm-button-menu").on("click", function(){
+    $("#states-page").hide();
+    $("#atm-page").show();
+  })
+
+  $("#states-button-menu").on("click", function(){
+    $("#states-page").show();
+    $("#atm-page").hide();
+  })
+
+  /**
    * States
    */
   function updateState(state){

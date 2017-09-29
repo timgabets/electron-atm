@@ -1043,7 +1043,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
             break;
 
           default:
-            if(this.buffer_C.length < 12){
+            if(this.buffer_C.length < 32){
               this.buffer_C += button;
 
               if(this.current_state.buffer_and_display_params[2] === '0'){

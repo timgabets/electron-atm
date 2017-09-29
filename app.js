@@ -17,7 +17,8 @@ electron.app.once('ready', function () {
     // background color of the page, this prevents any white flickering
     backgroundColor: "#D6D8DC",
     // Don't show the window until it ready, this prevents any white flickering
-    show: false
+    show: false,
+    icon: path.join(__dirname, '/img/icon.png')
   })
 
   // Open the DevTools.

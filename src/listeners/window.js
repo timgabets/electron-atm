@@ -8,6 +8,104 @@ $(function () {
   const settings = nodeRequire('electron-settings');
   const mousetrap = nodeRequire('mousetrap');
 
+  /**
+   * States
+   */
+  function updateState(state){
+    if(state)
+    {
+      graph.focus(state.number, {});  // Center
+      graph.selectNodes([state.number,]);   // Select node
+
+      updateScreen(screens.get(state.screen_number));
+      updateStateDetails(state, states.getExtensionState(state));
+      updateOpcodeBuffer(state);
+    }
+  };
+
+  $("#search-state-form").submit(function(e) {
+    e.preventDefault();
+    var state_number = $('#search-state-input').val();
+
+    if(state_number.length == 2){
+      state_number = '0' + state_number;
+      $('#search-state-input').val(state_number)
+    }
+    else if (state_number.length === 1){
+      state_number = '00' + state_number;
+      $('#search-state-input').val(state_number)
+    }
+  
+    updateState(states.get(state_number));
+  });
+
+    /**
+   * [updateScreen description]
+   * @param  {[type]} screen [description]
+   * @return {[type]}        [description]
+   */
+  function updateScreen(screen){
+    if(screen && screen.actions){      
+      screen.actions.forEach((element) => {
+        if(element.display_image)
+          $('#states-screen').attr('src', '/home/tim/share/screens/' + element.display_image);
+      });
+    }
+  };
+
+  /**
+   * [updateStateDetails description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  function updateStateDetails(state, extension_state){
+    $('#state-details').html(trace.object(state));
+    if(extension_state)
+      $('#state-details').append(trace.object(extension_state));
+  };
+
+  /**
+   * [updateOpcodeBuffer description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  function updateOpcodeBuffer(state, extension_state){
+    if(state && state.type === 'D'){
+      atm.setOpCodeBuffer(state, extension_state);
+      $('#opcode-buffer').val(atm.opcode_buffer.split(' ').join('_'));
+      $('#opcode-buffer').removeAttr('disabled');
+    }else{
+      $('#opcode-buffer').attr('disabled', true);
+    }
+  };
+
+  graph.on("click", function (params) {
+    var node_id = this.getNodeAt(params.pointer.DOM);
+
+    if(node_id){
+      var state = states.get(node_id);
+
+      updateScreen(screens.get(state.screen_number));
+      updateStateDetails(state, states.getExtensionState(state));
+      updateOpcodeBuffer(state);
+    }
+  });
+
+
+  graph.on("selectNode", function (params) {
+    // TODO
+  });
+
+
+  graph.on("deselectNode", function (params) {
+    // TODO
+  });
+
+
+  /**
+   *  ATM
+   */
+  
   $('#atm-status-button').on('click', _ => {
     /*
     settings.set('host', {
@@ -114,8 +212,10 @@ $(function () {
   setInterval(function() {
     if(atm.current_state.number != current_state){
       current_state = atm.current_state.number;
-      if(atm.current_state.number)
+      if(atm.current_state.number){
         $("#current-state").val(atm.current_state.number.toString() + ' ' + atm.current_state.type);
+        updateState(atm.current_state)
+      }
     }
   }, 200);
 
@@ -243,94 +343,4 @@ $(function () {
       }      
     }
   }, 300);
-
-  /**
-   * States
-   */
-  $("#search-state-form").submit(function(e) {
-    e.preventDefault();
-    var state_number = $('#search-state-input').val();
-
-    if(state_number.length == 2){
-      state_number = '0' + state_number;
-      $('#search-state-input').val(state_number)
-    }
-    else if (state_number.length === 1){
-      state_number = '00' + state_number;
-      $('#search-state-input').val(state_number)
-    }
-  
-    var state = states.get(state_number);
-    if(state)
-    {
-      graph.focus(state.number, {});  // Center
-      graph.selectNodes([state.number,]);   // Select node
-
-      updateScreen(screens.get(state.screen_number));
-      updateStateDetails(state, states.getExtensionState(state));
-      updateOpcodeBuffer(state);
-    }
-  });
-
-    /**
-   * [updateScreen description]
-   * @param  {[type]} screen [description]
-   * @return {[type]}        [description]
-   */
-  function updateScreen(screen){
-    if(screen && screen.actions){      
-      screen.actions.forEach((element) => {
-        if(element.display_image)
-          $('#states-screen').attr('src', '/home/tim/share/screens/' + element.display_image);
-      });
-    }
-  };
-
-  /**
-   * [updateStateDetails description]
-   * @param  {[type]} state [description]
-   * @return {[type]}       [description]
-   */
-  function updateStateDetails(state, extension_state){
-    $('#state-details').html(trace.object(state));
-    if(extension_state)
-      $('#state-details').append(trace.object(extension_state));
-  };
-
-  /**
-   * [updateOpcodeBuffer description]
-   * @param  {[type]} state [description]
-   * @return {[type]}       [description]
-   */
-  function updateOpcodeBuffer(state, extension_state){
-    if(state && state.type === 'D'){
-      atm.setOpCodeBuffer(state, extension_state);
-      $('#opcode-buffer').val(atm.opcode_buffer.split(' ').join('_'));
-      $('#opcode-buffer').removeAttr('disabled');
-    }else{
-      $('#opcode-buffer').attr('disabled', true);
-    }
-  };
-
-  graph.on("click", function (params) {
-    var node_id = this.getNodeAt(params.pointer.DOM);
-
-    if(node_id){
-      var state = states.get(node_id);
-
-      updateScreen(screens.get(state.screen_number));
-      updateStateDetails(state, states.getExtensionState(state));
-      updateOpcodeBuffer(state);
-    }
-  });
-
-
-  graph.on("selectNode", function (params) {
-    // TODO
-  });
-
-
-  graph.on("deselectNode", function (params) {
-    // TODO
-  });
 })

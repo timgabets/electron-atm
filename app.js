@@ -10,9 +10,11 @@ electron.app.once('ready', function () {
   // Create a new window
   window = new electron.BrowserWindow({
     // Set the initial width to 800px
-    width: 1470,
+    // width: 1470,
+    width: 1870,
     // Set the initial height to 600px
-    height: 655,
+    // height: 655,
+    height: 985,
     // Set the default background color of the window to match the CSS
     // background color of the page, this prevents any white flickering
     backgroundColor: "#D6D8DC",
@@ -22,7 +24,7 @@ electron.app.once('ready', function () {
   })
 
   // Open the DevTools.
-  // window.webContents.openDevTools()
+  window.webContents.openDevTools()
 
   // Load a URL in the window to the local atm.html path
   window.loadURL(url.format({

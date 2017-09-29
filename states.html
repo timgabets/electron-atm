@@ -37,18 +37,33 @@
               <li><button type="button" id="emv-button-menu" data-section="menus" class="nav-button">EMV</button></li>
             </ul>
 
-            <form id="search-state-form" class="navbar-form navbar-left">
+            <form id="search-state-form" class="navbar-form navbar-left" hidden="true">
               <div class="form-group">
                 <input type="number" class="form-control" id="search-state-input" value=""></input>
               </div>
               <button type="submit" class="btn btn-default" id="search-state-button">Search</button>
             </form>
 
+            <form id="atm-buffers" class="navbar-form navbar-right">
+                <div class="form-group">
+                  <input type="text" class="form-control buffer-6 letter-spacing" id="current-state" value="" title="State" placeholder="State" disabled></input>
+                  <input type="text" class="form-control buffer-8 letter-spacing" id="current-screen" value="" title="Screen" placeholder="Screen" disabled></input>
+                  <input type="text" class="form-control buffer-8 letter-spacing" id="pin-buffer" value="" title="PIN Buffer" placeholder="Buffer A" disabled></input>
+                  <input type="text" class="form-control buffer-12 letter-spacing" id="buffer-b" value="" title="Buffer B" placeholder="Buffer B" disabled></input>
+                  <input type="text" class="form-control buffer-12 letter-spacing" id="buffer-c" value="" title="Buffer C" placeholder="Buffer C" disabled></input>
+                  <input type="text" class="form-control buffer-8 letter-spacing" id="opcode-buffer" value="" title="Operation Code Buffer" placeholder="Opcode" disabled></input>
+                  <input type="text" class="form-control buffer-12 letter-spacing" id="amount-buffer" value="" title="Amount Buffer" placeholder="Amount Buffer" disabled></input>
+                </div>
+              </form>
+
+
+            <!--
             <form id="opcode-buffer-form" class="navbar-form navbar-center">
               <div class="form-group">
                 <input type="text" class="form-control letter-spacing" id="opcode-buffer" value="" disabled="" title="Operation Code Buffer"></input>
               </div>
             </form>
+            -->
 
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -63,35 +78,7 @@
         </div>
       </div>
 
-      <div class="row main-area" id="atm-page">
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">ATM <span class="sr-only">(current)</span></a></li>
-                <li><a href="states.html">States</a></li>
-                <li><a href="#" title="TODO">Screens</a></li>
-                <li><a href="#" title="TODO">FITs</a></li>
-                <li><a href="#" title="TODO">EMV</a></li>
-              </ul>
-
-              <form id="buffers-form buffers" class="navbar-form navbar-right">
-                <div class="form-group">
-                  <input type="text" class="form-control buffer-6 letter-spacing" id="current-state" value="" title="State" placeholder="State" disabled></input>
-                  <input type="text" class="form-control buffer-8 letter-spacing" id="current-screen" value="" title="Screen" placeholder="Screen" disabled></input>
-                  <input type="text" class="form-control buffer-8 letter-spacing" id="pin-buffer" value="" title="PIN Buffer" placeholder="Buffer A" disabled></input>
-                  <input type="text" class="form-control buffer-12 letter-spacing" id="buffer-b" value="" title="Buffer B" placeholder="Buffer B" disabled></input>
-                  <input type="text" class="form-control buffer-12 letter-spacing" id="buffer-c" value="" title="Buffer C" placeholder="Buffer C" disabled></input>
-                  <input type="text" class="form-control buffer-8 letter-spacing" id="opcode-buffer" value="" title="Operation Code Buffer" placeholder="Opcode" disabled></input>
-                  <input type="text" class="form-control buffer-12 letter-spacing" id="amount-buffer" value="" title="Amount Buffer" placeholder="Amount Buffer" disabled></input>
-                </div>
-              </form>
-
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-        
+      <div class="row main-area" id="atm-page">        
         <div class="col-md-1 fdk-button-block">
           <button id="FDK-I" type="submit" class="btn btn-lg btn-block fdk-button" disabled>I</button>
           <button id="FDK-H" type="submit" class="btn btn-lg btn-block fdk-button" disabled>H</button>

@@ -11,15 +11,23 @@ $(function () {
   /**
    * Navigation
    */
-  
+  // TODO: refactor me!!!
   $("#atm-button-menu").on("click", function(){
     $("#states-page").hide();
+    $("#search-state-form").hide();
+    
     $("#atm-page").show();
+    $("#atm-buffers").show()
+    $("#atm-bottom-navbar").show()
   })
 
   $("#states-button-menu").on("click", function(){
     $("#states-page").show();
+    $("#search-state-form").show();
+    
     $("#atm-page").hide();
+    $("#atm-buffers").hide()
+    $("#atm-bottom-navbar").hide()
   })
 
   /**

@@ -5,11 +5,43 @@ html, body, .container-fluid {
   font-size: 16px;
 }
 
-.hash-output {
+.mynetwork {
+  width: 940px;
+  height: 565px;
+  border: 1px solid;
+  border-radius: 5px;
+  margin-left: 15px;
+  display:inline-block;
+  margin-right:10px;
+}
+
+.states-screen {
+  width: 350px;
+  display:inline-block;
+  margin-bottom:10px;
+} 
+
+.state-details {
+  margin-top:10px;
+  height: 280px;
   color: #575B5E;
+  font-size: 10px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  border:1px solid #021a40;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.letter-spacing {
+  font-family: monospace;
   font-size: 16px;
   letter-spacing: 2px;
-  white-space: pre-wrap;
+}
+
+.form-control {
+    min-width: 130;
+    width: 130px !important;
 }
 
 .log-output {

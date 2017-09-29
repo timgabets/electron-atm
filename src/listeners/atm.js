@@ -2,11 +2,11 @@
  * ATM event listener.
  */
 
-const ATM = require('./src/controllers/atm.js');
-const CryptoService = require('./src/services/crypto.js');
-const settings = require('electron-settings');
+//const ATM = require('./src/controllers/atm.js');
+const CryptoService = nodeRequire('./src/services/crypto.js');
+//const settings = require('electron-settings');
 
-let atm = new ATM(settings, log);
+//let atm = new ATM(settings, log);
 let crypto = new CryptoService(settings, log);
 
 ipc.on('atm-process-host-message', (event, message) => {

@@ -1,12 +1,12 @@
 const StatesService = nodeRequire('./src/services/states.js');
 const ScreensService = nodeRequire('./src/services/screens.js');
 const settings = nodeRequire('electron-settings');
-//const Log = nodeRequire('./src/controllers/log.js');
-//const Trace = nodeRequire('./src/controllers/trace.js');
+const Log = nodeRequire('./src/controllers/log.js');
+const Trace = nodeRequire('./src/controllers/trace.js');
 const ATM = nodeRequire('./src/controllers/atm.js');
 
-//let log = new Log();
-// let trace = new Trace();
+let log = new Log();
+let trace = new Trace();
 let atm = new ATM(settings, log);
 
 let states = new StatesService(settings, log);

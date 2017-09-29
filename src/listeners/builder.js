@@ -2,7 +2,7 @@
  * Builder listener handles translations from network binary message to internal application message object
  */
 
-const Builder = require('./src/controllers/builder.js');
+const Builder = nodeRequire('./src/controllers/builder.js');
 
 //TODO: pass LUNO properly
 let builder = new Builder('000');

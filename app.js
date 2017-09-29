@@ -28,7 +28,7 @@ electron.app.once('ready', function () {
 
   // Load a URL in the window to the local atm.html path
   window.loadURL(url.format({
-    pathname: path.join(__dirname, 'atm.html'),
+    pathname: path.join(__dirname, 'states.html'),
     protocol: 'file:',
     slashes: true
   }))

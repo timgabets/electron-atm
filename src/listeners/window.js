@@ -44,7 +44,7 @@ $(function () {
 
     updateScreen(screens.get(state.screen_number));
     updateStateDetails(state, states.getExtensionState(state));
-    updateOpcodeBuffer(state);
+    // updateOpcodeBuffer(state);
   };
 
   $("#search-state-form").submit(function(e) {
@@ -111,7 +111,7 @@ $(function () {
 
       updateScreen(screens.get(state.screen_number));
       updateStateDetails(state, states.getExtensionState(state));
-      updateOpcodeBuffer(state);
+      // updateOpcodeBuffer(state);
     }
   });
 
@@ -244,7 +244,7 @@ $(function () {
           'y': current_position.y + move_y,
         },
         animation: {
-          duration: 700,
+          duration: 500,
           easingFunction: 'easeOutQuad'
         }
       });

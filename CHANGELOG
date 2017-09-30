@@ -1,4 +1,5 @@
 September 2017
+	0.7.8 Fixed form input sizes
 	0.7.7 Implemented proper navigation through application pages (ATM , States etc)
 	0.7.6 Buffer C max size changed to 32 bytes according to specification
 	0.7.5 Buffer B max size changed to 32 bytes according to specification
@@ -25,7 +26,7 @@ September 2017
 	0.5.4 Replying dummy message to 'Send Supply Counters' host command
 	0.5.3 Replying to 'Send Configuration ID' host command
 	0.5.2 Showing Key check values
-	0.5.1 Fixed ugly bug with incorrect ATM block encoding
+	0.5.1 Fixed ugly bug with incorrect ATM pinblock encoding
 	0.5.0 atm.getTerminalKey() and atm.getMasterKey()
 	0.4.9 Clearing Buffer B (or C) on entering state H
 	0.4.8 Processing state type H (Information Entry State)

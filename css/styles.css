@@ -58,7 +58,7 @@ html, body, .container-fluid {
 }
 
 .states-screen {
-  width: 350px;
+  height: 264px;
   display:inline-block;
   margin-bottom:10px;
 } 
@@ -79,11 +79,6 @@ html, body, .container-fluid {
   font-family: monospace;
   font-size: 16px;
   letter-spacing: 2px;
-}
-
-.form-control {
-    min-width: 130;
-    width: 130px !important;
 }
 
 .log-output {

@@ -61,6 +61,7 @@ $(function () {
     }
   
     updateState(states.get(state_number));
+    $("#search-state-input").blur();
   });
 
     /**
@@ -111,6 +112,8 @@ $(function () {
 
       updateScreen(screens.get(state.screen_number));
       updateStateDetails(state, states.getExtensionState(state));
+      // graph.focus(state.number, {});  // Center
+
       // updateOpcodeBuffer(state);
     }
   });

@@ -40,6 +40,13 @@ html, body, .container-fluid {
   pointer-events: none; /* makes it invisible to clicks */
 }
 
+.connection-button{
+  width: 80%;
+  height: 35px;
+  margin-top: 7px;
+  margin-right: 15px;
+}
+
 .mynetwork {
   width: 940px;
   height: 565px;
@@ -146,11 +153,6 @@ html, body, .container-fluid {
 
 .terminal-screen {
   width: 670px;
-}
-
-.connection-buttons{
-  margin-top: 7px;
-  margin-right: 15px;
 }
 
 .navbar-nav button {

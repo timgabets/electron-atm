@@ -26,23 +26,25 @@ $(function () {
     $("#search-state-form").show();
     
     $("#atm-page").hide();
-    $("#atm-buffers").hide()
-    $("#atm-bottom-navbar").hide()
+    $("#atm-buffers").hide();
+    $("#atm-bottom-navbar").hide();
+
+    updateState(atm.current_state);
   })
 
   /**
    * States
    */
-  function updateState(state){
-    if(state)
-    {
-      graph.focus(state.number, {});  // Center
-      graph.selectNodes([state.number,]);   // Select node
+  function updateState(state){   
+    if($.isEmptyObject(state))
+      state = states.get('000');
 
-      updateScreen(screens.get(state.screen_number));
-      updateStateDetails(state, states.getExtensionState(state));
-      updateOpcodeBuffer(state);
-    }
+    graph.focus(state.number, {});  // Center
+    graph.selectNodes([state.number,]);   // Select node
+
+    updateScreen(screens.get(state.screen_number));
+    updateStateDetails(state, states.getExtensionState(state));
+    updateOpcodeBuffer(state);
   };
 
   $("#search-state-form").submit(function(e) {

@@ -23,11 +23,11 @@ electron.app.once('ready', function () {
   })
 
   // Open the DevTools.
-  // window.webContents.openDevTools()
+  window.webContents.openDevTools()
 
   // Load a URL in the window to the local atm.html path
   window.loadURL(url.format({
-    pathname: path.join(__dirname, 'states.html'),
+    pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }))

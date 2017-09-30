@@ -23,8 +23,8 @@ var options = {
   layout: {
     hierarchical: {
         direction: 'LR',
-        levelSeparation: 150,
-        nodeSpacing: 150
+        levelSeparation: 160,
+        nodeSpacing: 160
     }
   },
   physics: false,
@@ -33,10 +33,10 @@ var options = {
 nodes = states.getNodes();
 
 nodes.forEach(node => {
-  node['size'] = 150;
+  node['size'] = 160;
   node['color'] = 'silver';
   node['shape'] = 'box';
-  node['font'] = {'size': '28', 'face': 'monospace', 'align': 'center'};
+  node['font'] = {'size': '32', 'face': 'monospace', 'align': 'center'};
   node['heightConstraint'] = { minimum: 100 };
   node['widthConstraint'] = { minimum: 100 };
 })

@@ -28,7 +28,7 @@
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div class="collapse navbar-collapse menu-buttons" id="menu-buttons">
             <ul class="nav navbar-nav">              
               <li><button type="button" id="atm-button-menu" data-section="menus" class="nav-button">ATM</button></li>
               <li><button type="button" id="states-button-menu" data-section="menus" class="nav-button">States</button></li>
@@ -45,17 +45,16 @@
             </form>
 
             <form id="atm-buffers" class="navbar-form navbar-right">
-                <div class="form-group">
-                  <input type="text" class="form-control buffer-6 letter-spacing" id="current-state" value="" title="State" placeholder="State" disabled></input>
-                  <input type="text" class="form-control buffer-8 letter-spacing" id="current-screen" value="" title="Screen" placeholder="Screen" disabled></input>
-                  <input type="text" class="form-control buffer-8 letter-spacing" id="pin-buffer" value="" title="PIN Buffer" placeholder="Buffer A" disabled></input>
-                  <input type="text" class="form-control buffer-12 letter-spacing" id="buffer-b" value="" title="Buffer B" placeholder="Buffer B" disabled></input>
-                  <input type="text" class="form-control buffer-12 letter-spacing" id="buffer-c" value="" title="Buffer C" placeholder="Buffer C" disabled></input>
-                  <input type="text" class="form-control buffer-8 letter-spacing" id="opcode-buffer" value="" title="Operation Code Buffer" placeholder="Opcode" disabled></input>
-                  <input type="text" class="form-control buffer-12 letter-spacing" id="amount-buffer" value="" title="Amount Buffer" placeholder="Amount Buffer" disabled></input>
-                </div>
-              </form>
-
+              <div class="form-group">
+                <input type="text" class="form-control buffer-6 letter-spacing" id="current-state" value="" title="State" placeholder="State" disabled></input>
+                <input type="text" class="form-control buffer-8 letter-spacing" id="current-screen" value="" title="Screen" placeholder="Screen" disabled></input>
+                <input type="text" class="form-control buffer-8 letter-spacing" id="pin-buffer" value="" title="PIN Buffer" placeholder="Buffer A" disabled></input>
+                <input type="text" class="form-control buffer-12 letter-spacing" id="buffer-b" value="" title="Buffer B" placeholder="Buffer B" disabled></input>
+                <input type="text" class="form-control buffer-12 letter-spacing" id="buffer-c" value="" title="Buffer C" placeholder="Buffer C" disabled></input>
+                <input type="text" class="form-control buffer-8 letter-spacing" id="opcode-buffer" value="" title="Operation Code Buffer" placeholder="Opcode" disabled></input>
+                <input type="text" class="form-control buffer-12 letter-spacing" id="amount-buffer" value="" title="Amount Buffer" placeholder="Amount Buffer" disabled></input>
+              </div>
+            </form>
 
             <!--
             <form id="opcode-buffer-form" class="navbar-form navbar-center">

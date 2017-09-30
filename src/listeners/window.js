@@ -15,7 +15,7 @@ $(function () {
   $("#atm-button-menu").on("click", function(){
     $("#states-page").hide();
     $("#search-state-form").hide();
-    
+
     $("#atm-page").show();
     $("#atm-buffers").show()
     $("#atm-bottom-navbar").show()
@@ -214,6 +214,43 @@ $(function () {
     });
   });
 
+  // cursor keys
+  var cursorButtons = ['left', 'right', 'up', 'down'];
+  cursorButtons.forEach( (element) => {
+    mousetrap.bind(element, function() { 
+      var move_x = 0;
+      var move_y = 0;
+
+      switch(element){
+        case 'left':
+          move_x = -700;
+          break;
+        case 'right':
+          move_x = 700;
+          break;
+        case 'up':
+          move_y = -700;
+          break;
+        case 'down':
+          move_y = 700;
+          break;
+      }
+
+
+      var current_position = graph.getViewPosition();
+      graph.moveTo({
+        position: {
+          'x': current_position.x + move_x,
+          'y': current_position.y + move_y,
+        },
+        animation: {
+          duration: 700,
+          easingFunction: 'easeOutQuad'
+        }
+      });
+    });
+  });
+
   // Activating/deactivating FDK buttons
   var activeFDKs = [];
   setInterval(function() {
@@ -320,6 +357,7 @@ $(function () {
 
   // Status button update
   var status = '';
+  
   setInterval(function() {
     function clearButtonClasses(){
       $('#atm-status-button').removeClass('btn-success');

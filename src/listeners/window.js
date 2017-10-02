@@ -416,9 +416,9 @@ $(function () {
 
     const modalPath = path.join('file://', __dirname, 'templates/new-card.html')
     let win = new BrowserWindow({ 
-      frame: false,
-      width: 309,
-      height: 300,
+      //frame: false,
+      width: 400,
+      height: 400,
     })
     win.on('close', function () { win = null })
     win.loadURL(modalPath)

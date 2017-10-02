@@ -1,45 +1,31 @@
-<style>
-body {
-  font-family: system, -apple-system, '.SFNSText-Regular', 'SF UI Text', 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif;
-  color: #fff;
-  background-color: #8aba87;
-  text-align: center;
-  font-size: 40px;
-}
-
-h2 {
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#close {
-  color: white;
-  opacity: 0.7;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  text-decoration: none;
-}
-
-</style>
-
 <link rel="stylesheet" href="../vendor/bootstrap-3.3.7.css"> 
 <link rel="stylesheet" href="../css/styles.css">
 
-<form id="add-new-card-form" class="navbar-form">
+<form id="add-new-card-form" class="navbar-form navbar-center">
   <div class="form-group">
-    <input type="text" class="form-control buffer-16" id="cardnumber" value="4338259918748135" placeholder="Card Number"></input>
+    <input type="text" class="form-control buffer-16" id="cardnumber" value="" placeholder="Card Number" required></input>
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" id="track2" value="20062211001668600001" placeholder="Track2"></input>
+    <input type="text" class="form-control buffer-6" id="exp-date" value="" placeholder="YYMM" required=""></input>
   </div>
-  <button type="submit" class="btn btn-default" id="card-inserted" >Add</button>
+
+  <div class="form-group">
+    <input type="text" class="form-control buffer-6" id="service-code" value="" placeholder="101" required></input>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control buffer-6" id="pvk-index" value="" placeholder="1" required></input>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control buffer-6" id="pvv" value="" placeholder="0000" required></input>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control buffer-6" id="cvv" value="" placeholder="000" required></input>
+  </div>
+
+  <button type="submit" class="btn btn-default" id="card-inserted">Add</button>
 </form>
 
-<a id="close" href="javascript:window.close()">Close this Window</a>
+<!-- <a id="close" href="javascript:window.close()">Close this Window</a> -->

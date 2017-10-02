@@ -4,8 +4,10 @@
 $(function () {
   const electron = nodeRequire('electron')
   const ipc = electron.ipcRenderer
+  const BrowserWindow = electron.remote.BrowserWindow
   const settings = nodeRequire('electron-settings');
   const mousetrap = nodeRequire('mousetrap');
+  const path = nodeRequire('path')
 
   /**
    * Navigation
@@ -407,4 +409,19 @@ $(function () {
       }      
     }
   }, 300);
+
+  $("#add-card-button").on('click', function(){
+    console.log(__dirname);
+    
+
+    const modalPath = path.join('file://', __dirname, 'templates/new-card.html')
+    let win = new BrowserWindow({ 
+      frame: false,
+      width: 309,
+      height: 300,
+    })
+    win.on('close', function () { win = null })
+    win.loadURL(modalPath)
+    win.show()
+  })
 })

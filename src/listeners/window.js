@@ -417,10 +417,10 @@ $(function () {
     const modalPath = path.join('file://', __dirname, 'templates/new-card.html')
     let win = new BrowserWindow({ 
       //frame: false,
-      width: 400,
-      height: 500,
+      width: 720,
+      height: 250,
       title: 'Add New Card',
-      resizable: false,
+      resizable: true,
     })
     win.on('close', function () { win = null })
     win.loadURL(modalPath)

@@ -18,11 +18,12 @@ electron.app.once('ready', function () {
     backgroundColor: "#D6D8DC",
     // Don't show the window until it ready, this prevents any white flickering
     show: false,
-    icon: path.join(__dirname, '/img/icon.png')
+    icon: path.join(__dirname, '/img/icon.png'),
+    title: 'Electron ATM'
   })
 
   // Open the DevTools.
-  window.webContents.openDevTools()
+  // window.webContents.openDevTools()
 
   // Load a URL in the window to the local atm.html path
   window.loadURL(url.format({

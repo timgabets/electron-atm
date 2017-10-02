@@ -146,7 +146,11 @@ $(function () {
   });
 
   $('#card-inserted').on('click', _ => {
-    ipc.send('ui-read-card', $('#cardnumber').val(), $('#track2').val());
+    var card = cards.get($("#cards-list option:selected").text());
+    var track2 = cards.getTrack2(card);
+
+    if(card)
+      ipc.send('ui-read-card', card.number, track2);
   });
 
   // Preventing page from refreshing when submit buttons pressed

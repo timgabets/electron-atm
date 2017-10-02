@@ -33,24 +33,6 @@ function CardValidationService(settings, log){
 
     return this.validateMonth(mm);
   };
-
-  /**
-   * [decorateCardNumber description]
-   * @param  {[type]} cardnumber [description]
-   * @return {[type]}            [description]
-   */
-  this.decorateCardNumber = function(cardnumber){
-    var decorated = '';
-
-    for(var i = 0; i < cardnumber.length; i++){
-      if(i % 4 === 0 && i !== 0)
-        decorated += ' ';
-
-      decorated += cardnumber[i];
-    }
-
-    return decorated;
-  }
 }
 
 module.exports = CardValidationService;

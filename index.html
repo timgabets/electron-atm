@@ -157,14 +157,11 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form id="card-read-form" class="navbar-form navbar-left">
               <div class="form-group">
-                <input type="text" class="form-control" id="cardnumber" value="4338259918748135" placeholder="Card Number"></input>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" id="track2" value="20062211001668600001" placeholder="Track2"></input>
-              </div>
-              <button type="submit" class="btn btn-default" id="card-inserted" >Read Card</button>
+                <select class="form-control" id="cards-list"></select>
+              </div> 
+              <button type="submit" class="btn btn-default" id="card-inserted">Read Card</button>
+              <button class="btn btn-default" id="add-card-button" >Add New</button> 
             </form>
-            <button class="btn btn-default" id="add-card-button" >Add New Card</button>
       
             <form id="keys-form buffers" class="navbar-form navbar-right keys-form ">
               <div class="form-group">

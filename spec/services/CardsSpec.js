@@ -72,7 +72,7 @@ describe("CardsService", function() {
 
   describe('getTrack2()', function(){
     it('should return empty array if there is no cards', function(){
-       var card = {
+      var card = {
         number: '4444555566667777',
         expiry_date: '1212',
         service_code: '101',
@@ -85,4 +85,14 @@ describe("CardsService", function() {
       expect(s.getTrack2(card)).toEqual('12121011123456700001');
     });
   });
+
+  describe('decorateCardNumber()', function(){
+    it('should not decorate empty cardnumber', function(){
+      expect(s.decorateCardNumber('')).toEqual('');
+    });
+
+    it('should decorate cardnumber', function(){
+      expect(s.decorateCardNumber('1111222233334444')).toEqual('1111 2222 3333 4444');
+    });
+  }); 
 });

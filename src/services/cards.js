@@ -12,7 +12,6 @@ function CardsService(settings, log){
     if(card.name === undefined || card.name === '')
       card.name = card.number;
 
-
     this.cards[card.name] = card;
     settings.set('cards', this.cards);
     return true;
@@ -56,6 +55,25 @@ function CardsService(settings, log){
       track2 += card.discretionary_data;
 
     return track2;
+  };
+
+
+  /**
+   * [decorateCardNumber description]
+   * @param  {[type]} cardnumber [description]
+   * @return {[type]}            [description]
+   */
+  this.decorateCardNumber = function(cardnumber){
+    var decorated = '';
+
+    for(var i = 0; i < cardnumber.length; i++){
+      if(i % 4 === 0 && i !== 0)
+        decorated += ' ';
+
+      decorated += cardnumber[i];
+    }
+
+    return decorated;
   }
 }
 

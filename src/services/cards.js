@@ -17,7 +17,11 @@ function CardsService(settings, log){
     return true;
   };
 
-
+  /**
+   * [get description]
+   * @param  {[type]} name [description]
+   * @return {[type]}      [description]
+   */
   this.get = function(name){
     return this.cards[name];
   };

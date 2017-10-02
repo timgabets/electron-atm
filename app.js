@@ -79,9 +79,8 @@ ipc.on('ui-read-card', (event, cardnumber, track2) => {
   window.webContents.send('atm-read-card', cardnumber, track2)
 })
 
-ipc.on('ui-add-new-card', (event, cardnumber) => {
-  console.log(cardnumber);
-  //window.webContents.send('atm-read-card', cardnumber, track2)
+ipc.on('ui-add-new-card', (event, card_data) => {
+  window.webContents.send('cards-add-new-card', card_data)
 })
 
 ipc.on('atm-change-screen-image', (event, image) => {

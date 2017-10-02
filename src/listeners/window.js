@@ -411,9 +411,6 @@ $(function () {
   }, 300);
 
   $("#add-card-button").on('click', function(){
-    console.log(__dirname);
-    
-
     const modalPath = path.join('file://', __dirname, 'templates/new-card.html')
     let win = new BrowserWindow({ 
       //frame: false,

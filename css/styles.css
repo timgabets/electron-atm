@@ -53,6 +53,13 @@ html, body, .container-fluid {
   text-align: center;
 }
 
+.scheme-logo-lg {
+  margin-top: 10px;
+  border: 0;
+  height: 40px;
+  text-align: left;
+}
+
 .thead {
   font-size: 14px;
   color: dimgrey;

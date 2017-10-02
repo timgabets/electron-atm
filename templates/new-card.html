@@ -8,7 +8,9 @@
 <div id="container" class="container-fluid">
   <form id="add-new-card-form" class="navbar-form navbar-center">
     <div class="row">
-      <div class="col-xs-2"></div>        
+      <div class="col-xs-2">
+        <img id="scheme-logo" class="scheme-logo-lg" hidden="true">
+      </div>        
       <div class="col-xs-4">
         <label for="cardnumber" class="control-label">Card Number</label>
         <input type="text" class="form-control buffer-24" id="cardnumber" value="" placeholder="Card Number" maxlength="22" required></input>
@@ -77,6 +79,30 @@
 <script>
   const electron = require('electron')
   const ipc = electron.ipcRenderer;
+  const settings = require('electron-settings');
+  const CardsService = require('../src/services/cards.js');
+
+  let cards = new CardsService(settings);
+
+  var cardnumber = '';
+  var payment_scheme = null;
+  setInterval(function() {
+    if($('#cardnumber').val()){
+      cardnumber = $('#cardnumber').val();
+
+      if(payment_scheme !== cards.getPaymentScheme(cardnumber)){
+        payment_scheme = cards.getPaymentScheme(cardnumber);
+        if(payment_scheme){
+          $("#scheme-logo").show();
+          $("#scheme-logo").attr('src', '../img/' + payment_scheme + '.png')
+        }
+      }
+    }else {
+      payment_scheme = null;
+      $("#scheme-logo").hide();
+    }
+  }, 500);
+
 
   $("#add-new-card-form").submit(function(e) {
     e.preventDefault();

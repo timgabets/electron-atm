@@ -1,4 +1,5 @@
 October 2017
+	0.8.2 Showing Payment scheme whil adding a new card
 	0.8.1 Cards service: creating new cards, select from cards etc.
 	0.8.0 Fixed bug with connecting to host on start
 	0.7.9 Opcode service

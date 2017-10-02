@@ -418,7 +418,7 @@ $(function () {
     let win = new BrowserWindow({ 
       //frame: false,
       width: 400,
-      height: 400,
+      height: 500,
     })
     win.on('close', function () { win = null })
     win.loadURL(modalPath)

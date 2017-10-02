@@ -17,9 +17,15 @@ function OperationCodeBufferService(log){
       return false;
     }
 
+    /*
     if(value.charCodeAt(0) < 65 || // 'A'
-       value.charCodeAt(0) > 73) // 'I'
+       value.charCodeAt(0) > 73 || // 'I'
+       value.charCodeAt(0) !== 32) // ' '
+    {
+      //console.log('Error setting Operation Code Buffer: incorrect value: ' + value);
       return false;
+    }
+    */
     
     this.buffer = this.buffer.substr(0, position) + value + this.buffer.substr(position + 1);
     return true;

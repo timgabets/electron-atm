@@ -62,6 +62,13 @@ describe("OperationCodeBufferService", function() {
       expect(s.buffer).toEqual('       I');
     });
 
+    it('should set buffer value to space', function(){
+      s.buffer = ' A      ';
+      expect(s.buffer).toEqual(' A      ');
+      expect(s.setBufferValueAt(1, ' ')).toBeTruthy();
+      expect(s.buffer).toEqual('        ');
+    });
+
     it('should not change buffer value in case of index overflow', function(){
       expect(s.buffer).toEqual('        ');
       expect(s.setBufferValueAt(-1, 'H')).toBeFalsy();
@@ -74,11 +81,13 @@ describe("OperationCodeBufferService", function() {
       expect(s.buffer).toEqual('        ');
     });
 
+    /*
     it('should not change buffer value to the values, other than [A-I]', function(){
       expect(s.buffer).toEqual('        ');
       expect(s.setBufferValueAt(3, 'J')).toBeFalsy();
       expect(s.buffer).toEqual('        ');
     });
+    */
   });
 
   describe("setOpCodeBuffer()", function(){

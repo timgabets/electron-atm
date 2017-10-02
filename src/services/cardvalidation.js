@@ -15,8 +15,13 @@ function CardValidationService(settings, log){
     if(date.length !== 4)
       return false;
 
+    var yy = date.substr(0,2);
+    var mm = date.substr(2,2);
 
-    return true;
+    if(isNaN(yy) || isNaN(mm))
+      return false;
+
+    return this.validateMonth(mm);
   };
 }
 

@@ -52,4 +52,20 @@ describe("CardsService", function() {
       expect(s.get('4444555566667777')).toEqual(card);
     });
   });
+
+  describe('getNames()', function(){
+    it('should return empty array if there is no cards', function(){
+      expect(s.cards).toEqual({});
+
+      expect(s.add({
+        number: '1111111111111111',
+      })).toBeTruthy();
+
+      expect(s.add({
+        number: '2222222222222222',
+      })).toBeTruthy();
+
+      expect(s.getNames()).toEqual(['1111111111111111', '2222222222222222']);
+    });
+  });
 });

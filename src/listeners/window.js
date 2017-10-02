@@ -423,4 +423,9 @@ $(function () {
     win.loadURL(modalPath)
     win.show()
   });
+
+  // Cards
+  cards.getNames().forEach( (card) => {
+    $("#cards-list").append('<option>' + card + '</option>');
+  });
 })

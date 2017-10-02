@@ -32,5 +32,15 @@ describe("CardValidationService", function() {
     it('should validate 1912', function(){
       expect(s.validateYYMM('1912')).toBeTruthy();
     });
-  });  
+  }); 
+
+  describe('decorateCardNumber()', function(){
+    it('should not decorate empty cardnumber', function(){
+      expect(s.decorateCardNumber('')).toEqual('');
+    });
+
+    it('should decorate cardnumber', function(){
+      expect(s.decorateCardNumber('1111222233334444')).toEqual('1111 2222 3333 4444');
+    });
+  }); 
 });

@@ -34,6 +34,10 @@ function CardsService(settings, log){
     return true;
   };
 
+  this.remove = function(name){
+    this.cards[name] = undefined;
+  }
+
   /**
    * [get description]
    * @param  {[type]} name [description]
@@ -51,7 +55,7 @@ function CardsService(settings, log){
     var names = [];
 
     for (var card in this.cards)
-      if (this.cards.hasOwnProperty(card))
+      if (this.cards.hasOwnProperty(card) && this.cards[card])
         names.push(card);
 
       return names;

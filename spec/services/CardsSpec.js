@@ -109,4 +109,24 @@ describe("CardsService", function() {
       expect(s.getPaymentScheme('66667777')).toEqual('CUP');
     });
   }); 
+
+  describe('remove()', function(){
+    it('should remove card', function(){
+
+      expect(s.cards).toEqual({});
+
+      expect(s.add({
+        number: '1111111111111111',
+      })).toBeTruthy();
+
+      expect(s.add({
+        number: '2222222222222222',
+      })).toBeTruthy();
+
+      expect(s.getNames()).toEqual(['1111111111111111', '2222222222222222']);
+      s.remove('1111111111111111');
+      expect(s.getNames()).toEqual(['2222222222222222']);
+      expect(s.get('1111111111111111')).toBeUndefined();
+    });
+  })
 });

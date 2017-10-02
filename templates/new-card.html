@@ -11,44 +11,47 @@
       <div class="col-xs-3"></div>        
       <div class="col-xs-6">
         <label for="cardnumber" class="control-label">Card Number</label>
-        <input type="text" class="form-control" id="cardnumber" value="" placeholder="Card Number" maxlength="19" required></input>
+        <input type="text" class="form-control" id="cardnumber" value="" placeholder="Card Number" maxlength="22" required></input>
         <span class="help-block"></span>
       </div>
       <div class="col-xs-3"></div>        
     </div>
 
-    <div class="row">
-      <div class="col-xs-1"></div>        
+    <div class="row">      
       <div class="col-xs-2">
         <label for="expiry-date" class="control-label">Expiry Date</label>
-        <input type="text" class="form-control buffer-6" id="expiry-date" value="" placeholder="YYMM" maxlength="4" required></input>
+        <input type="text" class="form-control buffer-6" id="expiry-date" value="" placeholder="YYMM" maxlength="4"></input>
         <span class="help-block"></span>
       </div>
 
       <div class="col-xs-2">
         <label for="service-code" class="control-label">Service Code</label>
-        <input type="text" class="form-control buffer-6" id="service-code" value="" placeholder="101" maxlength="3" required></input>
+        <input type="text" class="form-control buffer-6" id="service-code" value="" placeholder="101" maxlength="3"></input>
         <span class="help-block"></span>
       </div>
 
       <div class="col-xs-2">
         <label for="pvk-index" class="control-label">PVK Index</label>
-        <input type="text" class="form-control buffer-6" id="pvk-index" value="" placeholder="1" maxlength="1" required></input>
+        <input type="text" class="form-control buffer-6" id="pvk-index" value="" placeholder="1" maxlength="1"></input>
         <span class="help-block"></span>
       </div>
       
       <div class="col-xs-2">
         <label for="pvv" class="control-label">PVV</label>
-        <input type="text" class="form-control buffer-6" id="pvv" value="" placeholder="0000" maxlength="4" required></input>
+        <input type="text" class="form-control buffer-6" id="pvv" value="" placeholder="0000" maxlength="4"></input>
       </div>
       
       <div class="col-xs-2">
         <label for="cvv" class="control-label">CVV</label>
-        <input type="text" class="form-control buffer-6" id="cvv" value="" placeholder="000" maxlength="3" required></input>
+        <input type="text" class="form-control buffer-6" id="cvv" value="" placeholder="000" maxlength="3"></input>
         <span class="help-block"></span>
       </div>
 
-      <div class="col-xs-1"></div>        
+      <div class="col-xs-2">
+        <label for="discr-data" class="control-label">Discr Data</label>
+        <input type="text" class="form-control buffer-6" id="discr-data" value="" placeholder="" maxlength="6"></input>
+        <span class="help-block"></span>
+      </div>     
     </div>
     
     <div class="row">
@@ -105,12 +108,23 @@
 
 <!-- <a id="close" href="javascript:window.close()">Close this Window</a> -->
 <script>
+  const electron = require('electron')
+  const ipc = electron.ipcRenderer;
+
   $("#add-new-card-form").submit(function(e) {
     e.preventDefault();
-    console.log('add-new-card-form');
-    // window.close()
+
+    var card = {
+      number: $('#cardnumber').val(),
+      expiry_date: $('#expiry-date').val(),
+      service_code: $('#service-code').val(),
+      pvki: $('#pvk-index').val(),
+      pvv: $('#pvv').val(),
+      cvv: $('#cvv').val(),
+      discretionary_data: $('#discr-data').val(),
+    }
+
+    ipc.send('ui-add-new-card', card);
+    window.close()
   });
-
-
-  
 </script>

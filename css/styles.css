@@ -49,13 +49,19 @@ html, body, .container-fluid {
 
 .scheme-logo {
   border: 0;
-  height: 14px;
+  height: 20px;
   text-align: center;
+}
+
+.thead {
+  font-size: 14px;
+  color: dimgrey;
 }
 
 .tbody {
   margin-left: 15px;
   margin-right: 15px;
+  color: dimgrey;
   font-family: monospace;
   font-size: 14px;
 }

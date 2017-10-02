@@ -9,9 +9,44 @@ $(function () {
   const mousetrap = nodeRequire('mousetrap');
   const path = nodeRequire('path')
 
+
   /**
    * Navigation
+   * 
    */
+  /*
+  var nav_buttons = {
+    'atm-button-menu': ['#atm-page', '#atm-buffers', '#atm-bottom-navbar'],
+    'states-button-menu': ['#states-page', '#search-state-form'],
+    'cards-button-menu': ['#cards-page'],
+  };
+  for (var button in nav_buttons)
+    if (nav_buttons.hasOwnProperty(button)){
+      console.log(button);
+      $('#' + button).on("click", function(){
+        console.log(button + ' clicked');
+      })
+    }
+        
+
+  nav_buttons.forEach((button) => {
+    // button is #atm-button-menu, #states-button-menu etc
+    button.on("click", function(){
+      nav_buttons.forEach((element) => {
+        if(element === button){
+          nav_buttons[element].forEach((i) => {
+            nav_buttons[element][i].show();
+          })
+        } else {
+          nav_buttons[element].forEach((i) => {
+            nav_buttons[element][i].hide();
+          })
+        }
+      })
+    })
+  });
+
+    */
   // TODO: refactor me!!!
   $("#atm-button-menu").on("click", function(){
     $("#states-page").hide();
@@ -20,6 +55,8 @@ $(function () {
     $("#atm-page").show();
     $("#atm-buffers").show()
     $("#atm-bottom-navbar").show()
+
+    $("#cards-page").hide();
   })
 
   $("#states-button-menu").on("click", function(){
@@ -29,6 +66,8 @@ $(function () {
     $("#atm-page").hide();
     $("#atm-buffers").hide();
     $("#atm-bottom-navbar").hide();
+
+    $("#cards-page").hide();
 
     updateState(atm.current_state);
   })
@@ -43,7 +82,8 @@ $(function () {
 
     $("#cards-page").show();
   })
-
+/*
+*/
   /**
    * States
    */

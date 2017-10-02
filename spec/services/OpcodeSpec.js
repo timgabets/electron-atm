@@ -34,8 +34,8 @@ describe("OperationCodeBufferService", function() {
 
     it('should set buffer value at position 3', function(){
       expect(s.buffer).toEqual('        ');
-      expect(s.setBufferValueAt(3, 'E')).toBeTruthy();
-      expect(s.buffer).toEqual('   E    ');
+      expect(s.setBufferValueAt(3, 'B')).toBeTruthy();
+      expect(s.buffer).toEqual('   B    ');
     });
 
     it('should set buffer value at position 4', function(){
@@ -81,13 +81,11 @@ describe("OperationCodeBufferService", function() {
       expect(s.buffer).toEqual('        ');
     });
 
-    /*
-    it('should not change buffer value to the values, other than [A-I]', function(){
+    it('should not change buffer value to the values, other than A, B, C, D, F, G, H or I', function(){
       expect(s.buffer).toEqual('        ');
-      expect(s.setBufferValueAt(3, 'J')).toBeFalsy();
+      expect(s.setBufferValueAt(3, 'E')).toBeFalsy();
       expect(s.buffer).toEqual('        ');
     });
-    */
   });
 
   describe("setOpCodeBuffer()", function(){

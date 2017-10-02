@@ -47,7 +47,7 @@ describe("ATM", function() {
       expect(atm.buffer_B).toEqual('');
       expect(atm.buffer_C).toEqual('');
       expect(atm.amount_buffer).toEqual('000000000000');
-      expect(atm.opcode_buffer).toEqual('        ');
+      expect(atm.opcode.getBuffer()).toEqual('        ');
       expect(atm.FDK_buffer).toEqual('');
     });
   });
@@ -142,111 +142,10 @@ describe("ATM", function() {
     }); 
   });
 
-  describe("setOpCodeBuffer()", function(){
-    it("should clear opcode buffer completely", function() {
-      /**
-       * Specifies bytes of Operation Code buffer to be cleared to graphic ‘space’. Each bit relates to a byte
-       * in the Operation Code buffer. If a bit is zero, the corresponding entry is cleared. If a bit is one, the
-       * corresponding entry is unchanged. 
-       */
-      atm.opcode_buffer = 'XXXXXXXX'
-      var stateD ={ 
-        clear_mask: '000',  // 0000 0000
-        A_preset_mask: '000',
-        B_preset_mask: '000',
-        C_preset_mask: '000',
-        D_preset_mask: '000',
-        extension_state: '000' 
-      };
-
-      expect(atm.opcode_buffer).toEqual('XXXXXXXX');
-      expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
-      expect(atm.opcode_buffer).toEqual('        ');
-    });
-
-    it("should left opcode buffer untouched", function() {
-      atm.opcode_buffer = 'XXXXXXXX'
-      var stateD = { 
-        clear_mask: '255',  // 1111 1111
-        A_preset_mask: '000',
-        B_preset_mask: '000',
-        C_preset_mask: '000',
-        D_preset_mask: '000',
-        extension_state: '000' 
-      };
-
-      expect(atm.opcode_buffer).toEqual('XXXXXXXX');
-      expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
-      expect(atm.opcode_buffer).toEqual('XXXXXXXX');
-    });
-
-    it("should clear only the left half of opcode buffer", function() {
-      atm.opcode_buffer = 'ZZZZZZZZ'
-      var stateD = { 
-        clear_mask: '240', // 1111 0000
-        A_preset_mask: '000',
-        B_preset_mask: '000',
-        C_preset_mask: '000',
-        D_preset_mask: '000',
-        extension_state: '000' 
-      };
-
-      expect(atm.opcode_buffer).toEqual('ZZZZZZZZ');
-      expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
-      expect(atm.opcode_buffer).toEqual('    ZZZZ');
-    });
-
-
-    it("should set opcode values with proper B and C characters", function() {
-      var stateD = { 
-        clear_mask: '000', 
-        A_preset_mask: '000', // 0000 0000
-        B_preset_mask: '042', // 0010 1010
-        C_preset_mask: '006', // 0000 0110 
-        D_preset_mask: '000', // 0000 0000
-        extension_state: '000' 
-      };
-
-      expect(atm.opcode_buffer).toEqual('        ');
-      expect(atm.setOpCodeBuffer(stateD)).toBeTruthy();
-      expect(atm.opcode_buffer).toEqual(' CCB B  ');
-    });
-
-    it("should set opcode values characters from extension state", function() {
-      var stateD = { 
-        clear_mask: '000', 
-        A_preset_mask: '000', // 0000 0000
-        B_preset_mask: '000', // 0000 0000
-        C_preset_mask: '000', // 0000 0000
-        D_preset_mask: '000', // 0000 0000
-        extension_state: '000' 
-      };
-
-      var stateZ = { 
-        number: '037', 
-        type: 'Z',
-        description: 'Extension state',
-        entries: [ null, 'Z', 
-          '128', // F 1000 0000
-          '064', // G 0100 0000
-          '052', // H 0011 0100
-          '009', // I 0000 1001
-          'CDE', 
-          'FGH', 
-          'IJK', 
-          'LMN' ] 
-      };
-
-      expect(atm.opcode_buffer).toEqual('        ');
-      expect(atm.setOpCodeBuffer(stateD, stateZ)).toBeTruthy();
-      expect(atm.opcode_buffer).toEqual('I HIHHGF');
-    });
-  });
-
   describe("processTransactionRequestState()", function(){
     beforeEach(function() {
       atm.transaction_request = null;
-      atm.opcode_buffer = 'ZZZZZZZZ';
+      atm.opcode.set('ZZZZZZZZ');
       atm.track2 = '8990011234567890=20062011987612300720';
       atm.amount_buffer = '000000001337';
       atm.buffer_B = 'XZXZXZXZXZX';
@@ -266,7 +165,7 @@ describe("ATM", function() {
       };
 
       atm.processTransactionRequestState(state)
-      expect(atm.transaction_request.opcode_buffer).toEqual(atm.opcode_buffer);
+      expect(atm.transaction_request.opcode_buffer).toEqual(atm.opcode.getBuffer());
     });
 
     it("should properly fill transaction request data when send_operation_code is disabled", function(){
@@ -1036,11 +935,11 @@ describe("ATM", function() {
         buffer_location: '000',
       };
 
-      expect(atm.opcode_buffer).toEqual('        ');
+      expect(atm.opcode.getBuffer()).toEqual('        ');
 
       atm.buttons_pressed.push('C');
       atm.processFourFDKSelectionState(state);
-      expect(atm.opcode_buffer).toEqual('       C');
+      expect(atm.opcode.getBuffer()).toEqual('       C');
     })
 
     it("should put the pressed button into the opcode buffer", function(){
@@ -1058,11 +957,11 @@ describe("ATM", function() {
         buffer_location: '006',
       };
 
-      expect(atm.opcode_buffer).toEqual('        ');
+      expect(atm.opcode.getBuffer()).toEqual('        ');
 
       atm.buttons_pressed.push('D');
       atm.processFourFDKSelectionState(state);
-      expect(atm.opcode_buffer).toEqual(' D      ');
+      expect(atm.opcode.getBuffer()).toEqual(' D      ');
     })
 
     it("should leave opcode buffer unchanged if buffer location value is invalid", function(){
@@ -1080,10 +979,10 @@ describe("ATM", function() {
         buffer_location: '008',
       };
 
-      expect(atm.opcode_buffer).toEqual('        ');
+      expect(atm.opcode.getBuffer()).toEqual('        ');
       atm.buttons_pressed.push('D');
       atm.processFourFDKSelectionState(state);
-      expect(atm.opcode_buffer).toEqual('        ');
+      expect(atm.opcode.getBuffer()).toEqual('        ');
     })
   });
 

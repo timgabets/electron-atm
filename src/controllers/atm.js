@@ -3,6 +3,7 @@ const ScreensService = require('../services/screens.js');
 const FITsService = require('../services/fits.js');
 const CryptoService = require('../services/crypto.js');
 const DisplayService = require('../services/display.js');
+const OperationCodeBufferService = require('../services/opcode.js');
 const Trace = require('../controllers/trace.js');
 const Pinblock = require('../controllers/pinblock.js');
 const des3 = require('node-cardcrypto').des;
@@ -243,9 +244,6 @@ function ATM(settings, log) {
     return this.replySolicitedStatus('Ready');
   };
 
-
-
-
   /**
    * [getMessageCoordinationNumber 
    *  Message Co-Ordination Number is a character assigned by the
@@ -298,7 +296,7 @@ function ATM(settings, log) {
     this.buffer_B = '';
     this.buffer_C = '';
     this.amount_buffer = '000000000000';
-    this.opcode_buffer = '        ';
+    this.opcode.init();
     this.FDK_buffer = '';   // FDK_buffer is only needed on state type Y and W to determine the next state
 
     return true;
@@ -357,70 +355,14 @@ function ATM(settings, log) {
   }
 
   /**
-   * [setOpCodeBufferValueAt set this.opcode_buffer[position] with the value ]
-   * @param {[type]} position [description]
-   * @param {[type]} value    [description]
-   */
-  this.setOpCodeBufferValueAt = function(position, value){
-    this.opcode_buffer = this.opcode_buffer.substr(0, position) + value + this.opcode_buffer.substr(position + 1)
-  }
-
-  /**
-   * [setOpCodeBuffer process the D state logic (Pre‐Set Operation Code Buffer)]
-   * @param {[state]} state [D-type state]
-   * @param {[extension_state]} state [Z-type state]
-   */
-  this.setOpCodeBuffer = function(state, extension_state){
-    /**
-     * Specifies bytes of Operation Code buffer to be cleared to graphic ‘space’. Each bit relates to a byte
-     * in the Operation Code buffer. If a bit is zero, the corresponding entry is cleared. If a bit is one, the
-     * corresponding entry is unchanged. 
-     */
-    var mask = state.clear_mask;
-    for(var bit = 0; bit < 8; bit++){
-      if((mask & Math.pow(2, bit)).toString() === '0')
-        this.setOpCodeBufferValueAt(bit, ' ');
-    }
-
-    /**
-     * The buffer contains eight bytes. This entry sets the specified bytes to one of the values from keys[]. If a bit is one, the
-     * corresponding entry is set to keys[i]. If a bit is zero, the corresponding entry is unchanged.
-     */
-    var keys = ['A', 'B', 'C', 'D'];
-    ['A_preset_mask',
-     'B_preset_mask',
-     'C_preset_mask',
-     'D_preset_mask'
-     ].forEach( (element, i) => {
-        mask = state[element];
-        for(var bit = 0; bit < 8; bit++){
-          if((mask & Math.pow(2, bit)).toString() === Math.pow(2, bit).toString())
-            this.setOpCodeBufferValueAt(bit, keys[i]);
-        }
-     });
-
-    if(extension_state && extension_state.entries){
-      var keys = [null, null, 'F', 'G', 'H', 'I'];
-      for(var i = 2; i < 6; i++){
-        mask = extension_state.entries[i];
-        for(var bit = 0; bit < 8; bit++){
-          if((mask & Math.pow(2, bit)).toString() === Math.pow(2, bit).toString())
-            this.setOpCodeBufferValueAt(bit, keys[i]);
-        }
-       };
-    }
-
-    return true;
-  }
-
-  /**
    * [processStateD description]
    * @param  {[type]} state           [description]
    * @param  {[type]} extension_state [description]
    * @return {[type]}                 [description]
    */
   this.processStateD = function(state, extension_state){
-    this.setOpCodeBuffer(state, extension_state);
+    //this.setBufferFromState(state, extension_state);
+    this.opcode.setBufferFromState(state, extension_state);
     return state.next_state;
   }
 
@@ -442,7 +384,7 @@ function ATM(settings, log) {
     if(this.isFDKButtonActive(button)){
       var index = parseInt(state.buffer_location);
       if(index < 8)
-        this.setOpCodeBufferValueAt(7 - index, button)
+        this.opcode.setBufferValueAt(7 - index, button);
       else
         log.error('Invalid buffer location value: ' + state.buffer_location + '. Operation Code buffer is not changed');
 
@@ -510,7 +452,7 @@ function ATM(settings, log) {
       // Send Track 1 and/or Track 3 option is not supported 
 
       if(state.send_operation_code === '001')
-        request.opcode_buffer = this.opcode_buffer;
+        request.opcode_buffer = this.opcode.getBuffer();
 
       if(state.send_amount_data === '001')
         request.amount_buffer = this.amount_buffer;
@@ -691,7 +633,7 @@ function ATM(settings, log) {
 
         // If there is no extension state, state.buffer_positions defines the Operation Code buffer position 
         // to be edited by a value in the range 000 to 007.
-        this.setOpCodeBufferValueAt(parseInt(state.buffer_positions), button);
+        this.opcode.setBufferValueAt(parseInt(state.buffer_positions), button);
        
         return state.FDK_next_state;
       }
@@ -917,6 +859,7 @@ function ATM(settings, log) {
   this.crypto = new CryptoService(settings, log);
   this.display = new DisplayService(this.screens, log);
   this.pinblock = new Pinblock();
+  this.opcode = new OperationCodeBufferService();
 
   this.setStatus('Offline');
   this.initBuffers();

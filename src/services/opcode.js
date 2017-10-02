@@ -2,6 +2,34 @@ function OperationCodeBufferService(log){
   this.buffer = '        ';
 
   /**
+   * [init description]
+   * @return {[type]} [description]
+   */
+  this.init = function(){
+    this.buffer = '        ';
+  };
+
+  /**
+   * [set description]
+   * @param {[type]} buffer [description]
+   */
+  this.set = function(buffer){
+    if(buffer.length !== 8)
+      return false;
+
+    this.buffer = buffer;
+    return true;
+  };
+
+  /**
+   * [getBuffer description]
+   * @return {[type]} [description]
+   */
+  this.getBuffer = function(){
+    return this.buffer;
+  }
+
+  /**
    * [setBufferValueAt set this.opcode_buffer[position] with the value ]
    * @param {[type]} position [description]
    * @param {[type]} value    [description]
@@ -37,12 +65,12 @@ function OperationCodeBufferService(log){
     return true;
   };
 
-    /**
-   * [setOpCodeBuffer process the D state logic (Pre‐Set Operation Code Buffer)]
+  /**
+   * [setBufferFromState process the D state logic (Pre‐Set Operation Code Buffer)]
    * @param {[state]} state [D-type state]
    * @param {[extension_state]} state [Z-type state]
    */
-  this.setOpCodeBuffer = function(state, extension_state){
+  this.setBufferFromState = function(state, extension_state){
     /**
      * Specifies bytes of Operation Code buffer to be cleared to graphic ‘space’. Each bit relates to a byte
      * in the Operation Code buffer. If a bit is zero, the corresponding entry is cleared. If a bit is one, the
@@ -51,7 +79,8 @@ function OperationCodeBufferService(log){
     var mask = state.clear_mask;
     for(var bit = 0; bit < 8; bit++){
       if((mask & Math.pow(2, bit)).toString() === '0')
-        this.setBufferValueAt(bit, ' ');
+        if(!this.setBufferValueAt(bit, ' '))
+          return false;
     }
 
     /**
@@ -67,7 +96,8 @@ function OperationCodeBufferService(log){
         mask = state[element];
         for(var bit = 0; bit < 8; bit++){
           if((mask & Math.pow(2, bit)).toString() === Math.pow(2, bit).toString())
-            this.setBufferValueAt(bit, keys[i]);
+            if(!this.setBufferValueAt(bit, keys[i]))
+              return false;
         }
      });
 
@@ -77,7 +107,8 @@ function OperationCodeBufferService(log){
         mask = extension_state.entries[i];
         for(var bit = 0; bit < 8; bit++){
           if((mask & Math.pow(2, bit)).toString() === Math.pow(2, bit).toString())
-            this.setBufferValueAt(bit, keys[i]);
+            if(!this.setBufferValueAt(bit, keys[i]))
+              return false;
         }
        };
     }

@@ -88,7 +88,7 @@ describe("OperationCodeBufferService", function() {
     });
   });
 
-  describe("setOpCodeBuffer()", function(){
+  describe("setBufferFromState()", function(){
     it("should clear opcode buffer completely", function() {
       /**
        * Specifies bytes of Operation Code buffer to be cleared to graphic ‘space’. Each bit relates to a byte
@@ -107,7 +107,7 @@ describe("OperationCodeBufferService", function() {
       };
 
       expect(s.buffer).toEqual('HHHHHHHH');
-      expect(s.setOpCodeBuffer(stateD)).toBeTruthy();
+      expect(s.setBufferFromState(stateD)).toBeTruthy();
       expect(s.buffer).toEqual('        ');
     });
 
@@ -123,7 +123,7 @@ describe("OperationCodeBufferService", function() {
       };
 
       expect(s.buffer).toEqual('HHHHHHHH');
-      expect(s.setOpCodeBuffer(stateD)).toBeTruthy();
+      expect(s.setBufferFromState(stateD)).toBeTruthy();
       expect(s.buffer).toEqual('HHHHHHHH');
     });
 
@@ -139,7 +139,7 @@ describe("OperationCodeBufferService", function() {
       };
 
       expect(s.buffer).toEqual('BBBBBBBB');
-      expect(s.setOpCodeBuffer(stateD)).toBeTruthy();
+      expect(s.setBufferFromState(stateD)).toBeTruthy();
       expect(s.buffer).toEqual('    BBBB');
     });
 
@@ -155,7 +155,7 @@ describe("OperationCodeBufferService", function() {
       };
 
       expect(s.buffer).toEqual('        ');
-      expect(s.setOpCodeBuffer(stateD)).toBeTruthy();
+      expect(s.setBufferFromState(stateD)).toBeTruthy();
       expect(s.buffer).toEqual(' CCB B  ');
     });
 
@@ -185,7 +185,7 @@ describe("OperationCodeBufferService", function() {
       };
 
       expect(s.buffer).toEqual('        ');
-      expect(s.setOpCodeBuffer(stateD, stateZ)).toBeTruthy();
+      expect(s.setBufferFromState(stateD, stateZ)).toBeTruthy();
       expect(s.buffer).toEqual('I HIHHGF');
     });
   });

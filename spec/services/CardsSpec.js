@@ -95,4 +95,18 @@ describe("CardsService", function() {
       expect(s.decorateCardNumber('1111222233334444')).toEqual('1111 2222 3333 4444');
     });
   }); 
+
+  describe('getPaymentScheme()', function(){
+    it('should get VISA payment scheme', function(){
+      expect(s.getPaymentScheme('4444555566667777')).toEqual('VISA');
+    });
+
+    it('should get Mastercard payment scheme', function(){
+      expect(s.getPaymentScheme('555566667777')).toEqual('Mastercard');
+    });
+
+    it('should get Mastercard payment scheme', function(){
+      expect(s.getPaymentScheme('66667777')).toEqual('CUP');
+    });
+  }); 
 });

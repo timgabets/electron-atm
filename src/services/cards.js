@@ -5,6 +5,23 @@ function CardsService(settings, log){
     this.cards = {};
   
   /**
+   * [getPaymentScheme get payment scheme identifire, base on card number. 
+   *                Of course, the life is much more complicated, and there are BIN tables
+   *                for that purposes, but here we are just have a naive implementation, 
+   *                based on the checking the first digit of the card number]
+   * @param  {[type]} cardnumber [description]
+   * @return {[type]}            [description]
+   */
+  this.getPaymentScheme = function(cardnumber){
+    if(cardnumber[0] === '4')
+      return 'VISA';
+    else if(cardnumber[0] === '5')
+      return 'Mastercard';
+    else if(cardnumber[0] === '6')
+      return 'CUP';
+  };
+
+  /**
    * [add description]
    * @param {[type]} card [description]
    */

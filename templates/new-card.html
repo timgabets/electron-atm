@@ -1,45 +1,58 @@
 <link rel="stylesheet" href="../vendor/bootstrap-3.3.7.css"> 
 <link rel="stylesheet" href="../css/styles.css">
 
+<script>window.$ = window.jQuery = require('../vendor/jquery-3.1.1.js');</script>
+
+
 <div id="container" class="container-fluid">
   <form id="add-new-card-form" class="navbar-form navbar-center">
     <div class="form-group">
       <label for="cardnumber" class="control-label">Card Number</label>
-      <input type="text" class="form-control buffer-24" id="cardnumber" value="" placeholder="Card Number" required></input>
+      <input type="text" class="form-control buffer-24" id="cardnumber" value="" placeholder="Card Number" maxlength="19" required></input>
       <span class="help-block"></span>
     </div>
 
     <div class="form-group">
       <label for="expiry-date" class="control-label">Expiry Date</label>
-      <input type="text" class="form-control buffer-6" id="expiry-date" value="" placeholder="YYMM" required></input>
+      <input type="text" class="form-control buffer-6" id="expiry-date" value="" placeholder="YYMM" maxlength="4" required></input>
       <span class="help-block"></span>
     </div>
     <div class="form-group">
       <label for="service-code" class="control-label">Service Code</label>
-      <input type="text" class="form-control buffer-6" id="service-code" value="" placeholder="101" required></input>
+      <input type="text" class="form-control buffer-6" id="service-code" value="" placeholder="101" maxlength="3" required></input>
       <span class="help-block"></span>
     </div>
 
     <div class="form-group">
       <label for="pvk-index" class="control-label">PVK Index</label>
-      <input type="text" class="form-control buffer-6" id="pvk-index" value="" placeholder="1" required></input>
+      <input type="text" class="form-control buffer-6" id="pvk-index" value="" placeholder="1" maxlength="1" required></input>
       <span class="help-block"></span>
     </div>
 
     <div class="form-group">
       <label for="pvv" class="control-label">PVV</label>
-      <input type="text" class="form-control buffer-6" id="pvv" value="" placeholder="0000" required></input>
+      <input type="text" class="form-control buffer-6" id="pvv" value="" placeholder="0000" maxlength="4" required></input>
       <span class="help-block"></span>
     </div>
 
     <div class="form-group">
       <label for="cvv" class="control-label">CVV</label>
-      <input type="text" class="form-control buffer-6" id="cvv" value="" placeholder="000" required></input>
+      <input type="text" class="form-control buffer-6" id="cvv" value="" placeholder="000" maxlength="3" required></input>
       <span class="help-block"></span>
     </div>
 
-    <button type="submit" class="btn btn-default btn-block" id="card-inserted">Add</button>
+    <button type="submit" class="btn btn-default btn-block" id="card-added">Add</button>
   </form>
 </div>
 
 <!-- <a id="close" href="javascript:window.close()">Close this Window</a> -->
+<script>
+  $("#add-new-card-form").submit(function(e) {
+    e.preventDefault();
+    console.log('add-new-card-form');
+    // window.close()
+  });
+
+
+  
+</script>

@@ -419,9 +419,11 @@ $(function () {
       //frame: false,
       width: 400,
       height: 500,
+      title: 'Add New Card',
+      resizable: false,
     })
     win.on('close', function () { win = null })
     win.loadURL(modalPath)
     win.show()
-  })
+  });
 })

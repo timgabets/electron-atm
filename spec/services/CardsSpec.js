@@ -31,7 +31,8 @@ describe("CardsService", function() {
         service_code: '101',
         pvki: '1',
         pvv: '1234',
-        cvv: '567'
+        cvv: '567',
+        discretionary_data: '00001'
       }
       expect(s.add(card)).toBeTruthy();
       expect(settings.set).toHaveBeenCalled();
@@ -66,6 +67,22 @@ describe("CardsService", function() {
       })).toBeTruthy();
 
       expect(s.getNames()).toEqual(['1111111111111111', '2222222222222222']);
+    });
+  });
+
+  describe('getTrack2()', function(){
+    it('should return empty array if there is no cards', function(){
+       var card = {
+        number: '4444555566667777',
+        expiry_date: '1212',
+        service_code: '101',
+        pvki: '1',
+        pvv: '1234',
+        cvv: '567',
+        discretionary_data: '00001'
+      }
+
+      expect(s.getTrack2(card)).toEqual('12121011123456700001');
     });
   });
 });

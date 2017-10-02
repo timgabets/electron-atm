@@ -12,6 +12,7 @@ function CardsService(settings, log){
     if(card.name === undefined || card.name === '')
       card.name = card.number;
 
+
     this.cards[card.name] = card;
     settings.set('cards', this.cards);
     return true;
@@ -39,6 +40,23 @@ function CardsService(settings, log){
 
       return names;
   };
+
+  /**
+   * [getTrack2 description]
+   * @param  {[type]} card [description]
+   * @return {[type]}      [description]
+   */
+  this.getTrack2 = function(card){
+    if(!card)
+      return;
+
+    var track2 = card.expiry_date + card.service_code + card.pvki + card.pvv + card.cvv;
+
+    if(card.discretionary_data)
+      track2 += card.discretionary_data;
+
+    return track2;
+  }
 }
 
 module.exports = CardsService;

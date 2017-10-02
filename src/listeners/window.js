@@ -33,6 +33,17 @@ $(function () {
     updateState(atm.current_state);
   })
 
+  $("#cards-button-menu").on("click", function(){
+    $("#states-page").hide();
+    $("#search-state-form").hide();
+    
+    $("#atm-page").hide();
+    $("#atm-buffers").hide();
+    $("#atm-bottom-navbar").hide();
+
+    $("#cards-page").show();
+  })
+
   /**
    * States
    */

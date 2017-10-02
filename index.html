@@ -35,6 +35,7 @@
               <li><button type="button" id="screens-button-menu" data-section="menus" class="nav-button">Screens</button></li>
               <li><button type="button" id="fits-button-menu" data-section="menus" class="nav-button">FITs</button></li>
               <li><button type="button" id="emv-button-menu" data-section="menus" class="nav-button">EMV</button></li>
+              <li><button type="button" id="cards-button-menu" data-section="menus" class="nav-button">Cards</button></li>
             </ul>
 
             <form id="search-state-form" class="navbar-form navbar-left" hidden="true">
@@ -68,6 +69,8 @@
         </div><!-- /.container-fluid -->
       </nav>
 
+
+      <!-- STATES -->
       <div class="row" id="states-page" hidden="true">
         <div id="mynetwork" class="col-md-8 mynetwork"></div>
 
@@ -77,6 +80,53 @@
         </div>
       </div>
 
+      <!-- CARDS -->
+      <div id="cards-page" hidden="true">    
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Scheme</th>
+              <th>Cardnumber</th>
+              <th>FIT Entry</th>
+              <th>Name</th>
+              <th>Exp. Date</th>
+              <th>Service Code</th>
+              <th>PVKi</th>
+              <th>PVV</th>
+              <th>CVV</th>
+              <th>Discr.Data</th>
+            </tr>
+          </thead>
+          <tbody class="tbody">
+            <tr>
+              <td><img class="scheme-logo" src="./img/visa.png"></td>
+              <td>4444 5555 6666 7777 <span class="badge" title="PIN">1234</span></td>
+              <td>01</td>
+              <td>VISA Test #25</td>
+              <td>2012</td>
+              <td>101</td>
+              <td>1</td>
+              <td>0016</td>
+              <td>586</td>
+              <td>00001</td>
+            </tr>
+            <tr>
+              <td><img id="states-screen" class="scheme-logo" src="./img/mastercard.png"></td>
+              <td>5555 6666 7777 8888</td>
+              <td>02</td>
+              <td>MCHIP Test #03</td>
+              <td>1903</td>
+              <td>211</td>
+              <td>1</td>
+              <td>0016</td>
+              <td>586</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ATM -->
       <div class="row main-area" id="atm-page">        
         <div class="col-md-1 fdk-button-block">
           <button id="FDK-I" type="submit" class="btn btn-lg btn-block fdk-button" disabled>I</button>

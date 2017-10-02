@@ -1,6 +1,5 @@
 // Run this function after the page has loaded
 // 
-console.log('in window.js');
 
 $(function () {
   const electron = nodeRequire('electron')
@@ -96,8 +95,8 @@ $(function () {
    */
   function updateOpcodeBuffer(state, extension_state){
     if(state && state.type === 'D'){
-      atm.setOpCodeBuffer(state, extension_state);
-      $('#opcode-buffer').val(atm.opcode_buffer.split(' ').join('_'));
+      atm.opcode.setBufferFromState(state, extension_state);
+      $('#opcode-buffer').val(atm.opcode.getBuffer().split(' ').join('_'));
       $('#opcode-buffer').removeAttr('disabled');
     }else{
       $('#opcode-buffer').attr('disabled', true);
@@ -323,8 +322,8 @@ $(function () {
   // Opcode buffer update
   var opcode_buffer = '';
   setInterval(function() {
-    if(atm.opcode_buffer != opcode_buffer){
-      opcode_buffer = atm.opcode_buffer;
+    if(atm.opcode.getBuffer() != opcode_buffer){
+      opcode_buffer = atm.opcode.getBuffer();
       $("#opcode-buffer").val(opcode_buffer.split(' ').join('_'));
     }
   }, 200);

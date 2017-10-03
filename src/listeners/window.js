@@ -491,9 +491,9 @@ $(function () {
     table_record += '</td>';  
 
     table_record += '<td>' + cards.decorateCardNumber(card.number);
-
     if(card.PIN)
-      table_record += '<span class="badge" title="PIN">' + card.PIN +'</span></td>'
+      table_record += '<span class="badge" title="PIN">' + card.PIN +'</span>'
+    table_record += '</td>'
 
     table_record += '<td>TODO</td>'
     table_record += '<td>' + card.name + '</td>'

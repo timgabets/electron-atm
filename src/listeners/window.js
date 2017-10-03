@@ -509,6 +509,6 @@ $(function () {
     table_record += '</td>'
 
     table_record += '</tr>';
-    $("#thead").append(table_record);
+    $("#tbody").append(table_record);
   });
 })

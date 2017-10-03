@@ -98,8 +98,9 @@ function CardsService(settings, log){
     var decorated = '';
 
     for(var i = 0; i < cardnumber.length; i++){
-      if(i % 4 === 0 && i !== 0)
+      if(i % 4 === 0 && i !== 0 && cardnumber[i] !== ' '){
         decorated += ' ';
+      }
 
       decorated += cardnumber[i];
     }

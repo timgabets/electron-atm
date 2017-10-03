@@ -84,6 +84,7 @@
 
   let cards = new CardsService(settings);
 
+  // Checking Payment scheme
   var cardnumber = '';
   var payment_scheme = null;
   setInterval(function() {
@@ -103,6 +104,16 @@
     }
   }, 500);
 
+/*
+  // Decorating card number
+  var decorated_cardnumber = '';
+  setInterval(function() {
+    if(decorated_cardnumber != cardnumber){
+      decorated_cardnumber = cards.decorateCardNumber(cardnumber);
+      $("#cardnumber").val(decorated_cardnumber);
+    }
+  }, 200);
+*/
 
   $("#add-new-card-form").submit(function(e) {
     e.preventDefault();
@@ -110,7 +121,7 @@
     var card = {
       number: $('#cardnumber').val(),
       name: $('#name').val(),
-      PIN: $('PIN').val(),
+      PIN: $('#PIN').val(),
       expiry_date: $('#expiry-date').val(),
       service_code: $('#service-code').val(),
       pvki: $('#pvk-index').val(),

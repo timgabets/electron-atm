@@ -109,6 +109,10 @@ describe("CardsService", function() {
     it('should decorate cardnumber', function(){
       expect(s.decorateCardNumber('1111222233334444')).toEqual('1111 2222 3333 4444');
     });
+
+    it('should not decorate already decorated card number',  function(){
+      //expect(s.decorateCardNumber('1111 2222 3333 4444')).toEqual('1111 2222 3333 4444');
+    });
   }); 
 
 

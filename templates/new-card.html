@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="../css/styles.css">
 
 <script>window.$ = window.jQuery = require('../node_modules/jquery/dist/jquery.js');</script>
+<script src="../node_modules/jquery-validation/dist/jquery.validate.js"></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
 <div id="container" class="container-fluid">
@@ -12,7 +13,7 @@
       </div>        
       <div class="col-xs-4">
         <label for="cardnumber" class="control-label">Card Number</label>
-        <input type="text" class="form-control buffer-24 valid" id="cardnumber" value="" placeholder="Card Number" required minlength="16" maxlength="22" ></input>
+        <input type="text" class="form-control buffer-24 valid" id="cardnumber" name="cardnumber" value="" placeholder="Card Number" required minlength="16" maxlength="22" ></input>
         <span class="error-block" id="cardnumber-error-block"></span>
       </div>
       <div class="col-xs-4">

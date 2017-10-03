@@ -84,25 +84,15 @@
 
   let cards = new CardsService(settings);
 
-  // Checking Payment scheme
-  var cardnumber = '';
-  var payment_scheme = null;
-  setInterval(function() {
-    if($('#cardnumber').val()){
-      cardnumber = $('#cardnumber').val();
-
-      if(payment_scheme !== cards.getPaymentScheme(cardnumber)){
-        payment_scheme = cards.getPaymentScheme(cardnumber);
-        if(payment_scheme){
-          $("#scheme-logo").show();
-          $("#scheme-logo").attr('src', '../img/' + payment_scheme + '.png')
-        }
-      }
-    }else {
-      payment_scheme = null;
+  var payment_scheme;
+  $('#cardnumber').blur(function(){
+    payment_scheme = cards.getPaymentScheme($('#cardnumber').val());
+    if(payment_scheme){
+      $("#scheme-logo").show();
+      $("#scheme-logo").attr('src', '../img/' + payment_scheme + '.png')
+    } else 
       $("#scheme-logo").hide();
-    }
-  }, 500);
+  })
 
 /*
   // Validating cardnumber

@@ -408,6 +408,19 @@ img {
   left: -1px;
 }
 
+.error-block {
+  color: red;
+  font-size: 12px;
+}
+
+input:invalid {
+  border: 1px solid red;
+}
+
+input:focus:invalid {
+  outline: none;
+}
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 

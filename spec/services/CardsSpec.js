@@ -23,17 +23,93 @@ describe("CardsService", function() {
   });
 
   describe('getPaymentScheme()', function(){
-    it('should get VISA payment scheme', function(){
-      expect(s.getPaymentScheme('4444555566667777')).toEqual('VISA');
+    it('should get AMEX 34 payment scheme', function(){
+      expect(s.getPaymentScheme('34')).toEqual('AMEX');
+    });
+
+    it('should not resolve 3527', function(){
+      expect(s.getPaymentScheme('3527')).toBeUndefined();
+    });        
+
+    it('should resolve 3528 as JSB Payment scheme', function(){
+      expect(s.getPaymentScheme('3528')).toEqual('JCB');
+    });    
+
+    it('should resolve 3555 as JSB Payment scheme', function(){
+      expect(s.getPaymentScheme('3555')).toEqual('JCB');
+    });  
+
+    it('should resolve 3589 as JSB Payment scheme', function(){
+      expect(s.getPaymentScheme('3589')).toEqual('JCB');
+    });  
+
+    it('should resolve 3589 as JSB Payment scheme', function(){
+      expect(s.getPaymentScheme('3590')).toBeUndefined();
+    });  
+
+    it('should get AMEX 37 payment scheme', function(){
+      expect(s.getPaymentScheme('37')).toEqual('AMEX');
+    });
+
+    it('should resolve 50 as Maestro', function(){
+      expect(s.getPaymentScheme('50')).toEqual('Maestro');
+    });
+
+    it('should resolve 51 as Mastercard', function(){
+      expect(s.getPaymentScheme('51')).toEqual('Mastercard');
+    });
+
+    it('should resolve 52 as Mastercard', function(){
+      expect(s.getPaymentScheme('52')).toEqual('Mastercard');
+    });
+
+    it('should resolve 53 as Mastercard', function(){
+      expect(s.getPaymentScheme('53')).toEqual('Mastercard');
+    });
+
+    it('should resolve 54 as Mastercard', function(){
+      expect(s.getPaymentScheme('54')).toEqual('Mastercard');
+    });
+
+    it('should resolve 55 as Mastercard', function(){
+      expect(s.getPaymentScheme('55')).toEqual('Mastercard');
+    });
+
+    it('should resolve 56 as Maestro', function(){
+      expect(s.getPaymentScheme('56')).toEqual('Maestro');
+    });
+
+    it('should resolve 57 as Maestro', function(){
+      expect(s.getPaymentScheme('57')).toEqual('Maestro');
+    });
+
+    it('should resolve 58 as Maestro', function(){
+      expect(s.getPaymentScheme('58')).toEqual('Maestro');
     });
 
     it('should get Mastercard payment scheme', function(){
-      expect(s.getPaymentScheme('555566667777')).toEqual('Mastercard');
+      expect(s.getPaymentScheme('62')).toEqual('CUP');
     });
 
-    it('should get Mastercard payment scheme', function(){
-      expect(s.getPaymentScheme('66667777')).toEqual('CUP');
+    it('should get Discover 64 payment scheme', function(){
+      expect(s.getPaymentScheme('64')).toEqual('Discover');
     });
+
+    it('should get Discover 65 payment scheme', function(){
+      expect(s.getPaymentScheme('65')).toEqual('Discover');
+    });
+
+    it('should resolve 4 as VISA', function(){
+      expect(s.getPaymentScheme('4')).toEqual('VISA');
+    });    
+
+    it('should resolve 40 as VISA', function(){
+      expect(s.getPaymentScheme('40')).toEqual('VISA');
+    });    
+
+    it('should resolve 49 as VISA', function(){
+      expect(s.getPaymentScheme('49')).toEqual('VISA');
+    });    
   });
 
   describe('add()', function(){

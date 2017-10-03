@@ -29,11 +29,21 @@ function CardsService(settings, log){
     if(card.name === undefined || card.name === '')
       card.name = card.number;
 
+    var scheme = this.getPaymentScheme(card.number);
+    if(scheme)
+      card.scheme = scheme;
+
     this.cards[card.name] = card;
     settings.set('cards', this.cards);
+
     return true;
   };
 
+  /**
+   * [remove description]
+   * @param  {[type]} name [description]
+   * @return {[type]}      [description]
+   */
   this.remove = function(name){
     this.cards[name] = undefined;
   }

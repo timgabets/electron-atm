@@ -22,6 +22,20 @@ describe("CardsService", function() {
     s = new CardsService(settings, log);
   });
 
+  describe('getPaymentScheme()', function(){
+    it('should get VISA payment scheme', function(){
+      expect(s.getPaymentScheme('4444555566667777')).toEqual('VISA');
+    });
+
+    it('should get Mastercard payment scheme', function(){
+      expect(s.getPaymentScheme('555566667777')).toEqual('Mastercard');
+    });
+
+    it('should get Mastercard payment scheme', function(){
+      expect(s.getPaymentScheme('66667777')).toEqual('CUP');
+    });
+  });
+
   describe('add()', function(){
     it('should add a card', function(){
       var card = {
@@ -37,6 +51,7 @@ describe("CardsService", function() {
       expect(s.add(card)).toBeTruthy();
       expect(settings.set).toHaveBeenCalled();
       expect(s.get('Test Card')).toEqual(card);
+      expect(s.get('Test Card').scheme).toEqual('VISA');
     });
 
     it('should add a card without name', function(){
@@ -96,19 +111,6 @@ describe("CardsService", function() {
     });
   }); 
 
-  describe('getPaymentScheme()', function(){
-    it('should get VISA payment scheme', function(){
-      expect(s.getPaymentScheme('4444555566667777')).toEqual('VISA');
-    });
-
-    it('should get Mastercard payment scheme', function(){
-      expect(s.getPaymentScheme('555566667777')).toEqual('Mastercard');
-    });
-
-    it('should get Mastercard payment scheme', function(){
-      expect(s.getPaymentScheme('66667777')).toEqual('CUP');
-    });
-  }); 
 
   describe('remove()', function(){
     it('should remove card', function(){

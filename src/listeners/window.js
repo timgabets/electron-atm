@@ -483,25 +483,32 @@ $(function () {
   cards.getNames().forEach( (name) => {
     $("#cards-list").append('<option>' + name + '</option>');
     var card = cards.get(name);
-    var table_record = '<tr>\
-      <td><img class="scheme-logo" src="./img/VISA.png"></td>\
-      <td>' + cards.decorateCardNumber(card.number);
+    var table_record = '<tr>'
+    table_record += '<td>'
 
-      if(card.PIN)
-        table_record += '<span class="badge" title="PIN">' + card.PIN +'</span></td>'
+    if(card.scheme)
+      table_record += '<img class="scheme-logo" src="./img/' + card.scheme + '.png">';
+    table_record += '</td>';  
 
-      table_record += '<td>TODO</td>'
-      table_record += '<td>' + card.name + '</td>'
-      table_record += '<td>' + card.expiry_date + '</td>'
-      table_record += '<td>' + card.service_code + '</td>'
-      table_record += '<td>' + card.pvki + '</td>'
-      table_record += '<td>' + card.pvv + '</td>'
-      table_record += '<td>' + card.cvv + '</td>'
+    table_record += '<td>' + cards.decorateCardNumber(card.number);
 
-      if(card.discretionary_data)
-        table_record += '<td>' + card.discretionary_data + '</td>'
-      
-      table_record += '</tr>';
+    if(card.PIN)
+      table_record += '<span class="badge" title="PIN">' + card.PIN +'</span></td>'
+
+    table_record += '<td>TODO</td>'
+    table_record += '<td>' + card.name + '</td>'
+    table_record += '<td>' + card.expiry_date + '</td>'
+    table_record += '<td>' + card.service_code + '</td>'
+    table_record += '<td>' + card.pvki + '</td>'
+    table_record += '<td>' + card.pvv + '</td>'
+    table_record += '<td>' + card.cvv + '</td>'
+
+    table_record += '<td>'
+    if(card.discretionary_data)
+      table_record += card.discretionary_data
+    table_record += '</td>'
+
+    table_record += '</tr>';
     $("#thead").append(table_record);
   });
 })

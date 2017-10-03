@@ -87,7 +87,7 @@
       payment_scheme = cards.getPaymentScheme(cardnumber);
       if(payment_scheme){
         $("#scheme-logo").show();
-        $("#scheme-logo").attr('src', '../img/' + payment_scheme + '.png')
+        $("#scheme-logo").attr('src', '../img/schemes/' + payment_scheme + '.png')
       } else 
         $("#scheme-logo").hide();
     }

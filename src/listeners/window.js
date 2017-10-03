@@ -487,7 +487,7 @@ $(function () {
     table_record += '<td>'
 
     if(card.scheme)
-      table_record += '<img class="scheme-logo" src="./img/' + card.scheme + '.png">';
+      table_record += '<img class="scheme-logo" src="./img/schemes/' + card.scheme + '.png">';
     table_record += '</td>';  
 
     table_record += '<td>' + cards.decorateCardNumber(card.number);

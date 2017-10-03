@@ -408,9 +408,14 @@ img {
   left: -1px;
 }
 
-.error-block {
+.error {
   color: red;
   font-size: 12px;
+  font-weight: 300;
+}
+
+.new-card-form-row {
+  margin-bottom: 20px;
 }
 
 input:invalid {

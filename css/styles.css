@@ -56,7 +56,7 @@ html, body, .container-fluid {
 .scheme-logo-lg {
   margin-top: 10px;
   border: 0;
-  height: 40px;
+  width: 70px;
   text-align: left;
 }
 
@@ -416,6 +416,11 @@ img {
 
 .new-card-form-row {
   margin-bottom: 20px;
+}
+
+.control-label {
+  font-size: 13px;
+  font-weight: 500;
 }
 
 input:invalid {

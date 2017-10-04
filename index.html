@@ -13,6 +13,7 @@
     delete window.module;
   </script>
   <script src="node_modules/jquery/dist/jquery.js"></script>
+  <script src="node_modules/jquery-validation/dist/jquery.validate.js"></script>
 
  </head>
   <body>
@@ -85,6 +86,68 @@
         <button class="btn btn-success" id="add-card-button" >New Card</button>
         <button class="btn btn-danger" id="delete-card-button" >Delete Card</button>
         <div class="list-group" id="cards-page-cards-list">
+          <a href="#" class="list-group-item">
+            <form id="add-new-card-form" class="navbar-form navbar-center">
+              <div class="row">
+                <div class="col-xs-1">
+                  <img id="scheme-logo" class="scheme-logo-lg" hidden="true">
+                </div>        
+
+                <div class="col-xs-2">
+                  <label for="cardnumber" class="control-label">Card Number</label>
+                  <input type="text" class="form-control buffer-24" id="cardnumber" name="cardnumber" value="" placeholder="0000 0000 0000 0000" required minlength="12" maxlength="19" ></input>
+                  <label id="cardnumber-error" class="error" for="cardnumber"></label>
+                </div>
+
+                <div class="col-xs-1">
+                  <label for="PIN" class="control-label">FIT</label>
+                  <input type="text" class="form-control buffer-6" id="FIT" value="" placeholder="FIT" maxlength="6" disabled></input>
+                  <span class="error-block"></span>
+                </div>
+
+                <div class="col-xs-1">
+                  <label for="PIN" class="control-label">PIN</label>
+                  <input type="text" class="form-control buffer-6" id="PIN" value="" placeholder="0000" maxlength="6"></input>
+                  <span class="error-block"></span>
+                </div>
+
+                <div class="col-xs-1">
+                  <label for="expiry-date" class="control-label">Expiry Date</label>
+                  <input type="text" class="form-control buffer-6" id="expiry-date" name="expiry-date" value="" placeholder="YYMM" minlength="4" maxlength="4" required></input>
+                </div>
+
+                <div class="col-xs-1">
+                  <label for="service-code" class="control-label">Service Code</label>
+                  <input type="text" class="form-control buffer-6" id="service-code" name="service-code" value="" placeholder="101" minlength="3" maxlength="3" required></input>
+                </div>
+
+                <div class="col-xs-1">
+                  <label for="pvk-index" class="control-label">PVK Index</label>
+                  <input type="text" class="form-control buffer-6" id="pvk-index" name="pvk-index" value="" placeholder="1" minlength="1" maxlength="1" required></input>
+                </div>
+                
+                <div class="col-xs-1">
+                  <label for="pvv" class="control-label">PVV</label>
+                  <input type="text" class="form-control buffer-6" id="pvv" name="pvv" value="" placeholder="0000" minlength="4" maxlength="4" required></input>
+                </div>
+                
+                <div class="col-xs-1">
+                  <label for="cvv" class="control-label">CVV</label>
+                  <input type="text" class="form-control buffer-6" id="cvv" name="cvv" value="" placeholder="000" minlength="3" maxlength="3" required></input>
+                </div>
+
+                <div class="col-xs-1">
+                  <label for="discr-data" class="control-label">Discr Data</label>
+                  <input type="text" class="form-control buffer-6" id="discr-data" value="" placeholder="" maxlength="6"></input>
+                </div>
+
+                <div class="col-xs-1">
+                  <label for="save-card-button" class="control-label"></label>
+                  <button class="btn btn-success" id="save-card-button" >Save</button>
+                </div> 
+              </div>
+            </form>
+          </a>
         </div>
       </div>
 

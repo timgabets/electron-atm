@@ -3,8 +3,10 @@
  */
 
 const CardsService = nodeRequire('./src/services/cards.js');
+const FITsService = nodeRequire('./src/services/fits.js');
 
 let cards = new CardsService(settings, log);
+let fits = new FITsService(settings, log);
 
 ipc.on('cards-add-new-card', (event, card) => {
   cards.add(card);
@@ -25,7 +27,7 @@ $(function () {
   function buildCardsList(){
     cards.getNames().forEach( (name) => {
       var card = cards.get(name);
-      
+
       var record = '<a href="#" class="list-group-item">\
         <div class="row">\
           <div class="col-xs-1">';
@@ -35,7 +37,7 @@ $(function () {
         record += '</div>';
 
         record += '<div class="col-xs-2" title="Card number">' + card.name + '</div>';
-        record += '<div class="col-xs-1" title="FIT">XX</div>'
+        record += '<div class="col-xs-1" title="Financial Institution ID">' + fits.getInstitutionByCardnumber(card.number) + '</div>'
         
         record += '<div class="col-xs-1">';
         if(card.PIN)
@@ -67,12 +69,16 @@ $(function () {
   $('#cardnumber').blur(function(){
     var cardnumber = $('#cardnumber').val();
     if(cardnumber && cardnumber.length >= 16){
+      // Getting Payment scheme
       payment_scheme = cards.getPaymentScheme(cardnumber);
       if(payment_scheme){
         $("#scheme-logo").show();
         $("#scheme-logo").attr('src', 'img/schemes/' + payment_scheme + '.png')
       } else 
         $("#scheme-logo").hide();
+
+      // Getting FIT id
+      $("#FIT").val(fits.getInstitutionByCardnumber(cardnumber));
     }
   });
 

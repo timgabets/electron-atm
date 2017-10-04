@@ -95,6 +95,8 @@
               <th>PVV</th>
               <th>CVV</th>
               <th>Discr.Data</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody class="tbody" id="tbody">
@@ -109,30 +111,11 @@
               <td>0016</td>
               <td>586</td>
               <td>00001</td>
-            </tr>
-            <tr>
-              <td><img class="scheme-logo" src="./img/schemes/Maestro.png"></td>
-              <td>5555 6666 7777 8888</td>
-              <td>02</td>
-              <td>MCHIP Test #03</td>
-              <td>1903</td>
-              <td>211</td>
-              <td>1</td>
-              <td>0016</td>
-              <td>586</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><img class="scheme-logo" src="./img/schemes/CUP.png"></td>
-              <td>6666 7777 8888 9999</td>
-              <td>03</td>
-              <td>CUP Card #03</td>
-              <td>1907</td>
-              <td>211</td>
-              <td>1</td>
-              <td>9999</td>
-              <td>206</td>
-              <td></td>
+              <td>
+                <button id="remove-card" type="button" class="btn btn-md" aria-label="">
+                  <span id="" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -246,7 +229,7 @@
     <script src="./src/listeners/builder.js" charset="utf-8"></script>
     <script src="./src/listeners/cards.js" charset="utf-8"></script>
     <script src="node_modules/mousetrap/mousetrap.min.js" charset="utf-8"></script>
-    <script>window.$ = window.jQuery = nodeRequire('node_modules/jquery/dist/jquery.js');</script>
+    <!--<script>window.$ = window.jQuery = nodeRequire('node_modules/jquery/dist/jquery.js');</script>-->
     <script src="./src/listeners/window.js" charset="utf-8"></script>
   </body>
 </html>

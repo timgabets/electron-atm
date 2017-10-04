@@ -508,7 +508,17 @@ $(function () {
       table_record += card.discretionary_data
     table_record += '</td>'
 
+    table_record += '<td>\
+      <button id="remove-card-' + card.number + '" type="button" class="btn btn-md" aria-label="">\
+        <span id="" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>\
+      </button>\
+    </td>';
+
     table_record += '</tr>';
     $("#tbody").append(table_record);
+
+    $("#remove-card-" + card.number).on("click", _ => {
+      console.log('Button clicked ' + card.number);
+    })
   });
 })

@@ -33,6 +33,22 @@ $(function () {
     }
   });
 
+  $("#cards-page-form").submit(function(e) {
+    e.preventDefault();
+  });
+
+  $("#show-new-card-form-button").on('click', function(){
+    $("#add-new-card-form").show();
+    $("#hide-new-card-button-area").show();
+    $("#show-new-card-form-button").hide();
+  });
+
+  $("#cancel-new-card-form-button").on('click', function(){
+    $("#add-new-card-form").hide();
+    $("#hide-new-card-button-area").hide();
+    $("#show-new-card-form-button").show();
+  });
+
   // Fill in Cards table
   cards.getNames().forEach( (name) => {
     var card = cards.get(name);

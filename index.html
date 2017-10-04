@@ -66,6 +66,15 @@
             </form>
             -->
 
+            <form id="cards-page-form" class="navbar-form navbar-right" hidden="true">
+              <div id="show-new-card-button-area">
+                <button class="btn btn-success" id="show-new-card-form-button">➕ New Card</button>
+              </div>
+              <div hidden="true" id="hide-new-card-button-area">
+                <button class="btn btn-default" id="cancel-new-card-form-button">Cancel</button>
+              </div>
+            </form>
+
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
@@ -82,12 +91,10 @@
       </div>
 
       <!-- CARDS -->
-      <div id="cards-page" hidden="true">  
-        <button class="btn btn-success" id="add-card-button" >New Card</button>
-        <button class="btn btn-danger" id="delete-card-button" >Delete Card</button>
+      <div id="cards-page" hidden="true">
         <div class="list-group" id="cards-page-cards-list">
           <a href="#" class="list-group-item">
-            <form id="add-new-card-form" class="navbar-form navbar-center">
+            <form id="add-new-card-form" class="navbar-form navbar-center" hidden="true">
               <div class="row">
                 <div class="col-xs-1">
                   <img id="scheme-logo" class="scheme-logo-lg" hidden="true">

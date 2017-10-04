@@ -126,6 +126,7 @@ describe("CardsService", function() {
       expect(s.add(card)).toBeTruthy();
       expect(settings.set).toHaveBeenCalled();
       expect(s.get('4444555566667777')).toEqual(card);
+      expect(s.get('4444 5555 6666 7777')).toEqual(card);
       expect(s.get('4444555566667777').scheme).toEqual('VISA');
       expect(s.get('4444555566667777').name).toEqual('4444 5555 6666 7777');
     });

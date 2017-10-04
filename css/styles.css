@@ -60,19 +60,6 @@ html, body, .container-fluid {
   text-align: left;
 }
 
-.thead {
-  font-size: 14px;
-  color: dimgrey;
-}
-
-.tbody {
-  margin-left: 15px;
-  margin-right: 15px;
-  color: dimgrey;
-  font-family: monospace;
-  font-size: 14px;
-}
-
 .mynetwork {
   width: 940px;
   height: 565px;

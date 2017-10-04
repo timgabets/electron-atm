@@ -85,6 +85,8 @@ function CardsService(settings, log){
    * @return {[type]}      [description]
    */
   this.get = function(name){
+    name = name.split(' ').join('');
+
     return this.cards[name];
   };
 

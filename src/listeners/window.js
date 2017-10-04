@@ -9,7 +9,6 @@ $(function () {
   const mousetrap = nodeRequire('mousetrap');
   const path = nodeRequire('path')
 
-
   /**
    * Navigation
    * 
@@ -57,6 +56,8 @@ $(function () {
     $("#atm-bottom-navbar").show()
 
     $("#cards-page").hide();
+    $("#cards-page").hide();
+    $("#cards-page-form").hide();
   })
 
   $("#states-button-menu").on("click", function(){
@@ -68,6 +69,7 @@ $(function () {
     $("#atm-bottom-navbar").hide();
 
     $("#cards-page").hide();
+    $("#cards-page-form").hide();
 
     updateState(atm.current_state);
   })
@@ -81,6 +83,7 @@ $(function () {
     $("#atm-bottom-navbar").hide();
 
     $("#cards-page").show();
+    $("#cards-page-form").show();
   })
 /*
 */
@@ -197,6 +200,7 @@ $(function () {
   });
 
   $('#card-inserted').on('click', _ => {
+
     var card = cards.get($("#atm-page-cards-list option:selected").text());
     var track2 = cards.getTrack2(card);
 
@@ -464,7 +468,7 @@ $(function () {
       }      
     }
   }, 300);
-
+/*
   $("#add-card-button").on('click', function(){
     const modalPath = path.join('file://', __dirname, 'templates/new-card.html')
     let win = new BrowserWindow({ 
@@ -483,4 +487,5 @@ $(function () {
     console.log('Clicked');
     console.log($(".list-group-item active"));
   });
+*/
 })

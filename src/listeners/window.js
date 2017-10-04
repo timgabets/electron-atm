@@ -481,7 +481,42 @@ $(function () {
 
   // Fill in Cards table
   cards.getNames().forEach( (name) => {
-    $("#cards-list").append('<option>' + name + '</option>');
+    var card = cards.get(name);
+    
+    table_record = '<a href="#" class="list-group-item">\
+      <div class="row">\
+        <div class="col-xs-1">\
+          <img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png">\
+        </div>'
+
+      table_record += '<div class="col-xs-2">' + card.number + '</div>'
+      table_record += '<div class="col-xs-1">XX</div>'
+      table_record += '<div class="col-xs-1">' + card.expiry_date + '</div>'
+      table_record += '<div class="col-xs-1">' + card.service_code + '</div>'
+      table_record += '<div class="col-xs-1">' + card.pvki + '</div>'
+      table_record += '<div class="col-xs-1">' + card.pvv + '</div>'
+      table_record += '<div class="col-xs-1">' + card.cvv + '</div>'
+      
+      table_record += '<div class="col-xs-1">' 
+      if(card.discretionary_data)
+        table_record += card.discretionary_data;
+      table_record += '</div>';
+              
+      table_record += '<div class="col-xs-2">\
+        <button type="button" class="btn btn-md" aria-label="">\
+          <span id="" class="glyphicon glyphicon-edit" aria-hidden="true"></span>\
+        </button>\
+        <button type="button" class="btn btn-md" aria-label="">\
+          <span id="" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>\
+        </button>\
+      </div>'
+            
+      table_record += '</div>';
+      table_record += '</a>';
+
+      $("#cards-page-cards-list").append(table_record);
+/*
+      '<option>' + name + '</option>');
     var card = cards.get(name);
     var table_record = '<tr>'
     table_record += '<td>'
@@ -527,5 +562,6 @@ $(function () {
     $("#edit-card-" + card.number).on("click", _ => {
       console.log('Card to be edited: ' + card.number);
     });
+    */
   });
 })

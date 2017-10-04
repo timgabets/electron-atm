@@ -34,17 +34,20 @@ $(function () {
           record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png">';
         record += '</div>';
 
-        record += '<div class="col-xs-2">' + card.name
+        record += '<div class="col-xs-2" title="Card number">' + card.name + '</div>'
+
+        record += '<div class="col-xs-1" title="FIT">XX</div>'
+
+        record += '<div class="col-xs-1">'
         if(card.PIN)
           record += '<span class="badge" title="PIN">' + card.PIN + '</span>';
         record += '</div>';
 
-        record += '<div class="col-xs-1">XX</div>'
-        record += '<div class="col-xs-1">' + card.expiry_date + '</div>'
-        record += '<div class="col-xs-1">' + card.service_code + '</div>'
-        record += '<div class="col-xs-1">' + card.pvki + '</div>'
-        record += '<div class="col-xs-1">' + card.pvv + '</div>'
-        record += '<div class="col-xs-1">' + card.cvv + '</div>'
+        record += '<div class="col-xs-1" title="Expiration Date">' + card.expiry_date + '</div>'
+        record += '<div class="col-xs-1" title="Service Code">' + card.service_code + '</div>'
+        record += '<div class="col-xs-1" title="PVK Index">' + card.pvki + '</div>'
+        record += '<div class="col-xs-1" title="PIN Verification Value">' + card.pvv + '</div>'
+        record += '<div class="col-xs-1" title="Card Verification Value">' + card.cvv + '</div>'
         
         record += '<div class="col-xs-1">' 
         if(card.discretionary_data)

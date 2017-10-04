@@ -68,7 +68,7 @@ $(function () {
   var payment_scheme;
   $('#cardnumber').blur(function(){
     var cardnumber = $('#cardnumber').val();
-    if(cardnumber && cardnumber.length >= 16){
+    if(cardnumber && cardnumber.length >= 12){
       // Getting Payment scheme
       payment_scheme = cards.getPaymentScheme(cardnumber);
       if(payment_scheme){

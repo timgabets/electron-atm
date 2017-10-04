@@ -82,59 +82,9 @@
 
       <!-- CARDS -->
       <div id="cards-page" hidden="true">  
-
-        <!-- 
-        <table class="table table-striped">
-          <thead class="thead" id="thead">
-            <tr>
-              <th>Scheme</th>
-              <th>Cardnumber</th>
-              <th>FIT Entry</th>
-              <th>Name</th>
-              <th>Exp. Date</th>
-              <th>Service Code</th>
-              <th>PVKi</th>
-              <th>PVV</th>
-              <th>CVV</th>
-              <th>Discr.Data</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody class="tbody" id="tbody">
-          </tbody>
-        </table>
-        -->
         <button class="btn btn-success" id="add-card-button" >New Card</button>
+        <button class="btn btn-danger" id="delete-card-button" >Delete Card</button>
         <div class="list-group" id="cards-page-cards-list">
-          <a href="#" class="list-group-item">
-            <div class="row">
-              <div class="col-xs-1">
-                <img id="scheme-logo" class="scheme-logo" src="img/schemes/VISA.png">
-              </div> 
-
-              <div class="col-xs-2">4444555566667777123</div>
-              <div class="col-xs-1">01</div>
-              <div class="col-xs-1">2010</div>
-              <div class="col-xs-1">221</div>
-              <div class="col-xs-1">1</div>
-              <div class="col-xs-1">1234</div>
-              <div class="col-xs-1">567</div>
-              <div class="col-xs-1">00001</div>
-
-              <div class="col-xs-2">
-                <button type="button" class="btn btn-md" aria-label="">
-                  <span id="" class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="btn btn-md" aria-label="">
-                  <span id="" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-                </button>
-
-              </div>
-            </div>
-          </a>
-          <a href="#" class="list-group-item">Second item</a>
-          <a href="#" class="list-group-item">Third item</a>
         </div>
       </div>
 
@@ -219,7 +169,8 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form id="card-read-form" class="navbar-form navbar-left">
               <div class="form-group">
-                <select class="form-control" id="cards-list"></select>
+                <select class="form-control" id="atm-page-cards-list">
+                </select>
               </div> 
               <button type="submit" class="btn btn-default" id="card-inserted">Read Card</button>
             </form>

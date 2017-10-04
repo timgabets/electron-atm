@@ -197,7 +197,7 @@ $(function () {
   });
 
   $('#card-inserted').on('click', _ => {
-    var card = cards.get($("#cards-list option:selected").text());
+    var card = cards.get($("#atm-page-cards-list option:selected").text());
     var track2 = cards.getTrack2(card);
 
     if(card)
@@ -479,17 +479,28 @@ $(function () {
     win.show()
   });
 
+  $("#delete-card-button").on('click', function(){
+    console.log('Clicked');
+    console.log($(".list-group-item active"));
+  });
+
   // Fill in Cards table
   cards.getNames().forEach( (name) => {
     var card = cards.get(name);
     
     table_record = '<a href="#" class="list-group-item">\
       <div class="row">\
-        <div class="col-xs-1">\
-          <img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png">\
-        </div>'
+        <div class="col-xs-1">';
 
-      table_record += '<div class="col-xs-2">' + card.number + '</div>'
+      if(card.scheme)
+        table_record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png">';
+      table_record += '</div>';
+
+      table_record += '<div class="col-xs-2">' + card.name
+      if(card.PIN)
+        table_record += '<span class="badge" title="PIN">' + card.PIN + '</span>';
+      table_record += '</div>';
+
       table_record += '<div class="col-xs-1">XX</div>'
       table_record += '<div class="col-xs-1">' + card.expiry_date + '</div>'
       table_record += '<div class="col-xs-1">' + card.service_code + '</div>'
@@ -501,20 +512,34 @@ $(function () {
       if(card.discretionary_data)
         table_record += card.discretionary_data;
       table_record += '</div>';
-              
+
+      /*              
       table_record += '<div class="col-xs-2">\
-        <button type="button" class="btn btn-md" aria-label="">\
+        <button type="button" id="edit-card-' + card.number + '" class="btn btn-md" aria-label="">\
           <span id="" class="glyphicon glyphicon-edit" aria-hidden="true"></span>\
         </button>\
-        <button type="button" class="btn btn-md" aria-label="">\
+        <button type="button" id="remove-card-' + card.number + '" class="btn btn-md" aria-label="">\
           <span id="" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>\
         </button>\
       </div>'
+      */
             
       table_record += '</div>';
       table_record += '</a>';
 
       $("#cards-page-cards-list").append(table_record);
+      $("#atm-page-cards-list").append('<option value="' + card.number + '">' + card.name + '</option>');
+
+      $("#remove-card-" + card.number).on("click", _ => {
+        console.log('Card to be removed: ' + card.number);
+        // TODO: confirmation
+        cards.remove(card.number);
+      });
+
+      $("#edit-card-" + card.number).on("click", _ => {
+        // TODO: edit card
+        console.log('Card to be edited: ' + card.number);
+      });
 /*
       '<option>' + name + '</option>');
     var card = cards.get(name);

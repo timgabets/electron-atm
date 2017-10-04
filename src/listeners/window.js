@@ -479,7 +479,7 @@ $(function () {
     win.show()
   });
 
-  // Cards
+  // Fill in Cards table
   cards.getNames().forEach( (name) => {
     $("#cards-list").append('<option>' + name + '</option>');
     var card = cards.get(name);
@@ -509,6 +509,9 @@ $(function () {
     table_record += '</td>'
 
     table_record += '<td>\
+      <button id="edit-card-' + card.number + '" type="button" class="btn btn-md" aria-label="">\
+        <span id="" class="glyphicon glyphicon-edit" aria-hidden="true"></span>\
+      </button>\
       <button id="remove-card-' + card.number + '" type="button" class="btn btn-md" aria-label="">\
         <span id="" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>\
       </button>\
@@ -518,7 +521,11 @@ $(function () {
     $("#tbody").append(table_record);
 
     $("#remove-card-" + card.number).on("click", _ => {
-      console.log('Button clicked ' + card.number);
-    })
+      console.log('Card to be removed: ' + card.number);
+    });
+
+    $("#edit-card-" + card.number).on("click", _ => {
+      console.log('Card to be edited: ' + card.number);
+    });
   });
 })

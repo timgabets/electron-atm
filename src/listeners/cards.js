@@ -38,13 +38,13 @@ $(function () {
   });
 
   $("#show-new-card-form-button").on('click', function(){
-    $("#add-new-card-form").show();
+    $("#add-new-card-form-area").show();
     $("#hide-new-card-button-area").show();
     $("#show-new-card-form-button").hide();
   });
 
   $("#cancel-new-card-form-button").on('click', function(){
-    $("#add-new-card-form").hide();
+    $("#add-new-card-form-area").hide();
     $("#hide-new-card-button-area").hide();
     $("#show-new-card-form-button").show();
   });

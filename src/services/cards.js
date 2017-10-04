@@ -58,14 +58,13 @@ function CardsService(settings, log){
    * @param {[type]} card [description]
    */
   this.add = function(card){
-    if(card.name === undefined || card.name === '')
-      card.name = card.number;
+    card.name = this.decorateCardNumber(card.number);
 
     var scheme = this.getPaymentScheme(card.number);
     if(scheme)
       card.scheme = scheme;
 
-    this.cards[card.name] = card;
+    this.cards[card.number] = card;
     settings.set('cards', this.cards);
 
     return true;

@@ -34,12 +34,14 @@ $(function () {
           record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png">';
         record += '</div>';
 
-        record += '<div class="col-xs-2">' + card.name
+        record += '<div class="col-xs-2">' + card.name + '</div>';
+        record += '<div class="col-xs-1">XX</div>'
+        
+        record += '<div class="col-xs-1">';
         if(card.PIN)
           record += '<span class="badge" title="PIN">' + card.PIN + '</span>';
         record += '</div>';
 
-        record += '<div class="col-xs-1">XX</div>'
         record += '<div class="col-xs-1">' + card.expiry_date + '</div>'
         record += '<div class="col-xs-1">' + card.service_code + '</div>'
         record += '<div class="col-xs-1">' + card.pvki + '</div>'

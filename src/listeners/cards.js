@@ -23,8 +23,11 @@ $(function () {
    * @return {[type]} [description]
    */
   function buildCardsList(){
+
+    //$(".list-group-item").remove();
+    $("#add-new-card-form-area").load('./templates/new-card-form.html');
+
     cards.getNames().forEach( (name) => {
-      //$(".list-group-item").remove();
 
       var card = cards.get(name);
       

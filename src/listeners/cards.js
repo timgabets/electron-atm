@@ -18,6 +18,47 @@ $(function () {
 
   let cards = new CardsService(settings);
 
+  /**
+   * [buildCardsList description]
+   * @return {[type]} [description]
+   */
+  function buildCardsList(){
+    cards.getNames().forEach( (name) => {
+      var card = cards.get(name);
+      
+      var record = '<a href="#" class="list-group-item">\
+        <div class="row">\
+          <div class="col-xs-1">';
+
+        if(card.scheme)
+          record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png">';
+        record += '</div>';
+
+        record += '<div class="col-xs-2">' + card.name
+        if(card.PIN)
+          record += '<span class="badge" title="PIN">' + card.PIN + '</span>';
+        record += '</div>';
+
+        record += '<div class="col-xs-1">XX</div>'
+        record += '<div class="col-xs-1">' + card.expiry_date + '</div>'
+        record += '<div class="col-xs-1">' + card.service_code + '</div>'
+        record += '<div class="col-xs-1">' + card.pvki + '</div>'
+        record += '<div class="col-xs-1">' + card.pvv + '</div>'
+        record += '<div class="col-xs-1">' + card.cvv + '</div>'
+        
+        record += '<div class="col-xs-1">' 
+        if(card.discretionary_data)
+          record += card.discretionary_data;
+        record += '</div>';
+              
+        record += '</div>';
+        record += '</a>';
+
+        $("#cards-page-cards-list").append(record);
+        $("#atm-page-cards-list").append('<option value="' + card.number + '">' + card.name + '</option>');
+    });
+  };
+
   $("#add-new-card-form").validate();
 
   var payment_scheme;
@@ -66,39 +107,5 @@ $(function () {
     }
   });
 
-  // Fill in Cards table
-  cards.getNames().forEach( (name) => {
-    var card = cards.get(name);
-    
-    var record = '<a href="#" class="list-group-item">\
-      <div class="row">\
-        <div class="col-xs-1">';
-
-      if(card.scheme)
-        record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png">';
-      record += '</div>';
-
-      record += '<div class="col-xs-2">' + card.name
-      if(card.PIN)
-        record += '<span class="badge" title="PIN">' + card.PIN + '</span>';
-      record += '</div>';
-
-      record += '<div class="col-xs-1">XX</div>'
-      record += '<div class="col-xs-1">' + card.expiry_date + '</div>'
-      record += '<div class="col-xs-1">' + card.service_code + '</div>'
-      record += '<div class="col-xs-1">' + card.pvki + '</div>'
-      record += '<div class="col-xs-1">' + card.pvv + '</div>'
-      record += '<div class="col-xs-1">' + card.cvv + '</div>'
-      
-      record += '<div class="col-xs-1">' 
-      if(card.discretionary_data)
-        record += card.discretionary_data;
-      record += '</div>';
-            
-      record += '</div>';
-      record += '</a>';
-
-      $("#cards-page-cards-list").append(record);
-      $("#atm-page-cards-list").append('<option value="' + card.number + '">' + card.name + '</option>');
-  });
+  buildCardsList();
 });

@@ -13,101 +13,38 @@ $(function () {
    * Navigation
    * 
    */
-  /*
-  var nav_buttons = {
-    'atm-button-menu': ['#atm-page', '#atm-buffers', '#atm-bottom-navbar'],
-    'states-button-menu': ['#states-page', '#search-state-form'],
-    'cards-button-menu': ['#cards-page'],
+  var nav_buttons = [
+    '#atm-button-menu', 
+    '#states-button-menu', 
+    '#fits-button-menu', 
+    '#cards-button-menu'];
+
+  // elements is a dictionary of elements to be shown by clicking on each nav button. The other elements are to be hidden
+  var elements = {
+    '#atm-button-menu': ['#atm-page', '#atm-buffers', '#atm-bottom-navbar'],
+    '#states-button-menu': ['#states-page', '#search-state-form'],
+    '#fits-button-menu': ['#fits-page'],
+    '#cards-button-menu': ['#cards-page'],
   };
-  for (var button in nav_buttons)
-    if (nav_buttons.hasOwnProperty(button)){
-      console.log(button);
-      $('#' + button).on("click", function(){
-        console.log(button + ' clicked');
-      })
-    }
-        
 
   nav_buttons.forEach((button) => {
-    // button is #atm-button-menu, #states-button-menu etc
-    button.on("click", function(){
-      nav_buttons.forEach((element) => {
-        if(element === button){
-          nav_buttons[element].forEach((i) => {
-            nav_buttons[element][i].show();
-          })
-        } else {
-          nav_buttons[element].forEach((i) => {
-            nav_buttons[element][i].hide();
-          })
+    $(button).on('click', _ => {
+      for (var element in elements){
+        if (elements.hasOwnProperty(element)){
+          if(button === element){
+            elements[element].forEach((e) => {
+              $(e).show();
+            });
+          } else {
+            elements[element].forEach((e) => {
+              $(e).hide();
+            });
+          }
         }
-      })
+      }
     })
   });
 
-    */
-  // TODO: refactor me!!!
-  $("#atm-button-menu").on("click", function(){
-    $("#states-page").hide();
-    $("#search-state-form").hide();
-
-    $("#atm-page").show();
-    $("#atm-buffers").show()
-    $("#atm-bottom-navbar").show()
-
-    $("#fits-page").hide();
-
-    $("#cards-page").hide();
-    $("#cards-page").hide();
-    $("#cards-page-form").hide();
-  });
-
-  $("#states-button-menu").on("click", function(){
-    $("#states-page").show();
-    $("#search-state-form").show();
-    
-    $("#atm-page").hide();
-    $("#atm-buffers").hide();
-    $("#atm-bottom-navbar").hide();
-
-    $("#fits-page").hide();    
-
-    $("#cards-page").hide();
-    $("#cards-page-form").hide();
-
-    updateState(atm.current_state);
-  });
-
-  $("#fits-button-menu").on("click", function(){
-    $("#atm-page").hide();
-    $("#atm-buffers").hide();
-    
-    $("#atm-bottom-navbar").hide();
-    $("#states-page").hide();
-    $("#search-state-form").hide();
-
-    $("#fits-page").show();
-    
-    $("#cards-page").hide();
-    $("#cards-page-form").hide();
-  });
-
-  $("#cards-button-menu").on("click", function(){
-    $("#states-page").hide();
-    $("#search-state-form").hide();
-    
-    $("#atm-page").hide();
-    $("#atm-buffers").hide();
-    $("#atm-bottom-navbar").hide();
-
-    $("#fits-page").hide();
-
-    $("#cards-page").show();
-    $("#cards-page-form").show();
-  });
-
-/*
-*/
   /**
    * States
    */

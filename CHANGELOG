@@ -1,4 +1,5 @@
 October 2017
+	0.8.8 Navigation buttons logic refactored
 	0.8.7 Displaying FIT records on a FITs page
 	0.8.6 getting payment scheme based on BIN
 	0.8.5 Validating New Card form

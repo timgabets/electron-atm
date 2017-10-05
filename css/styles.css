@@ -103,10 +103,22 @@ html, body, .container-fluid {
   border:1px solid #021a40;
 }
 
-.fits-table {
-  height: 560px;
+.fits-area {
+  height: 580px;
   overflow-y: scroll;
   overflow-x: hidden;
+  border:1px solid lightgrey;
+  border-radius: 5px;
+}
+
+.fits-table-body{
+  font-size: 13px;
+  font-family: monospace;
+}
+
+.fits-table-head{
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .buffer-6 {

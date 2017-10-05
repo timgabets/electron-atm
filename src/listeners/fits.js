@@ -19,8 +19,8 @@ $(function () {
         fit_record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + scheme + '.png" title="' + scheme + ' Payment Scheme">';
       fit_record += '</td>'
       
-      fit_record += '<td title="">' + fit.PIDDX + '</td>';
-      fit_record += '<td title="">' + fit.PFIID + '</td>';
+      fit_record += '<td title="PIDDX (Insitution ID index)">' + fit.PIDDX + '</td>';
+      fit_record += '<td title="PFIID (Institution ID)">' + fit.PFIID + '</td>';
       fit_record += '<td title="PSTDX (Indirect Next State Index)">' + fit.PSTDX + '</td>';
       fit_record += '<td title="PAGDX (Algorithm/Bank ID Index)">' + fit.PAGDX + '</td>';
       fit_record += '<td title="PMXPN (Maximum PIN Digits Entered)">' + fit.PMXPN + '</td>';
@@ -38,22 +38,8 @@ $(function () {
       fit_record += '<td title="PMMSR (CIM86 sensor flag) ">' + fit.PMMSR + '</td>';
       fit_record += '<td title="PBFMT (PIN Block format)">' + fit.PBFMT + '</td>';
 
-      /*
-      fit_record = '<a href="#" class="list-group-item"><div class="row">';
-      
-      fit_record += '<div class="col-xs-1">'
-      fit_record += '</div>';
-
-      fit_record += '<div class="col-xs-1" title="PIDDX (Insitution ID index)">' + fit.PIDDX + '</div>';
-      fit_record += '<div class="col-xs-2" title="PFIID (Institution ID)">' + fit.PFIID + '</div>';
-      fit_record += '<div class="col-xs-1" title="PSTDX (Indirect Next State Index)">' + fit.PSTDX + '</div>';
-      fit_record += '<div class="col-xs-1" title="PAGDX (Algorithm/Bank ID Index)">' + fit.PAGDX + '</div>';
-      fit_record += '<div class="col-xs-1" title="PMXPN (Maximum PIN Digits Entered)">' + fit.PMXPN + '</div>';
-
-      fit_record += '</div></a>';
-      */
       fit_record += '</tr>';
-      $("#fits-table").append(fit_record);
+      $("#fits-table-body").append(fit_record);
     });
   };
   

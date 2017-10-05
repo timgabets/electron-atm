@@ -86,7 +86,6 @@ function FITsService(settings, log){
     parsed.PMXPN = this.decimal2hex(data.substr(i, field_length))
     i += field_length;
 
-    /*
     // PCKLN (Maximum PIN Digits Checked) - Number of digits used for local PIN check
     parsed.PCKLN = this.decimal2hex(data.substr(i, field_length))
     i += field_length;
@@ -98,7 +97,57 @@ function FITsService(settings, log){
     // PANDX (PAN Data Index) - Index for location of PAN (Personal Account Number) on card
     parsed.PANDX = this.decimal2hex(data.substr(i, field_length))
     i += field_length;
-    */
+    
+    // PANLN (PAN Data Length) - PAN data field length
+    parsed.PANLN = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // PANPD (PAN Pad) - Character used to pad PAN field for encryption
+    parsed.PANPD = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // PRCNT (Track 3 PIN retry count index) - Index for PIN retry count field on card
+    parsed.PRCNT = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // POFDX (PIN offset ind) - Index for PIN offset field on card
+    parsed.POFDX = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // PDCTB (Decimalisation table) - Decimalisation table used in encryption process
+    field_length = 1.5 * 16; // 16 digits
+    parsed.PDCTB = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // PEKEY (Encrypted PIN key) - DES‐Encrypted PIN key
+    field_length = 1.5 * 16; // 16 digits
+    parsed.PEKEY = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // PINDX (Index reference point) - Track and index reference point information for all card‐related entries in FIT
+    field_length = 1.5 * 6; // 6 digits
+    parsed.PINDX = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // PLNDX (Language code index) - Index for language code on card
+    field_length = 1.5 * 2; // 2 digits
+    parsed.PLNDX = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // PMMSR (CIM86 sensor flag) - Flag to identify the location of the CIM86 sensor in the FIT. Not supported by Advance NDC
+    parsed.PMMSR = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // Reserved
+    field_length = 1.5 * 6; // 6 digits
+    reserved = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
+    // PBFMT (PIN Block format) - Selects PIN block format for remote PIN verification
+    field_length = 1.5 * 2; // 2 digits
+    parsed.PBFMT = this.decimal2hex(data.substr(i, field_length))
+    i += field_length;
+
     return parsed;
   }
 

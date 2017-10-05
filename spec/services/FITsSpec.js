@@ -82,9 +82,22 @@ describe("FITs", function() {
         PFIID: '418825FFFF',
         PSTDX: '01',
         PAGDX: '00',
-        PMXPN: '84'
+        PMXPN: '84',
+        PCKLN: '00',
+        PINPD: 'F',
+        PANDX: '00',
+        PANLN: '90',
+        PANPD: '00',
+        PRCNT: '08',
+        POFDX: 'A',
+        PDCTB: '0000000000000000',
+        PEKEY: '0000000000000000',
+        PINDX: '000065',
+        PLNDX: '02',
+        PMMSR: '03',
+        PBFMT: '65'
       };
-      expect(f.parseFIT('029000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toEqual(parsed);
+      expect(f.parseFIT('029000065136037255255001000132000015000144000008010000000000000000000000000000000000000000000000000000000101002003000000000101303')).toEqual(parsed);
     });
   });
 
@@ -242,8 +255,8 @@ describe("FITs", function() {
 
       expect(f.get()).toEqual(
         [ 
-          { PIDDX: '005', PFIID: '409225FFFF', PSTDX: '01', PAGDX: '00', PMXPN: '84' }, 
-          { PIDDX: '019', PFIID: '418825FFFF', PSTDX: '02', PAGDX: '00', PMXPN: '84' } ] 
+          { PIDDX: '005', PFIID: '409225FFFF', PSTDX: '01', PAGDX: '00', PMXPN: '84', PCKLN: '00', PINPD: 'F', PANDX: '00', PANLN: '90', PANPD: '00', PRCNT: '00', POFDX: '00', PDCTB: '0000000000000000', PEKEY: '0000000000000000', PINDX: '', PLNDX: '', PMMSR: '', PBFMT: '' }, 
+          { PIDDX: '019', PFIID: '418825FFFF', PSTDX: '02', PAGDX: '00', PMXPN: '84', PCKLN: '00', PINPD: 'F', PANDX: '00', PANLN: '90', PANPD: '00', PRCNT: '00', POFDX: '00', PDCTB: '0000000000000000', PEKEY: '0000000000000000', PINDX: '', PLNDX: '', PMMSR: '', PBFMT: '' } ] 
       );
     });
   })

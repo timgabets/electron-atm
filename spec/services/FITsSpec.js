@@ -227,4 +227,24 @@ describe("FITs", function() {
       expect(f.getMaxPINLength('4188250000000001')).toEqual('6');
     });
   });
+
+  describe('get()', function(){
+    it('should get FIT records list ordered by PIDDX', function(){
+      // PIDDX: '019'
+      // PFIID: '418825FFFF'
+      // PSTDX: '02'
+      expect(f.addFIT('019000065136037255255002000132000015000144000000000000000000000000000000000000000000000000000000000')).toBeTruthy();
+
+      // PIDDX: '005'
+      // PFIID: '409225FFFF'
+      // PSTDX: '01'
+      expect(f.addFIT('005000064146037255255001000132000015000144000000000000000000000000000000000000000000000000000000000')).toBeTruthy();
+
+      expect(f.get()).toEqual(
+        [ 
+          { PIDDX: '005', PFIID: '409225FFFF', PSTDX: '01', PAGDX: '00', PMXPN: '84' }, 
+          { PIDDX: '019', PFIID: '418825FFFF', PSTDX: '02', PAGDX: '00', PMXPN: '84' } ] 
+      );
+    });
+  })
 });

@@ -167,6 +167,26 @@ function FITsService(settings, log){
     if (matched_institution !== Number.MAX_VALUE)
       return max_pin
   }
+
+
+  /**
+   * [get get array of FITs, ordered by PIDDX]
+   * @return {[type]} [arrary of FITs, sorted by PIDDX]
+   */
+  this.get = function(){
+    var sorted_keys = [];
+    for(var key in this.FITs) {
+        sorted_keys[sorted_keys.length] = key;
+    }
+    sorted_keys.sort();
+
+    var sorted_fits = [];
+    for(var i = 0; i < sorted_keys.length; i++){
+      sorted_fits.push(this.FITs[sorted_keys[i]]);
+    }
+
+    return sorted_fits;
+  }
 }
 
 /**

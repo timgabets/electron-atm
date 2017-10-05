@@ -70,7 +70,7 @@ This is an implementation of ATM (Automatic Teller machine) simulator, working u
 
 ### And why may I need it?
 
-If you are working with ATM processing systems (a.k.a ATM Host - the systems to which ATMs are connected, and which process various messages from ATMs, including financial inquiries) - either developing applications or supporting them, you may need to emulate the ATM messages coming to the host. You're lucky if you have a real ATM nearby, but the chances are that your test ATM may be located on the other floor, or, the company that you're currently working in may not have a real ATM at all. Being fed up with closed-source self-written ATM-simulators, I decided to develop my own stable, featureful and good-looking open-source ATM simulator, which may be available to everyone in the Banking/Card processing community.
+If you are working with ATM processing systems (a.k.a ATM Host - the systems to which ATMs are connected, and which process various messages from ATMs, including financial inquiries) - either developing applications or supporting them, you may need to emulate the ATM messages coming to the host. You're lucky if you have a real ATM nearby, but the chances are that your test ATM may be located on the other floor, or, the company that you're currently working in may not have a real ATM at all. Being fed up with closed-source self-written ATM-simulators, I decided to develop my own stable and and good-looking open-source ATM simulator, which may be available to everyone in the Banking/Card processing community.
 
 ### The application is ugly.
 

@@ -103,6 +103,12 @@ html, body, .container-fluid {
   border:1px solid #021a40;
 }
 
+.fits-list {
+  height: 560px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .buffer-6 {
   width: 80px !important;
   font-family: monospace;

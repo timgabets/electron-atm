@@ -2,11 +2,15 @@
 
 ![Travis CI build badge](https://travis-ci.org/timgabets/electron-atm.svg?branch=master)
 
-A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) ATM emulator, written from scratch using JavaScript, [visjs](http://visjs.org/), jQuery and Electron framework.
+A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) ATM emulator, written from scratch using JavaScript, [visjs](http://visjs.org/), jQuery and [Electron](https://electron.atom.io/) framework.
 
 ![screenshot](img/screenshot.png)
 
 ![states navigator](img/states.png)
+
+![FITs page](img/fits.png)
+
+![cards page](img/cards.png)
 
 ## To Use
 
@@ -48,7 +52,8 @@ Currently only the basic stuff is working, such as:
  * Crypto support: PIN block encryption, dynamic key exchange etc. (Triple DES double length key only)
  * State Navigator: showing graph of states
  * State Navigator: updating screen image when jumping through the states
- * State Navigator: displaying state details when state sleected
+ * State Navigator: displaying state details when state selected
+ * FITs: showing a table of Financial Institutions
 
 Things to be implemented (very) soon:
  * Touch area support (pressing touch areas, not only FDK buttons)
@@ -56,13 +61,40 @@ Things to be implemented (very) soon:
  * Saving the image path in user settings
  * ICC support
 
+
+## FAQ
+
+### What is this about?
+
+This is an implementation of NDC ATM (Automatic Teller machine) simulator.
+
+### And why may I need it?
+
+If you are working with ATM processing systems (a.k.a ATM Host - the systems to which ATMs are connected, and which process various messages from ATMs, including financial inquiries), either developing applications or supporting them, you may need to emulate the ATM messages coming to the host. You're lucky if you have a real ATM nearby, but the chanes are that your test ATM may be located on the other floor, or, the company that you're currently working in may not have a real ATM at all. Being fed up with closed-source self-written ATM-simulators, I decided to develop my own stable, featureful, good-looking open-source ATM simulator, which may be available to everyone in the Banking/Card processing community.
+
+### The application is ugly.
+
+Yes, I know and I'm really sorry. I'm not a frontend developer, my daytime job is related to soft-realtime payment processing, and my native language is C. I'm not good at CSS, so, if you are strong enough in UI/UX, please, feel free to do something with [this](https://github.com/timgabets/electron-atm/blob/master/css/styles.css). And [that](https://github.com/timgabets/electron-atm/blob/master/index.html). And [that](https://github.com/timgabets/electron-atm/tree/master/templates) as well.
+
+### jQuery? Why not [React](https://facebook.github.io/react/)?
+To me, [React](https://facebook.github.io/react/) is good for building user-interface-specific applications, while this application is considered as backend-centric (having tons of the protocol-specific code in the backend). Anyway, I do believe that React is a future of web-development, and if you want to redesign it all, using React, please send a pull request! ;)
+
+
+### Why not ES6? 
+I thought of ES6 in the very beginning, but Electron does not support ES6 out of the box, and transpiling with [Babel](https://babeljs.io/) was so overdesigned to me. Again, if you would like to have ES6 in this application, send me a pull request.
+
+
+### I would like to try the application, but it seems that the feature X, that I really-really need is not yet implemented.
+As I said, only the features that I needed were implemented. For example, all the ATM configurations that I've been working with, don't have V-type states (Language select from a card), these states are not supported by the application. So, if there is a feature that you would like to have implemented, you may create an [issue](https://github.com/timgabets/electron-atm/issues), or just drop me an [email](mailto:tim@gabets.ru). 
+
+
 ## Issues
 
 Please feel free to submit [issues](https://github.com/timgabets/electron-atm/issues) and enhancement requests, or simply drop me an [email](mailto:tim@gabets.ru) if you want to participate in the project or just give some feedback.
 
 ## Contribute
 
-Contributions welcome!
+Contributions are welcome, I would appreciate any help in application testing and development ;)
 
 ## License
 [LGPLv2](LICENSE.md)

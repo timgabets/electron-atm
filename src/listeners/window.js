@@ -24,7 +24,7 @@ $(function () {
     '#atm-button-menu': ['#atm-page', '#atm-buffers', '#atm-bottom-navbar'],
     '#states-button-menu': ['#states-page', '#search-state-form'],
     '#fits-button-menu': ['#fits-page'],
-    '#cards-button-menu': ['#cards-page'],
+    '#cards-button-menu': ['#cards-page', '#cards-page-form'],
   };
 
   nav_buttons.forEach((button) => {

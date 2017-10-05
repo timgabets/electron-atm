@@ -23,7 +23,7 @@ $(function () {
           <div class="col-xs-1">';
 
         if(card.scheme)
-          record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png" title="' + card.scheme + ' Payment Scheme">';
+          record += '<img class="scheme-logo" src="img/schemes/' + card.scheme + '.png" title="' + card.scheme + ' Payment Scheme">';
         record += '</div>';
 
         record += '<div class="col-xs-2" title="Card number">' + card.name + '</div>';
@@ -58,20 +58,18 @@ $(function () {
   var payment_scheme;
   $('#cardnumber').blur(function(){
     var cardnumber = $('#cardnumber').val();
-    if(cardnumber && cardnumber.length >= 12){
+    if(cardnumber){
       // Getting Payment scheme
       payment_scheme = cards.getPaymentScheme(cardnumber);
+      console.log(payment_scheme);
       if(payment_scheme){
-        $("#scheme-logo").show();
-        $("#scheme-logo").attr('src', 'img/schemes/' + payment_scheme + '.png')
+        $("#new-card-scheme-logo").show();
+        $("#new-card-scheme-logo").attr('src', 'img/schemes/' + payment_scheme + '.png')
       } else 
-        $("#scheme-logo").hide();
+        $("#new-card-scheme-logo").hide();
 
       // Getting FIT id
       $("#FIT").val(fits.getInstitutionByCardnumber(cardnumber));
-
-      //Decorating card number
-      //$('#cardnumber').val(cards.decorateCardNumber(cardnumber));
     }
   });
 

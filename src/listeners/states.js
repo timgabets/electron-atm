@@ -61,6 +61,8 @@ graph.focus('000', {
 
 
 $(function(){
+  const mousetrap = nodeRequire('mousetrap');
+  
   function updateState(state){   
     if($.isEmptyObject(state))
       state = states.get('000');
@@ -142,6 +144,43 @@ $(function(){
 
       // updateOpcodeBuffer(state);
     }
+  });
+
+  // cursor keys
+  var cursorButtons = ['left', 'right', 'up', 'down'];
+  cursorButtons.forEach( (element) => {
+    mousetrap.bind(element, function() { 
+      var move_x = 0;
+      var move_y = 0;
+
+      switch(element){
+        case 'left':
+          move_x = -700;
+          break;
+        case 'right':
+          move_x = 700;
+          break;
+        case 'up':
+          move_y = -700;
+          break;
+        case 'down':
+          move_y = 700;
+          break;
+      }
+
+
+      var current_position = graph.getViewPosition();
+      graph.moveTo({
+        position: {
+          'x': current_position.x + move_x,
+          'y': current_position.y + move_y,
+        },
+        animation: {
+          duration: 500,
+          easingFunction: 'easeOutQuad'
+        }
+      });
+    });
   });
 
   ipc.on('ui-change-current-state-on-states-page', (event, state) => {

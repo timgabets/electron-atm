@@ -131,6 +131,23 @@ describe("CardsService", function() {
       expect(s.get('4444555566667777').name).toEqual('4444 5555 6666 7777');
     });
 
+    it('should add a card with decorated card number', function(){
+      var original = {
+        number: '5555 0000 1123 4566',
+      };
+
+      var saved = {
+        number: '5555000011234566',
+        name: '5555 0000 1123 4566',
+        scheme: 'Mastercard',
+      };      
+      expect(s.add(original)).toBeTruthy();
+      expect(settings.set).toHaveBeenCalled();
+      expect(s.get('5555000011234566')).toEqual(saved);
+      expect(s.get('5555 0000 1123 4566')).toEqual(saved);
+      expect(s.get('5555000011234566').name).toEqual('5555 0000 1123 4566');
+    });
+
     it('should add a card without name', function(){
       var card = {
         number: '4444555566667777',

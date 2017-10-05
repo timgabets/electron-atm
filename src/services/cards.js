@@ -58,6 +58,7 @@ function CardsService(settings, log){
    * @param {[type]} card [description]
    */
   this.add = function(card){
+    card.number = card.number.split(' ').join('');
     card.name = this.decorateCardNumber(card.number);
 
     var scheme = this.getPaymentScheme(card.number);

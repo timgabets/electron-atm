@@ -103,7 +103,7 @@ html, body, .container-fluid {
   border:1px solid #021a40;
 }
 
-.fits-list {
+.fits-table {
   height: 560px;
   overflow-y: scroll;
   overflow-x: hidden;

@@ -128,6 +128,7 @@ function CardsService(settings, log){
    * @return {[type]}            [description]
    */
   this.decorateCardNumber = function(cardnumber){
+    var cardnumber = cardnumber.split(' ').join('');
     var decorated = '';
 
     for(var i = 0; i < cardnumber.length; i++){

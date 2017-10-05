@@ -188,7 +188,11 @@ describe("CardsService", function() {
     });
 
     it('should not decorate already decorated card number',  function(){
-      //expect(s.decorateCardNumber('1111 2222 3333 4444')).toEqual('1111 2222 3333 4444');
+      expect(s.decorateCardNumber('1111 2222 3333 4444')).toEqual('1111 2222 3333 4444');
+    });
+
+    it('should not decorate cardnumber with inserted char in the middle',  function(){
+      expect(s.decorateCardNumber('11181 2222 3333 444')).toEqual('1118 1222 2333 3444');
     });
   }); 
 

@@ -55,10 +55,12 @@ $(function () {
     $("#atm-buffers").show()
     $("#atm-bottom-navbar").show()
 
+    $("#fits-page").hide();
+
     $("#cards-page").hide();
     $("#cards-page").hide();
     $("#cards-page-form").hide();
-  })
+  });
 
   $("#states-button-menu").on("click", function(){
     $("#states-page").show();
@@ -68,11 +70,27 @@ $(function () {
     $("#atm-buffers").hide();
     $("#atm-bottom-navbar").hide();
 
+    $("#fits-page").hide();    
+
     $("#cards-page").hide();
     $("#cards-page-form").hide();
 
     updateState(atm.current_state);
-  })
+  });
+
+  $("#fits-button-menu").on("click", function(){
+    $("#atm-page").hide();
+    $("#atm-buffers").hide();
+    
+    $("#atm-bottom-navbar").hide();
+    $("#states-page").hide();
+    $("#search-state-form").hide();
+
+    $("#fits-page").show();
+    
+    $("#cards-page").hide();
+    $("#cards-page-form").hide();
+  });
 
   $("#cards-button-menu").on("click", function(){
     $("#states-page").hide();
@@ -82,9 +100,12 @@ $(function () {
     $("#atm-buffers").hide();
     $("#atm-bottom-navbar").hide();
 
+    $("#fits-page").hide();
+
     $("#cards-page").show();
     $("#cards-page-form").show();
-  })
+  });
+
 /*
 */
   /**

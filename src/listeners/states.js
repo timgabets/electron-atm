@@ -58,3 +58,94 @@ graph.focus('000', {
   scale: 0.4,
   offset: {x:-400, y:200}
 });
+
+
+$(function(){
+  function updateState(state){   
+    if($.isEmptyObject(state))
+      state = states.get('000');
+
+    graph.focus(state.number, {});  // Center
+    graph.selectNodes([state.number,]);   // Select node
+
+    updateScreen(screens.get(state.screen_number));
+    updateStateDetails(state, states.getExtensionState(state));
+    // updateOpcodeBuffer(state);
+  };
+
+  /**
+   * [updateScreen description]
+   * @param  {[type]} screen [description]
+   * @return {[type]}        [description]
+   */
+  function updateScreen(screen){
+    if(screen && screen.actions){      
+      screen.actions.forEach((element) => {
+        if(element.display_image)
+          $('#states-screen').attr('src', '/home/tim/share/screens/' + element.display_image);
+      });
+    }
+  };
+
+  /**
+   * [updateStateDetails description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  function updateStateDetails(state, extension_state){
+    $('#state-details').html(trace.object(state));
+    if(extension_state)
+      $('#state-details').append(trace.object(extension_state));
+  };
+
+  /**
+   * [updateOpcodeBuffer description]
+   * @param  {[type]} state [description]
+   * @return {[type]}       [description]
+   */
+  function updateOpcodeBuffer(state, extension_state){
+    if(state && state.type === 'D'){
+      atm.opcode.setBufferFromState(state, extension_state);
+      $('#opcode-buffer').val(atm.opcode.getBuffer().split(' ').join('_'));
+      $('#opcode-buffer').removeAttr('disabled');
+    }else{
+      $('#opcode-buffer').attr('disabled', true);
+    }
+  };
+
+  $("#search-state-form").submit(function(e) {
+    e.preventDefault();
+    var state_number = $('#search-state-input').val();
+
+    if(state_number.length == 2){
+      state_number = '0' + state_number;
+      $('#search-state-input').val(state_number)
+    }
+    else if (state_number.length === 1){
+      state_number = '00' + state_number;
+      $('#search-state-input').val(state_number)
+    }
+  
+    updateState(states.get(state_number));
+    $("#search-state-input").blur();
+  });
+
+  graph.on("click", function (params) {
+    var node_id = this.getNodeAt(params.pointer.DOM);
+
+    if(node_id){
+      var state = states.get(node_id);
+
+      updateScreen(screens.get(state.screen_number));
+      updateStateDetails(state, states.getExtensionState(state));
+      // graph.focus(state.number, {});  // Center
+
+      // updateOpcodeBuffer(state);
+    }
+  });
+
+  ipc.on('ui-change-current-state-on-states-page', (event, state) => {
+    console.log(state);
+    updateState(state);
+  })
+});

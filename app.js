@@ -88,4 +88,6 @@ ipc.on('atm-change-screen-image', (event, image) => {
   window.webContents.send('ui-change-screen-image', image)
 })
 
-
+ipc.on('ui-update-state', (event, state) => {
+  window.webContents.send('ui-change-current-state-on-states-page', state)
+})

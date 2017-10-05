@@ -66,26 +66,27 @@ Things to be implemented (very) soon:
 
 ### What is this about?
 
-This is an implementation of NDC ATM (Automatic Teller machine) simulator.
+This is an implementation of ATM (Automatic Teller machine) simulator, working under [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) protocol.
 
 ### And why may I need it?
 
-If you are working with ATM processing systems (a.k.a ATM Host - the systems to which ATMs are connected, and which process various messages from ATMs, including financial inquiries), either developing applications or supporting them, you may need to emulate the ATM messages coming to the host. You're lucky if you have a real ATM nearby, but the chanes are that your test ATM may be located on the other floor, or, the company that you're currently working in may not have a real ATM at all. Being fed up with closed-source self-written ATM-simulators, I decided to develop my own stable, featureful, good-looking open-source ATM simulator, which may be available to everyone in the Banking/Card processing community.
+If you are working with ATM processing systems (a.k.a ATM Host - the systems to which ATMs are connected, and which process various messages from ATMs, including financial inquiries) - either developing applications or supporting them, you may need to emulate the ATM messages coming to the host. You're lucky if you have a real ATM nearby, but the chances are that your test ATM may be located on the other floor, or, the company that you're currently working in may not have a real ATM at all. Being fed up with closed-source self-written ATM-simulators, I decided to develop my own stable, featureful and good-looking open-source ATM simulator, which may be available to everyone in the Banking/Card processing community.
 
 ### The application is ugly.
 
-Yes, I know and I'm really sorry. I'm not a frontend developer, my daytime job is related to soft-realtime payment processing, and my native language is C. I'm not good at CSS, so, if you are strong enough in UI/UX, please, feel free to do something with [this](https://github.com/timgabets/electron-atm/blob/master/css/styles.css). And [that](https://github.com/timgabets/electron-atm/blob/master/index.html). And [that](https://github.com/timgabets/electron-atm/tree/master/templates) as well.
+Yes, I know and I'm really sorry. I'm not a frontend developer (I'm not even a web-developer  as my daytime job is related to soft-realtime payment processing, and my native language is C). I'm not good at CSS, so, if you are strong enough in UI/UX, please, feel free to do something with [this](https://github.com/timgabets/electron-atm/blob/master/css/styles.css). And [that](https://github.com/timgabets/electron-atm/blob/master/index.html). And [that](https://github.com/timgabets/electron-atm/tree/master/templates) as well.
 
 ### jQuery? Why not [React](https://facebook.github.io/react/)?
-To me, [React](https://facebook.github.io/react/) is good for building user-interface-specific applications, while this application is considered as backend-centric (having tons of the protocol-specific code in the backend). Anyway, I do believe that React is a future of web-development, and if you want to redesign it all, using React, please send a pull request! ;)
+
+To me, [React](https://facebook.github.io/react/) is good for building user-interface-specific applications, while this application is considered as backend-centric (having tons of the protocol-specific code in the backend). As always, it started as a simple Electron app with "just a little jQuery", but now it's a [whole mess](https://github.com/timgabets/electron-atm/blob/master/src/listeners/window.js) of event-handlers and SetInterval functions, that already need to be rewritten. So, if you're brave enough to redesign it all using React, please send me a pull request! ;)
 
 
 ### Why not ES6? 
-I thought of ES6 in the very beginning, but Electron does not support ES6 out of the box, and transpiling with [Babel](https://babeljs.io/) was so overdesigned to me. Again, if you would like to have ES6 in this application, send me a pull request.
+I thought of ES6 in the very beginning, but Electron does not support ES6 out of the box, and transpiling with [Babel](https://babeljs.io/) looked to me as a complete overdesign to me. Again, if you would like to have ES6 in this application, send me a pull request.
 
 
-### I would like to try the application, but it seems that the feature X, that I really-really need is not yet implemented.
-As I said, only the features that I needed were implemented. For example, all the ATM configurations that I've been working with, don't have V-type states (Language select from a card), these states are not supported by the application. So, if there is a feature that you would like to have implemented, you may create an [issue](https://github.com/timgabets/electron-atm/issues), or just drop me an [email](mailto:tim@gabets.ru). 
+### I would like to use the application, but it seems that the feature X, that I really need is not yet implemented.
+As I said, only the features that I needed were implemented. For example, all the ATM configurations that I've been working with don't have V-type states (Language select from a card), therefore, these states are not supported by the application. So, if there is a feature that you would like to have implemented, you may create an [issue](https://github.com/timgabets/electron-atm/issues), or just drop me an [email](mailto:tim@gabets.ru). 
 
 
 ## Issues

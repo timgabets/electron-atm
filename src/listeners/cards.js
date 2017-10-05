@@ -3,10 +3,8 @@
  */
 
 const CardsService = nodeRequire('./src/services/cards.js');
-const FITsService = nodeRequire('./src/services/fits.js');
 
 let cards = new CardsService(settings, log);
-let fits = new FITsService(settings, log);
 
 ipc.on('cards-add-new-card', (event, card) => {
   cards.add(card);
@@ -15,10 +13,6 @@ ipc.on('cards-add-new-card', (event, card) => {
 $(function () {
   const electron = nodeRequire('electron')
   const ipc = electron.ipcRenderer;
-  const settings = nodeRequire('electron-settings');
-  const CardsService = nodeRequire('./src/services/cards.js');
-
-  let cards = new CardsService(settings);
 
   /**
    * [buildCardsList description]

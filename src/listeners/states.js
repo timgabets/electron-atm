@@ -55,19 +55,25 @@ var graph = new vis.Network(container, data, options);
 
 // Focus on state 000
 graph.focus('000', {
-  scale: 0.4,
-  offset: {x:-400, y:200}
+  scale: 0.3,
+  offset: {x:100, y:400}
 });
 
 
 $(function(){
   const mousetrap = nodeRequire('mousetrap');
-  
+
   function updateState(state){   
     if($.isEmptyObject(state))
       state = states.get('000');
 
-    graph.focus(state.number, {});  // Center
+    graph.focus(
+      state.number, 
+      {
+        scale: 0.3,
+        offset: {x:400, y:300}
+      }
+    );  // Center
     graph.selectNodes([state.number,]);   // Select node
 
     updateScreen(screens.get(state.screen_number));
@@ -168,7 +174,6 @@ $(function(){
           break;
       }
 
-
       var current_position = graph.getViewPosition();
       graph.moveTo({
         position: {
@@ -176,7 +181,7 @@ $(function(){
           'y': current_position.y + move_y,
         },
         animation: {
-          duration: 500,
+          duration: 300,
           easingFunction: 'easeOutQuad'
         }
       });
@@ -186,5 +191,8 @@ $(function(){
   ipc.on('ui-change-current-state-on-states-page', (event, state) => {
     console.log(state);
     updateState(state);
-  })
+  });
+
+  // Set to 000 initially
+  //updateState();
 });

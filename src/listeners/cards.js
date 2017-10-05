@@ -33,7 +33,7 @@ $(function () {
           <div class="col-xs-1">';
 
         if(card.scheme)
-          record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png">';
+          record += '<img id="scheme-logo" class="scheme-logo" src="img/schemes/' + card.scheme + '.png" title="' + card.scheme + ' Payment Scheme">';
         record += '</div>';
 
         record += '<div class="col-xs-2" title="Card number">' + card.name + '</div>';

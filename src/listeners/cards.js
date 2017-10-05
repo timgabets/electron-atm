@@ -79,6 +79,9 @@ $(function () {
 
       // Getting FIT id
       $("#FIT").val(fits.getInstitutionByCardnumber(cardnumber));
+
+      //Decorating card number
+      //$('#cardnumber').val(cards.decorateCardNumber(cardnumber));
     }
   });
 

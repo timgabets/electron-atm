@@ -402,7 +402,8 @@ $(function () {
   var pin_key = '';
   setInterval(function() {
     if(crypto.getTerminalKey()[0] != pin_key){
-      pin_key = crypto.getTerminalKey()[0];
+      // TODO: move to another service
+      pin_key = cards.decorateCardNumber(crypto.getTerminalKey()[0]);
       $("#comms-key").val(pin_key);
       $("#comms-key-cv").val(crypto.getTerminalKey()[1]);
     }
@@ -412,7 +413,8 @@ $(function () {
   var master_key = '';
   setInterval(function() {
     if(crypto.getMasterKey()[0] != master_key){
-      master_key = crypto.getMasterKey()[0];
+      // TODO: move to another service
+      master_key = cards.decorateCardNumber(crypto.getMasterKey()[0]);
       $("#master-key").val(master_key);
       $("#master-key-cv").val(crypto.getMasterKey()[1]);
     }

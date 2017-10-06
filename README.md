@@ -4,12 +4,16 @@
 
 A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) ATM emulator, written from scratch using JavaScript, [visjs](http://visjs.org/), jQuery and [Electron](https://electron.atom.io/) framework.
 
+ATM tab:
 ![screenshot](img/screenshot.png)
 
+States tag:
 ![states navigator](img/states.png)
 
+Financial Institutions tab:
 ![FITs page](img/fits.png)
 
+Cards management tab:
 ![cards page](img/cards.png)
 
 ## To Use
@@ -70,7 +74,7 @@ This is an implementation of ATM (Automatic Teller machine) simulator, working u
 
 ### And why may I need it?
 
-If you are working with ATM processing systems (a.k.a ATM Host - the systems to which ATMs are connected, and which process various messages from ATMs, including financial inquiries) - either developing applications or supporting them, you may need to emulate the ATM messages coming to the host. You're lucky if you have a real ATM nearby, but the chances are that your test ATM may be located on the other floor, or, the company that you're currently working in may not have a real ATM at all. Being fed up with closed-source self-written ATM-simulators, I decided to develop my own stable and and good-looking open-source ATM simulator, which may be available to everyone in the Banking/Card processing community.
+If you are working with ATM processing systems (a.k.a ATM Host - the systems to which ATMs are connected, and which process various messages from ATMs, including financial inquiries) - either developing applications or supporting them, you may need to emulate the ATM messages coming to the host. You're lucky if you have a real ATM nearby, but the chances are that your test ATM may be located on the other floor, or, the company that you're currently working in may not have a real ATM at all. Being fed up with closed-source self-written ATM-simulators, I decided to develop my own stable featureful open-source ATM simulator, which may be available to everyone in the Banking/Card processing community.
 
 ### The application is ugly.
 
@@ -78,11 +82,11 @@ Yes, I know and I'm really sorry. I'm not a frontend developer (I'm not even a w
 
 ### jQuery? Why not [React](https://facebook.github.io/react/)?
 
-To me, [React](https://facebook.github.io/react/) is good for building user-interface-specific applications, while this application is considered as backend-centric (having tons of the protocol-specific code in the backend). As always, it started as a simple Electron app with "just a little jQuery", but now it's a [whole mess](https://github.com/timgabets/electron-atm/blob/master/src/listeners/window.js) of event-handlers and SetInterval functions, that already need to be rewritten. So, if you're brave enough to redesign it all using React, please send me a pull request! ;)
+To me, [React](https://facebook.github.io/react/) is good for building user-interface-specific applications, while this application is considered as backend-centric (i.e. having tons of the protocol-specific code in the backend). As always, it started as a simple Electron app with "just a little jQuery", but now it's a [whole mess](https://github.com/timgabets/electron-atm/blob/master/src/listeners/window.js) of event-handlers and SetInterval functions, that already need to be rewritten. So, if you're brave enough to redesign it all using React, please send me a pull request! ;)
 
 
 ### Why not ES6? 
-I thought of ES6 in the very beginning, but Electron does not support ES6 out of the box, and transpiling with [Babel](https://babeljs.io/) looked to me as a complete overdesign to me. Again, if you would like to have ES6 in this application, send me a pull request.
+I thought of ES6 in the very beginning, but Electron does not support ES6 out of the box, and transpiling with [Babel](https://babeljs.io/) looked as a complete overdesign to me. Again, if you would like to have ES6 in this application, just send me a pull request.
 
 
 ### I would like to use the application, but it seems that the feature X, that I really need is not yet implemented.

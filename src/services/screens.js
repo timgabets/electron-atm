@@ -89,7 +89,9 @@ function ScreensService(settings, log){
 
     var i = 3;
 
-    parsed.actions = []
+    parsed.actions = [];
+
+    this.text.init();
 
     while(i < data.length){
       if(data[i] === '\x0c'){

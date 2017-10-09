@@ -22,7 +22,7 @@ $(function () {
   // elements is a dictionary of elements to be shown by clicking on each nav button. The other elements are to be hidden
   var elements = {
     '#atm-button-menu': ['#atm-page', '#atm-buffers', '#atm-bottom-navbar'],
-    '#states-button-menu': ['#states-page', '#search-state-form'],
+    '#states-button-menu': ['#states-page', '#search-state-form', '#states-opcode-buffer-form'],
     '#fits-button-menu': ['#fits-page'],
     '#cards-button-menu': ['#cards-page', '#cards-page-form'],
   };

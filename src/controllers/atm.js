@@ -807,6 +807,7 @@ function ATM(settings, log) {
       log.info('Card ' + this.card.number + ' read');
       this.processState('000');
     }
+    this.setStatus('Processing Card');
   };
 
   /**

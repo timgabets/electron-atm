@@ -263,7 +263,10 @@ $(function () {
     function disableCardReader(status){
       $('#atm-page-cards-list').prop('disabled', true);
       $('#card-inserted').prop('disabled', true);
-      $('#card-read-form').prop('title', 'Card Reader is disabled while ATM status is ' + status);
+      if(status)
+        $('#card-read-form').prop('title', 'Card Reader is disabled while ATM status is ' + status);
+      else
+        $('#card-read-form').prop('title', '');
     };
 
     function enableCardReader(){
@@ -298,6 +301,15 @@ $(function () {
           enableCardReader();
           $('#atm-status-button').addClass('btn-success')
           $('#atm-status-icon').addClass('glyphicon-link');
+          break;
+
+        case 'Processing Card':
+          disableCardReader();      
+
+          clearButtonClasses();
+          clearIconClasses();
+          $('#atm-status-button').addClass('btn-success')
+          $('#atm-status-icon').addClass('glyphicon glyphicon-credit-card');
           break;
 
         case 'Out-Of-Service':

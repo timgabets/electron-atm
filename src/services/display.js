@@ -1,6 +1,7 @@
 
 const CursorService = require('../services/cursor.js');
 const ScreenTextService = require('../services/screentext.js');
+const Trace = require('../controllers/trace.js');
 
 function DisplayService(screens, log){
   this.screens = screens;
@@ -8,9 +9,12 @@ function DisplayService(screens, log){
   this.image_file;
   this.cursor = new CursorService();
   this.text = new ScreenTextService(this.cursor);
+  this.trace = new Trace();
 
   this.setScreen = function(screen){
     this.current_screen = screen;
+
+    //log.info(this.trace.object(screen));
 
     this.current_screen.actions.forEach((element) => {
       if(element === 'clear_screen'){
@@ -21,6 +25,9 @@ function DisplayService(screens, log){
         this.text.setCursorPosition(element['move_cursor']);
       } else if(element['add_text']){
         this.text.copy(element['add_text']);
+      } else if(element['insert_screen']){
+        var subscreen = this.screens.get(element['insert_screen']);
+        this.setScreen(subscreen);
       }
     });
 

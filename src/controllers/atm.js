@@ -118,7 +118,6 @@ function ATM(settings, log) {
         break;
       case 'Go out-of-service':
         this.setStatus('Out-Of-Service');
-        this.display.setScreenByNumber('001');
         this.initBuffers();
         this.activeFDKs = [];
         this.card = null;
@@ -850,6 +849,13 @@ function ATM(settings, log) {
 
   this.setStatus = function(status){
     this.status = status;
+
+    switch(status){
+      case 'Offline':
+      case 'Out-Of-Service':
+        this.display.setScreenByNumber('001');
+        break;
+    }
   };
 
   this.trace = new Trace();

@@ -53,13 +53,6 @@ var container = document.getElementById('mynetwork');
 var data = {'nodes': nodes, 'edges': edges}
 var graph = new vis.Network(container, data, options);
 
-// Focus on state 000
-graph.focus('000', {
-  scale: 0.3,
-  offset: {x:100, y:400}
-});
-
-
 $(function(){
   const mousetrap = nodeRequire('mousetrap');
 
@@ -71,7 +64,7 @@ $(function(){
       state.number, 
       {
         scale: 0.3,
-        offset: {x:400, y:300}
+        offset: {}
       }
     );  // Center
     graph.selectNodes([state.number,]);   // Select node
@@ -194,5 +187,5 @@ $(function(){
   });
 
   // Set to 000 initially
-  //updateState();
+  updateState();
 });

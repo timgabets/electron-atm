@@ -260,6 +260,18 @@ $(function () {
       $('#atm-status-icon').removeClass('glyphicon-remove-circle');
     };
 
+    function disableCardReader(status){
+      $('#atm-page-cards-list').prop('disabled', true);
+      $('#card-inserted').prop('disabled', true);
+      $('#card-read-form').prop('title', 'Card Reader is disabled while ATM status is ' + status);
+    };
+
+    function enableCardReader(){
+      $('#atm-page-cards-list').prop('disabled', false);
+      $('#card-inserted').prop('disabled', false);
+      $('#card-read-form').prop('title', '');
+    };
+
     if(atm.status != status){
       status = atm.status;
 
@@ -268,19 +280,22 @@ $(function () {
         case 'Offline':
           clearButtonClasses();
           clearIconClasses();
+          disableCardReader(status);
           $('#atm-status-icon').addClass('glyphicon-remove-circle');
-          $('#atm-status-button').addClass('btn-danger')
+          $('#atm-status-button').addClass('btn-danger');
           break;
 
         case 'Connected':
           clearButtonClasses();
           clearIconClasses();
+          disableCardReader(status);
           $('#atm-status-icon').addClass('glyphicon-link');
           break;
 
         case 'In-Service':
           clearButtonClasses();
           clearIconClasses();
+          enableCardReader();
           $('#atm-status-button').addClass('btn-success')
           $('#atm-status-icon').addClass('glyphicon-link');
           break;
@@ -288,6 +303,7 @@ $(function () {
         case 'Out-Of-Service':
           clearButtonClasses();        
           clearIconClasses();
+          disableCardReader(status);
           $('#atm-status-button').addClass('btn-warning')
           $('#atm-status-icon').addClass('glyphicon-wrench');
           break;

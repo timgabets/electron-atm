@@ -1,4 +1,5 @@
 October 2017
+	0.9.0 Enabling/Disabling card reader form when Offline/Out-of-service
 	0.8.9 Updated Window title, README; added page images
 	0.8.8 Navigation buttons logic refactored
 	0.8.7 Displaying FIT records on a FITs page

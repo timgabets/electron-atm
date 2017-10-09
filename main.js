@@ -10,7 +10,7 @@ electron.app.once('ready', function () {
   // Create a new window
   window = new electron.BrowserWindow({
     // Set the initial width to 800px
-    width: 1470,
+    width: 1480,
     // Set the initial height to 600px
     // IMPORTANT: change .fits-list height in style.css as well
     height: 700, 

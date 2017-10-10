@@ -1,4 +1,3 @@
-const Trace = require('../controllers/trace.js');
 const LevelsService = require('atm-state-levels');
 
 /**
@@ -6,12 +5,11 @@ const LevelsService = require('atm-state-levels');
  * @param {[type]} settings [description]
  * @param {[type]} log      [description]
  */
-function StatesService(settings, log){
+function StatesService(settings, log, trace){
     this.states = settings.get('states');
     if(!this.states)
         this.states = {};
     
-    this.trace = new Trace();
     this.levels = new LevelsService();
 
     /**
@@ -39,7 +37,8 @@ function StatesService(settings, log){
       var parsed = this.parseState(state);
       if(parsed){
         this.states[parsed.number] = parsed;
-        log.info('State ' + parsed.number + ' processed:' + this.trace.object(parsed));
+        if(trace)
+            log.info('State ' + parsed.number + ' processed:' + trace.object(parsed));
         settings.set('states', this.states);
         return true;
       }

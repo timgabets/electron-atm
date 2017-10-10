@@ -860,7 +860,7 @@ function ATM(settings, log) {
   };
 
   this.trace = new Trace();
-  this.states = new StatesService(settings, log);
+  this.states = new StatesService(settings, log, this.trace);
   this.screens = new ScreensService(settings, log);
   this.FITs = new FITsService(settings, log);
   this.crypto = new CryptoService(settings, log);

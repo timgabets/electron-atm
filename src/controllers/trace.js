@@ -1,6 +1,6 @@
 
 const Log = require('./log.js')
-const Timestamp = require('../services/timestamp.js')
+const Timestamp = require('atm-timestamp')
 
 function Trace(){
     /**

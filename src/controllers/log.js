@@ -1,4 +1,4 @@
-const Timestamp = require('../services/timestamp.js')
+const Timestamp = require('atm-timestamp');
 
 function Log(){
   this.log = function(data){

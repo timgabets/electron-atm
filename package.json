@@ -1,26 +1,26 @@
 {
   "name": "electron-atm",
   "productName": "Electron ATM",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "A simple APTRA Advance NDC ATM emulator",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js"
-    ,"test": "istanbul cover jasmine"
-    ,"pack": "electron-builder --dir"
-    ,"dist": "electron-builder"
-    ,"win32":"electron-builder --win"
-    ,"linux":"electron-builder --linux"
+    "start": "electron main.js",
+    "test": "istanbul cover jasmine",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "win32": "electron-builder --win",
+    "linux": "electron-builder --linux"
   },
   "repository": "https://github.com/timgabets/electron-atm",
   "keywords": [
     "Electron",
     "ATM"
   ],
-  "author": { 
-    "name" : "Tim Gabets"
-    ,"email" : "tim@gabets.ru"
-    ,"url" : "http://gabets.ru/"
+  "author": {
+    "name": "Tim Gabets",
+    "email": "tim@gabets.ru",
+    "url": "http://gabets.ru/"
   },
   "license": "LGPL-2.1",
   "devDependencies": {
@@ -29,6 +29,7 @@
     "jasmine": "^2.6.0"
   },
   "dependencies": {
+    "atm-timestamp": "^1.1.0",
     "bootstrap": "^3.3.7",
     "electron-settings": "^3.1.1",
     "istanbul": "^0.4.5",
@@ -39,6 +40,6 @@
     "vis": "^4.20.1"
   },
   "build": {
-   "appId": "com.electron-atm"
- }
+    "appId": "com.electron-atm"
+  }
 }

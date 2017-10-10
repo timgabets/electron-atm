@@ -1,4 +1,4 @@
-const StatesService = nodeRequire('./src/services/states.js');
+const StatesService = nodeRequire('atm-states');
 const ScreensService = nodeRequire('./src/services/screens.js');
 const settings = nodeRequire('electron-settings');
 //const Log = nodeRequire('./src/controllers/log.js');
@@ -9,7 +9,7 @@ const ATM = nodeRequire('./src/controllers/atm.js');
 let trace = new Trace();
 let atm = new ATM(settings, log);
 
-let states = new StatesService(settings, log);
+let states = new StatesService(settings, log, trace);
 let screens = new ScreensService(settings, log);
 
 var options = {

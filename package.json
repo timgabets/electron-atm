@@ -1,7 +1,7 @@
 {
   "name": "electron-atm",
   "productName": "Electron ATM",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "A simple APTRA Advance NDC ATM emulator",
   "main": "main.js",
   "scripts": {
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "atm-state-levels": "^1.0.6",
+    "atm-states": "^0.1.7",
     "atm-timestamp": "^1.1.0",
     "bootstrap": "^3.3.7",
     "electron-settings": "^3.1.1",

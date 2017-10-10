@@ -1,4 +1,4 @@
-const StatesService = require('../services/states.js');
+const StatesService = require('atm-states');
 const ScreensService = require('../services/screens.js');
 const FITsService = require('../services/fits.js');
 const CryptoService = require('../services/crypto.js');

@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "atm-state-levels": "^1.0.6",
-    "atm-states": "0.2.x",
+    "atm-states": "^0.2.1",
     "atm-timestamp": "^1.1.0",
     "bootstrap": "^3.3.7",
     "electron-settings": "^3.1.1",

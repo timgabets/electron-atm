@@ -2,8 +2,9 @@ const LevelsService = require('atm-state-levels');
 
 /**
  * [StatesService description]
- * @param {[type]} settings [description]
- * @param {[type]} log      [description]
+ * @param {[type]} settings [settings object, created by require('electron-settings')]
+ * @param {[type]} log      [optional, log helper]
+ * @param {[type]} trace    [optional, trace helper]
  */
 function StatesService(settings, log, trace){
     this.states = settings.get('states');
@@ -37,7 +38,7 @@ function StatesService(settings, log, trace){
       var parsed = this.parseState(state);
       if(parsed){
         this.states[parsed.number] = parsed;
-        if(trace)
+        if(log && trace)
             log.info('State ' + parsed.number + ' processed:' + trace.object(parsed));
         settings.set('states', this.states);
         return true;
@@ -580,7 +581,8 @@ StatesService.prototype.add = function(data){
   if(typeof data === 'object') {
     for (var i = 0; i < data.length; i++){
       if(!this.addState(data[i])){
-        log.info('Error processing state ' + data[i] );
+        if(log)
+            log.info('Error processing state ' + data[i] );
         return false;
       }
     }

@@ -1,5 +1,6 @@
 {
   "name": "electron-atm",
+  "productName": "Electron ATM",
   "version": "0.9.1",
   "description": "A simple APTRA Advance NDC ATM emulator",
   "main": "main.js",
@@ -9,6 +10,7 @@
     ,"pack": "electron-builder --dir"
     ,"dist": "electron-builder"
     ,"win32":"electron-builder --win"
+    ,"linux":"electron-builder --linux"
   },
   "repository": "https://github.com/timgabets/electron-atm",
   "keywords": [

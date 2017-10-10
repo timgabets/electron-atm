@@ -1,5 +1,5 @@
 const Trace = require('../controllers/trace.js');
-const LevelsService = require('./levels.js');
+const LevelsService = require('atm-state-levels');
 
 /**
  * [StatesService description]

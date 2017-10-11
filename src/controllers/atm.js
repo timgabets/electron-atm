@@ -7,6 +7,7 @@ const OperationCodeBufferService = require('atm-opcode-buffer');
 const Trace = require('../controllers/trace.js');
 const Pinblock = require('../controllers/pinblock.js');
 const des3 = require('node-cardcrypto').des;
+const ATMHardwareService = require('atm-hardware');
 
 function ATM(settings, log) {
   /**
@@ -71,13 +72,12 @@ function ATM(settings, log) {
     switch(command_code){
       case 'Send Configuration Information':
         reply.config_id = this.getConfigID();
-        // hardware fitness
-        reply.hardware_fitness = '0000000000000000000000';
+        reply.hardware_fitness = this.hardware.getHardwareFitness();
         reply.hardware_configuration = '157F000901020483000001B1000000010202047F7F00';
-        reply.supplies_status = '00011111001000011130011';
+        reply.supplies_status = this.hardware.getSuppliesStatus();
         reply.sensor_status = '000000000000';
-        reply.release_number = '030300';
-        reply.ndc_software_id = 'G531‐0283';
+        reply.release_number = this.hardware.getReleaseNumber();
+        reply.ndc_software_id = this.hardware.getHarwareID();
 
         break;
 
@@ -893,6 +893,7 @@ function ATM(settings, log) {
   this.display = new DisplayService(this.screens, log);
   this.pinblock = new Pinblock();
   this.opcode = new OperationCodeBufferService();
+  this.hardware = new ATMHardwareService();
 
   this.setStatus('Offline');
   this.initBuffers();

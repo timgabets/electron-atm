@@ -1208,9 +1208,9 @@ describe("ATM", function() {
       var reply = {
         terminal_command: 'Send Configuration Information',
         config_id: '0789',
-        hardware_fitness: '0000000000000000000000',
+        hardware_fitness: '00000000000000000000000000000000000000',
         hardware_configuration: '157F000901020483000001B1000000010202047F7F00',
-        supplies_status: '00011111001000011130011',
+        supplies_status: '00000000000000000000000000',
         sensor_status: '000000000000',
         release_number: '030300',
         ndc_software_id: 'G531‐0283'

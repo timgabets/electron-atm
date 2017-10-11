@@ -18,7 +18,7 @@ $(function () {
     '#states-button-menu', 
     '#fits-button-menu', 
     '#cards-button-menu',
-    '#cassettes-button-menu'];
+    '#hardware-button-menu'];
 
   // elements is a dictionary of elements to be shown by clicking on each nav button. The other elements are to be hidden
   var elements = {
@@ -26,7 +26,7 @@ $(function () {
     '#states-button-menu': ['#states-page', '#search-state-form', '#states-opcode-buffer-form'],
     '#fits-button-menu': ['#fits-page'],
     '#cards-button-menu': ['#cards-page', '#cards-page-form'],
-    '#cassettes-button-menu': ['#cassettes-page'],
+    '#hardware-button-menu': ['#hardware-page'],
   };
 
   nav_buttons.forEach((button) => {

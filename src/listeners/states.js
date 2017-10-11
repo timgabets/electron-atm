@@ -182,7 +182,6 @@ $(function(){
   });
 
   ipc.on('ui-change-current-state-on-states-page', (event, state) => {
-    console.log(state);
     updateState(state);
   });
 

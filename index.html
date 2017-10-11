@@ -39,7 +39,7 @@
               <li><button type="button" id="fits-button-menu" data-section="menus" class="nav-button">FITs</button></li>
               <li><button type="button" id="emv-button-menu" data-section="menus" class="nav-button">EMV</button></li>
               <li><button type="button" id="cards-button-menu" data-section="menus" class="nav-button">Cards</button></li>
-              <li><button type="button" id="cassettes-button-menu" data-section="menus" class="nav-button">Cassettes</button></li>
+              <li><button type="button" id="hardware-button-menu" data-section="menus" class="nav-button">Hardware</button></li>
             </ul>
 
             <form id="search-state-form" class="navbar-form navbar-left" hidden="true">
@@ -203,8 +203,53 @@ Number) on card">PANDX</th>
       </div>
 
       <!-- CASSETTES -->
-      <div id="cassettes-page" hidden="true">
-        TODO: Cassettes
+      <div id="hardware-page" hidden="true">
+        <div class="row">
+          <form id="cassette-1-form" class="navbar-form navbar-left" title="">
+            <div class="row">
+              <div class="col-xs-2">
+                <label for="loaded" class="control-label">Loaded</label>
+                <input type="number" class="form-control buffer-6" id="loaded" name="loaded" value="" placeholder="00000"></input>
+                <label id="loaded-error" class="error" for="loaded"></label>
+              </div>
+
+              <div class="col-xs-2">
+                <label for="rejected" class="control-label">Rejected</label>
+                <input type="number" class="form-control buffer-6" id="rejected" name="rejected" value="" placeholder="00000"></input>
+                <label id="rejected-error" class="error" for="rejected"></label>
+              </div>
+
+              <div class="col-xs-2">
+                <label for="dispensed" class="control-label">Dispensed</label>
+                <input type="number" class="form-control buffer-6" id="dispensed" name="dispensed" value="" placeholder="00000"></input>
+                <label id="dispensed-error" class="error" for="dispensed"></label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-5">
+                <select class="form-control" id="cassette-1-fitness">
+                  <option value="0">0 No error</option>
+                  <option value="1">1 Routine</option>
+                  <option value="2">2 Warning</option>
+                  <option value="3">3 Suspend</option>
+                  <option value="4">4 Fatal</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <select class="form-control" id="cassette-1-supply">
+                  <option value="0">0 </option>
+                  <option value="1">1 Good</option>
+                  <option value="2">2 Low</option>
+                  <option value="3">3 Out</option>
+                  <option value="4">4 Overfill</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
 
       <!-- ATM -->

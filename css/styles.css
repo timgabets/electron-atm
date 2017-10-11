@@ -63,6 +63,10 @@ html, body, .container-fluid {
   margin-right:10px;
 }
 
+.cassette-select {
+  font-size: 10px;
+}
+
 .states-screen {
   height: 264px;
   display:inline-block;

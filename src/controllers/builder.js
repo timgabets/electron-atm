@@ -29,24 +29,39 @@ Builder.prototype.build = function(object){
               message += 'C';
               break;
             case 'Terminal State':
-              if(object.config_id){
-                // Send Configuration ID
-                message += 'F\x1C6' + object.config_id;
-              } else if(object.tsn) {
-                // Send Supply Counters
-                message += 'F\x1C2';
-                message += object.tsn;
-                message += object.transaction_count;
-                message += object.notes_in_cassettes;
-                message += object.notes_rejected;
-                message += object.notes_dispensed;
-                message += object.last_trxn_notes_dispensed;
-                message += object.card_captured;
-                message += object.envelopes_deposited;
-                message += object.camera_film_remaining;
-                message += object.last_envelope_serial;
-              }
+              switch(object.terminal_command){
+                case 'Send Configuration Information':
+                  message += 'F\x1C1';
+                  message += object.config_id + '\x1C';
+                  message += object.hardware_fitness + '\x1C';
+                  message += object.hardware_configuration + '\x1C';
+                  message += object.supplies_status + '\x1C';
+                  message += object.sensor_status + '\x1C';
+                  message += object.release_number + '\x1C';
+                  message += object.ndc_software_id;
+                  break;
 
+                case 'Send Configuration ID':
+                  message += 'F\x1C6' + object.config_id;
+                  break;
+
+                case 'Send Supply Counters':
+                  message += 'F\x1C2';
+                  message += object.tsn;
+                  message += object.transaction_count;
+                  message += object.notes_in_cassettes;
+                  message += object.notes_rejected;
+                  message += object.notes_dispensed;
+                  message += object.last_trxn_notes_dispensed;
+                  message += object.card_captured;
+                  message += object.envelopes_deposited;
+                  message += object.camera_film_remaining;
+                  message += object.last_envelope_serial;
+                  break;
+
+                default:
+                  break;
+              }
               break;
             default:
               message += 'A';

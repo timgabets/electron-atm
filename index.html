@@ -34,11 +34,12 @@
           <div class="collapse navbar-collapse menu-buttons" id="menu-buttons">
             <ul class="nav navbar-nav">              
               <li><button type="button" id="atm-button-menu" data-section="menus" class="nav-button">ATM</button></li>
-              <li><button type="button" id="states-button-menu" data-section="menus" class="nav-button">States</button></li>
+              <li><button type="button" id="states-button-menu" data-section="menus" class="nav-button active">States</button></li>
               <li><button type="button" id="screens-button-menu" data-section="menus" class="nav-button">Screens</button></li>
               <li><button type="button" id="fits-button-menu" data-section="menus" class="nav-button">FITs</button></li>
               <li><button type="button" id="emv-button-menu" data-section="menus" class="nav-button">EMV</button></li>
               <li><button type="button" id="cards-button-menu" data-section="menus" class="nav-button">Cards</button></li>
+              <li><button type="button" id="cassettes-button-menu" data-section="menus" class="nav-button">Cassettes</button></li>
             </ul>
 
             <form id="search-state-form" class="navbar-form navbar-left" hidden="true">
@@ -201,6 +202,11 @@ Number) on card">PANDX</th>
         </div>
       </div>
 
+      <!-- CASSETTES -->
+      <div id="cassettes-page" hidden="true">
+        TODO: Cassettes
+      </div>
+
       <!-- ATM -->
       <div class="row main-area" id="atm-page">        
         <div class="col-md-1 fdk-button-block">
@@ -282,10 +288,10 @@ Number) on card">PANDX</th>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form id="card-read-form" class="navbar-form navbar-left" title="">
               <div class="form-group">
-                <select class="form-control" id="atm-page-cards-list" disabled="true">
+                <select class="form-control" id="atm-page-cards-list">
                 </select>
               </div> 
-              <button type="submit" class="btn btn-default" id="card-inserted" disabled="true">Read Card</button>
+              <button type="submit" class="btn btn-default" id="card-inserted">Read Card</button>
             </form>
       
             <form id="keys-form buffers" class="navbar-form navbar-right keys-form ">

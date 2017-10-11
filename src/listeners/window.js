@@ -17,7 +17,8 @@ $(function () {
     '#atm-button-menu', 
     '#states-button-menu', 
     '#fits-button-menu', 
-    '#cards-button-menu'];
+    '#cards-button-menu',
+    '#cassettes-button-menu'];
 
   // elements is a dictionary of elements to be shown by clicking on each nav button. The other elements are to be hidden
   var elements = {
@@ -25,6 +26,7 @@ $(function () {
     '#states-button-menu': ['#states-page', '#search-state-form', '#states-opcode-buffer-form'],
     '#fits-button-menu': ['#fits-page'],
     '#cards-button-menu': ['#cards-page', '#cards-page-form'],
+    '#cassettes-button-menu': ['#cassettes-page'],
   };
 
   nav_buttons.forEach((button) => {
@@ -283,7 +285,7 @@ $(function () {
         case 'Offline':
           clearButtonClasses();
           clearIconClasses();
-          disableCardReader(status);
+          //disableCardReader(status);
           $('#atm-status-icon').addClass('glyphicon-remove-circle');
           $('#atm-status-button').addClass('btn-danger');
           break;
@@ -291,31 +293,31 @@ $(function () {
         case 'Connected':
           clearButtonClasses();
           clearIconClasses();
-          disableCardReader(status);
+          //disableCardReader(status);
           $('#atm-status-icon').addClass('glyphicon-link');
           break;
 
         case 'In-Service':
           clearButtonClasses();
           clearIconClasses();
-          enableCardReader();
+          //enableCardReader();
           $('#atm-status-button').addClass('btn-success')
           $('#atm-status-icon').addClass('glyphicon-link');
           break;
 
         case 'Processing Card':
-          disableCardReader();      
+          //disableCardReader();      
 
           clearButtonClasses();
           clearIconClasses();
-          $('#atm-status-button').addClass('btn-success')
+          //$('#atm-status-button').addClass('btn-success')
           $('#atm-status-icon').addClass('glyphicon glyphicon-credit-card');
           break;
 
         case 'Out-Of-Service':
           clearButtonClasses();        
           clearIconClasses();
-          disableCardReader(status);
+          //disableCardReader(status);
           $('#atm-status-button').addClass('btn-warning')
           $('#atm-status-icon').addClass('glyphicon-wrench');
           break;

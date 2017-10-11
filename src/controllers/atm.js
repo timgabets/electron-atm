@@ -62,6 +62,41 @@ function ATM(settings, log) {
     }
   }
 
+  this.getTerminalStateReply = function(command_code){
+    reply = {};
+
+    if(command_code)
+        reply.terminal_command = command_code;
+
+    switch(command_code){
+      case 'Send Configuration Information':
+        reply.config_id = this.getConfigID();
+        // hardware fitness
+        reply.hardware_fitness = '0000000000000000000000';
+        reply.hardware_configuration = '157F000901020483000001B1000000010202047F7F00';
+        reply.supplies_status = '00011111001000011130011';
+        reply.sensor_status = '000000000000';
+        reply.release_number = '030300';
+        reply.ndc_software_id = 'G531‐0283';
+
+        break;
+
+      case 'Send Configuration ID':
+        reply.config_id = this.getConfigID();
+        break;
+
+      case 'Send Supply Counters':
+        var counters = this.getSupplyCounters();
+        for(var c in counters) reply[c] = counters[c];
+        break;
+
+      default:
+        break;
+    }
+
+    return reply;
+  };
+
   /**
    * [replySolicitedStatus description]
    * @param  {[type]} status [description]
@@ -81,19 +116,9 @@ function ATM(settings, log) {
         
       case 'Terminal State':
         reply.status_descriptor = status;
-        switch(command_code){
-          case 'Send Configuration ID':
-            reply.config_id = this.getConfigID();
-            break;
+        data = this.getTerminalStateReply(command_code);
 
-          case 'Send Supply Counters':
-            var counters = this.getSupplyCounters();
-            for(var c in counters) reply[c] = counters[c];
-            break;
-
-          default:
-            break;
-        }
+        for(var c in data) reply[c] = data[c];
         break;
 
       default:
@@ -122,6 +147,7 @@ function ATM(settings, log) {
         this.activeFDKs = [];
         this.card = null;
         break;
+      case 'Send Configuration Information':
       case 'Send Configuration ID':
       case 'Send Supply Counters':
         return this.replySolicitedStatus('Terminal State', data.command_code);

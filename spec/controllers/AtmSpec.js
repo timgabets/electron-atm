@@ -1168,4 +1168,54 @@ describe("ATM", function() {
     });
   });
 
+  describe('getTerminalStateReply()', function(){
+    it('should return empty object in case of unknown command code', function(){
+      var reply = {};      
+      expect(atm.getTerminalStateReply()).toEqual(reply);    
+    });
+
+    it('should return config ID in response to \'Send Configuration ID\'', function(){
+      atm.setConfigID('0034');
+
+      var reply = {
+        terminal_command: 'Send Configuration ID',
+        config_id: '0034'
+      };      
+      expect(atm.getTerminalStateReply('Send Configuration ID')).toEqual(reply);    
+    });
+
+    it('should return counters data in response to \'Send Supply Counters\'', function(){
+      atm.initCounters();
+      var reply = {
+        terminal_command: 'Send Supply Counters',
+        tsn: '0000',
+        transaction_count: '0000000',
+        notes_in_cassettes: '00011000220003300044',
+        notes_rejected: '00000000000000000000',
+        notes_dispensed: '00000000000000000000',
+        last_trxn_notes_dispensed: '00000000000000000000',
+        card_captured: '00000',
+        envelopes_deposited: '00000',
+        camera_film_remaining: '00000',
+        last_envelope_serial: '00000'
+      };      
+      expect(atm.getTerminalStateReply('Send Supply Counters')).toEqual(reply);    
+    });
+
+    it('should respond to \'Send Configuration Information\'', function(){
+      atm.setConfigID('0789');
+
+      var reply = {
+        terminal_command: 'Send Configuration Information',
+        config_id: '0789',
+        hardware_fitness: '0000000000000000000000',
+        hardware_configuration: '157F000901020483000001B1000000010202047F7F00',
+        supplies_status: '00011111001000011130011',
+        sensor_status: '000000000000',
+        release_number: '030300',
+        ndc_software_id: 'G531‐0283'
+      };
+      expect(atm.getTerminalStateReply('Send Configuration Information')).toEqual(reply);    
+    })
+  });
 });

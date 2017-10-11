@@ -57,7 +57,11 @@ function Parser(){
             case '4':
                 parsed.command_code = 'Send Supply Counters';
                 break;
+            case '7':
+                parsed.command_code = 'Send Configuration Information';
+                break;
             default:
+                parsed.command_code = splitted[3][0];
                 break;
         }
         

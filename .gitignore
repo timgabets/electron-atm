@@ -3,3 +3,4 @@ coverage
 yarn.lock
 dist/
 *.tgz
+*.log

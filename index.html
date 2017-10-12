@@ -204,52 +204,203 @@ Number) on card">PANDX</th>
 
       <!-- CASSETTES -->
       <div id="hardware-page" hidden="true">
-        <div class="row">
-          <form id="cassette-1-form" class="navbar-form navbar-left" title="">
+        <div class="row" id="cassettes-row">
+          <div class="col-xs-3 cassette-area">
             <div class="row">
-              <div class="col-xs-2">
-                <label for="loaded" class="control-label">Loaded</label>
-                <input type="number" class="form-control buffer-6" id="loaded" name="loaded" value="" placeholder="00000"></input>
-                <label id="loaded-error" class="error" for="loaded"></label>
-              </div>
+              Cassette 1
+              <form id="cassette-1-form" class="navbar-form navbar-left" title="">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <label for="loaded" class="control-label">Loaded</label>
+                    <input type="number" class="form-control buffer-5" id="loaded" name="loaded" value="" placeholder="00000"></input>
+                    <label id="loaded-error" class="error" for="loaded"></label>
+                  </div>
 
-              <div class="col-xs-2">
-                <label for="rejected" class="control-label">Rejected</label>
-                <input type="number" class="form-control buffer-6" id="rejected" name="rejected" value="" placeholder="00000"></input>
-                <label id="rejected-error" class="error" for="rejected"></label>
-              </div>
+                  <div class="col-xs-4">
+                    <label for="rejected" class="control-label">Rejected</label>
+                    <input type="number" class="form-control buffer-5" id="rejected" name="rejected" value="" placeholder="00000"></input>
+                    <label id="rejected-error" class="error" for="rejected"></label>
+                  </div>
 
-              <div class="col-xs-2">
-                <label for="dispensed" class="control-label">Dispensed</label>
-                <input type="number" class="form-control buffer-6" id="dispensed" name="dispensed" value="" placeholder="00000"></input>
-                <label id="dispensed-error" class="error" for="dispensed"></label>
-              </div>
+                  <div class="col-xs-4">
+                    <label for="dispensed" class="control-label">Dispensed</label>
+                    <input type="number" class="form-control buffer-5" id="dispensed" name="dispensed" value="" placeholder="00000"></input>
+                    <label id="dispensed-error" class="error" for="dispensed"></label>
+                  </div>
+                </div>
+<!--
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select class="form-control" id="cassette-1-fitness">
+                      <option value="0">0 - No error</option>
+                      <option value="1">1 - Routine</option>
+                      <option value="2">2 - Warning</option>
+                      <option value="3">3 - Suspend</option>
+                      <option value="4">4 - Fatal</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-4">
+                    <select class="form-control" id="cassette-1-supply">
+                      <option value="0">0 - Not configured</option>
+                      <option value="1">1 - Good state</option>
+                      <option value="2">2 - Media Low</option>
+                      <option value="3">3 - Media Out</option>
+                      <option value="4">4 - Overfill</option>
+                    </select>
+                  </div>
+                </div>
+-->                
+              </form>
             </div>
+          </div>
 
+          <div class="col-xs-3 cassette-area">
             <div class="row">
-              <div class="col-xs-5">
-                <select class="form-control" id="cassette-1-fitness">
-                  <option value="0">0 No error</option>
-                  <option value="1">1 Routine</option>
-                  <option value="2">2 Warning</option>
-                  <option value="3">3 Suspend</option>
-                  <option value="4">4 Fatal</option>
-                </select>
-              </div>
+              Cassette 2
+              <form id="cassette-2-form" class="navbar-form navbar-left" title="">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <label for="loaded" class="control-label">Loaded</label>
+                    <input type="number" class="form-control buffer-5" id="loaded" name="loaded" value="" placeholder="00000"></input>
+                    <label id="loaded-error" class="error" for="loaded"></label>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <label for="rejected" class="control-label">Rejected</label>
+                    <input type="number" class="form-control buffer-5" id="rejected" name="rejected" value="" placeholder="00000"></input>
+                    <label id="rejected-error" class="error" for="rejected"></label>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <label for="dispensed" class="control-label">Dispensed</label>
+                    <input type="number" class="form-control buffer-5" id="dispensed" name="dispensed" value="" placeholder="00000"></input>
+                    <label id="dispensed-error" class="error" for="dispensed"></label>
+                  </div>
+                </div>
+<!--
+                <div class="row">
+                  <div class="col-xs-6">
+                    <select class="form-control" id="cassette-2-fitness">
+                      <option value="0">0 - No error</option>
+                      <option value="1">1 - Routine</option>
+                      <option value="2">2 - Warning</option>
+                      <option value="3">3 - Suspend</option>
+                      <option value="4">4 - Fatal</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-6">
+                    <select class="form-control" id="cassette-2-supply">
+                      <option value="0">0 - Not configured</option>
+                      <option value="1">1 - Good state</option>
+                      <option value="2">2 - Media Low</option>
+                      <option value="3">3 - Media Out</option>
+                      <option value="4">4 - Overfill</option>
+                    </select>
+                  </div>
+                </div>
+-->                
+              </form>
             </div>
+          </div>
+
+          <div class="col-xs-3 cassette-area">
             <div class="row">
-              <div class="col-xs-7">
-                <select class="form-control" id="cassette-1-supply">
-                  <option value="0">0 </option>
-                  <option value="1">1 Good</option>
-                  <option value="2">2 Low</option>
-                  <option value="3">3 Out</option>
-                  <option value="4">4 Overfill</option>
-                </select>
-              </div>
+              Cassette 3
+              <form id="cassette-3-form" class="navbar-form navbar-left" title="">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <label for="loaded" class="control-label">Loaded</label>
+                    <input type="number" class="form-control buffer-5" id="loaded" name="loaded" value="" placeholder="00000"></input>
+                    <label id="loaded-error" class="error" for="loaded"></label>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <label for="rejected" class="control-label">Rejected</label>
+                    <input type="number" class="form-control buffer-5" id="rejected" name="rejected" value="" placeholder="00000"></input>
+                    <label id="rejected-error" class="error" for="rejected"></label>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <label for="dispensed" class="control-label">Dispensed</label>
+                    <input type="number" class="form-control buffer-5" id="dispensed" name="dispensed" value="" placeholder="00000"></input>
+                    <label id="dispensed-error" class="error" for="dispensed"></label>
+                  </div>
+                </div>
+<!--
+                <div class="row">
+                  <div class="col-xs-6">
+                    <select class="form-control" id="cassette-3-fitness">
+                      <option value="0">0 - No error</option>
+                      <option value="1">1 - Routine</option>
+                      <option value="2">2 - Warning</option>
+                      <option value="3">3 - Suspend</option>
+                      <option value="4">4 - Fatal</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-6">
+                    <select class="form-control" id="cassette-3-supply">
+                      <option value="0">0 - Not configured</option>
+                      <option value="1">1 - Good state</option>
+                      <option value="2">2 - Media Low</option>
+                      <option value="3">3 - Media Out</option>
+                      <option value="4">4 - Overfill</option>
+                    </select>
+                  </div>
+                </div>
+-->                
+              </form>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <div class="col-xs-3 cassette-area">
+            <div class="row">
+              Cassette 4
+              <form id="cassette-4-form" class="navbar-form navbar-left" title="">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <label for="loaded" class="control-label">Loaded</label>
+                    <input type="number" class="form-control buffer-5" id="loaded" name="loaded" value="" placeholder="00000"></input>
+                    <label id="loaded-error" class="error" for="loaded"></label>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <label for="rejected" class="control-label">Rejected</label>
+                    <input type="number" class="form-control buffer-5" id="rejected" name="rejected" value="" placeholder="00000"></input>
+                    <label id="rejected-error" class="error" for="rejected"></label>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <label for="dispensed" class="control-label">Dispensed</label>
+                    <input type="number" class="form-control buffer-5" id="dispensed" name="dispensed" value="" placeholder="00000"></input>
+                    <label id="dispensed-error" class="error" for="dispensed"></label>
+                  </div>
+                </div>
+<!--
+                <div class="row">
+                  <div class="col-xs-6">
+                    <select class="form-control" id="cassette-4-fitness">
+                      <option value="0">0 - No error</option>
+                      <option value="1">1 - Routine</option>
+                      <option value="2">2 - Warning</option>
+                      <option value="3">3 - Suspend</option>
+                      <option value="4">4 - Fatal</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-6">
+                    <select class="form-control" id="cassette-4-supply">
+                      <option value="0">0 - Not configured</option>
+                      <option value="1">1 - Good state</option>
+                      <option value="2">2 - Media Low</option>
+                      <option value="3">3 - Media Out</option>
+                      <option value="4">4 - Overfill</option>
+                    </select>
+                  </div>
+                </div>
+-->          
+              </form>
+            </div>
+          </div>
+        </div>       
       </div>
 
       <!-- ATM -->

@@ -16,7 +16,9 @@ $(function () {
   var nav_buttons = [
     '#atm-button-menu', 
     '#states-button-menu', 
+    '#screens-button-menu', 
     '#fits-button-menu', 
+    '#emv-button-menu', 
     '#cards-button-menu',
     '#hardware-button-menu'];
 
@@ -24,7 +26,9 @@ $(function () {
   var elements = {
     '#atm-button-menu': ['#atm-page', '#atm-buffers', '#atm-bottom-navbar'],
     '#states-button-menu': ['#states-page', '#search-state-form', '#states-opcode-buffer-form'],
+    '#screens-button-menu': ['#screens-page'],
     '#fits-button-menu': ['#fits-page'],
+    '#emv-button-menu': ['#emv-page'],
     '#cards-button-menu': ['#cards-page', '#cards-page-form'],
     '#hardware-button-menu': ['#hardware-page'],
   };

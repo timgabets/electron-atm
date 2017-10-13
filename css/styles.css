@@ -76,16 +76,10 @@ html, body, .container-fluid {
 .state-details {
   margin-top:10px;
   height: 285px;
-  width: 320px;
   color: #575B5E;
   font-size: 10px;
   font-family: monospace;
   white-space: pre-wrap;
-  border:1px solid lightgrey;
-  border-radius: 5px;
-}
-
-.area {
   border:1px solid lightgrey;
   border-radius: 5px;
 }

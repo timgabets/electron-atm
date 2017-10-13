@@ -98,11 +98,11 @@ $(function(){
     if(extension_state)
       $('#state-details').append(trace.object(extension_state));
 
+    $('#states-to').html('');
     if(state.states_to){
-      $('#states-to').html('');
       state.states_to.forEach(state_to => {
         var state = states.get(state_to);
-        $('#states-to').append('<button class="btn btn-sm state-button" id="state-to-' + state.number + '">' + state.number + state.type + ' </button>');
+        $('#states-to').append('<button class="btn btn-sm state-button" id="state-to-' + state.number + '">' + state.number + ' ' + state.type + ' </button>');
         $('#state-to-' + state_to).on('click', _ => {
           updateState(states.get(state_to));
         })

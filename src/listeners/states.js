@@ -34,7 +34,20 @@ nodes = states.getNodes();
 
 nodes.forEach(node => {
   node['size'] = 160;
-  node['color'] = 'silver';
+
+  switch(node.label[4]){
+    case 'J':
+      node['color'] = 'lightcoral';
+      break;
+
+    case 'I':
+      node['color'] = 'palegreen';
+      break;
+
+    default:
+      node['color'] = 'silver';
+  }
+
   node['shape'] = 'box';
   node['font'] = {'size': '32', 'face': 'monospace', 'align': 'center'};
   node['heightConstraint'] = { minimum: 100 };

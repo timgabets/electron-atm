@@ -55,8 +55,8 @@ html, body, .container-fluid {
 
 .mynetwork {
   width: 940px;
-  height: 565px;
-  border: 1px solid;
+  height: 570px;
+  border: 1px solid lightgrey;
   border-radius: 5px;
   margin-left: 15px;
   display:inline-block;
@@ -75,14 +75,25 @@ html, body, .container-fluid {
 
 .state-details {
   margin-top:10px;
-  height: 280px;
+  height: 236px;
   color: #575B5E;
   font-size: 10px;
   font-family: monospace;
   white-space: pre-wrap;
-  border:1px solid #021a40;
+  border:1px solid lightgrey;
   border-radius: 5px;
-  margin-right: 10px;
+}
+
+.area {
+  border:1px solid lightgrey;
+  border-radius: 5px;
+}
+
+.state-button {
+  margin-top:2px;
+  margin-bottom:2px;
+  margin-left:2px;
+  margin-right:2px;
 }
 
 .letter-spacing {
@@ -97,7 +108,7 @@ html, body, .container-fluid {
   font-size: 11px;
   font-family: monospace;
   white-space: pre-wrap;
-  border:1px solid #021a40;
+  border:1px solid lightgrey;
 }
 
 .fits-area {
@@ -207,7 +218,7 @@ a.disabled {
 }
 
 img {
-  border:1px solid #021a40;
+  border:1px solid lightgrey;
   border-radius: 5px;
 }
 

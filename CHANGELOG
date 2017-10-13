@@ -1,4 +1,5 @@
 October 2017
+	0.9.9 Added exit states list on a States page
 	0.9.8 using 'atm-hardware' npm module
 	0.9.7 implemented reply to 'Send Configuration Information'
 	0.9.6 Using atm-opcode-buffer npm module

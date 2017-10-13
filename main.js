@@ -36,7 +36,7 @@ electron.app.once('ready', function () {
   // Show window when page is ready
   window.once('ready-to-show', function () {
     window.show()
-    window.webContents.send('network-connect')
+    //window.webContents.send('network-connect')
   })
 })
 

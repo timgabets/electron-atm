@@ -99,25 +99,25 @@
 
             <div class="form-group col-md-6">
               <label for="atm_host">ATM Host address</label>
-              <input type="text" class="form-control" name="" id="atm_host" placeholder="atm.example.com">
+              <input type="text" class="form-control" name="" id="atm_host" placeholder="atm.example.com" required>
             </div>
 
             <div class="form-group col-md-3">
               <label for="port">TCP Port</label>
-              <input type="text" class="form-control" name="port" id="" placeholder="1234">
+              <input type="text" class="form-control" name="port" id="" placeholder="1234" required>
             </div>
 
             <div class="form-group col-md-3">
               <label for="luno">LUNO(Optional)</label>
-              <input type="text" class="form-control" name="" id="luno" placeholder="0000">
+              <input type="text" class="form-control" name="" id="luno" placeholder="0000" required>
             </div>
           </fieldset>
 
           <fieldset>
             <legend>Keys</legend>
             <div class="form-group col-md-9">
-              <label for="port">Master Key</label>
-              <input type="text" class="form-control" name="port" id="" placeholder="Terminal Master Key">
+              <label for="port">Terminal Master Key</label>
+              <input type="text" class="form-control" name="port" id="" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)">
             </div>
 
             <div class="form-group col-md-3">
@@ -127,7 +127,7 @@
 
             <div class="form-group col-md-9">
               <label for="port">Communications Key</label>
-              <input type="text" class="form-control" name="port" id="" placeholder="Communications Key">
+              <input type="text" class="form-control" name="port" id="" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)">
             </div>
 
             <div class="form-group col-md-3">
@@ -137,17 +137,8 @@
           </fieldset>
 
           <fieldset>
-            <legend>Optional Details</legend>
-
-            <div class="form-group col-md-6">
-              <label for="country">Country of Residence</label>
-              <select class="form-control" name="" id="country">
-                <option>Country 1</option>
-                <option>Country 2</option>
-                <option>Country 3</option>
-              </select>
-            </div>
-
+            <legend>Images</legend>
+<!--
             <div class="form-group col-md-12">
               <label for="found_site">How did you find out about the site?</label>
               <select class="form-control" name="" id="found_site">
@@ -165,6 +156,11 @@
               <label for="specify">Please Specify</label>
               <textarea class="form-control" id="specify" name=""></textarea>
             </div>
+-->
+          <div class="form-group col-md-12">
+            <label for="port">Image Path Name</label>
+            <input type="text" class="form-control" name="port" id="" placeholder="Path to the ATM images">
+          </div>
 
           </fieldset>
 
@@ -173,18 +169,22 @@
               <div class="checkbox">
                 <label>
                   <input type="checkbox" value="" id="">
-                  I accept the <a href="#">terms and conditions</a>.
+                  Save this profile for a future use
                 </label>
               </div>
             </div>
           </div>
 
+          <div class="form-group col-md-12">
+            <label for="port">Profile Name</label>
+            <input type="text" class="form-control" name="port" id="" placeholder="Test ATM 1234">
+          </div>
+
           <div class="form-group">
             <div class="col-md-12">
-              <button type="submit" class="btn btn-primary">
-                Register
+              <button type="submit" class="btn btn-primary" disabled>
+                Continue
               </button>
-              <a href="#">Already have an account?</a>
             </div>
           </div>
 

@@ -8,7 +8,12 @@ $(function(){
   }
   console.log(host);
 
-  var master_key;
+  var master_key = settings.get('master_key');
+  if(master_key){
+    $('#settings-master-key').val(master_key);
+    $('#settings-master-key-cv').val(crypto.getKeyCheckValue(master_key));
+  }
+
   setInterval(function(){
     if(master_key !== $('#settings-master-key').val()){
       master_key = $('#settings-master-key').val();
@@ -20,7 +25,12 @@ $(function(){
     }
   }, 300);
 
-  var comms_key;
+  var comms_key = settings.get('pin_key');
+  var comms_key = settings.get('comms_key');
+  if(comms_key){
+    $('#settings-comms-key').val(comms_key);
+    $('#settings-comms-key-cv').val(crypto.getKeyCheckValue(comms_key));
+  }
   setInterval(function(){
     if(comms_key !== $('#settings-comms-key').val()){
       comms_key = $('#settings-comms-key').val();

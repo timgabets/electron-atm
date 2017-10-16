@@ -42,7 +42,7 @@ $(function () {
     record += '</div>';
     record += '</a>';
 
-    $("#cards-page-cards-list").append(record);
+    $('#cards-page-cards-list').append(record);
   }
 
   /**
@@ -55,9 +55,9 @@ $(function () {
       appendCard(card);
       
       if(card.number === settings.get('last_used_card'))
-        $("#atm-page-cards-list").append('<option value="' + card.number + '" selected>' + card.name + '</option>')
+        $('#atm-page-cards-list').append('<option value="' + card.number + '" selected>' + card.name + '</option>')
       else
-        $("#atm-page-cards-list").append('<option value="' + card.number + '">' + card.name + '</option>')        
+        $('#atm-page-cards-list').append('<option value="' + card.number + '">' + card.name + '</option>')        
     });
 
     if(cards.getNames().length > 0){
@@ -76,7 +76,7 @@ $(function () {
     }
   };
 
-  $("#add-new-card-form").validate();
+  $('#add-new-card-form').validate();
 
   var payment_scheme;
   $('#cardnumber').blur(function(){
@@ -85,34 +85,34 @@ $(function () {
       // Getting Payment scheme
       payment_scheme = cards.getPaymentScheme(cardnumber);
       if(payment_scheme){
-        $("#new-card-scheme-logo").show();
-        $("#new-card-scheme-logo").attr('src', 'img/schemes/' + payment_scheme + '.png')
+        $('#new-card-scheme-logo').show();
+        $('#new-card-scheme-logo').attr('src', 'img/schemes/' + payment_scheme + '.png')
       } else 
-        $("#new-card-scheme-logo").hide();
+        $('#new-card-scheme-logo').hide();
 
       // Getting FIT id
-      $("#FIT").val(fits.getInstitutionByCardnumber(cardnumber));
+      $('#FIT').val(fits.getInstitutionByCardnumber(cardnumber));
     }
   });
 
-  $("#cards-page-form").submit(function(e) {
+  $('#cards-page-form').submit(function(e) {
     e.preventDefault();
   });
 
-  $("#show-new-card-form-button").on('click', function(){
-    $("#add-new-card-form-area").show();
-    $("#hide-new-card-button-area").show();
-    $("#show-new-card-form-button").hide();
+  $('#show-new-card-form-button').on('click', function(){
+    $('#add-new-card-form-area').show();
+    $('#hide-new-card-button-area').show();
+    $('#show-new-card-form-button').hide();
   });
 
-  $("#cancel-new-card-form-button").on('click', function(){
-    $("#add-new-card-form-area").hide();
-    $("#hide-new-card-button-area").hide();
-    $("#show-new-card-form-button").show();
+  $('#cancel-new-card-form-button').on('click', function(){
+    $('#add-new-card-form-area').hide();
+    $('#hide-new-card-button-area').hide();
+    $('#show-new-card-form-button').show();
   });
 
-  $("#save-new-card-button").on('click', function(){
-    if($("#add-new-card-form").valid()){
+  $('#save-new-card-button').on('click', function(){
+    if($('#add-new-card-form').valid()){
       var card = {
         number: $('#cardnumber').val(),
         PIN: $('#PIN').val(),

@@ -123,9 +123,11 @@ $(function () {
         cvv: $('#cvv').val(),
         discretionary_data: $('#discr-data').val(),
       }
-  
+    
       if(cards.add(card)){
-
+        appendCard(card);
+      } else {
+        log.error('Error adding card');
       }
     }
   });

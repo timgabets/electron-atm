@@ -1,6 +1,13 @@
 $(function(){
-  console.log('From settings');
-  
+  var host = settings.get('host');
+
+  if(host){
+    $('#settings-atm-host').val(host.ip);
+    $('#settings-atm-port').val(host.port);
+    $('#settings-atm-luno').val(host.luno);
+  }
+  console.log(host);
+
   var master_key;
   setInterval(function(){
     if(master_key !== $('#settings-master-key').val()){

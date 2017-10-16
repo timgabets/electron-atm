@@ -6,7 +6,6 @@ $(function(){
     $('#settings-atm-port').val(host.port);
     $('#settings-atm-luno').val(host.luno);
   }
-  console.log(host);
 
   var master_key = settings.get('master_key');
   if(master_key){
@@ -31,6 +30,7 @@ $(function(){
     $('#settings-comms-key').val(comms_key);
     $('#settings-comms-key-cv').val(crypto.getKeyCheckValue(comms_key));
   }
+
   setInterval(function(){
     if(comms_key !== $('#settings-comms-key').val()){
       comms_key = $('#settings-comms-key').val();
@@ -41,4 +41,9 @@ $(function(){
       }
     }
   }, 300);
+
+  setInterval(function(){
+    if($('#settings-form').valid() )
+      $('#settings-submit-button').attr('disabled', false)
+  }, 300)
 });

@@ -90,7 +90,7 @@
     <div class="row">
 
       <div class="col-md-6 col-md-offset-3">
-        <form role="form" method="POST" action="#">
+        <form role="form" id="settings-form" method="POST" action="#">
 
           <legend class="text-center">Register</legend>
 
@@ -109,7 +109,7 @@
 
             <div class="form-group col-md-3">
               <label for="settings-luno">LUNO</label>
-              <input type="text" class="form-control" name="settings-luno" id="settings-luno" placeholder="0000" required>
+              <input type="text" class="form-control" name="settings-luno" id="settings-luno" placeholder="0000" minlength="4" maxlength="4" required>
             </div>
           </fieldset>
 
@@ -117,7 +117,7 @@
             <legend>Keys</legend>
             <div class="form-group col-md-9">
               <label for="port">Terminal Master Key</label>
-              <input type="text" class="form-control" name="port" id="settings-master-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)" maxlength="32">
+              <input type="text" class="form-control" name="port" id="settings-master-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)" maxlength="32" required>
             </div>
 
             <div class="form-group col-md-3">
@@ -127,7 +127,7 @@
 
             <div class="form-group col-md-9">
               <label for="port">Communications Key (Terminal PIN Key)</label>
-              <input type="text" class="form-control" name="port" id="settings-comms-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)" maxlength="32">
+              <input type="text" class="form-control" name="port" id="settings-comms-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)" maxlength="32" required>
             </div>
 
             <div class="form-group col-md-3">
@@ -163,7 +163,7 @@
           </div>
 
           </fieldset>
-
+<!--
           <div class="form-group">
             <div class="col-md-12">
               <div class="checkbox">
@@ -174,7 +174,7 @@
               </div>
             </div>
           </div>
-
+-->
           <div class="form-group col-md-12">
             <label for="port">Profile Name</label>
             <input type="text" class="form-control" name="port" id="" placeholder="Test ATM 1234">
@@ -182,7 +182,7 @@
 
           <div class="form-group">
             <div class="col-md-12">
-              <button type="submit" class="btn btn-primary" disabled>
+              <button type="submit" class="btn btn-primary" id="settings-submit-button" disabled>
                 Continue
               </button>
             </div>

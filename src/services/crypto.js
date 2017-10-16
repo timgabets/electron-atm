@@ -139,8 +139,8 @@ function CryptoService(settings, log){
       check_value: ''}
   };
 
-  (settings.get('master_key')) ? this.setMasterKey(settings.get('master_key')) : this.setMasterKey('4BA59DC607B13AF49F3CD22CB2FDA11E');
-  (settings.get('pin_key')) ? this.setTerminalKey(settings.get('pin_key')) : this.setTerminalKey('1E9CA58EBE65FF4B6F339393142DA096');
+  (settings.get('master_key')) ? this.setMasterKey(settings.get('master_key')) : this.setMasterKey('');
+  (settings.get('pin_key')) ? this.setTerminalKey(settings.get('pin_key')) : this.setTerminalKey('');
 };
 
 module.exports = CryptoService;

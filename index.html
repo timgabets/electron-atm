@@ -91,11 +91,8 @@
 
       <div class="col-md-6 col-md-offset-3">
         <form role="form" id="settings-form" method="POST" action="#">
-
-          <legend class="text-center">ATM Settings</legend>
-
           <fieldset>
-            <legend>Connection Details</legend>
+            <legend>ATM Connection Details</legend>
 
             <div class="form-group col-md-6">
               <label for="settings-atm-host">ATM Host address</label>
@@ -104,7 +101,7 @@
 
             <div class="form-group col-md-3">
               <label for="settings-atm-port">TCP Port</label>
-              <input type="text" class="form-control" name="settings-atm-port" id="settings-atm-port" placeholder="1234" maxlength="5" required>
+              <input type="text" class="form-control" name="settings-atm-port" id="settings-atm-port" title="TCP Port" placeholder="12345" maxlength="5" required>
             </div>
 
             <div class="form-group col-md-3">
@@ -116,23 +113,23 @@
           <fieldset>
             <legend>Keys</legend>
             <div class="form-group col-md-9">
-              <label for="port">Terminal Master Key</label>
-              <input type="text" class="form-control" name="port" id="settings-master-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters) required" maxlength="32" required>
+              <label for="settings-master-key">Terminal Master Key</label>
+              <input type="text" class="form-control" name="settings-master-key" id="settings-master-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters) required" minlength="32" maxlength="32" required>
             </div>
 
             <div class="form-group col-md-3">
-              <label for="port">KCV</label>
-              <input type="text" class="form-control" name="port" id="settings-master-key-cv" placeholder="123456" disabled="">
+              <label for="settings-master-key-cv">Check Value</label>
+              <input type="text" class="form-control" name="settings-master-key-cv" id="settings-master-key-cv" placeholder="" disabled="">
             </div>
 
             <div class="form-group col-md-9">
-              <label for="port">Communications Key (Terminal PIN Key)</label>
-              <input type="text" class="form-control" name="port" id="settings-comms-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters) required" maxlength="32" required>
+              <label for="settings-comms-key">Communications Key (Terminal PIN Key)</label>
+              <input type="text" class="form-control" name="settings-comms-key" id="settings-comms-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters) required" minlength="32" maxlength="32" required>
             </div>
 
             <div class="form-group col-md-3">
-              <label for="port">KCV</label>
-              <input type="text" class="form-control" name="port" id="settings-comms-key-cv" placeholder="123456" disabled="">
+              <label for="port">Check Value</label>
+              <input type="text" class="form-control" name="settings-comms-key-cv" id="settings-comms-key-cv" placeholder="" disabled="">
             </div>
           </fieldset>
 
@@ -158,10 +155,10 @@
             </div>
 -->
           <div class="form-group col-md-10">
-            <input type="text" class="form-control" name="images-path" id="images-path" placeholder="Path to the ATM images" title="Path to the ATM images" disabled>
+            <input type="text" class="form-control" name="images-path" id="images-path" placeholder="Path to the ATM images (required)" title="Path to the ATM images (required)" required>
           </div>
           <div class="form-group col-md-2">
-            <button id="open-file-manager" class="btn btn-block glyphicon glyphicon-folder-open"></button>
+            <button id="open-file-manager" class="btn btn-default glyphicon glyphicon-folder-open"></button>
           </div>
 
           </fieldset>
@@ -178,10 +175,9 @@
           </div>
 -->
           <fieldset>
-            <legend>Profile</legend>
+            <legend>Profile Name</legend>
 
             <div class="form-group col-md-12">
-              <label for="port">Profile Name</label>
               <input type="text" class="form-control" name="port" id="" placeholder="Test ATM 1234">
             </div>
           </fieldset>
@@ -654,5 +650,6 @@ Number) on card">PANDX</th>
     <script src="./src/listeners/window.js" charset="utf-8"></script>
   </body>
 
-  <footer class="footer" id="footer"></footer>
+  <footer class="footer navbar-fixed-bottom" id="footer">
+  </footer>
 </html>

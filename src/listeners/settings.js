@@ -29,7 +29,6 @@ $(function(){
   }, 300);
 
   var comms_key = settings.get('pin_key');
-  //var comms_key = settings.get('comms_key');
   if(comms_key){
     $('#settings-comms-key').val(comms_key);
     $('#settings-comms-key-cv').val(crypto.getKeyCheckValue(comms_key));
@@ -49,11 +48,7 @@ $(function(){
   }, 300);
 
   // Image path
-  image_path = settings.get('image_path');
-  $('#images-path').val(image_path);
-
-  $('#open-file-manager').on('click', function(e){
-    e.preventDefault();
+  function setImagePath(){
     var selected_image_path = dialog.showOpenDialog({
         properties: ['openDirectory']
     });
@@ -63,6 +58,18 @@ $(function(){
       $('#images-path').val(selected_image_path);
       settings.set('image_path', selected_image_path);
     }
+  }
+
+  image_path = settings.get('image_path');
+  $('#images-path').val(image_path);
+
+  $('#open-file-manager').on('click', function(e){
+    e.preventDefault();
+    setImagePath();
+  });
+
+  $('#images-path').on('click', function(){
+    setImagePath();
   })
 
   // Form validation

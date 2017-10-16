@@ -1,6 +1,5 @@
 $(function(){
   var host = settings.get('host');
-  console.log(host);
 
   if(host){
     $('#settings-atm-host').val(host.ip);
@@ -68,6 +67,10 @@ $(function(){
     settings.set('master_key', $('#settings-master-key').val());
     settings.set('pin_key', $('#settings-comms-key').val());
 
-    console.log('Submitted');
+    // TODO: handle it properly (move to window.js maybe)
+    $('#settings-page').hide();
+    $('#navbar').show();
+    $('#atm-button-menu').click();
+    ipc.send('settings-entered-network-connect', host);
   });
 });

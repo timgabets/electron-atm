@@ -36,8 +36,11 @@ electron.app.once('ready', function () {
   // Show window when page is ready
   window.once('ready-to-show', function () {
     window.show()
-    //window.webContents.send('network-connect')
   })
+})
+
+ipc.on('settings-entered-network-connect', (event, connection_settings) => {
+  window.webContents.send('network-connect', connection_settings)
 })
 
 ipc.on('fdk-pressed', (event, FDK) => {
@@ -58,7 +61,6 @@ ipc.on('network-connection-status-change', (event, isConnected) => {
   else
     window.webContents.send('atm-network-disconnected')
 })
-
 
 ipc.on('network-data-received', (event, data) => {
   window.webContents.send('parse-host-message', data)

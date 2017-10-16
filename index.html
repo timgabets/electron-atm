@@ -99,7 +99,7 @@
 
             <div class="form-group col-md-6">
               <label for="settings-atm-host">ATM Host address</label>
-              <input type="text" class="form-control" name="settings-atm-host" id="settings-atm-host" placeholder="atm.example.com" required>
+              <input type="text" class="form-control" name="settings-atm-host" id="settings-atm-host" placeholder="atm.example.com" title="Valid IP or hostname required" required>
             </div>
 
             <div class="form-group col-md-3">
@@ -109,7 +109,7 @@
 
             <div class="form-group col-md-3">
               <label for="settings-luno">LUNO</label>
-              <input type="text" class="form-control" name="settings-luno" id="settings-luno" placeholder="0000" minlength="4" maxlength="4" required>
+              <input type="text" class="form-control" name="settings-luno" id="settings-luno" placeholder="0000" title="4 numeric characters" minlength="4" maxlength="4" required>
             </div>
           </fieldset>
 
@@ -117,7 +117,7 @@
             <legend>Keys</legend>
             <div class="form-group col-md-9">
               <label for="port">Terminal Master Key</label>
-              <input type="text" class="form-control" name="port" id="settings-master-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)" maxlength="32" required>
+              <input type="text" class="form-control" name="port" id="settings-master-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters) required" maxlength="32" required>
             </div>
 
             <div class="form-group col-md-3">
@@ -127,7 +127,7 @@
 
             <div class="form-group col-md-9">
               <label for="port">Communications Key (Terminal PIN Key)</label>
-              <input type="text" class="form-control" name="port" id="settings-comms-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)" maxlength="32" required>
+              <input type="text" class="form-control" name="port" id="settings-comms-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters) required" maxlength="32" required>
             </div>
 
             <div class="form-group col-md-3">

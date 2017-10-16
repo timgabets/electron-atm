@@ -20,6 +20,8 @@ $(function(){
       if(master_key.length === 32){
         $('#settings-master-key-cv').val(crypto.getKeyCheckValue(master_key));
         $('#settings-master-key').val(master_key.toUpperCase());
+      } else {
+        $('#settings-master-key-cv').val('');
       }
     }
   }, 300);
@@ -38,6 +40,8 @@ $(function(){
       if(comms_key.length === 32){
         $('#settings-comms-key-cv').val(crypto.getKeyCheckValue(comms_key));
         $('#settings-comms-key').val(comms_key.toUpperCase());
+      } else {
+        $('#settings-comms-key-cv').val('');
       }
     }
   }, 300);

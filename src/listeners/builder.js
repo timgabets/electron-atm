@@ -4,13 +4,18 @@
 
 const Builder = nodeRequire('./src/controllers/builder.js');
 
-//TODO: pass LUNO properly
-let builder = new Builder('000');
+let host = settings.get('host');
+if(host && host.luno)
+  luno = host.luno;
+else
+  luno = '000';
+
+let builder = new Builder(luno);
 
 ipc.on('build-message-to-host', (event, message) => {
   var built = builder.build(message);
   if(built){
-  	log.info('ATM message built:' + trace.object(message));
+    log.info('ATM message built:' + trace.object(message));
     ipc.send('atm-message-built', built);
   }
 })

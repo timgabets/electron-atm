@@ -47,6 +47,8 @@ $(function(){
     }
   }, 300);
 
+  $('#profile-name').val(settings.get('profile'))
+
   // Image path
   function setImagePath(){
     var selected_image_path = dialog.showOpenDialog({
@@ -92,10 +94,14 @@ $(function(){
     };
     settings.set('host', host);
 
+
     // Saving keys
     settings.set('master_key', $('#settings-master-key').val());
     settings.set('pin_key', $('#settings-comms-key').val());
 
+    // Saving profile name
+    settings.set('profile', $('#profile-name').val());
+    
     // TODO: handle it properly (move to window.js maybe)
     $('#settings-page').hide();
     $('#navbar').show();

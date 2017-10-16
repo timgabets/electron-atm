@@ -10,7 +10,7 @@ let log = new Log();
 let network = new Network(ipc, log);
 
 ipc.on('network-connect', (event, connection_settings) => {
-  network.toggleConnect(connection_settings.host, connection_settings.port);
+  network.toggleConnect(connection_settings.ip, connection_settings.port);
 })
 
 ipc.on('network-send', (event, message) => {

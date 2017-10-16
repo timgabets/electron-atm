@@ -54,16 +54,9 @@ $(function () {
   /**
    *  ATM
    */
-  
   $('#atm-status-button').on('click', _ => {
-    /*
-    settings.set('host', {
-      'ip': $('#host').val(), 
-      'port': $('#port').val()});
-
-    ipc.send('connect-button-pressed', $('#host').val(), $('#port').val());
-    */
-    ipc.send('connect-button-pressed');
+    var connection_settings = settings.get('host');
+    ipc.send('connect-button-pressed', connection_settings);
   });
 
   $('#card-inserted').on('click', _ => {

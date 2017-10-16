@@ -51,8 +51,8 @@ ipc.on('pinpad-button-pressed', (event, button) => {
   window.webContents.send('atm-process-pinpad-button-pressed', button)
 })
 
-ipc.on('connect-button-pressed', (event, host, port) => {
-  window.webContents.send('network-connect')
+ipc.on('connect-button-pressed', (event, connection_settings) => {
+  window.webContents.send('network-connect', connection_settings)
 })
 
 ipc.on('network-connection-status-change', (event, isConnected) => {

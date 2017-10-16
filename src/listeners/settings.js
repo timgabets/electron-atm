@@ -50,6 +50,9 @@ $(function(){
   setInterval(function(){
     if($('#settings-form').valid() )
       $('#settings-submit-button').attr('disabled', false)
+    else
+      $('#settings-submit-button').attr('disabled', true)
+
   }, 300);
 
   $('#settings-form').submit(function(e) {

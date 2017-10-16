@@ -55,6 +55,21 @@ $(function () {
         else
           $("#atm-page-cards-list").append('<option value="' + card.number + '">' + card.name + '</option>')        
     });
+
+    if(cards.getNames().length > 0){
+      $('#card-inserted').show();
+      $('#atm-page-cards-list').show();
+      $('#atm-no-cards-add-card').hide();    
+    } else {
+      $('#card-inserted').hide();
+      $('#atm-page-cards-list').hide();
+      $('#atm-no-cards-add-card').show();
+
+      $('#atm-no-cards-add-card').on('click', function(){
+        $('#cards-button-menu').click();
+        $('#show-new-card-form-button').click();
+      });
+    }
   };
 
   $("#add-new-card-form").validate();
@@ -65,7 +80,6 @@ $(function () {
     if(cardnumber){
       // Getting Payment scheme
       payment_scheme = cards.getPaymentScheme(cardnumber);
-      console.log(payment_scheme);
       if(payment_scheme){
         $("#new-card-scheme-logo").show();
         $("#new-card-scheme-logo").attr('src', 'img/schemes/' + payment_scheme + '.png')

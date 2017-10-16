@@ -831,6 +831,7 @@ function ATM(settings, log) {
     this.card = this.parseTrack2(this.track2)
     if(this.card){
       log.info('Card ' + this.card.number + ' read');
+      log.info('Track2: ' + this.track2);
       this.processState('000');
     }
     this.setStatus('Processing Card');

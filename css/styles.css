@@ -462,3 +462,9 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+
+.footer {
+  text-align: right;
+  color: lightgrey;
+  margin-right: 10px; 
+}

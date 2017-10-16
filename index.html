@@ -158,7 +158,7 @@
             </div>
 -->
           <div class="form-group col-md-10">
-            <input type="text" class="form-control" name="images-path" id="images-path" placeholder="Path to the ATM images" title="Path to the ATM images">
+            <input type="text" class="form-control" name="images-path" id="images-path" placeholder="Path to the ATM images" title="Path to the ATM images" disabled>
           </div>
           <div class="form-group col-md-2">
             <button id="open-file-manager" class="btn btn-block glyphicon glyphicon-folder-open"></button>
@@ -648,8 +648,11 @@ Number) on card">PANDX</th>
     <script src="./src/listeners/fits.js" charset="utf-8"></script>
     <script src="./src/listeners/cards.js" charset="utf-8"></script>
     <script src="./src/listeners/settings.js" charset="utf-8"></script>
+    <script src="./src/listeners/version.js" charset="utf-8"></script>
     <script src="node_modules/mousetrap/mousetrap.min.js" charset="utf-8"></script>
     <!--<script>window.$ = window.jQuery = nodeRequire('node_modules/jquery/dist/jquery.js');</script>-->
     <script src="./src/listeners/window.js" charset="utf-8"></script>
   </body>
+
+  <footer class="footer" id="footer"></footer>
 </html>

@@ -49,7 +49,11 @@ $(function () {
         record += '</a>';
 
         $("#cards-page-cards-list").append(record);
-        $("#atm-page-cards-list").append('<option value="' + card.number + '">' + card.name + '</option>');
+
+        if(card.number === settings.get('last_used_card'))
+          $("#atm-page-cards-list").append('<option value="' + card.number + '" selected>' + card.name + '</option>')
+        else
+          $("#atm-page-cards-list").append('<option value="' + card.number + '">' + card.name + '</option>')        
     });
   };
 

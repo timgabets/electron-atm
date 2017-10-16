@@ -64,8 +64,7 @@ $(function () {
   });
 
   $('#card-inserted').on('click', _ => {
-
-    var card = cards.get($("#atm-page-cards-list option:selected").text());
+    var card = cards.get($('#atm-page-cards-list option:selected').text());
     var track2 = cards.getTrack2(card);
 
     if(card)

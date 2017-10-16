@@ -22,6 +22,7 @@ ipc.on('atm-process-pinpad-button-pressed', (event, button) => {
 })
 
 ipc.on('atm-read-card', (event, cardnumber, track2) => {
+  settings.set('last_used_card', cardnumber)
   atm.readCard(cardnumber, track2)
 })
 

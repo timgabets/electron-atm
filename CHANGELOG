@@ -1,4 +1,5 @@
 October 2017
+	1.1.0 Added settings user input on start
 	1.0.0 Using 'lightcoral' color code for J states and 'palegreen' for I states
 	0.9.9 Added exit states list on a States page
 	0.9.8 using 'atm-hardware' npm module

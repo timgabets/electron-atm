@@ -72,11 +72,11 @@ $(function () {
   });
 
   // Preventing page from refreshing when submit buttons pressed
-  $("#connection-data-form").submit(function(e) {
+  $('#connection-data-form').submit(function(e) {
     e.preventDefault();
   });
 
-  $("#card-read-form").submit(function(e) {
+  $('#card-read-form').submit(function(e) {
     e.preventDefault();
   });
 
@@ -102,7 +102,7 @@ $(function () {
       }
 
       // Changing image
-      $("#screen").attr("src", image_path + '/' + image);
+      $('#screen').attr("src", image_path + '/' + image);
     }
   })
 
@@ -163,7 +163,7 @@ $(function () {
     if(atm.current_state.number != current_state){
       current_state = atm.current_state.number;
       if(atm.current_state.number){
-        $("#current-state").val(atm.current_state.number.toString() + ' ' + atm.current_state.type);
+        $('#current-state').val(atm.current_state.number.toString() + ' ' + atm.current_state.type);
         ipc.send('ui-update-state', atm.current_state);
       }
     }
@@ -175,7 +175,7 @@ $(function () {
     if(atm.display.getScreenNumber() != current_screen){
       current_screen = atm.display.getScreenNumber();
       if(current_screen)
-        $("#current-screen").val(current_screen);
+        $('#current-screen').val(current_screen);
     }
   }, 200);
 
@@ -184,7 +184,7 @@ $(function () {
   setInterval(function() {
     if(atm.PIN_buffer != PIN_buffer){
       PIN_buffer = atm.PIN_buffer;
-      $("#pin-buffer").val(PIN_buffer);
+      $('#pin-buffer').val(PIN_buffer);
     }
   }, 200);
 
@@ -193,7 +193,7 @@ $(function () {
   setInterval(function() {
     if(atm.buffer_B != buffer_B){
       buffer_B = atm.buffer_B;
-      $("#buffer-b").val(buffer_B);
+      $('#buffer-b').val(buffer_B);
     }
   }, 200);
 
@@ -202,7 +202,7 @@ $(function () {
   setInterval(function() {
     if(atm.buffer_C != buffer_C){
       buffer_C = atm.buffer_C;
-      $("#buffer-c").val(buffer_C);
+      $('#buffer-c').val(buffer_C);
     }
   }, 200);
 
@@ -211,7 +211,7 @@ $(function () {
   setInterval(function() {
     if(atm.opcode.getBuffer() != opcode_buffer){
       opcode_buffer = atm.opcode.getBuffer();
-      $("#opcode-buffer").val(opcode_buffer.split(' ').join('_'));
+      $('#opcode-buffer').val(opcode_buffer.split(' ').join('_'));
     }
   }, 200);
 
@@ -220,7 +220,7 @@ $(function () {
   setInterval(function() {
     if(atm.amount_buffer != amount_buffer){
       amount_buffer = atm.amount_buffer;
-      $("#amount-buffer").val(amount_buffer);
+      $('#amount-buffer').val(amount_buffer);
     }
   }, 200);
 
@@ -230,8 +230,8 @@ $(function () {
     if(crypto.getTerminalKey()[0] != pin_key){
       // TODO: move to another service
       pin_key = cards.decorateCardNumber(crypto.getTerminalKey()[0]);
-      $("#comms-key").val(pin_key);
-      $("#comms-key-cv").val(crypto.getTerminalKey()[1]);
+      $('#comms-key').val(pin_key);
+      $('#comms-key-cv').val(crypto.getTerminalKey()[1]);
     }
   }, 500);
 
@@ -241,8 +241,8 @@ $(function () {
     if(crypto.getMasterKey()[0] != master_key){
       // TODO: move to another service
       master_key = cards.decorateCardNumber(crypto.getMasterKey()[0]);
-      $("#master-key").val(master_key);
-      $("#master-key-cv").val(crypto.getMasterKey()[1]);
+      $('#master-key').val(master_key);
+      $('#master-key-cv').val(crypto.getMasterKey()[1]);
     }
   }, 500);
 

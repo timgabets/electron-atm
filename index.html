@@ -108,7 +108,7 @@
             </div>
 
             <div class="form-group col-md-3">
-              <label for="luno">LUNO(Optional)</label>
+              <label for="luno">LUNO</label>
               <input type="text" class="form-control" name="" id="luno" placeholder="0000" required>
             </div>
           </fieldset>
@@ -117,22 +117,22 @@
             <legend>Keys</legend>
             <div class="form-group col-md-9">
               <label for="port">Terminal Master Key</label>
-              <input type="text" class="form-control" name="port" id="" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)">
+              <input type="text" class="form-control" name="port" id="settings-master-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)" maxlength="32">
             </div>
 
             <div class="form-group col-md-3">
               <label for="port">KCV</label>
-              <input type="text" class="form-control" name="port" id="" placeholder="123456" disabled="">
+              <input type="text" class="form-control" name="port" id="settings-master-key-cv" placeholder="123456" disabled="">
             </div>
 
             <div class="form-group col-md-9">
-              <label for="port">Communications Key</label>
-              <input type="text" class="form-control" name="port" id="" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)">
+              <label for="port">Communications Key (Terminal PIN Key)</label>
+              <input type="text" class="form-control" name="port" id="settings-comms-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters)" maxlength="32">
             </div>
 
             <div class="form-group col-md-3">
               <label for="port">KCV</label>
-              <input type="text" class="form-control" name="port" id="" placeholder="123456" disabled="">
+              <input type="text" class="form-control" name="port" id="settings-comms-key-cv" placeholder="123456" disabled="">
             </div>
           </fieldset>
 
@@ -640,6 +640,7 @@ Number) on card">PANDX</th>
     <script src="./src/listeners/builder.js" charset="utf-8"></script>
     <script src="./src/listeners/fits.js" charset="utf-8"></script>
     <script src="./src/listeners/cards.js" charset="utf-8"></script>
+    <script src="./src/listeners/settings.js" charset="utf-8"></script>
     <script src="node_modules/mousetrap/mousetrap.min.js" charset="utf-8"></script>
     <!--<script>window.$ = window.jQuery = nodeRequire('node_modules/jquery/dist/jquery.js');</script>-->
     <script src="./src/listeners/window.js" charset="utf-8"></script>

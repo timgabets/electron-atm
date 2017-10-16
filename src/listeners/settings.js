@@ -1,3 +1,5 @@
+var dialog = nodeRequire('electron').remote.dialog
+
 $(function(){
   var host = settings.get('host');
 
@@ -46,7 +48,24 @@ $(function(){
     }
   }, 300);
 
-  // Form
+  // Image path
+  image_path = settings.get('image_path');
+  $('#images-path').val(image_path);
+
+  $('#open-file-manager').on('click', function(e){
+    e.preventDefault();
+    var selected_image_path = dialog.showOpenDialog({
+        properties: ['openDirectory']
+    });
+
+    if(selected_image_path){
+      $('#images-path').val(selected_image_path[0]);
+      $('#images-path').val(selected_image_path);
+      settings.set('image_path', selected_image_path);
+    }
+  })
+
+  // Form validation
   setInterval(function(){
     if($('#settings-form').valid() )
       $('#settings-submit-button').attr('disabled', false)

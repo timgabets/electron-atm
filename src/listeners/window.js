@@ -9,6 +9,10 @@ $(function () {
   const mousetrap = nodeRequire('mousetrap');
   const path = nodeRequire('path')
 
+  image_path = settings.get('image_path');
+  if(image_path)
+    image_path = image_path[0];
+
   /**
    * Navigation
    * 
@@ -99,7 +103,7 @@ $(function () {
       }
 
       // Changing image
-      $("#screen").attr("src", "/home/tim/share/screens/" + image);
+      $("#screen").attr("src", image_path + '/' + image);
     }
   })
 

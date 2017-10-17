@@ -1,6 +1,6 @@
 const Trace = require('../controllers/trace.js');
 const CursorService = require('atm-cursor');
-const ScreenTextService = require('../services/screentext.js');
+const ScreenTextService = require('atm-screentext');
 
 /**
  * [ScreensService description]

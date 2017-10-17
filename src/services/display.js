@@ -1,5 +1,5 @@
 
-const CursorService = require('../services/cursor.js');
+const CursorService = require('atm-cursor');
 const ScreenTextService = require('../services/screentext.js');
 const Trace = require('../controllers/trace.js');
 

@@ -1,6 +1,6 @@
 describe("ScreenTextService", function() {
   var ScreenTextService = require('../../src/services/screentext.js');
-  var CursorService = require('../../src/services/cursor.js');
+  var CursorService = require('atm-cursor');
   var s, cursor;
 
   beforeEach(function() {  

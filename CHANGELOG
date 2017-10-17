@@ -1,5 +1,6 @@
 October 2017
-	1.1.7 'pinblock' moved to a separate npm module
+	1.1.8 'cursor' service moved to a searate npm module called 'atm-cursor'
+	1.1.7 'pinblock' moved to a separate npm module called 'pinblock'
 	1.1.6 Showing "Create Card" button + redirecting to card creation form on a cards page when the button pressed
 	1.1.5 Saving ATM profile name
 	1.1.4 Removed default master key and PIN key + sticky bottom footer

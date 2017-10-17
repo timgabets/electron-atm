@@ -5,7 +5,7 @@ const CryptoService = require('../services/crypto.js');
 const DisplayService = require('../services/display.js');
 const OperationCodeBufferService = require('atm-opcode-buffer');
 const Trace = require('../controllers/trace.js');
-const Pinblock = require('../controllers/pinblock.js');
+const Pinblock = require('pinblock');
 const des3 = require('node-cardcrypto').des;
 const ATMHardwareService = require('atm-hardware');
 

@@ -1,4 +1,4 @@
-const Pinblock = require('../controllers/pinblock.js');
+const Pinblock = require('pinblock');
 const des3 = require('node-cardcrypto').des;
 
 function CryptoService(settings, log){

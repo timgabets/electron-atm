@@ -1,7 +1,5 @@
-const Timestamp = require('atm-timestamp');
-
-function Log(){
-  this.log = function(data){
+class Log{
+  log(data){
     $( _ => {
       $('#log-output').append(data);
 
@@ -10,19 +8,17 @@ function Log(){
     })
   }
 
-  this.info = function(data){
+  info(data){
     this.log('<div>' + data + '</div>');
   };
 
-  this.warn = function(data){
+  warn(data){
     this.log('<p><b>' + data + '</b></p>');
   };
 
-  this.error = function(data){
+  error(data){
     this.log('<p style="color:red">' + data + '</p>');
   };
-
-  this.timestamp = new Timestamp()
 };
 
 module.exports = Log;

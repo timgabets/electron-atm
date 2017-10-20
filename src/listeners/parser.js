@@ -2,7 +2,7 @@
  * Parse listener handles translations from network binary message to internal application message object
  */
 
-const Parser = nodeRequire('./src/controllers/parser.js');
+const Parser = nodeRequire('ndc-parser');
 //const Trace = nodeRequire('./src/controllers/trace.js');
 
 let parser = new Parser();

@@ -66,6 +66,7 @@
     "jquery": "^3.2.1",
     "jquery-validation": "^1.17.0",
     "mousetrap": "^1.6.1",
+    "ndc-parser": "^0.1.1",
     "node-cardcrypto": "^1.0.2",
     "pinblock": "^0.2.0",
     "vis": "^4.20.1"

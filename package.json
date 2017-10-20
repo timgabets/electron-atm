@@ -1,12 +1,12 @@
 {
   "name": "electron-atm",
   "productName": "Electron ATM",
-  "version": "1.1.9-alpha.1",
+  "version": "1.2.0",
   "description": "A simple APTRA Advance NDC ATM emulator",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "test": "istanbul cover jasmine",
+    "test": "istanbul cover jasmine && ava",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "win32": "electron-builder --win",
@@ -17,8 +17,26 @@
     "Electron",
     "ATM"
   ],
-  "babel": { 
-    "presets": ["es2015"]
+  "ava": {
+    "files": [
+      "tests/**/*.js"
+    ],
+    "source": [
+      "**/*.{js}"
+    ],
+    "concurrency": 5,
+    "failFast": true,
+    "failWithoutAssertions": false,
+    "powerAssert": false,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
   },
   "author": {
     "name": "Tim Gabets",
@@ -27,6 +45,7 @@
   },
   "license": "LGPL-2.1",
   "devDependencies": {
+    "ava": "^0.22.0",
     "electron": "~1.6.2",
     "electron-builder": "^19.35.1",
     "jasmine": "^2.6.0"

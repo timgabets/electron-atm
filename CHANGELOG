@@ -1,4 +1,5 @@
 October 2017
+	1.2.0 Added 'ava' test framework that will replace 'jasmine'
 	1.1.9 ScreeTextService moved to a separate npm module called 'atm-screentext'
 	1.1.8 'cursor' service moved to a separate npm module called 'atm-cursor'
 	1.1.7 'pinblock' moved to a separate npm module called 'pinblock'

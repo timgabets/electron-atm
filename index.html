@@ -9,6 +9,10 @@
   <script src="node_modules/vis/dist/vis.js"></script>
 
   <script>
+    require('babel-register')
+  </script>
+
+  <script>
     window.nodeRequire = require;
     delete window.require;
     delete window.exports;

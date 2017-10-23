@@ -1,9 +1,6 @@
 class Builder{
-  constructor(luno){
-    if (luno)
-      this.luno = luno;
-    else
-      this.luno = '000';  
+  constructor(luno = '000'){
+    this.luno = luno;
   }
 
   /**
@@ -12,7 +9,7 @@ class Builder{
    * @return {[type]}        [description]
    */
   build(object){
-    var message = '';
+    let message = '';
 
     if (!object)
       return null;

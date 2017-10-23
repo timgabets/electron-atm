@@ -1,4 +1,3 @@
-const Trace = require('../controllers/trace.js');
 const CursorService = require('atm-cursor');
 const ScreenTextService = require('atm-screentext');
 
@@ -7,12 +6,11 @@ const ScreenTextService = require('atm-screentext');
  * @param {[type]} settings [description]
  * @param {[type]} log      [description]
  */
-function ScreensService(settings, log){
+function ScreensService(settings, log, trace){
   this.screens = settings.get('screens');
   if(!this.screens)
     this.screens = {};
 
-  this.trace = new Trace();
   this.cursor = new CursorService();
   this.text = new ScreenTextService(this.cursor);
 
@@ -221,7 +219,8 @@ function ScreensService(settings, log){
     var parsed = this.parseScreen(screen);
     if(parsed){
       this.screens[parsed.number] = parsed;
-      log.info('\tScreen ' + parsed.number + ' processed (screens overall: ' + Object.keys(this.screens).length + '):' + this.trace.object(parsed));
+      if(trace)
+        log.info('\tScreen ' + parsed.number + ' processed (screens overall: ' + Object.keys(this.screens).length + '):' + trace.object(parsed));
       settings.set('screens', this.screens);
       return true;
     }

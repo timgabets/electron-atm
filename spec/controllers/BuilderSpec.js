@@ -4,7 +4,7 @@ describe("Builder", function() {
   var luno = '777';
 
   beforeEach(function() {
-    b = new Builder();
+    b = new Builder(luno);
   });
 
   describe("build()", function(){

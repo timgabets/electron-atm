@@ -1,5 +1,5 @@
 const StatesService = require('atm-states');
-const ScreensService = require('../services/screens.js');
+const ScreensService = require('atm-screens');
 const FITsService = require('../services/fits.js');
 const CryptoService = require('../services/crypto.js');
 const DisplayService = require('../services/display.js');

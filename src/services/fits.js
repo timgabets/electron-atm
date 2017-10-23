@@ -1,7 +1,6 @@
 const Trace = require('../controllers/trace.js');
 
-function FITsService(settings, log){
-  this.trace = new Trace();
+function FITsService(settings, log, trace){
   this.FITs = settings.get('FITs');
   if(!this.FITs)
     this.FITs = {};  
@@ -56,7 +55,8 @@ function FITsService(settings, log){
   this.parseFIT = function(data){
     var parsed = {};
     if(!data){
-      log.info('FITsService.parseFIT(): empty data');
+      if(log)
+        log.info('FITsService.parseFIT(): empty data');
       return false;
     }
   
@@ -160,12 +160,14 @@ function FITsService(settings, log){
     var parsed = this.parseFIT(FIT);
     if(parsed){
       this.FITs[parsed.PIDDX] = parsed;
-      log.info('\tFIT ' + parsed.PIDDX + ' processed (FITs overall: ' + Object.keys(this.FITs).length + '):' + this.trace.object(parsed));
+      if(log && trace)
+        log.info('\tFIT ' + parsed.PIDDX + ' processed (FITs overall: ' + Object.keys(this.FITs).length + '):' + trace.object(parsed));
       settings.set('FITs', this.FITs);
       return true;
     }
     else{
-      log.info('FITsService.addFIT(): not added');
+      if(log)
+        log.info('FITsService.addFIT(): not added');
       return false;
     }
   };
@@ -236,25 +238,26 @@ function FITsService(settings, log){
 
     return sorted_fits;
   }
-}
 
-/**
- * [add description]
- * @param {[type]} data [array of data to add]
- * @return {boolean}     [true if data were successfully added, false otherwise]
- */
-FITsService.prototype.add = function(data){
-  if(typeof data === 'object') {
-    for (var i = 0; i < data.length; i++){
-      if(!this.addFIT(data[i])){
-        log.info('Error processing FIT ' + data[i] );
-        return false;
+  /**
+   * [add description]
+   * @param {[type]} data [array of data to add]
+   * @return {boolean}     [true if data were successfully added, false otherwise]
+   */
+  this.add = function(data){
+    if(typeof data === 'object') {
+      for (var i = 0; i < data.length; i++){
+        if(!this.addFIT(data[i])){
+          if(log)
+            log.info('Error processing FIT ' + data[i] );
+          return false;
+        }
       }
-    }
-    return true;
-  } else if (typeof data === 'string') {
-    return this.addFIT(data); 
-  } 
-};
+      return true;
+    } else if (typeof data === 'string') {
+      return this.addFIT(data); 
+    } 
+  };
+}
 
 module.exports = FITsService

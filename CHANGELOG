@@ -1,4 +1,5 @@
 October 2017
+	1.2.5 FITsService moved to the separate npm module called 'atm-fits'
 	1.2.4 passing trace to FITsService()
 	1.2.3 ScreensService moved to the separate npm module called 'atm-screens'
 	1.2.2 passing trace to ScreensService()

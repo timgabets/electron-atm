@@ -2,7 +2,7 @@
  * FITs listener passes requests to/from FITsService and handles jquery-stuff on a FITs page 
  */
 
-const FITsService = nodeRequire('./src/services/fits.js');
+const FITsService = nodeRequire('atm-fits');
 const CardsService = nodeRequire('./src/services/cards.js');
 
 let cards = new CardsService(settings, log);

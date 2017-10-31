@@ -58,7 +58,7 @@
     "atm-screens": "^0.1.1",
     "atm-screentext": "^0.1.0",
     "atm-state-levels": "^1.0.6",
-    "atm-states": "^0.2.8",
+    "atm-states": "^0.2.9",
     "atm-timestamp": "^1.1.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",

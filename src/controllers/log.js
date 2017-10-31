@@ -1,24 +1,38 @@
-class Log{
-  log(data){
-    $( _ => {
-      $('#log-output').append(data);
+import Timestamp from 'atm-timestamp'
 
-      // Scroll the bar down to the bottom
-      $('#log-output').scrollTop($('#log-output')[0].scrollHeight);
-    })
+class Log{
+  constructor() {
+    this.timestamp = new Timestamp()
+    this.logArea = document.getElementById('log-output');
+    this.scrollHeight = this.logArea.scrollHeight
   }
 
-  info(data){
-    this.log('<div>' + data + '</div>');
-  };
+  log(data, options){
+    var timestamp = ''
+    var title = ''
 
-  warn(data){
-    this.log('<p><b>' + data + '</b></p>');
-  };
+    if(options){
+      if(options.timestamp)
+        timestamp = this.timestamp.get() + ' '
+      if(options.title)
+        title = options.title
+    }
 
-  error(data){
-    this.log('<p style="color:red">' + data + '</p>');
-  };
-};
+    this.logArea.innerHTML += timestamp + title + data
+    this.logArea.scrollTop = this.logArea.scrollHeight
+  }
+
+  info(data, options){
+    this.log('<div>' + data + '</div>')
+  }
+
+  warn(data, options){
+    this.log('<p><b>' + data + '</b></p>')
+  }
+
+  error(data, options){
+    this.log('<p style="color:red">' + data + '</p>')
+  }
+}
 
 module.exports = Log;

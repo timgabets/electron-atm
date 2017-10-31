@@ -4,6 +4,9 @@
 
 A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) ATM emulator, written from scratch using JavaScript, [visjs](http://visjs.org/), jQuery and [Electron](https://electron.atom.io/) framework.
 
+Profile selection on application start:
+![profile selection](img/profile-selection.png)
+
 ATM tab:
 ![screenshot](img/screenshot.png)
 

@@ -61,11 +61,11 @@ Currently only the basic stuff is working, such as:
  * State Navigator: updating screen image when jumping through the states
  * State Navigator: displaying state details when state selected
  * FITs: showing a table of Financial Institutions
+ * Saving the image path in user settings
 
 Things to be implemented (very) soon:
  * Touch area support (pressing touch areas, not only FDK buttons)
  * Auto reconnection
- * Saving the image path in user settings
  * ICC support
 
 
@@ -92,7 +92,7 @@ To me, [React](https://facebook.github.io/react/) is good for building user-inte
 I thought of ES6 in the very beginning, but Electron does not support ES6 out of the box, and transpiling with [Babel](https://babeljs.io/) looked as a complete overdesign to me. Again, if you would like to have ES6 in this application, just send me a pull request.
 
 
-### I would like to use the application, but it seems that the feature X, that I really need is not yet implemented.
+### I would like to use the application, but it seems that the feature X that I really need is not yet implemented.
 As I said, only the features that I needed were implemented. For example, all the ATM configurations that I've been working with don't have V-type states (Language select from a card), therefore, these states are not supported by the application. So, if there is a feature that you would like to have implemented, you may create an [issue](https://github.com/timgabets/electron-atm/issues), or just drop me an [email](mailto:tim@gabets.ru). 
 
 

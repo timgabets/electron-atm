@@ -3,10 +3,8 @@
  */
 
 const Parser = nodeRequire('ndc-parser');
-//const Trace = nodeRequire('./src/controllers/trace.js');
 
 let parser = new Parser();
-//let trace = new Trace();
 
 ipc.on('parse-host-message', (event, data) => {
   var parsed = parser.parseHostMessage(data);

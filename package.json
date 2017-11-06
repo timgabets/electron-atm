@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "test": "istanbul cover jasmine && ava",
+    "test": "istanbul cover jasmine",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "win32": "electron-builder --win",

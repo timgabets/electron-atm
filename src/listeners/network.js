@@ -2,7 +2,7 @@
  * Listening to Network Events (sending/receiving data from host)
  */
 const electron = nodeRequire('electron')
-const Log = nodeRequire('./src/controllers/log.js');
+const Log = nodeRequire('atm-logging');
 const Network = nodeRequire('./src/controllers/network.js');
 const ipc = electron.ipcRenderer
 

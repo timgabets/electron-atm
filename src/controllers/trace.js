@@ -1,5 +1,5 @@
 
-const Log = require('./log.js')
+const Log = require('atm-logging')
 const Timestamp = require('atm-timestamp')
 
 function Trace(){

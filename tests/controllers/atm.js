@@ -9,6 +9,18 @@ const { window } = jsdom;
 global.window = window;
 global.document = window.document;
 
+const status_ready = { 
+  message_class: 'Solicited', 
+  message_subclass: 'Status', 
+  status_descriptor: 'Ready' 
+};
+
+const command_reject = { 
+  message_class: 'Solicited', 
+  message_subclass: 'Status', 
+  status_descriptor: 'Command Reject' 
+};
+
 let s = {};
 const settings = {
   get: function(item) {
@@ -23,13 +35,10 @@ const settings = {
 };
 
 const log = new Log();
-const atm = new ATM(settings, log);
-
-test('should pass dummy test', t => {
-  t.is(true, true);
-});
 
 test('should init terminal buffers', t => {
+  const atm = new ATM(settings, log);
+
   t.is(atm.initBuffers(), true);
   t.is(atm.PIN_buffer, '');
   t.is(atm.buffer_B, '');
@@ -38,5 +47,107 @@ test('should init terminal buffers', t => {
   t.is(atm.opcode.getBuffer(), '        ');
   t.is(atm.FDK_buffer, '');
 });
- 
+
+/**
+ * describe('parseTrack2()', t =>{
+ */
+test('should parse track2', t => {
+  const atm = new ATM(settings, log);
+  const track2 = ';4575270595153145=20012211998522600001?';
+  const card = {
+    number: '4575270595153145',
+    service_code: '221',
+    track2: ';4575270595153145=20012211998522600001?'
+  };
+
+  t.deepEqual(atm.parseTrack2(track2), card);
+});
+
+test('should return null if track2 is invalid', t => {
+  const atm = new ATM(settings, log);
+  const track2 = ';4575270595153145D200?';
+
+  t.is(atm.parseTrack2(track2), null);
+});
+
+/**
+ * describe('processHostMessage()', t =>{
+ */
+test('should return false on empty message', t => {
+  let host_message = {};
+  // TODO:
+  //t.deepEqual(atm.processHostMessage(host_message), false);
+});
+
+    
+// Terminal Command     
+test('should respond with "Command Reject" message to unknown Terminal Command host message', t => {
+  const atm = new ATM(settings, log);
+  const host_message = {
+    message_class: 'Terminal Command',
+    command_code: 'IDDQD',
+  };
+
+  t.is(atm.status, 'Offline');
+  t.deepEqual(atm.processHostMessage(host_message), command_reject);
+  t.is(atm.status, 'Offline');      
+});
+
+test('should process "Go out-of-service" message properly and respond with "Ready" message', t => {
+  const atm = new ATM(settings, log);
+  const host_message = {
+    message_class: 'Terminal Command',
+    command_code: 'Go out-of-service',
+  };
+
+  t.is(atm.status, 'Offline');
+  t.deepEqual(atm.processHostMessage(host_message), status_ready);
+  t.is(atm.status, 'Out-Of-Service');      
+});
+
+test('should process "Go in-service" message properly and respond with "Ready" message', t => {
+  const atm = new ATM(settings, log);
+  const host_message = {
+    message_class: 'Terminal Command',
+    command_code: 'Go in-service',
+  };
+
+  t.is(atm.status, 'Offline');
+  t.deepEqual(atm.processHostMessage(host_message), status_ready);
+  t.is(atm.status, 'In-Service');      
+});
+
+// Data Command     
+test('should respond with "Command Reject" message to unknown Data Command host message', t => {
+  const atm = new ATM(settings, log);
+  const host_message = {
+    message_class: 'Data Command',
+    command_code: 'IDDQD',
+  };
+
+  t.deepEqual(atm.processHostMessage(host_message), command_reject);
+}); 
+
+test('should respond with "Command Reject" message to invalid "State Tables load" host message', t => {
+  const atm = new ATM(settings, log);
+  const host_message = {
+    message_class: 'Data Command',
+    message_subclass: 'Customization Command',
+  };
+
+  t.deepEqual(atm.processHostMessage(host_message), command_reject);
+}); 
+
+
+test('should respond with "Ready" message to "State Tables load" host message', t => {
+  const atm = new ATM(settings, log);
+  const host_message = {
+    message_class: 'Data Command',
+    message_subclass: 'Customization Command',
+    message_identifier: 'State Tables load',
+    states: '001K003004004127127127127127'
+  };
+
+  t.deepEqual(atm.processHostMessage(host_message), status_ready);
+}); 
 

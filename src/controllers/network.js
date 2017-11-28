@@ -1,7 +1,7 @@
 // NodeJS net module
 const net = require('net');
 // trace routines
-const Trace = require('../controllers/trace.js');
+const Trace = require('atm-trace');
 
 function Network(ipc, log) {
   this.trace = new Trace();

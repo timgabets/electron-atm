@@ -1,7 +1,7 @@
 
 const CursorService = require('atm-cursor');
 const ScreenTextService = require('atm-screentext');
-const Trace = require('../controllers/trace.js');
+const Trace = require('atm-trace');
 
 function DisplayService(screens, log){
   this.screens = screens;

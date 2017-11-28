@@ -1,4 +1,5 @@
 Novemebr 
+  1.2.8 trace() moved to the separate npm module called 'atm-trace'
   1.2.7 using atm-logging library
 
 October 2017

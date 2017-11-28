@@ -1,7 +1,7 @@
 const StatesService = nodeRequire('atm-states');
 const ScreensService = nodeRequire('atm-screens');
 const settings = nodeRequire('electron-settings');
-const Trace = nodeRequire('./src/controllers/trace.js');
+const Trace = nodeRequire('atm-trace');
 const ATM = nodeRequire('./src/controllers/atm.js');
 
 //let log = new Log();

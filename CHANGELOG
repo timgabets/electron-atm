@@ -1,3 +1,6 @@
+Novemebr 
+  1.2.7 using atm-logging library
+
 October 2017
 	1.2.6 using document.getElementById instead of jQuery in controllers/log.js
 	1.2.5 FITsService moved to the separate npm module called 'atm-fits'

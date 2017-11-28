@@ -169,7 +169,7 @@ test('should build Unsolicited Transaction Request message without Track 1 data 
   t.is(b.build(object), '11\x1C777\x1C\x1C\x1C1?\x1C;8990011234567890=20062011987612300720?\x1C\x1CBA BA BA\x1C000000001337\x1C;>:>:=>:>:>:>:>:\x1C19671994\x1C1337\x1C\x1C');
 });
 
-test('should build \'Send Configuration Information\' terminal state solicited status', t =>{
+test('should build \'Send Configuration Information\' terminal state solicited status', t => {
   let object = {
     message_class: 'Solicited',
     message_subclass: 'Status',
@@ -186,7 +186,7 @@ test('should build \'Send Configuration Information\' terminal state solicited s
   t.is(b.build(object), '22\x1C777\x1C\x1CF\x1C10789\x1C0000000000000000000000\x1C157F000901020483000001B1000000010202047F7F00\x1C00011111001000011130011\x1C000000000000\x1C030300\x1CG531‐0283');
 });
 
-test('should build \'Send Configuration ID\' terminal state solicited status', t =>{
+test('should build \'Send Configuration ID\' terminal state solicited status', t => {
   let object = {
     message_class: 'Solicited',
     message_subclass: 'Status',
@@ -197,7 +197,7 @@ test('should build \'Send Configuration ID\' terminal state solicited status', t
   t.is(b.build(object), '22\x1C777\x1C\x1CF\x1C60192');
 });
 
-test('should build \'Send Supply Counters\' terminal state solicited status', t =>{
+test('should build \'Send Supply Counters\' terminal state solicited status', t => {
   let object = {
     message_class: 'Solicited',
     message_subclass: 'Status',

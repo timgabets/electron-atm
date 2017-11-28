@@ -1,7 +1,7 @@
 import test from 'ava';
 
 test('should return true', t => {
-  t.is(true, true)
+  t.is(true, true);
 });
 
 /*

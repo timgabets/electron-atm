@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "test": "istanbul cover jasmine",
+    "test": "eslint tests/** && nyc --reporter=html ava",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "win32": "electron-builder --win",
@@ -47,8 +47,10 @@
   "devDependencies": {
     "ava": "^0.22.0",
     "electron": "~1.6.2",
+    "eslint": "^4.12.0",
+    "eslint-plugin-import": "^2.8.0",
     "electron-builder": "^19.35.1",
-    "jasmine": "^2.6.0"
+    "nyc": "^11.3.0"
   },
   "dependencies": {
     "atm-cursor": "^0.1.1",
@@ -64,7 +66,6 @@
     "babel-register": "^6.26.0",
     "bootstrap": "^3.3.7",
     "electron-settings": "^3.1.1",
-    "istanbul": "^0.4.5",
     "jquery": "^3.2.1",
     "jquery-validation": "^1.17.0",
     "mousetrap": "^1.6.1",

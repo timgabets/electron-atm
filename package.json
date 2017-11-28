@@ -50,6 +50,7 @@
     "electron-builder": "^19.35.1",
     "eslint": "^4.12.0",
     "eslint-plugin-import": "^2.8.0",
+    "jsdom": "^11.5.1",
     "nyc": "^11.3.0"
   },
   "dependencies": {

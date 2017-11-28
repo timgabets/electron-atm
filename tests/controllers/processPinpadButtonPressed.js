@@ -191,3 +191,360 @@ test('should clear PIN Buffer when Esc pressed', t => {
   t.true(atm.processState.notCalled);
 });
 
+/**
+ * describe("processPinpadButtonPressed() for state F', t => {
+ */
+test('should put the entered numbers into amount buffer', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'F');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+
+  t.is(atm.amount_buffer, '000000000000');
+      
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('5');
+
+  t.is(atm.amount_buffer, '000000001985');
+});
+
+test('should properly handle pressed Backspace button', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'F');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+
+  t.is(atm.amount_buffer, '000000000000');
+      
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('3');
+
+  t.is(atm.amount_buffer, '000000005893');
+});
+
+test('should properly handle pressed Enter button', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'F');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+  
+  t.is(atm.amount_buffer, '000000000000');
+    
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('enter');
+
+  t.is(atm.amount_buffer, '000000009855');
+  t.true(atm.processState.calledOnce);
+});
+
+test('should not overflow amount buffer', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'F');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+  t.is(atm.amount_buffer, '000000000000');
+      
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  atm.processPinpadButtonPressed('3');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('6');
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('0');
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  atm.processPinpadButtonPressed('3');
+  atm.processPinpadButtonPressed('4');
+
+  t.is(atm.amount_buffer, '345678901234');
+});
+
+/**
+ * describe("processPinpadButtonPressed() for state H', t => {
+    beforeEach(t =>  {
+      atm.current_state = { 
+        number: '700', 
+        type: 'H',
+        FDK_A_next_state: '001',
+        FDK_B_next_state: '002',
+        FDK_C_next_state: '003',
+        FDK_D_next_state: '004',
+        buffer_and_display_params: '000', // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+      };
+
+      spyOn(atm, 'processState');
+
+      atm.initBuffers();
+});
+*/
+test('should put the entered numbers into buffer C', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'H');
+  state.set('FDK_A_next_state', '001');
+  state.set('FDK_B_next_state', '002');
+  state.set('FDK_C_next_state', '003');
+  state.set('FDK_D_next_state', '004');
+  state.set('buffer_and_display_params', '000'); // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+ 
+  t.is(atm.buffer_C, '');
+
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('5');
+
+  t.is(atm.buffer_C, '1985');
+});
+
+test('should properly handle pressed Backspace button', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'H');
+  state.set('FDK_A_next_state', '001');
+  state.set('FDK_B_next_state', '002');
+  state.set('FDK_C_next_state', '003');
+  state.set('FDK_D_next_state', '004');
+  state.set('buffer_and_display_params', '000'); // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+  t.is(atm.buffer_C, '');
+      
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('3');
+
+  t.is(atm.buffer_C, '5893');
+});
+
+test('should put the entered numbers into buffer C when buffer_and_display_params = 001', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'H');
+  state.set('FDK_A_next_state', '001');
+  state.set('FDK_B_next_state', '002');
+  state.set('FDK_C_next_state', '003');
+  state.set('FDK_D_next_state', '004');
+  state.set('buffer_and_display_params', '001');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+  
+  t.is(atm.buffer_C, '');
+
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('4');
+
+  t.is(atm.buffer_C, '794');
+});
+
+test('should put the entered numbers into buffer B when buffer_and_display_params = 002', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'H');
+  state.set('FDK_A_next_state', '001');
+  state.set('FDK_B_next_state', '002');
+  state.set('FDK_C_next_state', '003');
+  state.set('FDK_D_next_state', '004');
+  state.set('buffer_and_display_params', '002');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+ 
+  t.is(atm.buffer_B, '');
+
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('4');
+
+  t.is(atm.buffer_B, '7984');
+});
+
+test('should put the entered numbers into buffer B when buffer_and_display_params = 003', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'H');
+  state.set('FDK_A_next_state', '001');
+  state.set('FDK_B_next_state', '002');
+  state.set('FDK_C_next_state', '003');
+  state.set('FDK_D_next_state', '004');
+  state.set('buffer_and_display_params', '003');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+  
+  t.is(atm.buffer_B, '');
+
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('backspace');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('0');
+
+  t.is(atm.buffer_B, '98440');
+});
+
+
+test('should not overflow buffer C (32 bytes max)', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'H');
+  state.set('FDK_A_next_state', '001');
+  state.set('FDK_B_next_state', '002');
+  state.set('FDK_C_next_state', '003');
+  state.set('FDK_D_next_state', '004');
+  state.set('buffer_and_display_params', '001');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+
+  t.is(atm.buffer_C, '');
+
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  atm.processPinpadButtonPressed('3');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('6');
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('0');
+  // 10
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  atm.processPinpadButtonPressed('3');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('6');
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('0');
+  // 20
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  atm.processPinpadButtonPressed('3');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('6');
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('0');
+  // 30
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  // 32. The rest must be trimmed
+  atm.processPinpadButtonPressed('0');
+  atm.processPinpadButtonPressed('0');
+  atm.processPinpadButtonPressed('0');
+  atm.processPinpadButtonPressed('0');
+
+  t.is(atm.buffer_C, '12345678901234567890123456789012');
+});
+
+test('should not overflow buffer B (32 bytes max)', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'H');
+  state.set('FDK_A_next_state', '001');
+  state.set('FDK_B_next_state', '002');
+  state.set('FDK_C_next_state', '003');
+  state.set('FDK_D_next_state', '004');
+  state.set('buffer_and_display_params', '003');
+  atm.current_state = state;
+  atm.processState = sinon.spy();
+  atm.initBuffers();
+ 
+  t.is(atm.buffer_B, '');
+
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  atm.processPinpadButtonPressed('3');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('6');
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('0');
+  // 10
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  atm.processPinpadButtonPressed('3');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('6');
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('0');
+  // 20
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  atm.processPinpadButtonPressed('3');
+  atm.processPinpadButtonPressed('4');
+  atm.processPinpadButtonPressed('5');
+  atm.processPinpadButtonPressed('6');
+  atm.processPinpadButtonPressed('7');
+  atm.processPinpadButtonPressed('8');
+  atm.processPinpadButtonPressed('9');
+  atm.processPinpadButtonPressed('0');
+  // 30
+  atm.processPinpadButtonPressed('1');
+  atm.processPinpadButtonPressed('2');
+  // 32. The rest must be trimmed
+  atm.processPinpadButtonPressed('0');
+  atm.processPinpadButtonPressed('0');
+  atm.processPinpadButtonPressed('0');
+  atm.processPinpadButtonPressed('0');
+
+  t.is(atm.buffer_B, '12345678901234567890123456789012');
+});
+

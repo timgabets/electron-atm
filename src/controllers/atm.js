@@ -334,7 +334,7 @@ function ATM(settings, log) {
    */
   this.processStateA = function(state){
     this.initBuffers();
-    this.display.setScreenByNumber(state.screen_number)
+    this.display.setScreenByNumber(state.get('screen_number'))
     
     if(this.card)
       return state.good_read_next_state;
@@ -354,7 +354,7 @@ function ATM(settings, log) {
      * to the left of the CRT is set) or the Enter key after the last digit has
      * been entered. Pressing the Clear key clears all digits.
      */
-    this.display.setScreenByNumber(state.screen_number)
+    this.display.setScreenByNumber(state.get('screen_number'))
     this.setFDKsActiveMask('001'); // Enabling button 'A' only
     this.max_pin_length = this.FITs.getMaxPINLength(this.card.number)
 
@@ -370,7 +370,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processAmountEntryState = function(state){
-    this.display.setScreenByNumber(state.screen_number);
+    this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask('015'); // Enabling 'A', 'B', 'C', 'D' buttons
     this.amount_buffer = '000000000000';
 
@@ -397,7 +397,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processFourFDKSelectionState = function(state){
-    this.display.setScreenByNumber(state.screen_number);
+    this.display.setScreenByNumber(state.get('screen_number'));
 
     this.activeFDKs= [];
     ['A', 'B', 'C', 'D'].forEach((element, index) => {
@@ -418,7 +418,7 @@ function ATM(settings, log) {
   }
 
   this.processInformationEntryState = function(state){
-    this.display.setScreenByNumber(state.screen_number);
+    this.display.setScreenByNumber(state.get('screen_number'));
     var active_mask = '0';
     [state.FDK_A_next_state,
      state.FDK_B_next_state,
@@ -460,7 +460,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processTransactionRequestState = function(state){
-    this.display.setScreenByNumber(state.screen_number);
+    this.display.setScreenByNumber(state.get('screen_number'));
 
     var request = {
       message_class: 'Unsolicited',
@@ -471,18 +471,18 @@ function ATM(settings, log) {
 
     if(!this.interactive_transaction)
     {
-      if(state.send_track2 === '001')
+      if(state.get('send_track2') === '001')
         request.track2 = this.track2;
 
       // Send Track 1 and/or Track 3 option is not supported 
 
-      if(state.send_operation_code === '001')
+      if(state.get('send_operation_code') === '001')
         request.opcode_buffer = this.opcode.getBuffer();
 
-      if(state.send_amount_data === '001')
+      if(state.get('send_amount_data') === '001')
         request.amount_buffer = this.amount_buffer;
 
-      switch(state.send_pin_buffer){
+      switch(state.get('send_pin_buffer')){
         case '001':   // Standard format. Send Buffer A
         case '129':   // Extended format. Send Buffer A
           request.PIN_buffer = this.crypto.getEncryptedPIN(this.PIN_buffer, this.card.number);
@@ -493,7 +493,7 @@ function ATM(settings, log) {
           break;
       }
 
-      switch(state.send_buffer_B_buffer_C){
+      switch(state.get('send_buffer_B_buffer_C')){
         case '000': // Send no buffers
           break;
 
@@ -512,7 +512,7 @@ function ATM(settings, log) {
 
         default:
           // TODO: If the extended format is selected in table entry 8, this entry is an Extension state number.
-          if(state.send_pin_buffer in ['128', '129']){
+          if(state.get('send_pin_buffer') in ['128', '129']){
             null;
           }
           break;
@@ -582,7 +582,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateX = function(state, extension_state){
-    this.display.setScreenByNumber(state.screen_number);
+    this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask(state.FDK_active_mask);
 
     var button = this.buttons_pressed.shift();
@@ -645,7 +645,7 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateY = function(state, extension_state){
-    this.display.setScreenByNumber(state.screen_number);
+    this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask(state.FDK_active_mask);
 
     if(extension_state)

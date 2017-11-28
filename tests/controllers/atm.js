@@ -76,11 +76,10 @@ test('should return null if track2 is invalid', t => {
 test('should return false on empty message', t => {
   const atm = new ATM(settings, log);
   const host_message = {};
-  // TODO:
+  
   t.deepEqual(atm.processHostMessage(host_message), false);
 });
 
-    
 // Terminal Command     
 test('should respond with "Command Reject" message to unknown Terminal Command host message', t => {
   const atm = new ATM(settings, log);
@@ -151,4 +150,5 @@ test('should respond with "Ready" message to "State Tables load" host message', 
 
   t.deepEqual(atm.processHostMessage(host_message), status_ready);
 }); 
+
 

@@ -907,7 +907,48 @@ function ATM(settings, log) {
       break;
   }
   return false;
-};
+  };
+
+  /**
+   * [processFDKButtonPressed description]
+   * @param  {[type]} button [description]
+   * @return {[type]}        [description]
+   */
+  this.processFDKButtonPressed = function(button){
+    // log.info(button + ' button pressed');
+    switch(this.current_state.get('type')){
+    case 'B':
+      if (button === 'A' && this.PIN_buffer.length >= 4)
+        this.processState(this.current_state.get('number'));
+      break;
+
+    case 'H':
+      var active_mask = '0';
+      [this.current_state.FDK_A_next_state,
+       this.current_state.FDK_B_next_state,
+       this.current_state.FDK_C_next_state,
+       this.current_state.FDK_D_next_state].forEach((element, index) => {
+        if(element !== '255')
+          active_mask += '1';
+        else
+          active_mask += '0';
+      })
+      this.setFDKsActiveMask(active_mask);
+
+      if(this.isFDKButtonActive(button)){
+        this.buttons_pressed.push(button);
+        this.processState(this.current_state.get('number'));
+      }
+      break;
+
+    default:
+      // No special processing required
+      this.buttons_pressed.push(button);
+      this.processState(this.current_state.get('number'));
+      break;
+  };
+  };
+
 
   this.trace = new Trace();
   this.states = new StatesService(settings, log, this.trace);
@@ -928,47 +969,6 @@ function ATM(settings, log) {
   this.transaction_request = null;
 }
 
-/**
- * [processFDKButtonPressed description]
- * @param  {[type]} button [description]
- * @return {[type]}        [description]
- */
-ATM.prototype.processFDKButtonPressed = function(button){
-  // log.info(button + ' button pressed');
-
-  switch(this.current_state.type){
-    case 'B':
-      if (button === 'A' && this.PIN_buffer.length >= 4)
-        this.processState(this.current_state.number);
-      break;
-
-    case 'H':
-      var active_mask = '0';
-      [this.current_state.FDK_A_next_state,
-       this.current_state.FDK_B_next_state,
-       this.current_state.FDK_C_next_state,
-       this.current_state.FDK_D_next_state].forEach((element, index) => {
-        if(element !== '255')
-          active_mask += '1';
-        else
-          active_mask += '0';
-      })
-      this.setFDKsActiveMask(active_mask);
-
-      if(this.isFDKButtonActive(button)){
-        this.buttons_pressed.push(button);
-        this.processState(this.current_state.number);
-      }
-      break;
-
-    default:
-      // No special processing required
-      this.buttons_pressed.push(button);
-      this.processState(this.current_state.number);
-      break;
-  };
-};
-
 
 /**
  * [processPinpadButtonPressed description]
@@ -977,7 +977,7 @@ ATM.prototype.processFDKButtonPressed = function(button){
  */
 ATM.prototype.processPinpadButtonPressed = function(button){
   //log.info('Button ' + button + ' pressed');
-  switch(this.current_state.type){
+  switch(this.current_state.get('type')){
     case 'B':
       switch(button){
         case 'backspace':
@@ -986,7 +986,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
 
         case 'enter':
           if(this.PIN_buffer.length >= 4)
-            this.processState(this.current_state.number)
+            this.processState(this.current_state.get('number'))
           break;
 
         case 'esc':
@@ -996,7 +996,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
         default:
           this.PIN_buffer += button;
           if(this.PIN_buffer.length == this.max_pin_length)
-            this.processState(this.current_state.number)
+            this.processState(this.current_state.get('number'))
       }
       this.display.insertText(this.PIN_buffer, '*');
       break;
@@ -1006,7 +1006,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
         case 'enter':
           // If the cardholder presses the Enter key, it has the same effect as pressing FDK ‘A’
           this.buttons_pressed.push('A');
-          this.processState(this.current_state.number)
+          this.processState(this.current_state.get('number'))
           break;
 
         case 'backspace':
@@ -1026,14 +1026,14 @@ ATM.prototype.processPinpadButtonPressed = function(button){
       break;
 
     case 'H':
-      if( this.current_state.buffer_and_display_params[2] === '0' || this.current_state.buffer_and_display_params[2] === '1'){
+      if( this.current_state.get('buffer_and_display_params')[2] === '0' || this.current_state.get('buffer_and_display_params')[2] === '1'){
         switch(button){
           case 'backspace':
             this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
-            if(this.current_state.buffer_and_display_params[2] === '0'){
+            if(this.current_state.get('buffer_and_display_params')[2] === '0'){
               // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
               this.display.insertText(this.buffer_C, 'X');
-            } else if(this.current_state.buffer_and_display_params[2] === '1'){
+            } else if(this.current_state.get('buffer_and_display_params')[2] === '1'){
               // 1 - Display data as keyed in. Store data in general-purpose Buffer C
               this.display.insertText(this.buffer_C);
             };
@@ -1047,24 +1047,24 @@ ATM.prototype.processPinpadButtonPressed = function(button){
             if(this.buffer_C.length < 32){
               this.buffer_C += button;
 
-              if(this.current_state.buffer_and_display_params[2] === '0'){
+              if(this.current_state.get('buffer_and_display_params')[2] === '0'){
                 // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
                 this.display.insertText(this.buffer_C, 'X');
-              } else if(this.current_state.buffer_and_display_params[2] === '1'){
+              } else if(this.current_state.get('buffer_and_display_params')[2] === '1'){
                 // 1 - Display data as keyed in. Store data in general-purpose Buffer C
                 this.display.insertText(this.buffer_C);
               }
             }
             break;
         }
-      } else if(  this.current_state.buffer_and_display_params[2] === '2' || this.current_state.buffer_and_display_params[2] === '3'){
+      } else if(  this.current_state.get('buffer_and_display_params')[2] === '2' || this.current_state.get('buffer_and_display_params')[2] === '3'){
         switch(button){
           case 'backspace':
             this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1)
-            if(  this.current_state.buffer_and_display_params[2] === '2'){
+            if(  this.current_state.get('buffer_and_display_params')[2] === '2'){
               // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
               this.display.insertText(this.buffer_B, 'X');
-            } else if(this.current_state.buffer_and_display_params[2] === '3'){
+            } else if(this.current_state.get('buffer_and_display_params')[2] === '3'){
               // 3 - Display data as keyed in. Store data in general-purpose Buffer B
               this.display.insertText(this.buffer_B);
             }
@@ -1078,10 +1078,10 @@ ATM.prototype.processPinpadButtonPressed = function(button){
             if(this.buffer_B.length < 32){
               this.buffer_B += button;
 
-              if(  this.current_state.buffer_and_display_params[2] === '2'){
+              if(  this.current_state.get('buffer_and_display_params')[2] === '2'){
                 // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
                 this.display.insertText(this.buffer_B, 'X');
-              } else if(this.current_state.buffer_and_display_params[2] === '3'){
+              } else if(this.current_state.get('buffer_and_display_params')[2] === '3'){
                 // 3 - Display data as keyed in. Store data in general-purpose Buffer B
                 this.display.insertText(this.buffer_B);
               }
@@ -1094,7 +1094,7 @@ ATM.prototype.processPinpadButtonPressed = function(button){
       break;
 
     default:
-      log.error('No keyboard entry allowed for state type ' + this.current_state.type);
+      log.error('No keyboard entry allowed for state type ' + this.current_state.get('type'));
       break;
   }
 };

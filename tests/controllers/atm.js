@@ -151,4 +151,57 @@ test('should respond with "Ready" message to "State Tables load" host message', 
   t.deepEqual(atm.processHostMessage(host_message), status_ready);
 }); 
 
+/**
+ * describe("setFDKsActiveMask()', t => {
+ */
+test('FDK mask 000 should enable disable all the buttons', t => {
+  const atm = new ATM(settings, log);
+  
+  t.deepEqual(atm.activeFDKs, []);
+  atm.setFDKsActiveMask('000');
+  t.deepEqual(atm.activeFDKs, []);
+});
+
+test('FDK mask 060 should enable C, D, F and G buttons', t => {
+  const atm = new ATM(settings, log);
+  
+  t.deepEqual(atm.activeFDKs, []);
+  atm.setFDKsActiveMask('060');
+  t.deepEqual(atm.activeFDKs, ['C', 'D', 'F', 'G']);
+});
+
+test('FDK mask 255 should enable all the buttons', t => {
+  const atm = new ATM(settings, log);
+  
+  t.deepEqual(atm.activeFDKs, []);
+  atm.setFDKsActiveMask('255');
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I']);
+});
+
+test('should leave the current FDK mask unchanged if new FDK mask is invalid', t => {
+  const atm = new ATM(settings, log);
+  
+  t.deepEqual(atm.activeFDKs, []);
+  atm.setFDKsActiveMask('129');
+  t.deepEqual(atm.activeFDKs, ['A', 'I']);
+  atm.setFDKsActiveMask('666');
+  t.deepEqual(atm.activeFDKs, ['A', 'I']);
+});
+
+test('FDK mask 0100010000 should enable buttons A, E (Cancel) and F', t => {
+  const atm = new ATM(settings, log);
+  
+  t.deepEqual(atm.activeFDKs, []);
+  atm.setFDKsActiveMask('0100011000');
+  t.deepEqual(atm.activeFDKs, ['A', 'E', 'F']);
+});
+
+test('FDK mask 0111111111 should enable all the buttons', t => {
+  const atm = new ATM(settings, log);
+  
+  t.deepEqual(atm.activeFDKs, []);
+  atm.setFDKsActiveMask('0111111111');
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']);
+});
+
 

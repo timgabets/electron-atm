@@ -886,6 +886,29 @@ function ATM(settings, log) {
     }
   };
 
+  /**
+   * [processHostMessage description]
+   * @param  {[type]} data [description]
+   * @return {[type]}      [description]
+   */
+  this.processHostMessage = function(data){
+    switch(data.message_class){
+    case 'Terminal Command':
+      return this.processTerminalCommand(data);
+
+    case 'Data Command':
+      return this.processDataCommand(data);
+
+    case 'Transaction Reply Command':
+      return this.processTransactionReply(data);
+            
+    default:
+      log.info('ATM.processHostMessage(): unknown message class: ' + data.message_class);
+      break;
+  }
+  return false;
+};
+
   this.trace = new Trace();
   this.states = new StatesService(settings, log, this.trace);
   this.screens = new ScreensService(settings, log, this.trace);
@@ -1074,29 +1097,6 @@ ATM.prototype.processPinpadButtonPressed = function(button){
       log.error('No keyboard entry allowed for state type ' + this.current_state.type);
       break;
   }
-};
-
-/**
- * [processHostMessage description]
- * @param  {[type]} data [description]
- * @return {[type]}      [description]
- */
-ATM.prototype.processHostMessage = function(data){
-  switch(data.message_class){
-    case 'Terminal Command':
-      return this.processTerminalCommand(data);
-
-    case 'Data Command':
-      return this.processDataCommand(data);
-
-    case 'Transaction Reply Command':
-      return this.processTransactionReply(data);
-            
-    default:
-      log.info('ATM.processHostMessage(): unknown message class: ' + data.message_class);
-      break;
-  }
-  return false;
 };
 
 module.exports = ATM;

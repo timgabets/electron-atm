@@ -74,9 +74,10 @@ test('should return null if track2 is invalid', t => {
  * describe('processHostMessage()', t =>{
  */
 test('should return false on empty message', t => {
-  let host_message = {};
+  const atm = new ATM(settings, log);
+  const host_message = {};
   // TODO:
-  //t.deepEqual(atm.processHostMessage(host_message), false);
+  t.deepEqual(atm.processHostMessage(host_message), false);
 });
 
     

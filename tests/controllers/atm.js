@@ -844,3 +844,17 @@ test('should not change state on amount entry state F if F, G, H or I button pre
   t.is(atm.processAmountEntryState(state), undefined);
 });
 
+/**
+ * processStateD()
+ */
+test('should process state D', t => {
+  const atm = new ATM(settings, log);
+  
+  let state = new Map(); 
+  state.set('type', 'D');
+  state.set('next_state', '123');
+
+  t.is(atm.processStateD(state), '123');
+});
+
+

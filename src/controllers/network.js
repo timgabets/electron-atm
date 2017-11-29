@@ -25,7 +25,7 @@ function Network(ipc, log) {
   this.send = function (data){
     let binary_data = Buffer(this.getOutgoingMessageLength(data) + data, 'binary');
     this.client.write(binary_data);
-    this.trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
+    this.trace.trace(binary_data, ' >> ' + binary_data.length + ' bytes sent:');
   };
 
   /**
@@ -55,7 +55,7 @@ function Network(ipc, log) {
       });
 
       this.client.on('data', (data) => {
-        this.trace.trace(data, '<< ' + data.length + ' bytes received:');
+        this.trace.trace(data, ' << ' + data.length + ' bytes received:');
         ipc.send('network-data-received', data);
       });
     }else{

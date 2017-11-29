@@ -464,7 +464,7 @@ test('should return proper message coordination number', t =>{
   // 50
   t.is(atm.getMessageCoordinationNumber(), '2');
 
-  for (let i =0; i < 10; i++ )
+  for (let i = 0; i < 10; i++ )
     atm.getMessageCoordinationNumber();
 
   // 61
@@ -500,6 +500,39 @@ test('should set ConfigID', t =>{
   atm.setConfigID('0003');
   t.is(atm.getConfigID(), '0003');
   t.true(settings.set.calledOnce);
+});
+
+/**
+ * replySolicitedStatus()
+ */
+test('should get reply to \'Send Supply Counters\' terminal command', t => {
+  const atm = new ATM(settings, log);
+  let reply = atm.replySolicitedStatus('Terminal State', 'Send Supply Counters');
+
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');
+
+  t.is(reply.tsn, '0000');
+  t.is(reply.transaction_count, '0000000');
+  t.is(reply.notes_in_cassettes, '00011000220003300044');
+  t.is(reply.notes_rejected, '00000000000000000000');
+  t.is(reply.notes_dispensed, '00000000000000000000');
+  t.is(reply.last_trxn_notes_dispensed, '00000000000000000000');
+  t.is(reply.card_captured, '00000');
+  t.is(reply.envelopes_deposited, '00000');
+  t.is(reply.camera_film_remaining, '00000');
+  t.is(reply.last_envelope_serial, '00000');
+});
+
+test('should get reply to \'Send Configuration ID\' terminal command', t => {
+  const atm = new ATM(settings, log);
+  atm.setConfigID('0007');
+  let reply = atm.replySolicitedStatus('Terminal State', 'Send Configuration ID');
+      
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');
+
+  t.is(reply.config_id, '0007');
 });
 
 

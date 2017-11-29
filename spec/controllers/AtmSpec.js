@@ -66,36 +66,6 @@ describe("ATM", function() {
     });
   });
 
-  describe('replySolicitedStatus()', function(){
-    it('should get reply to \'Send Supply Counters\' terminal command', function(){
-      var reply = atm.replySolicitedStatus('Terminal State', 'Send Supply Counters');
-
-      expect(reply.message_class).toEqual('Solicited');
-      expect(reply.message_subclass).toEqual('Status');
-
-      expect(reply.tsn).toEqual('0000');
-      expect(reply.transaction_count).toEqual('0000000');
-      expect(reply.notes_in_cassettes).toEqual('00011000220003300044');
-      expect(reply.notes_rejected).toEqual('00000000000000000000');
-      expect(reply.notes_dispensed).toEqual('00000000000000000000');
-      expect(reply.last_trxn_notes_dispensed).toEqual('00000000000000000000');
-      expect(reply.card_captured).toEqual('00000');
-      expect(reply.envelopes_deposited).toEqual('00000');
-      expect(reply.camera_film_remaining).toEqual('00000');
-      expect(reply.last_envelope_serial).toEqual('00000');
-    });
-
-    it('should get reply to \'Send Configuration ID\' terminal command', function(){
-      atm.setConfigID('0007');
-      var reply = atm.replySolicitedStatus('Terminal State', 'Send Configuration ID');
-      
-      expect(reply.message_class).toEqual('Solicited');
-      expect(reply.message_subclass).toEqual('Status');
-
-      expect(reply.config_id).toEqual('0007');
-    });
-  });
-
   describe('processCustomizationCommand()', function(){
     it('should reply with \'Ready\' to Screen Data load command', function(){
       data = {

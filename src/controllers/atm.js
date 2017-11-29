@@ -19,7 +19,7 @@ function ATM(settings, log) {
     if(!button)
       return;
 
-    for (var i = 0; i < this.activeFDKs.length; i++)
+    for (let i = 0; i < this.activeFDKs.length; i++)
       if(button.toUpperCase() === this.activeFDKs[i] )
         return true; 
     
@@ -64,7 +64,7 @@ function ATM(settings, log) {
   }
 
   this.getTerminalStateReply = function(command_code){
-    reply = {};
+    let reply = {};
 
     if(command_code)
         reply.terminal_command = command_code;
@@ -78,7 +78,6 @@ function ATM(settings, log) {
         reply.sensor_status = '000000000000';
         reply.release_number = this.hardware.getReleaseNumber();
         reply.ndc_software_id = this.hardware.getHarwareID();
-
         break;
 
       case 'Send Configuration ID':
@@ -86,8 +85,8 @@ function ATM(settings, log) {
         break;
 
       case 'Send Supply Counters':
-        var counters = this.getSupplyCounters();
-        for(var c in counters) reply[c] = counters[c];
+        let counters = this.getSupplyCounters();
+        for(let c in counters) reply[c] = counters[c];
         break;
 
       default:
@@ -103,7 +102,7 @@ function ATM(settings, log) {
    * @return {[type]}        [description]
    */
   this.replySolicitedStatus = function(status, command_code){
-    var reply = {};
+    let reply = {};
     reply.message_class = 'Solicited';
     reply.message_subclass = 'Status'; 
 
@@ -116,9 +115,9 @@ function ATM(settings, log) {
         
       case 'Terminal State':
         reply.status_descriptor = status;
-        data = this.getTerminalStateReply(command_code);
+        let data = this.getTerminalStateReply(command_code);
 
-        for(var c in data) reply[c] = data[c];
+        for(let c in data) reply[c] = data[c];
         break;
 
       default:

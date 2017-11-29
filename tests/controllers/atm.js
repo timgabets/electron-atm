@@ -1039,4 +1039,28 @@ test('should process information entry state H with D button pressed', t => {
   t.true(atm.display.setScreenByNumber.calledWith('997'));
 });
 
+/**
+ * processCloseState
+ */
+test('should process information entry state H with D button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.activeFDKs = ['A', 'B', 'C', 'D'];
+  atm.card = {
+    number: '4444555566667777'
+  }; 
+  atm.display.setScreenByNumber = sinon.spy();
+
+  let state = new Map(); 
+ 
+  state.set('type', 'J');
+  state.set('receipt_delivered_screen', '988');
+ 
+  atm.processCloseState(state);
+ 
+  t.deepEqual(atm.activeFDKs, []);
+  t.true(atm.display.setScreenByNumber.calledWith('988'));
+  t.is(atm.card, null);
+});
+
+
 

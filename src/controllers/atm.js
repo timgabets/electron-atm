@@ -468,7 +468,7 @@ class ATM {
       break;
 
     default: 
-      this.log.error('Unsupported Display parameter value: ' + this.curren_state.get('buffer_and_display_params')[2]);
+      this.log.error('Unsupported Display parameter value: ' + this.current_state.get('buffer_and_display_params')[2]);
     }
   }
 
@@ -1079,7 +1079,7 @@ class ATM {
           break;
         }
       } else
-        this.log.error('Unsupported Display parameter value: ' + this.curren_state.get('buffer_and_display_params')[2]);
+        this.log.error('Unsupported Display parameter value: ' + this.current_state.get('buffer_and_display_params')[2]);
 
       break;
 

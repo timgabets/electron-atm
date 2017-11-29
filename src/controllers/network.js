@@ -23,7 +23,7 @@ function Network(ipc, log) {
    * @return {[type]}      [description]
    */
   this.send = function (data){
-    var binary_data = Buffer(this.getOutgoingMessageLength(data) + data, 'binary');
+    let binary_data = Buffer(this.getOutgoingMessageLength(data) + data, 'binary');
     this.client.write(binary_data);
     this.trace.trace(binary_data, '>> ' + binary_data.length + ' bytes sent:');
   };
@@ -73,4 +73,5 @@ Network.prototype.send = function(message){
   this.send(message);
 };
 
-module.exports = Network
+module.exports = Network;
+

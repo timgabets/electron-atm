@@ -866,35 +866,37 @@ test('should process state flow A -> D -> B', t => {
   atm.card = {
     number: '4444555566667777'
   };
- 
-  let A000 = new Map(); 
-  A000.set('number', '000');
-  A000.set('type', 'A');
-  A000.set('good_read_next_state', '001');
 
-  let D001 = new Map(); 
-  D001.set('number', '001');
-  D001.set('type', 'D');
-  D001.set('next_state', '002');
+  let state_string = '000A870127128002002002001127';
+  let A000 = atm.states.parseState(state_string);
+  t.is(atm.states.add(state_string), true);
+  t.is(A000.get('number'), '000');
+  t.is(A000.get('type'), 'A');
+  t.is(A000.get('good_read_next_state'), '127');
 
-  let B002 = new Map(); 
-  B002.set('number', '002');
-  B002.set('type', 'B');
-  B002.set('screen_number', '993');
-  B002.set('remote_pin_check_next_state', '202');
 
-  atm.states.add(A000);
-  atm.states.add(D001);
-  atm.states.add(B002);
+  state_string = '127D500000128001002003004005';
+  let D127 = atm.states.parseState(state_string);
+  t.is(atm.states.add(state_string), true);
+  t.is(D127.get('number'), '127');
+  t.is(D127.get('type'), 'D');
+  t.is(D127.get('next_state'), '500');
 
-  // Checking that each state is valid:
-  t.is(atm.processStateA(A000), '001');
-  t.is(atm.processStateD(D001), '002');
-  t.is(atm.processPINEntryState(B002), undefined); 
+  state_string = '500B024002131026026138026003';
+  let B500 = atm.states.parseState(state_string);
+  t.is(atm.states.add(state_string), true);
+  t.is(B500.get('number'), '500');
+  t.is(B500.get('type'), 'B');
+
+
+  // Validating each state:
+  t.is(atm.processStateA(A000), '127');
+  t.is(atm.processStateD(D127), '500');
+  t.is(atm.processPINEntryState(B500), undefined); 
 
   // processing the states A -> D -> B:
   t.true(atm.processState('000'));
-  //t.deepEqual(atm.current_state, B002);
+  t.deepEqual(atm.current_state, B500);
 });
 
 

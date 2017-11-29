@@ -24,7 +24,7 @@ function ATM(settings, log) {
         return true; 
     
     return false;
-  }
+  };
 
   /**
    * [setFDKsActiveMask set the current FDK mask ]
@@ -40,57 +40,56 @@ function ATM(settings, log) {
       }
 
       this.activeFDKs = [];
-      var FDKs = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];  // E excluded
-      for(var bit = 0; bit < 8; bit++)
+      let FDKs = ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];  // E excluded
+      for(let bit = 0; bit < 8; bit++)
         if((mask & Math.pow(2, bit)).toString() !== '0')
           this.activeFDKs.push(FDKs[bit]);
 
-    } else if(mask.length > 0)
-    {
+    } else if(mask.length > 0) {
       // 2. mask is a binary mask, represented as string, e.g. 100011000 
       this.activeFDKs = [];
       
       // The first character of the mask is a 'Numeric Keys activator', and is not currently processed
       mask = mask.substr(1, mask.length);
 
-      var FDKs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']; // E included
-      for(var i = 0; i < mask.length; i++)
-          if(mask[i] === '1')
-            this.activeFDKs.push(FDKs[i]);
-    } else
-    {
+      let FDKs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']; // E included
+      for(let i = 0; i < mask.length; i++)
+        if(mask[i] === '1')
+          this.activeFDKs.push(FDKs[i]);
+    } else 
       log.error('Empty FDK mask');
-    }
-  }
+  };
 
   this.getTerminalStateReply = function(command_code){
     let reply = {};
 
     if(command_code)
-        reply.terminal_command = command_code;
+      reply.terminal_command = command_code;
 
     switch(command_code){
-      case 'Send Configuration Information':
-        reply.config_id = this.getConfigID();
-        reply.hardware_fitness = this.hardware.getHardwareFitness();
-        reply.hardware_configuration = '157F000901020483000001B1000000010202047F7F00';
-        reply.supplies_status = this.hardware.getSuppliesStatus();
-        reply.sensor_status = '000000000000';
-        reply.release_number = this.hardware.getReleaseNumber();
-        reply.ndc_software_id = this.hardware.getHarwareID();
-        break;
+    case 'Send Configuration Information':
+      reply.config_id = this.getConfigID();
+      reply.hardware_fitness = this.hardware.getHardwareFitness();
+      reply.hardware_configuration = '157F000901020483000001B1000000010202047F7F00';
+      reply.supplies_status = this.hardware.getSuppliesStatus();
+      reply.sensor_status = '000000000000';
+      reply.release_number = this.hardware.getReleaseNumber();
+      reply.ndc_software_id = this.hardware.getHarwareID();
+      break;
 
-      case 'Send Configuration ID':
-        reply.config_id = this.getConfigID();
-        break;
+    case 'Send Configuration ID':
+      reply.config_id = this.getConfigID();
+      break;
 
-      case 'Send Supply Counters':
+    case 'Send Supply Counters':
+      {
         let counters = this.getSupplyCounters();
         for(let c in counters) reply[c] = counters[c];
-        break;
+      }
+      break;
 
-      default:
-        break;
+    default:
+      break;
     }
 
     return reply;
@@ -107,22 +106,24 @@ function ATM(settings, log) {
     reply.message_subclass = 'Status'; 
 
     switch(status){
-      case 'Ready':
-      case 'Command Reject':
-      case 'Specific Command Reject':
-        reply.status_descriptor = status;
-        break;
+    case 'Ready':
+    case 'Command Reject':
+    case 'Specific Command Reject':
+      reply.status_descriptor = status;
+      break;
         
-      case 'Terminal State':
+    case 'Terminal State':
+      {
         reply.status_descriptor = status;
         let data = this.getTerminalStateReply(command_code);
 
         for(let c in data) reply[c] = data[c];
-        break;
+      }
+      break;
 
-      default:
-        log.error('atm.replySolicitedStatus(): unknown status ' + status);
-        reply.status_descriptor = 'Command Reject';
+    default:
+      log.error('atm.replySolicitedStatus(): unknown status ' + status);
+      reply.status_descriptor = 'Command Reject';
     }
     return reply;
   };
@@ -134,29 +135,29 @@ function ATM(settings, log) {
    */
   this.processTerminalCommand = function(data){
     switch(data.command_code){
-      case 'Go in-service':
-        this.setStatus('In-Service');
-        this.processState('000');
-        this.initBuffers();
-        this.activeFDKs = [];
-        break;
-      case 'Go out-of-service':
-        this.setStatus('Out-Of-Service');
-        this.initBuffers();
-        this.activeFDKs = [];
-        this.card = null;
-        break;
-      case 'Send Configuration Information':
-      case 'Send Configuration ID':
-      case 'Send Supply Counters':
-        return this.replySolicitedStatus('Terminal State', data.command_code);
+    case 'Go in-service':
+      this.setStatus('In-Service');
+      this.processState('000');
+      this.initBuffers();
+      this.activeFDKs = [];
+      break;
+    case 'Go out-of-service':
+      this.setStatus('Out-Of-Service');
+      this.initBuffers();
+      this.activeFDKs = [];
+      this.card = null;
+      break;
+    case 'Send Configuration Information':
+    case 'Send Configuration ID':
+    case 'Send Supply Counters':
+      return this.replySolicitedStatus('Terminal State', data.command_code);
 
-      default:
-          log.error('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
-          return this.replySolicitedStatus('Command Reject');
-        }
-      return this.replySolicitedStatus('Ready');
-  } 
+    default:
+      log.error('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
+      return this.replySolicitedStatus('Command Reject');
+    }
+    return this.replySolicitedStatus('Ready');
+  };
 
   /**
    * [processCustomizationCommand description]
@@ -165,36 +166,36 @@ function ATM(settings, log) {
    */
   this.processCustomizationCommand = function(data){
     switch(data.message_identifier){
-      case 'Screen Data load':
-        if(this.screens.add(data.screens))
-          return this.replySolicitedStatus('Ready') 
-        else
-          return this.replySolicitedStatus('Command Reject');
-
-      case 'State Tables load':
-        if(this.states.add(data.states))
-          return this.replySolicitedStatus('Ready') 
-        else
-          return this.replySolicitedStatus('Command Reject');
-
-      case 'FIT Data load':
-        if(this.FITs.add(data.FITs))
-          return this.replySolicitedStatus('Ready')
-        else
-          return this.replySolicitedStatus('Command Reject');
-
-      case 'Configuration ID number load':
-        if(data.config_id){
-          this.setConfigID(data.config_id);
-          return this.replySolicitedStatus('Ready');
-        }else{
-          log.info('ATM.processDataCommand(): no Config ID provided');
-          return this.replySolicitedStatus('Command Reject');
-        }
-
-      default:
-        log.error('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
+    case 'Screen Data load':
+      if(this.screens.add(data.screens))
+        return this.replySolicitedStatus('Ready'); 
+      else
         return this.replySolicitedStatus('Command Reject');
+
+    case 'State Tables load':
+      if(this.states.add(data.states))
+        return this.replySolicitedStatus('Ready'); 
+      else
+        return this.replySolicitedStatus('Command Reject');
+
+    case 'FIT Data load':
+      if(this.FITs.add(data.FITs))
+        return this.replySolicitedStatus('Ready');
+      else
+        return this.replySolicitedStatus('Command Reject');
+
+    case 'Configuration ID number load':
+      if(data.config_id){
+        this.setConfigID(data.config_id);
+        return this.replySolicitedStatus('Ready');
+      }else{
+        log.info('ATM.processDataCommand(): no Config ID provided');
+        return this.replySolicitedStatus('Command Reject');
+      }
+
+    default:
+      log.error('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
+      return this.replySolicitedStatus('Command Reject');
     }
   };
 
@@ -207,7 +208,7 @@ function ATM(settings, log) {
     this.interactive_transaction = true;
 
     if(data.active_keys){
-      this.setFDKsActiveMask(data.active_keys)
+      this.setFDKsActiveMask(data.active_keys);
     }
     
     this.display.setScreen(this.screens.parseDynamicScreenData(data.screen_data_field));
@@ -216,20 +217,19 @@ function ATM(settings, log) {
 
   this.processExtendedEncKeyInfo = function(data){
     switch(data.modifier){
-      case 'Decipher new comms key with current master key':
-        if( this.crypto.setCommsKey(data.new_key_data, data.new_key_length) )
-          return this.replySolicitedStatus('Ready');
-        else
-          return this.replySolicitedStatus('Command Reject');
-        break;
+    case 'Decipher new comms key with current master key':
+      if( this.crypto.setCommsKey(data.new_key_data, data.new_key_length) )
+        return this.replySolicitedStatus('Ready');
+      else
+        return this.replySolicitedStatus('Command Reject');
 
-      default:
-        log.error('Unsupported modifier');
-        break;
+    default:
+      log.error('Unsupported modifier');
+      break;
     }
 
     return this.replySolicitedStatus('Command Reject');
-  }
+  };
 
   /**
    * [processDataCommand description]
@@ -238,21 +238,20 @@ function ATM(settings, log) {
    */
   this.processDataCommand = function(data){
     switch(data.message_subclass){
-      case 'Customization Command':
-        return this.processCustomizationCommand(data);
+    case 'Customization Command':
+      return this.processCustomizationCommand(data);
 
-      case 'Interactive Transaction Response':
-        return this.processInteractiveTransactionResponse(data);
+    case 'Interactive Transaction Response':
+      return this.processInteractiveTransactionResponse(data);
 
-      case 'Extended Encryption Key Information':
-        return this.processExtendedEncKeyInfo(data);
+    case 'Extended Encryption Key Information':
+      return this.processExtendedEncKeyInfo(data);
         
-      default:
-        log.info('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
-        return this.replySolicitedStatus('Command Reject');
+    default:
+      log.info('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
+      return this.replySolicitedStatus('Command Reject');
     }
-    return this.replySolicitedStatus('Command Reject');
-  }
+  };
 
   /**
    * [processTransactionReply description]
@@ -290,7 +289,7 @@ function ATM(settings, log) {
    * @return {[type]} [description]
    */
   this.getMessageCoordinationNumber = function(){
-    var saved = settings.get('message_coordination_number');
+    let saved = settings.get('message_coordination_number');
     if(!saved)
       saved = '0';
 
@@ -324,7 +323,7 @@ function ATM(settings, log) {
     this.FDK_buffer = '';   // FDK_buffer is only needed on state type Y and W to determine the next state
 
     return true;
-  }
+  };
 
   /**
    * [processStateA process the Card Read state]
@@ -333,11 +332,11 @@ function ATM(settings, log) {
    */
   this.processStateA = function(state){
     this.initBuffers();
-    this.display.setScreenByNumber(state.get('screen_number'))
+    this.display.setScreenByNumber(state.get('screen_number'));
     
     if(this.card)
       return state.good_read_next_state;
-  }
+  };
 
   /**
    * [processPINEntryState description]
@@ -353,15 +352,15 @@ function ATM(settings, log) {
      * to the left of the CRT is set) or the Enter key after the last digit has
      * been entered. Pressing the Clear key clears all digits.
      */
-    this.display.setScreenByNumber(state.get('screen_number'))
+    this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask('001'); // Enabling button 'A' only
-    this.max_pin_length = this.FITs.getMaxPINLength(this.card.number)
+    this.max_pin_length = this.FITs.getMaxPINLength(this.card.number);
 
     if(this.PIN_buffer.length > 3){
       // TODO: PIN encryption
-      return state.remote_pin_check_next_state
+      return state.remote_pin_check_next_state;
     }
-  }
+  };
 
   /**
    * [processAmountEntryState description]
@@ -373,10 +372,10 @@ function ATM(settings, log) {
     this.setFDKsActiveMask('015'); // Enabling 'A', 'B', 'C', 'D' buttons
     this.amount_buffer = '000000000000';
 
-    var button = this.buttons_pressed.shift();
+    let button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button))
       return state['FDK_' + button + '_next_state'];
-  }
+  };
 
   /**
    * [processStateD description]
@@ -388,7 +387,7 @@ function ATM(settings, log) {
     //this.setBufferFromState(state, extension_state);
     this.opcode.setBufferFromState(state, extension_state);
     return state.next_state;
-  }
+  };
 
   /**
    * [processFourFDKSelectionState description]
@@ -402,11 +401,11 @@ function ATM(settings, log) {
     ['A', 'B', 'C', 'D'].forEach((element, index) => {
       if(state.get('FDK_' + element + '_next_state') !== '255')
         this.activeFDKs.push(element);
-    })
+    });
 
-    var button = this.buttons_pressed.shift();
+    let button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
-      var index = parseInt(state.get('buffer_location'));
+      let index = parseInt(state.get('buffer_location'), 10);
       if(index < 8)
         this.opcode.setBufferValueAt(7 - index, button);
       else
@@ -414,41 +413,40 @@ function ATM(settings, log) {
 
       return state.get('FDK_' + button + '_next_state');
     }
-  }
+  };
 
   this.processInformationEntryState = function(state){
     this.display.setScreenByNumber(state.get('screen_number'));
-    var active_mask = '0';
-    [state.FDK_A_next_state,
-     state.FDK_B_next_state,
-     state.FDK_C_next_state,
-     state.FDK_D_next_state].forEach((element, index) => {
+    let active_mask = '0';
+    [ state.FDK_A_next_state,
+      state.FDK_B_next_state,
+      state.FDK_C_next_state,
+      state.FDK_D_next_state].forEach((element, index) => {
       if(element !== '255')
         active_mask += '1';
       else
         active_mask += '0';
-    })
+    });
     this.setFDKsActiveMask(active_mask);
 
-    var button = this.buttons_pressed.shift();
+    let button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
       return state['FDK_' + button + '_next_state'];
     }
 
-    switch(state.buffer_and_display_params[2])
-    {
-      case '0':
-      case '1':
-        this.buffer_C = '';
-        break;
+    switch(state.buffer_and_display_params[2]){
+    case '0':
+    case '1':
+      this.buffer_C = '';
+      break;
 
-      case '2':
-      case '3':
-        this.buffer_B = '';
-        break;
+    case '2':
+    case '3':
+      this.buffer_B = '';
+      break;
 
-      default: 
-        log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
+    default: 
+      log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
     }
   };
 
@@ -461,15 +459,14 @@ function ATM(settings, log) {
   this.processTransactionRequestState = function(state){
     this.display.setScreenByNumber(state.get('screen_number'));
 
-    var request = {
+    let request = {
       message_class: 'Unsolicited',
       message_subclass: 'Transaction Request',
       top_of_receipt: '1',
       message_coordination_number: this.getMessageCoordinationNumber(),
     };
 
-    if(!this.interactive_transaction)
-    {
+    if(!this.interactive_transaction){
       if(state.get('send_track2') === '001')
         request.track2 = this.track2;
 
@@ -482,45 +479,45 @@ function ATM(settings, log) {
         request.amount_buffer = this.amount_buffer;
 
       switch(state.get('send_pin_buffer')){
-        case '001':   // Standard format. Send Buffer A
-        case '129':   // Extended format. Send Buffer A
-          request.PIN_buffer = this.crypto.getEncryptedPIN(this.PIN_buffer, this.card.number);
-          break;
-        case '000':   // Standard format. Do not send Buffer A
-        case '128':   // Extended format. Do not send Buffer A
-        default:
-          break;
+      case '001':   // Standard format. Send Buffer A
+      case '129':   // Extended format. Send Buffer A
+        request.PIN_buffer = this.crypto.getEncryptedPIN(this.PIN_buffer, this.card.number);
+        break;
+      case '000':   // Standard format. Do not send Buffer A
+      case '128':   // Extended format. Do not send Buffer A
+      default:
+        break;
       }
 
       switch(state.get('send_buffer_B_buffer_C')){
-        case '000': // Send no buffers
-          break;
+      case '000': // Send no buffers
+        break;
 
-        case '001': // Send Buffer B
-          request.buffer_B = this.buffer_B;
-          break;
+      case '001': // Send Buffer B
+        request.buffer_B = this.buffer_B;
+        break;
 
-        case '002': // Send Buffer C
-          request.buffer_C = this.buffer_C;
-          break;
+      case '002': // Send Buffer C
+        request.buffer_C = this.buffer_C;
+        break;
 
-        case '003': // Send Buffer B and C
-          request.buffer_B = this.buffer_B;
-          request.buffer_C = this.buffer_C;
-          break;
+      case '003': // Send Buffer B and C
+        request.buffer_B = this.buffer_B;
+        request.buffer_C = this.buffer_C;
+        break;
 
-        default:
-          // TODO: If the extended format is selected in table entry 8, this entry is an Extension state number.
-          if(state.get('send_pin_buffer') in ['128', '129']){
-            null;
-          }
-          break;
+      default:
+        // TODO: If the extended format is selected in table entry 8, this entry is an Extension state number.
+        if(state.get('send_pin_buffer') in ['128', '129']){
+          null;
+        }
+        break;
       }
     } else {
       this.interactive_transaction = false;
 
       // Keyboard data entered after receiving an Interactive Transaction Response is stored in General Purpose Buffer B
-      var button = this.buttons_pressed.shift();
+      let button = this.buttons_pressed.shift();
       if(this.isFDKButtonActive(button)){
         this.buffer_B = button;
         request.buffer_B = button;
@@ -529,7 +526,7 @@ function ATM(settings, log) {
 
 
     this.transaction_request = request; // further processing is performed by the atm listener
-  }
+  };
 
   /**
    * [processCloseState description]
@@ -540,8 +537,8 @@ function ATM(settings, log) {
     this.display.setScreenByNumber(state.receipt_delivered_screen);
     this.setFDKsActiveMask('000');  // Disable all FDK buttons
     this.card = null;
-    log.info(trace.object(state));
-  }
+    log.info(this.trace.object(state));
+  };
 
   /**
    * [processStateK description]
@@ -549,10 +546,10 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateK = function(state){
-    var institution_id = this.FITs.getInstitutionByCardnumber(this.card.number)
+    let institution_id = this.FITs.getInstitutionByCardnumber(this.card.number);
     // log.info('Found institution_id ' + institution_id);
-    return state.states_to[parseInt(institution_id)];
-  }
+    return state.states_to[parseInt(institution_id, 10)];
+  };
 
   /**
    * [processStateW description]
@@ -560,8 +557,8 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateW = function(state){
-    return state.states[this.FDK_buffer]
-  }
+    return state.states[this.FDK_buffer];
+  };
 
 
   /**
@@ -584,7 +581,7 @@ function ATM(settings, log) {
     this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask(state.get('FDK_active_mask'));
 
-    var button = this.buttons_pressed.shift();
+    let button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
       this.FDK_buffer = button;
 
@@ -595,11 +592,11 @@ function ATM(settings, log) {
          * Information Entry state table (table entry 7) if the
          * specified FDK or touch area is pressed.
          */
-        var buffer_value;
+        let buffer_value;
         [null, null, 'A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'].forEach((element, index) => {
           if(button === element)
             buffer_value = extension_state.get('entries')[index];
-        })
+        });
 
         /**
          * Buffer ID identifies which buffer is to be edited and the number of zeros to add 
@@ -610,33 +607,33 @@ function ATM(settings, log) {
          * X specifies the number of zeros in the range 0-9
          */
         // Checking number of zeroes to pad
-        var num_of_zeroes = state.get('buffer_id').substr(2, 1);
-        for (var i = 0; i < num_of_zeroes; i++)
+        let num_of_zeroes = state.get('buffer_id').substr(2, 1);
+        for (let i = 0; i < num_of_zeroes; i++)
           buffer_value += '0';
 
         // Checking which buffer to use
         switch(state.get('buffer_id').substr(1, 1)){
-          case '1':
-            this.buffer_B = buffer_value;
-            break;
+        case '1':
+          this.buffer_B = buffer_value;
+          break;
   
-          case '2':
-            this.buffer_C = buffer_value;
-            break;
+        case '2':
+          this.buffer_C = buffer_value;
+          break;
   
-          case '3':
-            this.setAmountBuffer(buffer_value);
-            break;
+        case '3':
+          this.setAmountBuffer(buffer_value);
+          break;
   
-          default:
-            log.error('Unsupported buffer id value: ' + state.get('buffer_id'));
-            break;
+        default:
+          log.error('Unsupported buffer id value: ' + state.get('buffer_id'));
+          break;
         }
       }
 
       return state.get('FDK_next_state');
     }
-  }
+  };
 
   /**
    * [processStateY description]
@@ -647,22 +644,21 @@ function ATM(settings, log) {
     this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask(state.get('FDK_active_mask'));
 
-    if(extension_state)
-    {
+    if(extension_state){
       log.error('Extension state on state Y is not yet supported');
     }else{
-      var button = this.buttons_pressed.shift();
+      let button = this.buttons_pressed.shift();
       if(this.isFDKButtonActive(button)){
         this.FDK_buffer = button;
 
         // If there is no extension state, state.get('buffer_positions') defines the Operation Code buffer position 
         // to be edited by a value in the range 000 to 007.
-        this.opcode.setBufferValueAt(parseInt(state.get('buffer_positions')), button);
+        this.opcode.setBufferValueAt(parseInt(state.get('buffer_positions'), 10), button);
        
         return state.get('FDK_next_state');
       }
     }
-  }
+  };
 
   /**
    * [processStateBeginICCInit description]
@@ -671,7 +667,7 @@ function ATM(settings, log) {
    */
   this.processStateBeginICCInit = function(state){
     return state.icc_init_not_started_next_state;
-  }
+  };
 
   /**
    * [processStateCompleteICCAppInit description]
@@ -679,11 +675,11 @@ function ATM(settings, log) {
    * @return {[type]}       [description]
    */
   this.processStateCompleteICCAppInit = function(state){
-    var extension_state = this.states.get(state.extension_state);
+    let extension_state = this.states.get(state.extension_state);
     this.display.setScreenByNumber(state.please_wait_screen_number);
 
     return extension_state.get('entries')[8]; // Processing not performed
-  }
+  };
 
   /**
    * [processICCReinit description]
@@ -692,7 +688,7 @@ function ATM(settings, log) {
    */
   this.processICCReinit = function(state){
     return state.processing_not_performed_next_state;
-  }
+  };
 
 
   /**
@@ -703,7 +699,7 @@ function ATM(settings, log) {
   this.processSetICCDataState = function(state){
     // No processing as ICC cards are not currently supported
     return state.next_state;
-  }
+  };
 
 
   /**
@@ -712,87 +708,86 @@ function ATM(settings, log) {
    * @return {[type]}              [description]
    */
   this.processState = function(state_number){
-    var state = this.states.get(state_number);
-    var next_state = null;
+    let state = this.states.get(state_number);
+    let next_state = null;
 
     do{
       if(state){
         this.current_state = state;
         log.info('Processing state ' + state.number + state.type + ' (' + state.description + ')');
-      }else
-      {
+      } else {
         log.error('Error getting state ' + state_number + ': state not found');
         return false;
       }
         
       switch(state.type){
-        case 'A':
-          next_state = this.processStateA(state);
-          break;
+      case 'A':
+        next_state = this.processStateA(state);
+        break;
 
-        case 'B':
-          next_state = this.processPINEntryState(state);
-          break;
+      case 'B':
+        next_state = this.processPINEntryState(state);
+        break;
 
-        case 'D':
-          state.extension_state !== '255' ? next_state = this.processStateD(state, this.states.get(state.extension_state)) : next_state = this.processStateD(state);
-          break;
+      case 'D':
+        state.extension_state !== '255' ? next_state = this.processStateD(state, this.states.get(state.extension_state)) : next_state = this.processStateD(state);
+        break;
 
-        case 'E':
-          next_state = this.processFourFDKSelectionState(state);
-          break;
+      case 'E':
+        next_state = this.processFourFDKSelectionState(state);
+        break;
 
-        case 'F':
-          next_state = this.processAmountEntryState(state);
-          break;
+      case 'F':
+        next_state = this.processAmountEntryState(state);
+        break;
 
-        case 'H':
-          next_state = this.processInformationEntryState(state);
-          break;
+      case 'H':
+        next_state = this.processInformationEntryState(state);
+        break;
 
-        case 'I':
-          next_state = this.processTransactionRequestState(state);
-          break;
+      case 'I':
+        next_state = this.processTransactionRequestState(state);
+        break;
 
-        case 'J':
-          next_state = this.processCloseState(state);
-          break;
+      case 'J':
+        next_state = this.processCloseState(state);
+        break;
 
-        case 'K':
-          next_state = this.processStateK(state);
-          break;
+      case 'K':
+        next_state = this.processStateK(state);
+        break;
 
-        case 'X':
-          (state.extension_state !== '255' && state.extension_state !== '000') ? next_state = this.processStateX(state, this.states.get(state.extension_state)) : next_state = this.processStateX(state);
-          break;
+      case 'X':
+        (state.extension_state !== '255' && state.extension_state !== '000') ? next_state = this.processStateX(state, this.states.get(state.extension_state)) : next_state = this.processStateX(state);
+        break;
 
-        case 'Y':
-          (state.extension_state !== '255' && state.extension_state !== '000') ? next_state = this.processStateY(state, this.states.get(state.extension_state)) : next_state = this.processStateY(state);
-          break;
+      case 'Y':
+        (state.extension_state !== '255' && state.extension_state !== '000') ? next_state = this.processStateY(state, this.states.get(state.extension_state)) : next_state = this.processStateY(state);
+        break;
 
-        case 'W':
-          next_state = this.processStateW(state);
-          break;
+      case 'W':
+        next_state = this.processStateW(state);
+        break;
 
-        case '+':
-          next_state = this.processStateBeginICCInit(state);
-          break;
+      case '+':
+        next_state = this.processStateBeginICCInit(state);
+        break;
 
-        case '/':
-          next_state = this.processStateCompleteICCAppInit(state);
-          break;
+      case '/':
+        next_state = this.processStateCompleteICCAppInit(state);
+        break;
 
-        case ';':
-          next_state = this.processICCReinit(state);
-          break;
+      case ';':
+        next_state = this.processICCReinit(state);
+        break;
 
-        case '?':
-          next_state = this.processSetICCDataState(state);
-          break;
+      case '?':
+        next_state = this.processSetICCDataState(state);
+        break;
 
-        default:
-          log.error('atm.processState(): unsupported state type ' + state.type);
-          next_state = null;
+      default:
+        log.error('atm.processState(): unsupported state type ' + state.type);
+        next_state = null;
       }
 
       if(next_state)
@@ -803,7 +798,7 @@ function ATM(settings, log) {
     }while(state);
 
     return true;
-  }
+  };
 
   /**
    * [parseTrack2 parse track2 and return card object]
@@ -811,9 +806,9 @@ function ATM(settings, log) {
    * @return {[card object]} [description]
    */
   this.parseTrack2 = function(track2){
-    var card = {};
+    let card = {};
     try{
-      var splitted = track2.split('=')
+      let splitted = track2.split('=');
       card.track2 = track2;
       card.number = splitted[0].replace(';', '');
       card.service_code = splitted[1].substr(4, 3);
@@ -823,11 +818,11 @@ function ATM(settings, log) {
     }
 
     return card;
-  }
+  };
 
   this.readCard = function(cardnumber, track2_data){
     this.track2 = cardnumber + '=' + track2_data;
-    this.card = this.parseTrack2(this.track2)
+    this.card = this.parseTrack2(this.track2);
     if(this.card){
       log.info('Card ' + this.card.number + ' read');
       log.info('Track2: ' + this.track2);
@@ -841,7 +836,7 @@ function ATM(settings, log) {
    * @return {[type]} [description]
    */
   this.initCounters = function(){
-    var config_id = settings.get('config_id');
+    let config_id = settings.get('config_id');
     (config_id) ? this.setConfigID(config_id) : this.setConfigID('0000');
 
     this.supply_counters = {};
@@ -855,7 +850,7 @@ function ATM(settings, log) {
     this.supply_counters.envelopes_deposited = '00000';
     this.supply_counters.camera_film_remaining = '00000';
     this.supply_counters.last_envelope_serial = '00000';
-  }
+  };
 
   this.getSupplyCounters = function(){
     return this.supply_counters;
@@ -878,10 +873,10 @@ function ATM(settings, log) {
     this.status = status;
 
     switch(status){
-      case 'Offline':
-      case 'Out-Of-Service':
-        this.display.setScreenByNumber('001');
-        break;
+    case 'Offline':
+    case 'Out-Of-Service':
+      this.display.setScreenByNumber('001');
+      break;
     }
   };
 
@@ -904,8 +899,8 @@ function ATM(settings, log) {
     default:
       log.info('ATM.processHostMessage(): unknown message class: ' + data.message_class);
       break;
-  }
-  return false;
+    }
+    return false;
   };
 
   /**
@@ -922,21 +917,23 @@ function ATM(settings, log) {
       break;
 
     case 'H':
-      var active_mask = '0';
-      [this.current_state.FDK_A_next_state,
-       this.current_state.FDK_B_next_state,
-       this.current_state.FDK_C_next_state,
-       this.current_state.FDK_D_next_state].forEach((element, index) => {
-        if(element !== '255')
-          active_mask += '1';
-        else
-          active_mask += '0';
-      })
-      this.setFDKsActiveMask(active_mask);
+      {
+        let active_mask = '0';
+        [ this.current_state.FDK_A_next_state,
+          this.current_state.FDK_B_next_state,
+          this.current_state.FDK_C_next_state,
+          this.current_state.FDK_D_next_state].forEach((element, index) => {
+          if(element !== '255')
+            active_mask += '1';
+          else
+            active_mask += '0';
+        });
+        this.setFDKsActiveMask(active_mask);
 
-      if(this.isFDKButtonActive(button)){
-        this.buttons_pressed.push(button);
-        this.processState(this.current_state.get('number'));
+        if(this.isFDKButtonActive(button)){
+          this.buttons_pressed.push(button);
+          this.processState(this.current_state.get('number'));
+        }
       }
       break;
 
@@ -945,7 +942,7 @@ function ATM(settings, log) {
       this.buttons_pressed.push(button);
       this.processState(this.current_state.get('number'));
       break;
-  };
+    }
   };
 
 
@@ -977,124 +974,118 @@ function ATM(settings, log) {
 ATM.prototype.processPinpadButtonPressed = function(button){
   //log.info('Button ' + button + ' pressed');
   switch(this.current_state.get('type')){
-    case 'B':
-      switch(button){
-        case 'backspace':
-          this.PIN_buffer = this.PIN_buffer.slice(0, -1);
-          break;
-
-        case 'enter':
-          if(this.PIN_buffer.length >= 4)
-            this.processState(this.current_state.get('number'))
-          break;
-
-        case 'esc':
-          this.PIN_buffer = '';
-          break;
-
-        default:
-          this.PIN_buffer += button;
-          if(this.PIN_buffer.length == this.max_pin_length)
-            this.processState(this.current_state.get('number'))
-      }
-      this.display.insertText(this.PIN_buffer, '*');
+  case 'B':
+    switch(button){
+    case 'backspace':
+      this.PIN_buffer = this.PIN_buffer.slice(0, -1);
       break;
-
-    case 'F':
-      switch(button){
-        case 'enter':
-          // If the cardholder presses the Enter key, it has the same effect as pressing FDK ‘A’
-          this.buttons_pressed.push('A');
-          this.processState(this.current_state.get('number'))
-          break;
-
-        case 'backspace':
-          this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1);
-          this.display.insertText(this.amount_buffer);
-          break;
-
-        case 'esc':
-          // TODO: clear buffer
-          break;
-
-        default:
-          this.amount_buffer = this.amount_buffer.substr(1) + button;
-          this.display.insertText(this.amount_buffer);
-          break;
-      }
+    case 'enter':
+      if(this.PIN_buffer.length >= 4)
+        this.processState(this.current_state.get('number'));
       break;
-
-    case 'H':
-      if( this.current_state.get('buffer_and_display_params')[2] === '0' || this.current_state.get('buffer_and_display_params')[2] === '1'){
-        switch(button){
-          case 'backspace':
-            this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
-            if(this.current_state.get('buffer_and_display_params')[2] === '0'){
-              // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-              this.display.insertText(this.buffer_C, 'X');
-            } else if(this.current_state.get('buffer_and_display_params')[2] === '1'){
-              // 1 - Display data as keyed in. Store data in general-purpose Buffer C
-              this.display.insertText(this.buffer_C);
-            };
-            break;
-
-          case 'esc':
-            // TODO: clear buffer
-            break;
-
-          default:
-            if(this.buffer_C.length < 32){
-              this.buffer_C += button;
-
-              if(this.current_state.get('buffer_and_display_params')[2] === '0'){
-                // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-                this.display.insertText(this.buffer_C, 'X');
-              } else if(this.current_state.get('buffer_and_display_params')[2] === '1'){
-                // 1 - Display data as keyed in. Store data in general-purpose Buffer C
-                this.display.insertText(this.buffer_C);
-              }
-            }
-            break;
-        }
-      } else if(  this.current_state.get('buffer_and_display_params')[2] === '2' || this.current_state.get('buffer_and_display_params')[2] === '3'){
-        switch(button){
-          case 'backspace':
-            this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1)
-            if(  this.current_state.get('buffer_and_display_params')[2] === '2'){
-              // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
-              this.display.insertText(this.buffer_B, 'X');
-            } else if(this.current_state.get('buffer_and_display_params')[2] === '3'){
-              // 3 - Display data as keyed in. Store data in general-purpose Buffer B
-              this.display.insertText(this.buffer_B);
-            }
-            break;
-
-          case 'esc':
-            // TODO: clear buffer
-            break;
-
-          default:
-            if(this.buffer_B.length < 32){
-              this.buffer_B += button;
-
-              if(  this.current_state.get('buffer_and_display_params')[2] === '2'){
-                // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
-                this.display.insertText(this.buffer_B, 'X');
-              } else if(this.current_state.get('buffer_and_display_params')[2] === '3'){
-                // 3 - Display data as keyed in. Store data in general-purpose Buffer B
-                this.display.insertText(this.buffer_B);
-              }
-            }
-            break;
-        }
-      } else
-        log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
-
+    case 'esc':
+      this.PIN_buffer = '';
       break;
-
     default:
-      log.error('No keyboard entry allowed for state type ' + this.current_state.get('type'));
+      this.PIN_buffer += button;
+      if(this.PIN_buffer.length === this.max_pin_length)
+        this.processState(this.current_state.get('number'));
+    }
+    this.display.insertText(this.PIN_buffer, '*');
+    break;
+
+  case 'F':
+    switch(button){
+    case 'enter':
+      // If the cardholder presses the Enter key, it has the same effect as pressing FDK ‘A’
+      this.buttons_pressed.push('A');
+      this.processState(this.current_state.get('number'));
       break;
+    case 'backspace':
+      this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1);
+      this.display.insertText(this.amount_buffer);
+      break;
+    case 'esc':
+      // TODO: clear buffer
+      break;
+    default:
+      this.amount_buffer = this.amount_buffer.substr(1) + button;
+      this.display.insertText(this.amount_buffer);
+      break;
+    }
+    break;
+
+  case 'H':
+    if( this.current_state.get('buffer_and_display_params')[2] === '0' || this.current_state.get('buffer_and_display_params')[2] === '1'){
+      switch(button){
+      case 'backspace':
+        this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
+        if(this.current_state.get('buffer_and_display_params')[2] === '0'){
+          // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+          this.display.insertText(this.buffer_C, 'X');
+        } else if(this.current_state.get('buffer_and_display_params')[2] === '1'){
+          // 1 - Display data as keyed in. Store data in general-purpose Buffer C
+          this.display.insertText(this.buffer_C);
+        }
+        break;
+
+      case 'esc':
+        // TODO: clear buffer
+        break;
+
+      default:
+        if(this.buffer_C.length < 32){
+          this.buffer_C += button;
+
+          if(this.current_state.get('buffer_and_display_params')[2] === '0'){
+            // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+            this.display.insertText(this.buffer_C, 'X');
+          } else if(this.current_state.get('buffer_and_display_params')[2] === '1'){
+            // 1 - Display data as keyed in. Store data in general-purpose Buffer C
+            this.display.insertText(this.buffer_C);
+          }
+        }
+        break;
+      }
+    } else if(  this.current_state.get('buffer_and_display_params')[2] === '2' || this.current_state.get('buffer_and_display_params')[2] === '3'){
+      switch(button){
+      case 'backspace':
+        this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1);
+        if(  this.current_state.get('buffer_and_display_params')[2] === '2'){
+          // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+          this.display.insertText(this.buffer_B, 'X');
+        } else if(this.current_state.get('buffer_and_display_params')[2] === '3'){
+          // 3 - Display data as keyed in. Store data in general-purpose Buffer B
+          this.display.insertText(this.buffer_B);
+        }
+        break;
+
+      case 'esc':
+        // TODO: clear buffer
+        break;
+
+      default:
+        if(this.buffer_B.length < 32){
+          this.buffer_B += button;
+
+          if(  this.current_state.get('buffer_and_display_params')[2] === '2'){
+            // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+            this.display.insertText(this.buffer_B, 'X');
+          } else if(this.current_state.get('buffer_and_display_params')[2] === '3'){
+            // 3 - Display data as keyed in. Store data in general-purpose Buffer B
+            this.display.insertText(this.buffer_B);
+          }
+        }
+        break;
+      }
+    } else
+      this.log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
+
+    break;
+
+  default:
+    this.log.error('No keyboard entry allowed for state type ' + this.current_state.get('type'));
+    break;
   }
 };
 

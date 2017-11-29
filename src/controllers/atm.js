@@ -736,6 +736,7 @@ class ATM {
       if(state){
         this.current_state = state;
         this.log.info('Processing state ' + state.get('number') + state.get('type') + ' (' + state.get('description') + ')');
+        console.log('Processing state ' + state.get('number') + state.get('type') + ' (' + state.get('description') + ')');
       } else {
         this.log.error('Error getting state ' + state_number + ': state not found');
         return false;

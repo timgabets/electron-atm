@@ -857,4 +857,45 @@ test('should process state D', t => {
   t.is(atm.processStateD(state), '123');
 });
 
+/**
+ * processState()
+ */
+test('should process state flow A -> D -> B', t => {
+  settings.set('states', {});
+  const atm = new ATM(settings, log);
+  atm.card = {
+    number: '4444555566667777'
+  };
+ 
+  let A000 = new Map(); 
+  A000.set('number', '000');
+  A000.set('type', 'A');
+  A000.set('good_read_next_state', '001');
+
+  let D001 = new Map(); 
+  D001.set('number', '001');
+  D001.set('type', 'D');
+  D001.set('next_state', '002');
+
+  let B002 = new Map(); 
+  B002.set('number', '002');
+  B002.set('type', 'B');
+  B002.set('screen_number', '993');
+  B002.set('remote_pin_check_next_state', '202');
+
+  atm.states.add(A000);
+  atm.states.add(D001);
+  atm.states.add(B002);
+
+  // Checking that each state is valid:
+  t.is(atm.processStateA(A000), '001');
+  t.is(atm.processStateD(D001), '002');
+  t.is(atm.processPINEntryState(B002), undefined); 
+
+  // processing the states A -> D -> B:
+  t.true(atm.processState('000'));
+  //t.deepEqual(atm.current_state, B002);
+});
+
+
 

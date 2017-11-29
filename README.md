@@ -108,3 +108,7 @@ Contributions are welcome, I would appreciate any help in application testing an
 
 ## License
 [LGPLv2](LICENSE.md)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/bd413733bed6663896cc/maintainability)](https://codeclimate.com/github/timgabets/electron-atm/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/bd413733bed6663896cc/test_coverage)](https://codeclimate.com/github/timgabets/electron-atm/test_coverage)
+

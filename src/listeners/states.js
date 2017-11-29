@@ -8,7 +8,7 @@ const ATM = nodeRequire('./src/controllers/atm.js');
 let trace = new Trace();
 const atm = new ATM(settings, log);
 
-let states = new StatesService(settings, log, trace);
+const states = new StatesService(settings, log, trace);
 let screens = new ScreensService(settings, log);
 
 var options = {
@@ -112,7 +112,7 @@ $(function(){
 
     $('#states-to').html('');
     if(state.get('states_to')){
-      state.states_to.forEach(state_to => {
+      state.get('states_to').forEach(state_to => {
         var state = states.get(state_to);
         $('#states-to').append('<button class="btn btn-sm state-button" id="state-to-' + state.get('number') + '">' + state.get('number') + ' ' + state.get('type') + ' </button>');
         $('#state-to-' + state_to).on('click', _ => {

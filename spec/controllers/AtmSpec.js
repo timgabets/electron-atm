@@ -60,36 +60,6 @@ describe("ATM", function() {
 
 
 
-  describe('getMessageCoordinationNumber', function(){
-    it('should return proper message coordination number', function(){
-      settings.set('message_coordination_number', '0');
-
-      // ASCII code 49 
-      expect(atm.getMessageCoordinationNumber()).toEqual('1');
-      // 50
-      expect(atm.getMessageCoordinationNumber()).toEqual('2');
-
-      for (var i =0; i < 10; i++ )
-        atm.getMessageCoordinationNumber();
-
-      // 61
-      expect(atm.getMessageCoordinationNumber()).toEqual('=');
-    });
-
-    it('should rotate message coordination number', function(){
-      settings.set('message_coordination_number', '0');
-      expect(atm.getMessageCoordinationNumber()).toEqual('1');
-      for (var i =0; i < 75; i++ )
-        atm.getMessageCoordinationNumber();
-
-      expect(atm.getMessageCoordinationNumber()).toEqual('}');
-      expect(atm.getMessageCoordinationNumber()).toEqual('~');
-      // End of cycle, should start over again
-      expect(atm.getMessageCoordinationNumber()).toEqual('1');
-      expect(atm.getMessageCoordinationNumber()).toEqual('2');
-    });
-  });
-
   describe('setConfigID() and getConfigID()', function(){
     beforeEach(function() {
       atm.initCounters();

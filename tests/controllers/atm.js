@@ -451,4 +451,38 @@ test('should leave opcode buffer unchanged if buffer location value is invalid',
   t.is(atm.opcode.getBuffer(), '        ');
 });
 
+/**
+ * getMessageCoordinationNumber()
+ */
+test('should return proper message coordination number', t =>{
+  settings.set('message_coordination_number', '0');
+  const atm = new ATM(settings, log);
+  
+  // ASCII code 49 
+  t.is(atm.getMessageCoordinationNumber(), '1');
+  // 50
+  t.is(atm.getMessageCoordinationNumber(), '2');
+
+  for (let i =0; i < 10; i++ )
+    atm.getMessageCoordinationNumber();
+
+  // 61
+  t.is(atm.getMessageCoordinationNumber(), '=');
+});
+
+test('should rotate message coordination number', t =>{
+  settings.set('message_coordination_number', '0');
+  const atm = new ATM(settings, log);
+  
+  t.is(atm.getMessageCoordinationNumber(), '1');
+  for (let i =0; i < 75; i++ )
+    atm.getMessageCoordinationNumber();
+
+  t.is(atm.getMessageCoordinationNumber(), '}');
+  t.is(atm.getMessageCoordinationNumber(), '~');
+  // End of cycle, should start over again
+  t.is(atm.getMessageCoordinationNumber(), '1');
+  t.is(atm.getMessageCoordinationNumber(), '2');
+});
+
 

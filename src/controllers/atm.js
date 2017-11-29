@@ -9,13 +9,35 @@ const Pinblock = require('pinblock');
 const des3 = require('node-cardcrypto').des;
 const ATMHardwareService = require('atm-hardware');
 
-function ATM(settings, log) {
+class ATM {
+  constructor(settings, log){
+    this.settings = settings;
+    this.log = log;
+    this.trace = new Trace();
+    this.states = new StatesService(settings, log, this.trace);
+    this.screens = new ScreensService(settings, log, this.trace);
+    this.FITs = new FITsService(settings, log, this.trace);
+    this.crypto = new CryptoService(settings, log);
+    this.display = new DisplayService(this.screens, log);
+    this.pinblock = new Pinblock();
+    this.opcode = new OperationCodeBufferService();
+    this.hardware = new ATMHardwareService();
+
+    this.setStatus('Offline');
+    this.initBuffers();
+    this.initCounters();
+    this.current_state = {};
+    this.buttons_pressed = [];
+    this.activeFDKs = [];
+    this.transaction_request = null;
+  }
+
   /**
    * [isFDKButtonActive check whether the FDKs is active or not]
    * @param  {[type]}  button [FDK button to be checked, e.g. 'A', 'G' (case does not matter - 'a', 'g' works as well) ]
    * @return {Boolean}        [true if FDK is active, false if inactive]
    */
-  this.isFDKButtonActive = function(button){
+  isFDKButtonActive(button){
     if(!button)
       return;
 
@@ -24,18 +46,18 @@ function ATM(settings, log) {
         return true; 
     
     return false;
-  };
+  }
 
   /**
    * [setFDKsActiveMask set the current FDK mask ]
    * @param {[type]} mask [1. number from 000 to 255, represented as string, OR
    *                       2. binary mask, represented as string, e.g. 100011000 ]
    */
-  this.setFDKsActiveMask = function(mask){
+  setFDKsActiveMask(mask){
     if(mask.length <= 3){
       // 1. mask is a number from 000 to 255, represented as string
       if(mask > 255){
-        log.error('Invalid FDK mask: ' + mask);
+        this.log.error('Invalid FDK mask: ' + mask);
         return;
       }
 
@@ -57,10 +79,10 @@ function ATM(settings, log) {
         if(mask[i] === '1')
           this.activeFDKs.push(FDKs[i]);
     } else 
-      log.error('Empty FDK mask');
-  };
+      this.log.error('Empty FDK mask');
+  }
 
-  this.getTerminalStateReply = function(command_code){
+  getTerminalStateReply(command_code){
     let reply = {};
 
     if(command_code)
@@ -93,14 +115,14 @@ function ATM(settings, log) {
     }
 
     return reply;
-  };
+  }
 
   /**
    * [replySolicitedStatus description]
    * @param  {[type]} status [description]
    * @return {[type]}        [description]
    */
-  this.replySolicitedStatus = function(status, command_code){
+  replySolicitedStatus(status, command_code){
     let reply = {};
     reply.message_class = 'Solicited';
     reply.message_subclass = 'Status'; 
@@ -122,18 +144,18 @@ function ATM(settings, log) {
       break;
 
     default:
-      log.error('atm.replySolicitedStatus(): unknown status ' + status);
+      this.log.error('atm.replySolicitedStatus(): unknown status ' + status);
       reply.status_descriptor = 'Command Reject';
     }
     return reply;
-  };
+  }
 
   /**
    * [processTerminalCommand description]
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
-  this.processTerminalCommand = function(data){
+  processTerminalCommand(data){
     switch(data.command_code){
     case 'Go in-service':
       this.setStatus('In-Service');
@@ -153,18 +175,18 @@ function ATM(settings, log) {
       return this.replySolicitedStatus('Terminal State', data.command_code);
 
     default:
-      log.error('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
+      this.log.error('atm.processTerminalCommand(): unknown command code: ' + data.command_code);
       return this.replySolicitedStatus('Command Reject');
     }
     return this.replySolicitedStatus('Ready');
-  };
+  }
 
   /**
    * [processCustomizationCommand description]
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
-  this.processCustomizationCommand = function(data){
+  processCustomizationCommand(data){
     switch(data.message_identifier){
     case 'Screen Data load':
       if(this.screens.add(data.screens))
@@ -189,22 +211,22 @@ function ATM(settings, log) {
         this.setConfigID(data.config_id);
         return this.replySolicitedStatus('Ready');
       }else{
-        log.info('ATM.processDataCommand(): no Config ID provided');
+        this.log.info('ATM.processDataCommand(): no Config ID provided');
         return this.replySolicitedStatus('Command Reject');
       }
 
     default:
-      log.error('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
+      this.log.error('ATM.processDataCommand(): unknown message identifier: ', data.message_identifier);
       return this.replySolicitedStatus('Command Reject');
     }
-  };
+  }
 
   /**
    * [processInteractiveTransactionResponse description]
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
-  this.processInteractiveTransactionResponse = function(data){
+  processInteractiveTransactionResponse(data){
     this.interactive_transaction = true;
 
     if(data.active_keys){
@@ -213,9 +235,9 @@ function ATM(settings, log) {
     
     this.display.setScreen(this.screens.parseDynamicScreenData(data.screen_data_field));
     return this.replySolicitedStatus('Ready');
-  };
+  }
 
-  this.processExtendedEncKeyInfo = function(data){
+  processExtendedEncKeyInfo(data){
     switch(data.modifier){
     case 'Decipher new comms key with current master key':
       if( this.crypto.setCommsKey(data.new_key_data, data.new_key_length) )
@@ -224,19 +246,19 @@ function ATM(settings, log) {
         return this.replySolicitedStatus('Command Reject');
 
     default:
-      log.error('Unsupported modifier');
+      this.log.error('Unsupported modifier');
       break;
     }
 
     return this.replySolicitedStatus('Command Reject');
-  };
+  }
 
   /**
    * [processDataCommand description]
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
-  this.processDataCommand = function(data){
+  processDataCommand(data){
     switch(data.message_subclass){
     case 'Customization Command':
       return this.processCustomizationCommand(data);
@@ -248,24 +270,24 @@ function ATM(settings, log) {
       return this.processExtendedEncKeyInfo(data);
         
     default:
-      log.info('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
+      this.log.info('atm.processDataCommand(): unknown message sublass: ', data.message_subclass);
       return this.replySolicitedStatus('Command Reject');
     }
-  };
+  }
 
   /**
    * [processTransactionReply description]
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
-  this.processTransactionReply = function(data){    
+  processTransactionReply(data){    
     this.processState(data.next_state);
 
     if(data.screen_display_update)
       this.screens.parseScreenDisplayUpdate(data.screen_display_update);
 
     return this.replySolicitedStatus('Ready');
-  };
+  }
 
   /**
    * [getMessageCoordinationNumber 
@@ -288,8 +310,8 @@ function ATM(settings, log) {
    *  message.]
    * @return {[type]} [description]
    */
-  this.getMessageCoordinationNumber = function(){
-    let saved = settings.get('message_coordination_number');
+  getMessageCoordinationNumber(){
+    let saved = this.settings.get('message_coordination_number');
     if(!saved)
       saved = '0';
 
@@ -297,9 +319,9 @@ function ATM(settings, log) {
     if(saved.toString().charCodeAt(0) > 126)
       saved = '1';
 
-    settings.set('message_coordination_number', saved);
+    this.settings.set('message_coordination_number', saved);
     return saved;
-  };
+  }
 
   /**
    * [initBuffers clears the terminal buffers
@@ -311,7 +333,7 @@ function ATM(settings, log) {
    *  - FDK buffer (zero filled)]
    * @return {[type]} [description]
    */
-  this.initBuffers = function(){
+  initBuffers(){
     // In a real ATM PIN_buffer contains encrypted PIN, but in this application PIN_buffer contains clear PIN entered by cardholder.
     // To get the encrypted PIN, use getEncryptedPIN() method
     this.PIN_buffer = '';
@@ -323,27 +345,27 @@ function ATM(settings, log) {
     this.FDK_buffer = '';   // FDK_buffer is only needed on state type Y and W to determine the next state
 
     return true;
-  };
+  }
 
   /**
    * [processStateA process the Card Read state]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateA = function(state){
+  processStateA(state){
     this.initBuffers();
     this.display.setScreenByNumber(state.get('screen_number'));
     
     if(this.card)
       return state.good_read_next_state;
-  };
+  }
 
   /**
    * [processPINEntryState description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processPINEntryState = function(state){
+  processPINEntryState(state){
     /**
      * The cardholder enters the PIN, which can consist of from four to
      * sixteen digits, on the facia keyboard. If the cardholder enters fewer
@@ -360,14 +382,14 @@ function ATM(settings, log) {
       // TODO: PIN encryption
       return state.remote_pin_check_next_state;
     }
-  };
+  }
 
   /**
    * [processAmountEntryState description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processAmountEntryState = function(state){
+  processAmountEntryState(state){
     this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask('015'); // Enabling 'A', 'B', 'C', 'D' buttons
     this.amount_buffer = '000000000000';
@@ -375,7 +397,7 @@ function ATM(settings, log) {
     let button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button))
       return state['FDK_' + button + '_next_state'];
-  };
+  }
 
   /**
    * [processStateD description]
@@ -383,18 +405,18 @@ function ATM(settings, log) {
    * @param  {[type]} extension_state [description]
    * @return {[type]}                 [description]
    */
-  this.processStateD = function(state, extension_state){
+  processStateD(state, extension_state){
     //this.setBufferFromState(state, extension_state);
     this.opcode.setBufferFromState(state, extension_state);
     return state.next_state;
-  };
+  }
 
   /**
    * [processFourFDKSelectionState description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processFourFDKSelectionState = function(state){
+  processFourFDKSelectionState(state){
     this.display.setScreenByNumber(state.get('screen_number'));
 
     this.activeFDKs = [];
@@ -409,13 +431,13 @@ function ATM(settings, log) {
       if(index < 8)
         this.opcode.setBufferValueAt(7 - index, button);
       else
-        log.error('Invalid buffer location value: ' + state.get('buffer_location') + '. Operation Code buffer is not changed');
+        this.log.error('Invalid buffer location value: ' + state.get('buffer_location') + '. Operation Code buffer is not changed');
 
       return state.get('FDK_' + button + '_next_state');
     }
-  };
+  }
 
-  this.processInformationEntryState = function(state){
+  processInformationEntryState(state){
     this.display.setScreenByNumber(state.get('screen_number'));
     let active_mask = '0';
     [ state.FDK_A_next_state,
@@ -446,9 +468,9 @@ function ATM(settings, log) {
       break;
 
     default: 
-      log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
+      this.log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
     }
-  };
+  }
 
 
   /**
@@ -456,7 +478,7 @@ function ATM(settings, log) {
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processTransactionRequestState = function(state){
+  processTransactionRequestState(state){
     this.display.setScreenByNumber(state.get('screen_number'));
 
     let request = {
@@ -524,52 +546,51 @@ function ATM(settings, log) {
       }
     }
 
-
     this.transaction_request = request; // further processing is performed by the atm listener
-  };
+  }
 
   /**
    * [processCloseState description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processCloseState = function(state){
+  processCloseState(state){
     this.display.setScreenByNumber(state.receipt_delivered_screen);
     this.setFDKsActiveMask('000');  // Disable all FDK buttons
     this.card = null;
-    log.info(this.trace.object(state));
-  };
+    this.log.info(this.trace.object(state));
+  }
 
   /**
    * [processStateK description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateK = function(state){
+  processStateK(state){
     let institution_id = this.FITs.getInstitutionByCardnumber(this.card.number);
     // log.info('Found institution_id ' + institution_id);
     return state.states_to[parseInt(institution_id, 10)];
-  };
+  }
 
   /**
    * [processStateW description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateW = function(state){
+  processStateW(state){
     return state.states[this.FDK_buffer];
-  };
+  }
 
 
   /**
    * [setAmountBuffer assign the provide value to amount buffer]
    * @param {[type]} amount [description]
    */
-  this.setAmountBuffer = function(amount){
+  setAmountBuffer(amount){
     if(!amount)
       return;
     this.amount_buffer = this.amount_buffer.substr(amount.length) + amount;
-  };
+  }
 
 
   /**
@@ -577,7 +598,7 @@ function ATM(settings, log) {
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateX = function(state, extension_state){
+  processStateX(state, extension_state){
     this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask(state.get('FDK_active_mask'));
 
@@ -626,26 +647,26 @@ function ATM(settings, log) {
           break;
   
         default:
-          log.error('Unsupported buffer id value: ' + state.get('buffer_id'));
+          this.log.error('Unsupported buffer id value: ' + state.get('buffer_id'));
           break;
         }
       }
 
       return state.get('FDK_next_state');
     }
-  };
+  }
 
   /**
    * [processStateY description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateY = function(state, extension_state){
+  processStateY(state, extension_state){
     this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask(state.get('FDK_active_mask'));
 
     if(extension_state){
-      log.error('Extension state on state Y is not yet supported');
+      this.log.error('Extension state on state Y is not yet supported');
     }else{
       let button = this.buttons_pressed.shift();
       if(this.isFDKButtonActive(button)){
@@ -658,37 +679,37 @@ function ATM(settings, log) {
         return state.get('FDK_next_state');
       }
     }
-  };
+  }
 
   /**
    * [processStateBeginICCInit description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateBeginICCInit = function(state){
+  processStateBeginICCInit(state){
     return state.icc_init_not_started_next_state;
-  };
+  }
 
   /**
    * [processStateCompleteICCAppInit description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processStateCompleteICCAppInit = function(state){
+  processStateCompleteICCAppInit(state){
     let extension_state = this.states.get(state.extension_state);
     this.display.setScreenByNumber(state.please_wait_screen_number);
 
     return extension_state.get('entries')[8]; // Processing not performed
-  };
+  }
 
   /**
    * [processICCReinit description]
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processICCReinit = function(state){
+  processICCReinit(state){
     return state.processing_not_performed_next_state;
-  };
+  }
 
 
   /**
@@ -696,10 +717,10 @@ function ATM(settings, log) {
    * @param  {[type]} state [description]
    * @return {[type]}       [description]
    */
-  this.processSetICCDataState = function(state){
+  processSetICCDataState(state){
     // No processing as ICC cards are not currently supported
     return state.next_state;
-  };
+  }
 
 
   /**
@@ -707,16 +728,16 @@ function ATM(settings, log) {
    * @param  {[type]} state_number [description]
    * @return {[type]}              [description]
    */
-  this.processState = function(state_number){
+  processState(state_number){
     let state = this.states.get(state_number);
     let next_state = null;
 
     do{
       if(state){
         this.current_state = state;
-        log.info('Processing state ' + state.number + state.type + ' (' + state.description + ')');
+        this.log.info('Processing state ' + state.number + state.type + ' (' + state.description + ')');
       } else {
-        log.error('Error getting state ' + state_number + ': state not found');
+        this.log.error('Error getting state ' + state_number + ': state not found');
         return false;
       }
         
@@ -786,7 +807,7 @@ function ATM(settings, log) {
         break;
 
       default:
-        log.error('atm.processState(): unsupported state type ' + state.type);
+        this.log.error('atm.processState(): unsupported state type ' + state.type);
         next_state = null;
       }
 
@@ -798,14 +819,14 @@ function ATM(settings, log) {
     }while(state);
 
     return true;
-  };
+  }
 
   /**
    * [parseTrack2 parse track2 and return card object]
    * @param  {[type]} track2 [track2 string]
    * @return {[card object]} [description]
    */
-  this.parseTrack2 = function(track2){
+  parseTrack2(track2){
     let card = {};
     try{
       let splitted = track2.split('=');
@@ -813,30 +834,30 @@ function ATM(settings, log) {
       card.number = splitted[0].replace(';', '');
       card.service_code = splitted[1].substr(4, 3);
     }catch(e){
-      log.info(e);
+      this.log.info(e);
       return null;
     }
 
     return card;
-  };
+  }
 
-  this.readCard = function(cardnumber, track2_data){
+  readCard(cardnumber, track2_data){
     this.track2 = cardnumber + '=' + track2_data;
     this.card = this.parseTrack2(this.track2);
     if(this.card){
-      log.info('Card ' + this.card.number + ' read');
-      log.info('Track2: ' + this.track2);
+      this.log.info('Card ' + this.card.number + ' read');
+      this.log.info('Track2: ' + this.track2);
       this.processState('000');
     }
     this.setStatus('Processing Card');
-  };
+  }
 
   /**
    * [initCounters description]
    * @return {[type]} [description]
    */
-  this.initCounters = function(){
-    let config_id = settings.get('config_id');
+  initCounters(){
+    let config_id = this.settings.get('config_id');
     (config_id) ? this.setConfigID(config_id) : this.setConfigID('0000');
 
     this.supply_counters = {};
@@ -850,26 +871,26 @@ function ATM(settings, log) {
     this.supply_counters.envelopes_deposited = '00000';
     this.supply_counters.camera_film_remaining = '00000';
     this.supply_counters.last_envelope_serial = '00000';
-  };
+  }
 
-  this.getSupplyCounters = function(){
+  getSupplyCounters(){
     return this.supply_counters;
-  };
+  }
 
   /**
    * [setConfigID description]
    * @param {[type]} config_id [description]
    */
-  this.setConfigID = function(config_id){
+  setConfigID(config_id){
     this.config_id = config_id;
-    settings.set('config_id', config_id);
-  };
+    this.settings.set('config_id', config_id);
+  }
 
-  this.getConfigID = function(){
+  getConfigID(){
     return this.config_id;
-  };
+  }
 
-  this.setStatus = function(status){
+  setStatus(status){
     this.status = status;
 
     switch(status){
@@ -878,14 +899,14 @@ function ATM(settings, log) {
       this.display.setScreenByNumber('001');
       break;
     }
-  };
+  }
 
   /**
    * [processHostMessage description]
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
-  this.processHostMessage = function(data){
+  processHostMessage(data){
     switch(data.message_class){
     case 'Terminal Command':
       return this.processTerminalCommand(data);
@@ -897,18 +918,18 @@ function ATM(settings, log) {
       return this.processTransactionReply(data);
             
     default:
-      log.info('ATM.processHostMessage(): unknown message class: ' + data.message_class);
+      this.log.info('ATM.processHostMessage(): unknown message class: ' + data.message_class);
       break;
     }
     return false;
-  };
+  }
 
   /**
    * [processFDKButtonPressed description]
    * @param  {[type]} button [description]
    * @return {[type]}        [description]
    */
-  this.processFDKButtonPressed = function(button){
+  processFDKButtonPressed(button){
     // log.info(button + ' button pressed');
     switch(this.current_state.get('type')){
     case 'B':
@@ -943,14 +964,14 @@ function ATM(settings, log) {
       this.processState(this.current_state.get('number'));
       break;
     }
-  };
+  }
 
   /**
    * [processPinpadButtonPressed description]
    * @param  {[type]} button [description]
    * @return {[type]}        [description]
    */
-  this.processPinpadButtonPressed = function(button){
+  processPinpadButtonPressed(button){
     //log.info('Button ' + button + ' pressed');
     switch(this.current_state.get('type')){
     case 'B':
@@ -1066,25 +1087,8 @@ function ATM(settings, log) {
       this.log.error('No keyboard entry allowed for state type ' + this.current_state.get('type'));
       break;
     }
-  };
+  }
 
-  this.trace = new Trace();
-  this.states = new StatesService(settings, log, this.trace);
-  this.screens = new ScreensService(settings, log, this.trace);
-  this.FITs = new FITsService(settings, log, this.trace);
-  this.crypto = new CryptoService(settings, log);
-  this.display = new DisplayService(this.screens, log);
-  this.pinblock = new Pinblock();
-  this.opcode = new OperationCodeBufferService();
-  this.hardware = new ATMHardwareService();
-
-  this.setStatus('Offline');
-  this.initBuffers();
-  this.initCounters();
-  this.current_state = {};
-  this.buttons_pressed = [];
-  this.activeFDKs = [];
-  this.transaction_request = null;
 }
 
 module.exports = ATM;

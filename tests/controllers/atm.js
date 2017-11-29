@@ -701,3 +701,24 @@ test('should respond to \'Send Configuration Information\'', t => {
   t.deepEqual(atm.getTerminalStateReply('Send Configuration Information'), reply);    
 });
 
+/**
+ * processStateA()
+ */
+
+test('should process state A', t => {
+  const atm = new ATM(settings, log);
+  atm.card = true;
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('number', '000');
+  state.set('type', 'A');
+  state.set('screen_number', '141');
+  state.set('good_read_next_state', '002');
+
+  t.is(atm.processStateA(state), '002');    
+  t.true(atm.display.setScreenByNumber.calledWith('141'));
+});
+
+

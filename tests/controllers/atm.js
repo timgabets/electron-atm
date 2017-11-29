@@ -1062,5 +1062,40 @@ test('should process information entry state H with D button pressed', t => {
   t.is(atm.card, null);
 });
 
+/**
+ * processStateK()
+ */
+test('should show error while processing state K if FIT not found', t => {
+  const atm = new ATM(settings, log);
+  atm.card = {
+    number: '4444555566667777'  
+  };
+  atm.log.error = sinon.spy();
+  let state = new Map(); 
+ 
+  state.set('type', 'K');
+  state.set('states_to', ['001', '002', '003', '004', '005', '006', '007']);
+ 
+  t.is(atm.processStateK(state), undefined);
+  t.true(atm.log.error.calledWith('Unable to get Financial Institution by card number'));
+});
+
+test('should return proper state entry while processing state K', t => {
+  const atm = new ATM(settings, log);
+  atm.card = {
+    number: '4188250000000001'  
+  };
+  let state = new Map(); 
+ 
+  state.set('type', 'K');
+  state.set('states_to', ['001', '002', '003', '004', '005', '006', '007', '008']);
+
+  // FIT record with Institution ID 07 
+  t.true(atm.FITs.addFIT('029000065136037255255007000132000015000144000000000000000000000000000000000000000000000000000000000'));
+  t.is(atm.processStateK(state), '008');
+});
+
+
+
 
 

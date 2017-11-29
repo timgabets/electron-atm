@@ -569,7 +569,10 @@ class ATM {
   processStateK(state){
     let institution_id = this.FITs.getInstitutionByCardnumber(this.card.number);
     // log.info('Found institution_id ' + institution_id);
-    return state.get('states_to')[parseInt(institution_id, 10)];
+    if(institution_id)
+      return state.get('states_to')[parseInt(institution_id, 10)];
+    else
+      this.log.error('Unable to get Financial Institution by card number');
   }
 
   /**

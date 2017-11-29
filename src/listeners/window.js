@@ -158,13 +158,12 @@ $(function () {
   }, 200);
 
   // Current state update
-  var current_state = '';
   setInterval(function() {
-    if(atm.current_state.number != current_state){
-      current_state = atm.current_state.number;
-      if(atm.current_state.number){
-        $('#current-state').val(atm.current_state.number.toString() + ' ' + atm.current_state.type);
-        ipc.send('ui-update-state', atm.current_state);
+    let current_state = atm.getCurrentState();
+    if(current_state){
+      if(current_state.get('number')){
+        $('#current-state').val(current_state.get('number').toString() + ' ' + current_state.get('type'));
+        ipc.send('ui-update-state', current_state);
       }
     }
   }, 200);

@@ -26,7 +26,7 @@ class ATM {
     this.setStatus('Offline');
     this.initBuffers();
     this.initCounters();
-    this.current_state = {};
+    this.current_state = null;
     this.buttons_pressed = [];
     this.activeFDKs = [];
     this.transaction_request = null;
@@ -1089,6 +1089,9 @@ class ATM {
     }
   }
 
+  getCurrentState(){
+    return this.current_state;
+  }
 }
 
 module.exports = ATM;

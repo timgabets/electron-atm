@@ -6,7 +6,7 @@ const ATM = nodeRequire('./src/controllers/atm.js');
 
 //let log = new Log();
 let trace = new Trace();
-let atm = new ATM(settings, log);
+const atm = new ATM(settings, log);
 
 let states = new StatesService(settings, log, trace);
 let screens = new ScreensService(settings, log);
@@ -73,15 +73,15 @@ $(function(){
       state = states.get('000');
 
     graph.focus(
-      state.number, 
+      state.get('number'), 
       {
         scale: 0.3,
         offset: {}
       }
     );  // Center
-    graph.selectNodes([state.number,]);   // Select node
+    graph.selectNodes([state.get('number'),]);   // Select node
 
-    updateScreen(screens.get(state.screen_number));
+    updateScreen(screens.get(state.get('screen_number')));
     updateStateDetails(state, states.getExtensionState(state));
     // updateOpcodeBuffer(state);
   };
@@ -111,10 +111,10 @@ $(function(){
       $('#state-details').append(trace.object(extension_state));
 
     $('#states-to').html('');
-    if(state.states_to){
+    if(state.get('states_to')){
       state.states_to.forEach(state_to => {
         var state = states.get(state_to);
-        $('#states-to').append('<button class="btn btn-sm state-button" id="state-to-' + state.number + '">' + state.number + ' ' + state.type + ' </button>');
+        $('#states-to').append('<button class="btn btn-sm state-button" id="state-to-' + state.get('number') + '">' + state.get('number') + ' ' + state.get('type') + ' </button>');
         $('#state-to-' + state_to).on('click', _ => {
           updateState(states.get(state_to));
         })
@@ -128,7 +128,7 @@ $(function(){
    * @return {[type]}       [description]
    */
   function updateOpcodeBuffer(state, extension_state){
-    if(state && state.type === 'D'){
+    if(state && state.get('type') === 'D'){
       atm.opcode.setBufferFromState(state, extension_state);
       $('#opcode-buffer').val(atm.opcode.getBuffer().split(' ').join('_'));
       $('#opcode-buffer').removeAttr('disabled');
@@ -160,7 +160,7 @@ $(function(){
     if(node_id){
       var state = states.get(node_id);
 
-      updateScreen(screens.get(state.screen_number));
+      updateScreen(screens.get(state.get('screen_number')));
       updateStateDetails(state, states.getExtensionState(state));
       // graph.focus(state.number, {});  // Center
 

@@ -1,8 +1,8 @@
 # electron-atm
 
 ![Travis CI build badge](https://travis-ci.org/timgabets/electron-atm.svg?branch=master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/bd413733bed6663896cc/maintainability)](https://codeclimate.com/github/timgabets/electron-atm/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/bd413733bed6663896cc/test_coverage)](https://codeclimate.com/github/timgabets/electron-atm/test_coverage)
+![Maintainability](https://api.codeclimate.com/v1/badges/bd413733bed6663896cc/maintainability)
+![Test Coverage](https://api.codeclimate.com/v1/badges/bd413733bed6663896cc/test_coverage)
 
 A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) ATM emulator, written from scratch using JavaScript, [visjs](http://visjs.org/), jQuery and [Electron](https://electron.atom.io/) framework.
 

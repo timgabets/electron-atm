@@ -581,7 +581,7 @@ class ATM {
    * @return {[type]}       [description]
    */
   processStateW(state){
-    return state.states[this.FDK_buffer];
+    return state.get('states')[this.FDK_buffer];
   }
 
 

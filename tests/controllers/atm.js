@@ -1095,6 +1095,45 @@ test('should return proper state entry while processing state K', t => {
   t.is(atm.processStateK(state), '008');
 });
 
+/**
+ * processStateW()
+ */
+test('should process state W', t => {
+  const atm = new ATM(settings, log);
+  let state = new Map();
+
+  state.set('type', 'W');
+  state.set('states', { 
+    A: '181', 
+    B: '037', 
+    C: '255', 
+    D: '127', 
+    F: '031', 
+    G: '034', 
+    H: '250', 
+    I: '186' 
+  });
+ 
+  atm.FDK_buffer = 'A';
+  t.is(atm.processStateW(state), '181');
+  atm.FDK_buffer = 'B';
+  t.is(atm.processStateW(state), '037');
+  atm.FDK_buffer = 'C';
+  t.is(atm.processStateW(state), '255');
+  atm.FDK_buffer = 'D';
+  t.is(atm.processStateW(state), '127');
+  atm.FDK_buffer = 'F';
+  t.is(atm.processStateW(state), '031');
+  atm.FDK_buffer = 'G';
+  t.is(atm.processStateW(state), '034');
+  atm.FDK_buffer = 'H';
+  t.is(atm.processStateW(state), '250');
+  atm.FDK_buffer = 'I';
+  t.is(atm.processStateW(state), '186');
+});
+
+
+
 
 
 

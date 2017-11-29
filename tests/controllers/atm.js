@@ -721,4 +721,26 @@ test('should process state A', t => {
   t.true(atm.display.setScreenByNumber.calledWith('141'));
 });
 
+/**
+ * processPINEntryState()
+ */
+
+test('should process state B', t => {
+  const atm = new ATM(settings, log);
+  atm.card = {
+    number: '4444555566667777'
+  };
+  atm.PIN_buffer = '1234';
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('number', '001');
+  state.set('type', 'B');
+  state.set('screen_number', '993');
+  state.set('remote_pin_check_next_state', '202');
+
+  t.is(atm.processPINEntryState(state), '202');    
+  t.true(atm.display.setScreenByNumber.calledWith('993'));
+});
 

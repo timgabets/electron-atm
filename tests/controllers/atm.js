@@ -50,7 +50,7 @@ test('should init terminal buffers', t => {
 });
 
 /**
- * describe('parseTrack2()', t =>{
+ * describe('parseTrack2()', t => {
  */
 test('should parse track2', t => {
   const atm = new ATM(settings, log);
@@ -72,7 +72,7 @@ test('should return null if track2 is invalid', t => {
 });
 
 /**
- * describe('processHostMessage()', t =>{
+ * describe('processHostMessage()', t => {
  */
 test('should return false on empty message', t => {
   const atm = new ATM(settings, log);
@@ -208,12 +208,12 @@ test('FDK mask 0111111111 should enable all the buttons', t => {
 /**
  * isFDKButtonActive()
  */
-test('should return undefined if button value is not provided', t =>{
+test('should return undefined if button value is not provided', t => {
   const atm = new ATM(settings, log);
   t.is(atm.isFDKButtonActive(), undefined);
 });
 
-test('should perform case-insensitive check through active FDKs', t =>{
+test('should perform case-insensitive check through active FDKs', t => {
   const atm = new ATM(settings, log);
   atm.setFDKsActiveMask('129');
   
@@ -230,16 +230,16 @@ test('should perform case-insensitive check through active FDKs', t =>{
 });
 
 /**
- * describe("setAmountBuffer()', t =>{
+ * describe("setAmountBuffer()', t => {
  */
-test('should set amount buffer', t =>{
+test('should set amount buffer', t => {
   const atm = new ATM(settings, log);
   t.is(atm.amount_buffer, '000000000000');
   atm.setAmountBuffer('15067');
   t.is(atm.amount_buffer, '000000015067');
 });
 
-test('should leave amount buffer unchanged if no value provided', t =>{
+test('should leave amount buffer unchanged if no value provided', t => {
   const atm = new ATM(settings, log);
   t.is(atm.amount_buffer, '000000000000');
   atm.setAmountBuffer('15067');
@@ -251,7 +251,7 @@ test('should leave amount buffer unchanged if no value provided', t =>{
 /**
  * processStateX()
  */
-test('should set amount buffer properly when A button pressed', t =>{
+test('should set amount buffer properly when A button pressed', t => {
   const atm = new ATM(settings, log);
   let state = new Map();
 
@@ -279,7 +279,7 @@ test('should set amount buffer properly when A button pressed', t =>{
   t.is(atm.amount_buffer, '000000150000');
 });
 
-test('should set amount buffer properly when B button pressed', t =>{
+test('should set amount buffer properly when B button pressed', t => {
   const atm = new ATM(settings, log);
   let state = new Map();
   state.set('number', '037');
@@ -306,7 +306,7 @@ test('should set amount buffer properly when B button pressed', t =>{
   t.is(atm.amount_buffer, '250000000000');
 });
 
-test('should set buffer B properly', t =>{
+test('should set buffer B properly', t => {
   const atm = new ATM(settings, log);
   let state = new Map();
   state.set('number', '037');
@@ -333,7 +333,7 @@ test('should set buffer B properly', t =>{
   t.is(atm.buffer_B, '400');
 });
 
-test('should set buffer C properly', t =>{
+test('should set buffer C properly', t => {
   const atm = new ATM(settings, log);
   let state = new Map();
   state.set('number', '037');
@@ -363,7 +363,7 @@ test('should set buffer C properly', t =>{
 /**
  * processFourFDKSelectionState()
  */
-test('should set active FDK', t =>{
+test('should set active FDK', t => {
   const atm = new ATM(settings, log);
   let state = new Map(); 
 
@@ -384,7 +384,7 @@ test('should set active FDK', t =>{
   t.deepEqual(atm.activeFDKs, ['C', 'D']);
 });
 
-test('should put the pressed button into the opcode buffer', t =>{
+test('should put the pressed button into the opcode buffer', t => {
   const atm = new ATM(settings, log);
   let state = new Map(); 
 
@@ -407,7 +407,7 @@ test('should put the pressed button into the opcode buffer', t =>{
   t.is(atm.opcode.getBuffer(), '       C');
 });
 
-test('should put the pressed button into the opcode buffer', t =>{
+test('should put the pressed button into the opcode buffer', t => {
   const atm = new ATM(settings, log);
   let state = new Map(); 
   
@@ -430,7 +430,7 @@ test('should put the pressed button into the opcode buffer', t =>{
   t.is(atm.opcode.getBuffer(), ' D      ');
 });
 
-test('should leave opcode buffer unchanged if buffer location value is invalid', t =>{
+test('should leave opcode buffer unchanged if buffer location value is invalid', t => {
   const atm = new ATM(settings, log);
   let state = new Map(); 
  
@@ -455,7 +455,7 @@ test('should leave opcode buffer unchanged if buffer location value is invalid',
 /**
  * getMessageCoordinationNumber()
  */
-test('should return proper message coordination number', t =>{
+test('should return proper message coordination number', t => {
   settings.set('message_coordination_number', '0');
   const atm = new ATM(settings, log);
   
@@ -471,7 +471,7 @@ test('should return proper message coordination number', t =>{
   t.is(atm.getMessageCoordinationNumber(), '=');
 });
 
-test('should rotate message coordination number', t =>{
+test('should rotate message coordination number', t => {
   settings.set('message_coordination_number', '0');
   const atm = new ATM(settings, log);
   
@@ -489,7 +489,7 @@ test('should rotate message coordination number', t =>{
 /**
  * 'setConfigID() and getConfigID()'
  */
-test('should set ConfigID', t =>{
+test('should set ConfigID', t => {
   const atm = new ATM(settings, log);
   atm.initCounters();
   atm.setConfigID('0000');

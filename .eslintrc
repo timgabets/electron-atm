@@ -36,5 +36,6 @@
     "key-spacing": 2,
     "linebreak-style": 2,
     "space-infix-ops": 1,
+    "arrow-spacing": 1,
   }
 }

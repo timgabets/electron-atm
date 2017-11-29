@@ -359,3 +359,96 @@ test('should set buffer C properly', t =>{
   t.is(atm.buffer_C, '6000');
 });
 
+/**
+ * processFourFDKSelectionState()
+ */
+test('should set active FDK', t =>{
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+
+  state.set('number', '141');
+  state.set('type', 'E');
+  state.set('description', 'Four FDK selection state');
+  state.set('screen_number', '141');
+  state.set('timeout_next_state', '002');
+  state.set('cancel_next_state', '131');
+  state.set('FDK_A_next_state', '255');
+  state.set('FDK_B_next_state', '255');
+  state.set('FDK_C_next_state', '571');
+  state.set('FDK_D_next_state', '132');
+  state.set('buffer_location', '000');
+
+  t.deepEqual(atm.activeFDKs, []);
+  atm.processFourFDKSelectionState(state);
+  t.deepEqual(atm.activeFDKs, ['C', 'D']);
+});
+
+test('should put the pressed button into the opcode buffer', t =>{
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+
+  state.set('number', '141');
+  state.set('type', 'E');
+  state.set('description', 'Four FDK selection state');
+  state.set('screen_number', '141');
+  state.set('timeout_next_state', '002');
+  state.set('cancel_next_state', '131');
+  state.set('FDK_A_next_state', '255');
+  state.set('FDK_B_next_state', '255');
+  state.set('FDK_C_next_state', '571');
+  state.set('FDK_D_next_state', '132');
+  state.set('buffer_location', '000');
+
+  t.is(atm.opcode.getBuffer(), '        ');
+
+  atm.buttons_pressed.push('C');
+  atm.processFourFDKSelectionState(state);
+  t.is(atm.opcode.getBuffer(), '       C');
+});
+
+test('should put the pressed button into the opcode buffer', t =>{
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+  
+  state.set('number', '141');
+  state.set('type', 'E');
+  state.set('description', 'Four FDK selection state');
+  state.set('screen_number', '141');
+  state.set('timeout_next_state', '002');
+  state.set('cancel_next_state', '131');
+  state.set('FDK_A_next_state', '255');
+  state.set('FDK_B_next_state', '255');
+  state.set('FDK_C_next_state', '571');
+  state.set('FDK_D_next_state', '132');
+  state.set('buffer_location', '006');
+
+  t.is(atm.opcode.getBuffer(), '        ');
+
+  atm.buttons_pressed.push('D');
+  atm.processFourFDKSelectionState(state);
+  t.is(atm.opcode.getBuffer(), ' D      ');
+});
+
+test('should leave opcode buffer unchanged if buffer location value is invalid', t =>{
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+ 
+  state.set('number', '141');
+  state.set('type', 'E');
+  state.set('description', 'Four FDK selection state');
+  state.set('screen_number', '141');
+  state.set('timeout_next_state', '002');
+  state.set('cancel_next_state', '131');
+  state.set('FDK_A_next_state', '255');
+  state.set('FDK_B_next_state', '255');
+  state.set('FDK_C_next_state', '571');
+  state.set('FDK_D_next_state', '132');
+  state.set('buffer_location', '008');
+
+  t.is(atm.opcode.getBuffer(), '        ');
+  atm.buttons_pressed.push('D');
+  atm.processFourFDKSelectionState(state);
+  t.is(atm.opcode.getBuffer(), '        ');
+});
+
+

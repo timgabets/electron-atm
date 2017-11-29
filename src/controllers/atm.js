@@ -399,21 +399,21 @@ function ATM(settings, log) {
   this.processFourFDKSelectionState = function(state){
     this.display.setScreenByNumber(state.get('screen_number'));
 
-    this.activeFDKs= [];
+    this.activeFDKs = [];
     ['A', 'B', 'C', 'D'].forEach((element, index) => {
-      if(state['FDK_' + element + '_next_state'] !== '255')
+      if(state.get('FDK_' + element + '_next_state') !== '255')
         this.activeFDKs.push(element);
     })
 
     var button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
-      var index = parseInt(state.buffer_location);
+      var index = parseInt(state.get('buffer_location'));
       if(index < 8)
         this.opcode.setBufferValueAt(7 - index, button);
       else
-        log.error('Invalid buffer location value: ' + state.buffer_location + '. Operation Code buffer is not changed');
+        log.error('Invalid buffer location value: ' + state.get('buffer_location') + '. Operation Code buffer is not changed');
 
-      return state['FDK_' + button + '_next_state'];
+      return state.get('FDK_' + button + '_next_state');
     }
   }
 

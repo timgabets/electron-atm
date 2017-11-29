@@ -535,4 +535,112 @@ test('should get reply to \'Send Configuration ID\' terminal command', t => {
   t.is(reply.config_id, '0007');
 });
 
+/**
+ * describe('processCustomizationCommand()', t => {
+ */
+test('should reply with \'Ready\' to Screen Data load command', t => {
+  const atm = new ATM(settings, log);
+  let data = {
+    message_identifier: 'Screen Data load',
+    screens: ['screens data'],
+  };
+  let reply = atm.processCustomizationCommand(data);
 
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');    
+  t.is(reply.status_descriptor, 'Ready');            
+});
+
+test('should reply with \'Command Reject\' to Screen Data load command when no screens data provided', t => {
+  const atm = new ATM(settings, log);
+  let data = {
+    message_identifier: 'Screen Data load',
+  };
+  let reply = atm.processCustomizationCommand(data);
+
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');    
+  t.is(reply.status_descriptor, 'Command Reject');            
+});
+
+test('should reply with \'Ready\' to State Tables load command', t => {
+  const atm = new ATM(settings, log);
+  let data = {
+    message_identifier: 'State Tables load',
+    states: ['000A0010020030004005006007008'],
+  };
+
+  let reply = atm.processCustomizationCommand(data);
+
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');    
+  t.is(reply.status_descriptor, 'Ready');            
+});
+
+test('should reply with \'Command Reject\' to State Tables load command when no valid state tables provided', t => {
+  const atm = new ATM(settings, log);
+  let data = {
+    message_identifier: 'State Tables load',
+    states: ['iddqd'],
+  };
+
+  let reply = atm.processCustomizationCommand(data);
+
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');    
+  t.is(reply.status_descriptor, 'Command Reject');
+});
+
+test('should reply with \'Ready\' to FIT Data load command', t => {
+  const atm = new ATM(settings, log);
+  let data = {
+    message_identifier: 'FIT Data load',
+    FITs: ['029000065136037255255001000132000015000144000000000000000000000000000000000000000000000000000000000'],
+  };
+
+  let reply = atm.processCustomizationCommand(data);
+
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');    
+  t.is(reply.status_descriptor, 'Ready');            
+});
+
+test('should reply with \'Command Reject\' to FIT Data load command when no valid FITs provided', t => {
+  const atm = new ATM(settings, log);
+  let data = {
+    message_identifier: 'FIT Data load',
+  };
+
+  let reply = atm.processCustomizationCommand(data);
+
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');    
+  t.is(reply.status_descriptor, 'Command Reject');            
+});
+
+test('should reply with \'Ready\' to proper Configuration ID number load command', t => {
+  const atm = new ATM(settings, log);
+  let data = {
+    message_identifier: 'Configuration ID number load',
+    config_id: ['0043'],
+  };
+
+  let reply = atm.processCustomizationCommand(data);
+
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');    
+  t.is(reply.status_descriptor, 'Ready');            
+});
+
+test('should reply with \'Command Reject\' to Configuration ID number load command without Config ID', t => {
+  const atm = new ATM(settings, log);
+  let data = {
+    message_identifier: 'Configuration ID number load',
+  };
+
+  let reply = atm.processCustomizationCommand(data);
+
+  t.is(reply.message_class, 'Solicited');
+  t.is(reply.message_subclass, 'Status');    
+  t.is(reply.status_descriptor, 'Command Reject');            
+});

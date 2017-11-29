@@ -899,5 +899,134 @@ test('should process state flow A -> D -> B', t => {
   t.deepEqual(atm.current_state, B500);
 });
 
+/**
+ * processInformationEntryState()
+ */
+test('should clear Buffer B while processing information entry state H', t => {
+  const atm = new ATM(settings, log);
+  atm.display.setScreenByNumber = sinon.spy();
+  atm.buffer_B = 'B';
+  atm.buffer_C = 'C';
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('screen_number', '997');
+  state.set('buffer_and_display_params', '002');
+
+  t.is(atm.processInformationEntryState(state), undefined);
+  t.is(atm.buffer_B, '');
+  t.is(atm.buffer_C, 'C');
+});
+
+test('should clear Buffer C while processing information entry state H', t => {
+  const atm = new ATM(settings, log);
+  atm.display.setScreenByNumber = sinon.spy();
+  atm.buffer_B = 'B';
+  atm.buffer_C = 'C';
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('screen_number', '997');
+  state.set('buffer_and_display_params', '000');
+
+  t.is(atm.processInformationEntryState(state), undefined);
+  t.is(atm.buffer_B, 'B');
+  t.is(atm.buffer_C, '');
+});
+
+test('should show error while processing information entry state H if param is not supported', t => {
+  const atm = new ATM(settings, log);
+  atm.display.setScreenByNumber = sinon.spy();
+  atm.buffer_B = 'B';
+  atm.buffer_C = 'C';
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('screen_number', '997');
+  state.set('buffer_and_display_params', '007');
+  atm.log.error = sinon.spy();
+
+  t.is(atm.processInformationEntryState(state), undefined);
+  t.is(atm.buffer_B, 'B');
+  t.is(atm.buffer_C, 'C');
+  t.true(atm.log.error.calledWith('Unsupported Display parameter value: 7'));
+});
+
+
+test('should process information entry state H with A button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.buttons_pressed = ['A'];
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('screen_number', '997');
+  state.set('FDK_A_next_state', '111');
+  state.set('FDK_B_next_state', '222');
+  state.set('FDK_C_next_state', '255');
+  state.set('FDK_D_next_state', '444');
+
+  t.is(atm.processInformationEntryState(state), '111');
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'D']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
+
+test('should process information entry state H with B button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.buttons_pressed = ['B'];
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('screen_number', '997');
+  state.set('FDK_A_next_state', '111');
+  state.set('FDK_B_next_state', '222');
+  state.set('FDK_C_next_state', '333');
+  state.set('FDK_D_next_state', '255');
+
+  t.is(atm.processInformationEntryState(state), '222');
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
+
+test('should process information entry state H with C button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.buttons_pressed = ['C'];
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('screen_number', '997');
+  state.set('FDK_A_next_state', '255');
+  state.set('FDK_B_next_state', '255');
+  state.set('FDK_C_next_state', '333');
+  state.set('FDK_D_next_state', '255');
+
+  t.is(atm.processInformationEntryState(state), '333');
+  t.deepEqual(atm.activeFDKs, ['C']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
+
+test('should process information entry state H with D button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.buttons_pressed = ['D'];
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('screen_number', '997');
+  state.set('FDK_A_next_state', '255');
+  state.set('FDK_B_next_state', '255');
+  state.set('FDK_C_next_state', '333');
+  state.set('FDK_D_next_state', '444');
+
+  t.is(atm.processInformationEntryState(state), '444');
+  t.deepEqual(atm.activeFDKs, ['C', 'D']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
 
 

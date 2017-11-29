@@ -443,7 +443,7 @@ class ATM {
     [ state.get('FDK_A_next_state'),
       state.get('FDK_B_next_state'),
       state.get('FDK_C_next_state'),
-      state.get('FDK_D_next_state')].forEach((element, index) => {
+      state.get('FDK_D_next_state')].forEach( element => {
       if(element !== '255')
         active_mask += '1';
       else
@@ -453,7 +453,7 @@ class ATM {
 
     let button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
-      return state['FDK_' + button + '_next_state'];
+      return state.get('FDK_' + button + '_next_state');
     }
 
     switch(state.get('buffer_and_display_params')[2]){
@@ -468,7 +468,7 @@ class ATM {
       break;
 
     default: 
-      this.log.error('Unsupported Display parameter value: ' + this.current_state.get('buffer_and_display_params')[2]);
+      this.log.error('Unsupported Display parameter value: ' + state.get('buffer_and_display_params')[2]);
     }
   }
 

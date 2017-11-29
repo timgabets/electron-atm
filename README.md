@@ -12,7 +12,7 @@ Profile selection on application start:
 ATM tab:
 ![screenshot](img/screenshot.png)
 
-States tag:
+States tab:
 ![states navigator](img/states.png)
 
 Financial Institutions tab:
@@ -23,7 +23,7 @@ Cards management tab:
 
 ## To Use
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From the command line:
+To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js version 8.x](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From the command line:
 
 ```bash
 # Clone this repository

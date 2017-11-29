@@ -2,6 +2,7 @@ import test from 'ava';
 import Log from 'atm-logging';
 import ATM from '../../src/controllers/atm.js';
 import { JSDOM } from 'jsdom';
+import sinon from 'sinon';
 
 const jsdom = new JSDOM('<!doctype html><html><body><pre id="log-output" class="log-output" type="text"></pre></body></html>');
 const { window } = jsdom;
@@ -475,7 +476,7 @@ test('should rotate message coordination number', t =>{
   const atm = new ATM(settings, log);
   
   t.is(atm.getMessageCoordinationNumber(), '1');
-  for (let i =0; i < 75; i++ )
+  for (let i = 0; i < 75; i++ )
     atm.getMessageCoordinationNumber();
 
   t.is(atm.getMessageCoordinationNumber(), '}');
@@ -483,6 +484,22 @@ test('should rotate message coordination number', t =>{
   // End of cycle, should start over again
   t.is(atm.getMessageCoordinationNumber(), '1');
   t.is(atm.getMessageCoordinationNumber(), '2');
+});
+
+/**
+ * 'setConfigID() and getConfigID()'
+ */
+test('should set ConfigID', t =>{
+  const atm = new ATM(settings, log);
+  atm.initCounters();
+  atm.setConfigID('0000');
+  //spyOn(settings, 'set');
+  settings.set = sinon.spy();
+
+  t.is(atm.getConfigID(), '0000');
+  atm.setConfigID('0003');
+  t.is(atm.getConfigID(), '0003');
+  t.true(settings.set.calledOnce);
 });
 
 

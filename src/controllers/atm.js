@@ -357,7 +357,7 @@ class ATM {
     this.display.setScreenByNumber(state.get('screen_number'));
     
     if(this.card)
-      return state.good_read_next_state;
+      return state.get('good_read_next_state');
   }
 
   /**
@@ -380,7 +380,7 @@ class ATM {
 
     if(this.PIN_buffer.length > 3){
       // TODO: PIN encryption
-      return state.remote_pin_check_next_state;
+      return state.get('remote_pin_check_next_state');
     }
   }
 
@@ -408,7 +408,7 @@ class ATM {
   processStateD(state, extension_state){
     //this.setBufferFromState(state, extension_state);
     this.opcode.setBufferFromState(state, extension_state);
-    return state.next_state;
+    return state.get('next_state');
   }
 
   /**
@@ -440,10 +440,10 @@ class ATM {
   processInformationEntryState(state){
     this.display.setScreenByNumber(state.get('screen_number'));
     let active_mask = '0';
-    [ state.FDK_A_next_state,
-      state.FDK_B_next_state,
-      state.FDK_C_next_state,
-      state.FDK_D_next_state].forEach((element, index) => {
+    [ state.get('FDK_A_next_state'),
+      state.get('FDK_B_next_state'),
+      state.get('FDK_C_next_state'),
+      state.get('FDK_D_next_state')].forEach((element, index) => {
       if(element !== '255')
         active_mask += '1';
       else
@@ -456,7 +456,7 @@ class ATM {
       return state['FDK_' + button + '_next_state'];
     }
 
-    switch(state.buffer_and_display_params[2]){
+    switch(state.get('buffer_and_display_params')[2]){
     case '0':
     case '1':
       this.buffer_C = '';
@@ -468,7 +468,7 @@ class ATM {
       break;
 
     default: 
-      this.log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
+      this.log.error('Unsupported Display parameter value: ' + this.curren_state.get('buffer_and_display_params')[2]);
     }
   }
 
@@ -555,7 +555,7 @@ class ATM {
    * @return {[type]}       [description]
    */
   processCloseState(state){
-    this.display.setScreenByNumber(state.receipt_delivered_screen);
+    this.display.setScreenByNumber(state.get('receipt_delivered_screen'));
     this.setFDKsActiveMask('000');  // Disable all FDK buttons
     this.card = null;
     this.log.info(this.trace.object(state));
@@ -569,7 +569,7 @@ class ATM {
   processStateK(state){
     let institution_id = this.FITs.getInstitutionByCardnumber(this.card.number);
     // log.info('Found institution_id ' + institution_id);
-    return state.states_to[parseInt(institution_id, 10)];
+    return state.get('states_to')[parseInt(institution_id, 10)];
   }
 
   /**
@@ -687,7 +687,7 @@ class ATM {
    * @return {[type]}       [description]
    */
   processStateBeginICCInit(state){
-    return state.icc_init_not_started_next_state;
+    return state.get('icc_init_not_started_next_state');
   }
 
   /**
@@ -696,8 +696,8 @@ class ATM {
    * @return {[type]}       [description]
    */
   processStateCompleteICCAppInit(state){
-    let extension_state = this.states.get(state.extension_state);
-    this.display.setScreenByNumber(state.please_wait_screen_number);
+    let extension_state = this.states.get(state.get('extension_state'));
+    this.display.setScreenByNumber(state.get('please_wait_screen_number'));
 
     return extension_state.get('entries')[8]; // Processing not performed
   }
@@ -708,7 +708,7 @@ class ATM {
    * @return {[type]}       [description]
    */
   processICCReinit(state){
-    return state.processing_not_performed_next_state;
+    return state.get('processing_not_performed_next_state');
   }
 
 
@@ -719,7 +719,7 @@ class ATM {
    */
   processSetICCDataState(state){
     // No processing as ICC cards are not currently supported
-    return state.next_state;
+    return state.get('next_state');
   }
 
 
@@ -735,13 +735,13 @@ class ATM {
     do{
       if(state){
         this.current_state = state;
-        this.log.info('Processing state ' + state.number + state.type + ' (' + state.description + ')');
+        this.log.info('Processing state ' + state.get('number') + state.get('type') + ' (' + state.get('description') + ')');
       } else {
         this.log.error('Error getting state ' + state_number + ': state not found');
         return false;
       }
         
-      switch(state.type){
+      switch(state.get('type')){
       case 'A':
         next_state = this.processStateA(state);
         break;
@@ -751,7 +751,7 @@ class ATM {
         break;
 
       case 'D':
-        state.extension_state !== '255' ? next_state = this.processStateD(state, this.states.get(state.extension_state)) : next_state = this.processStateD(state);
+        state.get('extension_state') !== '255' ? next_state = this.processStateD(state, this.states.get(state.get('extension_state'))) : next_state = this.processStateD(state);
         break;
 
       case 'E':
@@ -779,11 +779,11 @@ class ATM {
         break;
 
       case 'X':
-        (state.extension_state !== '255' && state.extension_state !== '000') ? next_state = this.processStateX(state, this.states.get(state.extension_state)) : next_state = this.processStateX(state);
+        (state.get('extension_state') !== '255' && state.get('extension_state') !== '000') ? next_state = this.processStateX(state, this.states.get(state.get('extension_state'))) : next_state = this.processStateX(state);
         break;
 
       case 'Y':
-        (state.extension_state !== '255' && state.extension_state !== '000') ? next_state = this.processStateY(state, this.states.get(state.extension_state)) : next_state = this.processStateY(state);
+        (state.get('extension_state') !== '255' && state.get('extension_state') !== '000') ? next_state = this.processStateY(state, this.states.get(state.get('extension_state'))) : next_state = this.processStateY(state);
         break;
 
       case 'W':
@@ -807,7 +807,7 @@ class ATM {
         break;
 
       default:
-        this.log.error('atm.processState(): unsupported state type ' + state.type);
+        this.log.error('atm.processState(): unsupported state type ' + state.get('type'));
         next_state = null;
       }
 
@@ -940,10 +940,10 @@ class ATM {
     case 'H':
       {
         let active_mask = '0';
-        [ this.current_state.FDK_A_next_state,
-          this.current_state.FDK_B_next_state,
-          this.current_state.FDK_C_next_state,
-          this.current_state.FDK_D_next_state].forEach((element, index) => {
+        [ this.current_state.get('FDK_A_next_state'),
+          this.current_state.get('FDK_B_next_state'),
+          this.current_state.get('FDK_C_next_state'),
+          this.current_state.get('FDK_D_next_state')].forEach((element, index) => {
           if(element !== '255')
             active_mask += '1';
           else
@@ -1079,7 +1079,7 @@ class ATM {
           break;
         }
       } else
-        this.log.error('Unsupported Display parameter value: ' + this.curren_state.buffer_and_display_params[2]);
+        this.log.error('Unsupported Display parameter value: ' + this.curren_state.get('buffer_and_display_params')[2]);
 
       break;
 

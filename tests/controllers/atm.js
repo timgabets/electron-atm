@@ -204,4 +204,47 @@ test('FDK mask 0111111111 should enable all the buttons', t => {
   t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']);
 });
 
+/**
+ * isFDKButtonActive()
+ */
+test('should return undefined if button value is not provided', t =>{
+  const atm = new ATM(settings, log);
+  t.is(atm.isFDKButtonActive(), undefined);
+});
+
+test('should perform case-insensitive check through active FDKs', t =>{
+  const atm = new ATM(settings, log);
+  atm.setFDKsActiveMask('129');
+  
+  t.deepEqual(atm.activeFDKs, ['A', 'I']);
+
+  t.is(atm.isFDKButtonActive('a'), true);
+  t.is(atm.isFDKButtonActive('A'), true);
+
+  t.is(atm.isFDKButtonActive('i'), true);
+  t.is(atm.isFDKButtonActive('I'), true);
+      
+  t.is(atm.isFDKButtonActive('d'), false);
+  t.is(atm.isFDKButtonActive('D'), false);
+});
+
+/**
+ * describe("setAmountBuffer()', t =>{
+ */
+test('should set amount buffer', t =>{
+  const atm = new ATM(settings, log);
+  t.is(atm.amount_buffer, '000000000000');
+  atm.setAmountBuffer('15067');
+  t.is(atm.amount_buffer, '000000015067');
+});
+
+test('should leave amount buffer unchanged if no value provided', t =>{
+  const atm = new ATM(settings, log);
+  t.is(atm.amount_buffer, '000000000000');
+  atm.setAmountBuffer('15067');
+  t.is(atm.amount_buffer, '000000015067');
+  atm.setAmountBuffer();
+  t.is(atm.amount_buffer, '000000015067');
+});
+
 

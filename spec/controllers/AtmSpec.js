@@ -59,41 +59,6 @@ describe("ATM", function() {
   });
 
 
-  describe("isFDKButtonActive()", function(){
-    it("should return undefined if button value is not provided", function(){
-      expect(atm.isFDKButtonActive()).toBeUndefined();
-    });
-
-    it("should perform case-insensitive check through active FDKs", function(){
-      atm.setFDKsActiveMask('129');
-      expect(atm.activeFDKs).toEqual(['A', 'I']);
-      expect(atm.isFDKButtonActive('a')).toBeTruthy();
-      expect(atm.isFDKButtonActive('A')).toBeTruthy();
-
-      expect(atm.isFDKButtonActive('i')).toBeTruthy();
-      expect(atm.isFDKButtonActive('I')).toBeTruthy();
-      
-      expect(atm.isFDKButtonActive('d')).toBeFalsy();
-      expect(atm.isFDKButtonActive('D')).toBeFalsy();
-    })
-  });
-
-  describe("setAmountBuffer()", function(){
-    it("should set amount buffer", function(){
-      expect(atm.amount_buffer).toEqual('000000000000');
-      atm.setAmountBuffer('15067');
-      expect(atm.amount_buffer).toEqual('000000015067');
-    })
-
-    it("should leave amount buffer unchanged if no value provided", function(){
-      expect(atm.amount_buffer).toEqual('000000000000');
-      atm.setAmountBuffer('15067');
-      expect(atm.amount_buffer).toEqual('000000015067');
-      atm.setAmountBuffer();
-      expect(atm.amount_buffer).toEqual('000000015067');
-    })
-  });
-
   describe("processStateX()", function(){
     it("should set amount buffer properly when A button pressed", function(){
       state = { 

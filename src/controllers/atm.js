@@ -54,7 +54,7 @@ class ATM {
    *                       2. binary mask, represented as string, e.g. 100011000 ]
    */
   setFDKsActiveMask(mask){
-    if(mask.length <= 3){
+    if(mask.length <= 3 && mask.length !== 0){
       // 1. mask is a number from 000 to 255, represented as string
       if(mask > 255){
         this.log.error('Invalid FDK mask: ' + mask);
@@ -78,7 +78,7 @@ class ATM {
       for(let i = 0; i < mask.length; i++)
         if(mask[i] === '1')
           this.activeFDKs.push(FDKs[i]);
-    } else 
+    } else  
       this.log.error('Empty FDK mask');
   }
 

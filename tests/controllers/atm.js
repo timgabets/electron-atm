@@ -155,6 +155,16 @@ test('should respond with "Ready" message to "State Tables load" host message', 
 /**
  * describe("setFDKsActiveMask()', t => {
  */
+test('should show log error message when empty mask passed', t => {
+  const atm = new ATM(settings, log);
+  
+  atm.log.error = sinon.spy();
+  atm.setFDKsActiveMask('');
+
+  t.true(atm.log.error.calledWith('Empty FDK mask'));
+  t.deepEqual(atm.activeFDKs, []);
+});
+
 test('FDK mask 000 should enable disable all the buttons', t => {
   const atm = new ATM(settings, log);
   

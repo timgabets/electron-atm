@@ -1223,6 +1223,20 @@ test('should not continue with state processing on state H when disabled button 
 });
 
 
+test('should continue with default state processing', t => {
+  const atm = new ATM(settings, log);
+  atm.processState = sinon.spy();
+  let state = new Map(); 
+ 
+  state.set('type', 'F');
+  state.set('number', '202');
+  atm.current_state = state;
+
+  atm.processFDKButtonPressed('B');
+  t.true(atm.processState.calledWith('202'));
+});
+
+
 
 
 

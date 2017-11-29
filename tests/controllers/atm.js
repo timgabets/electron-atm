@@ -1042,7 +1042,7 @@ test('should process information entry state H with D button pressed', t => {
 /**
  * processCloseState
  */
-test('should process information entry state H with D button pressed', t => {
+test('should process state J', t => {
   const atm = new ATM(settings, log);
   atm.activeFDKs = ['A', 'B', 'C', 'D'];
   atm.card = {
@@ -1182,6 +1182,44 @@ test('should continue with state processing on state B with A button pressed and
 
   atm.processFDKButtonPressed('A');
   t.true(atm.processState.calledOnce);
+});
+
+test('should continue with state processing on state H with enabled button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.processState = sinon.spy();
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('number', '200');
+  state.set('screen_number', '997');
+  state.set('FDK_A_next_state', '255');
+  state.set('FDK_B_next_state', '255');
+  state.set('FDK_C_next_state', '333');
+  state.set('FDK_D_next_state', '444');
+  atm.current_state = state;
+
+  atm.processFDKButtonPressed('C');
+  t.deepEqual(atm.activeFDKs, ['C', 'D']);
+  t.true(atm.processState.calledWith('200'));
+});
+
+test('should not continue with state processing on state H when disabled button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.processState = sinon.spy();
+  let state = new Map(); 
+ 
+  state.set('type', 'H');
+  state.set('number', '200');
+  state.set('screen_number', '997');
+  state.set('FDK_A_next_state', '255');
+  state.set('FDK_B_next_state', '255');
+  state.set('FDK_C_next_state', '255');
+  state.set('FDK_D_next_state', '444');
+  atm.current_state = state;
+
+  atm.processFDKButtonPressed('A');
+  t.deepEqual(atm.activeFDKs, ['D']);
+  t.true(atm.processState.notCalled);
 });
 
 

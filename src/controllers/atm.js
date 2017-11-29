@@ -946,7 +946,7 @@ class ATM {
         [ this.current_state.get('FDK_A_next_state'),
           this.current_state.get('FDK_B_next_state'),
           this.current_state.get('FDK_C_next_state'),
-          this.current_state.get('FDK_D_next_state')].forEach((element, index) => {
+          this.current_state.get('FDK_D_next_state')].forEach( element => {
           if(element !== '255')
             active_mask += '1';
           else

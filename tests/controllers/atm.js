@@ -744,3 +744,103 @@ test('should process state B', t => {
   t.true(atm.display.setScreenByNumber.calledWith('993'));
 });
 
+/**
+ * processAmountEntryState()
+ */
+
+test('should process amount entry state F when no button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'F');
+  state.set('screen_number', '997');
+
+  t.is(atm.processAmountEntryState(state), undefined);
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
+
+test('should process amount entry state F when A button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.buttons_pressed = ['A'];
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'F');
+  state.set('screen_number', '997');
+  state.set('FDK_A_next_state', '111');
+
+  t.is(atm.processAmountEntryState(state), '111');
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
+
+test('should process amount entry state F when B button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.buttons_pressed = ['B'];
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'F');
+  state.set('screen_number', '997');
+  state.set('FDK_B_next_state', '222');
+
+  t.is(atm.processAmountEntryState(state), '222');
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
+
+test('should process amount entry state F when C button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.buttons_pressed = ['C'];
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'F');
+  state.set('screen_number', '997');
+  state.set('FDK_C_next_state', '333');
+
+  t.is(atm.processAmountEntryState(state), '333');
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
+
+test('should process amount entry state F when D button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.buttons_pressed = ['D'];
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'F');
+  state.set('screen_number', '997');
+  state.set('FDK_D_next_state', '444');
+
+  t.is(atm.processAmountEntryState(state), '444');
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D']);
+  t.true(atm.display.setScreenByNumber.calledWith('997'));
+});
+
+test('should not change state on amount entry state F if F, G, H or I button pressed', t => {
+  const atm = new ATM(settings, log);
+  atm.display.setScreenByNumber = sinon.spy();
+  
+  let state = new Map(); 
+ 
+  state.set('type', 'F');
+
+  atm.buttons_pressed = ['F'];
+  t.is(atm.processAmountEntryState(state), undefined);
+  atm.buttons_pressed = ['G'];
+  t.is(atm.processAmountEntryState(state), undefined);
+  atm.buttons_pressed = ['H'];
+  t.is(atm.processAmountEntryState(state), undefined);
+  atm.buttons_pressed = ['I'];
+  t.is(atm.processAmountEntryState(state), undefined);
+});
+

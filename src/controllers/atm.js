@@ -396,7 +396,7 @@ class ATM {
 
     let button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button))
-      return state['FDK_' + button + '_next_state'];
+      return state.get('FDK_' + button + '_next_state');
   }
 
   /**

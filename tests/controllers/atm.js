@@ -1147,6 +1147,43 @@ test('should read card', t => {
   t.is(atm.status, 'Processing Card');
 });
 
+/**
+ * processFDKButtonPressed()
+ */
+test('FDK A should be inactive on state B with PIN less than 4', t => {
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+ 
+  state.set('number', '001');
+  state.set('type', 'B');
+  state.set('screen_number', '993');
+  state.set('remote_pin_check_next_state', '202');
+
+  atm.current_state = state;
+  atm.PIN_buffer = '123'; 
+  atm.processState = sinon.spy();
+
+  atm.processFDKButtonPressed('A');
+  t.true(atm.processState.notCalled);
+});
+
+test('should continue with state processing on state B with A button pressed and PIN longer than 3', t => {
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+ 
+  state.set('number', '001');
+  state.set('type', 'B');
+  state.set('screen_number', '993');
+  state.set('remote_pin_check_next_state', '202');
+
+  atm.current_state = state;
+  atm.PIN_buffer = '1234'; 
+  atm.processState = sinon.spy();
+
+  atm.processFDKButtonPressed('A');
+  t.true(atm.processState.calledOnce);
+});
+
 
 
 

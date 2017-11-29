@@ -1132,6 +1132,20 @@ test('should process state W', t => {
   t.is(atm.processStateW(state), '186');
 });
 
+/**
+ * readCard()
+ */
+test('should read card', t => {
+  const atm = new ATM(settings, log);
+  let cardnumber = '4444555566667777';
+  let track2_data = '201201211234999';
+  atm.log.info = sinon.spy();
+
+  atm.readCard(cardnumber, track2_data);
+  t.true(atm.log.info.calledWith('Card ' + cardnumber + ' read'));
+  t.true(atm.log.info.calledWith('Track2: ' + cardnumber + '=' + track2_data));
+  t.is(atm.status, 'Processing Card');
+});
 
 
 

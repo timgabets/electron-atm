@@ -583,7 +583,7 @@ function ATM(settings, log) {
    */
   this.processStateX = function(state, extension_state){
     this.display.setScreenByNumber(state.get('screen_number'));
-    this.setFDKsActiveMask(state.FDK_active_mask);
+    this.setFDKsActiveMask(state.get('FDK_active_mask'));
 
     var button = this.buttons_pressed.shift();
     if(this.isFDKButtonActive(button)){
@@ -599,7 +599,7 @@ function ATM(settings, log) {
         var buffer_value;
         [null, null, 'A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'].forEach((element, index) => {
           if(button === element)
-            buffer_value = extension_state.entries[index];
+            buffer_value = extension_state.get('entries')[index];
         })
 
         /**
@@ -611,12 +611,12 @@ function ATM(settings, log) {
          * X specifies the number of zeros in the range 0-9
          */
         // Checking number of zeroes to pad
-        var num_of_zeroes = state.buffer_id.substr(2, 1);
+        var num_of_zeroes = state.get('buffer_id').substr(2, 1);
         for (var i = 0; i < num_of_zeroes; i++)
           buffer_value += '0';
 
         // Checking which buffer to use
-        switch(state.buffer_id.substr(1, 1)){
+        switch(state.get('buffer_id').substr(1, 1)){
           case '1':
             this.buffer_B = buffer_value;
             break;
@@ -630,12 +630,12 @@ function ATM(settings, log) {
             break;
   
           default:
-            log.error('Unsupported buffer id value: ' + state.buffer_id);
+            log.error('Unsupported buffer id value: ' + state.get('buffer_id'));
             break;
         }
       }
 
-      return state.FDK_next_state;
+      return state.get('FDK_next_state');
     }
   }
 
@@ -646,7 +646,7 @@ function ATM(settings, log) {
    */
   this.processStateY = function(state, extension_state){
     this.display.setScreenByNumber(state.get('screen_number'));
-    this.setFDKsActiveMask(state.FDK_active_mask);
+    this.setFDKsActiveMask(state.get('FDK_active_mask'));
 
     if(extension_state)
     {
@@ -656,11 +656,11 @@ function ATM(settings, log) {
       if(this.isFDKButtonActive(button)){
         this.FDK_buffer = button;
 
-        // If there is no extension state, state.buffer_positions defines the Operation Code buffer position 
+        // If there is no extension state, state.get('buffer_positions') defines the Operation Code buffer position 
         // to be edited by a value in the range 000 to 007.
-        this.opcode.setBufferValueAt(parseInt(state.buffer_positions), button);
+        this.opcode.setBufferValueAt(parseInt(state.get('buffer_positions')), button);
        
-        return state.FDK_next_state;
+        return state.get('FDK_next_state');
       }
     }
   }
@@ -683,7 +683,7 @@ function ATM(settings, log) {
     var extension_state = this.states.get(state.extension_state);
     this.display.setScreenByNumber(state.please_wait_screen_number);
 
-    return extension_state.entries[8]; // Processing not performed
+    return extension_state.get('entries')[8]; // Processing not performed
   }
 
   /**

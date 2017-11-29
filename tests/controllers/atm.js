@@ -247,4 +247,115 @@ test('should leave amount buffer unchanged if no value provided', t =>{
   t.is(atm.amount_buffer, '000000015067');
 });
 
+/**
+ * processStateX()
+ */
+test('should set amount buffer properly when A button pressed', t =>{
+  const atm = new ATM(settings, log);
+  let state = new Map();
+
+  state.set('number', '037');
+  state.set('type', 'X');
+  state.set('description', 'FDK information entry state');
+  state.set('screen_number', '037');
+  state.set('timeout_next_state', '002');
+  state.set('cancel_next_state', '131');
+  state.set('FDK_next_state', '038');
+  state.set('extension_state', '037');
+  state.set('buffer_id', '033'); // amount buffer, 3 zeroes
+  state.set('FDK_active_mask', '255');
+  state.set('states_to', [ '002', '131', '038' ]);
+  
+  let extension_state = new Map();
+  extension_state.set('number', '037');
+  extension_state.set('type', 'Z');
+  extension_state.set('description', 'Extension state');
+  extension_state.set('entries', [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] );
+
+  atm.buttons_pressed.push('A');
+  t.is(atm.amount_buffer, '000000000000');
+  atm.processStateX(state, extension_state);
+  t.is(atm.amount_buffer, '000000150000');
+});
+
+test('should set amount buffer properly when B button pressed', t =>{
+  const atm = new ATM(settings, log);
+  let state = new Map();
+  state.set('number', '037');
+  state.set('type', 'X');
+  state.set('description', 'FDK information entry state');
+  state.set('screen_number', '037');
+  state.set('timeout_next_state', '002');
+  state.set('cancel_next_state', '131');
+  state.set('FDK_next_state', '038');
+  state.set('extension_state', '037');
+  state.set('buffer_id', '039'); // amount buffer, 9 zeroes
+  state.set('FDK_active_mask', '255');
+  state.set('states_to', [ '002', '131', '038' ]);
+  
+  let extension_state = new Map();
+  extension_state.set('number', '037');
+  extension_state.set('type', 'Z');
+  extension_state.set('description', 'Extension state');
+  extension_state.set('entries', [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] );
+
+  atm.buttons_pressed.push('B');
+  t.is(atm.amount_buffer, '000000000000');
+  atm.processStateX(state, extension_state);
+  t.is(atm.amount_buffer, '250000000000');
+});
+
+test('should set buffer B properly', t =>{
+  const atm = new ATM(settings, log);
+  let state = new Map();
+  state.set('number', '037');
+  state.set('type', 'X');
+  state.set('description', 'FDK information entry state');
+  state.set('screen_number', '037');
+  state.set('timeout_next_state', '002');
+  state.set('cancel_next_state', '131');
+  state.set('FDK_next_state', '038');
+  state.set('extension_state', '037');
+  state.set('buffer_id', '010');  // buffer B, no zeroes
+  state.set('FDK_active_mask', '255');
+  state.set('states_to', [ '002', '131', '038' ]);
+  
+  let extension_state = new Map();
+  extension_state.set('number', '037');
+  extension_state.set('type', 'Z');
+  extension_state.set('description', 'Extension state');
+  extension_state.set('entries', [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] );
+
+  atm.buttons_pressed.push('C');      
+  t.is(atm.buffer_B, '');
+  atm.processStateX(state, extension_state);
+  t.is(atm.buffer_B, '400');
+});
+
+test('should set buffer C properly', t =>{
+  const atm = new ATM(settings, log);
+  let state = new Map();
+  state.set('number', '037');
+  state.set('type', 'X');
+  state.set('description', 'FDK information entry state');
+  state.set('screen_number', '037');
+  state.set('timeout_next_state', '002');
+  state.set('cancel_next_state', '131');
+  state.set('FDK_next_state', '038');
+  state.set('extension_state', '037');
+  state.set('buffer_id', '021');  // buffer B, 1 zero
+  state.set('FDK_active_mask', '255');
+  state.set('states_to', [ '002', '131', '038' ]);
+  
+  let extension_state = new Map();
+  extension_state.set('number', '037');
+  extension_state.set('type', 'Z');
+  extension_state.set('description', 'Extension state');
+  extension_state.set('entries', [ null, 'Z', '150', '250', '400', '600', '000', '100', '050', '020' ] );
+
+  atm.buttons_pressed.push('D');      
+  t.is(atm.buffer_C, '');
+  atm.processStateX(state, extension_state);
+  t.is(atm.buffer_C, '6000');
+});
 

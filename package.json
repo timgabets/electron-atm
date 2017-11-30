@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "atm-cursor": "^0.1.1",
-    "atm-fits": "^0.1.0",
+    "atm-fits": "^0.2.0",
     "atm-hardware": "^0.2.3",
     "atm-logging": "^0.2.0",
     "atm-opcode-buffer": "^1.0.1",

@@ -60,7 +60,7 @@ test('should set and store the master key', t => {
 test('should get the key check value', t => {
   t.is(s.getKeyCheckValue('DEADBEEFDEADBEEFDEADBEEFDEADBEEF'), '2AE358');
 });
- 
+
 /**
  * dec2hex()
  */
@@ -115,6 +115,12 @@ test('should raise if master key is empty', t => {
    */
   s.setMasterKey(null);
   t.false(s.setCommsKey(data.new_key_data, data.new_key_length));
+});
+
+test('should log error in case of key length mismatch', t => {
+  log.error = sinon.spy();
+  t.false(s.setCommsKey('040198145193087203201076202216192211251240251237', '015'));
+  t.true(log.error.calledWith('Key length mismatch. New key has length 32, but expected length is 14'));
 });
 
 /**

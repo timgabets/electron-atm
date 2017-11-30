@@ -117,3 +117,20 @@ test('should raise if master key is empty', t => {
   t.false(s.setCommsKey(data.new_key_data, data.new_key_length));
 });
 
+/**
+ * getEncryptedPIN()
+ */
+test('should get encrypted PIN', t => {
+  s.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+  t.is(s.getEncryptedPIN('1234', '4000001234562000'), '<3;:1>04=88654<4');
+});
+
+test('should return null if no terminal key', t => {
+  s.setTerminalKey();
+  t.is(s.getEncryptedPIN('1234', '4000001234562000'), null);
+});    
+
+test('should format key', t => {
+  t.is(s.format('DEADBEEFDEADBEEFDEADBEEFDEADBEEF'), 'DEAD BEEF DEAD BEEF DEAD BEEF DEAD BEEF');
+});
+

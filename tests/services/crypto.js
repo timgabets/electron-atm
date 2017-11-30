@@ -57,5 +57,19 @@ test('should set and store the master key', t => {
   t.true(settings.set.calledWith('master_key', 'D2C4E412AE89A92AD2C4E412AE89A92A'));
 });
  
+test('should get the key check value', t => {
+  t.is(s.getKeyCheckValue('DEADBEEFDEADBEEFDEADBEEFDEADBEEF'), '2AE358');
+});
+ 
+/**
+ * dec2hex()
+ */
+test('should convert decimal string to hex string', t => {
+  t.is(s.dec2hex('040198145193087203201076202216192211251240251237'), '28C691C157CBC94CCAD8C0D3FBF0FBED');
+});
+
+test('should convert decimal string to hex string', t => {
+  t.is(s.dec2hex('000001002003004005006007008009010011012013014015'), '000102030405060708090A0B0C0D0E0F');
+});
 
 

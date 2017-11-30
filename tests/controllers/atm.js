@@ -566,6 +566,22 @@ test('should pass through ICC state +', t => {
   t.is(atm.processStateBeginICCInit(state), '400');
 });
 
+/**
+ * processStateCompleteICCAppInit() TODO
+ */
+test('should pass through ICC state /', t => {
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+ 
+  state.set('number', '560');
+  state.set('type', '/');
+  state.set('extension_state', '332');
+
+  //t.is(atm.processStateCompleteICCAppInit(state), '009');
+});
+
+
+
 
 /**
  * getMessageCoordinationNumber()

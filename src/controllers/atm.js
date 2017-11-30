@@ -1053,33 +1053,38 @@ class ATM {
       break;
     case 'H':
       {
+        let key;
+        let buffer;
         let display_param = this.current_state.get('buffer_and_display_params')[2];
-        if( display_param === '0' || display_param === '1'){  
+        switch(display_param){
+        case '0': // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+        case '1': // Display data as keyed in. Store data in general-purpose Buffer C
           if(this.buffer_C.length < 32){
             this.buffer_C += button;
 
+            buffer = this.buffer_C;
             if(display_param === '0'){
-              // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-              this.display.insertText(this.buffer_C, 'X');
-            } else if(display_param === '1'){
-              // 1 - Display data as keyed in. Store data in general-purpose Buffer C
-              this.display.insertText(this.buffer_C);
+              key = 'X';
             }
           }
-        } else if(  display_param === '2' || display_param === '3'){
+          break;
+        case '2': // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+        case '3': // Display data as keyed in. Store data in general-purpose Buffer B
           if(this.buffer_B.length < 32){
             this.buffer_B += button;
 
+            buffer = this.buffer_B;
             if(  display_param === '2'){
-              // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
-              this.display.insertText(this.buffer_B, 'X');
-            } else if(display_param === '3'){
-              // 3 - Display data as keyed in. Store data in general-purpose Buffer B
-              this.display.insertText(this.buffer_B);
+              key = 'X';
             }
           }
-        } else
+          break;
+        default:
           this.log.error('Unsupported Display parameter value: ' + display_param);
+        }
+        
+        if(buffer)
+          this.display.insertText(this.buffer_C, key);
       }
       break;
     default:

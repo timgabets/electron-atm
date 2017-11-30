@@ -158,13 +158,13 @@ $(function () {
   }, 200);
 
   // Current state update
+  let displayed_state;
   setInterval(function() {
     let current_state = atm.getCurrentState();
-    if(current_state){
-      if(current_state.get('number')){
-        $('#current-state').val(current_state.get('number').toString() + ' ' + current_state.get('type'));
-        ipc.send('ui-update-state', current_state);
-      }
+    if(current_state && displayed_state !== current_state && current_state.get('number')){
+      $('#current-state').val(current_state.get('number').toString() + ' ' + current_state.get('type'));
+      ipc.send('ui-update-state', current_state);
+      displayed_state = current_state;
     }
   }, 200);
 

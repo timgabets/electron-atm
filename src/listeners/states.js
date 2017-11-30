@@ -68,10 +68,11 @@ var graph = new vis.Network(container, data, options);
 $(function(){
   const mousetrap = nodeRequire('mousetrap');
 
-  function updateState(state){   
-    if($.isEmptyObject(state))
+  function updateState(state){
+    if(!state)
       state = states.get('000');
-
+    
+    console.log(state);
     graph.focus(
       state.get('number'), 
       {

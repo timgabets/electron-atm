@@ -969,7 +969,6 @@ class ATM {
     }
   }
 
-
   processBackspaceButtonPressed(){
     switch(this.current_state.get('type')){
     case 'B':
@@ -979,6 +978,34 @@ class ATM {
     case 'F':
       this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1);
       this.display.insertText(this.amount_buffer);
+      break;
+    case 'H':
+      {
+        let buffer;
+        let key;
+
+        switch(this.current_state.get('buffer_and_display_params')[2]){
+        case '0': // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+          this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
+          key = 'X';
+          buffer = this.buffer_C;
+          break;
+        case '1': // Display data as keyed in. Store data in general-purpose Buffer C
+          this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
+          buffer = this.buffer_C;
+          break;
+        case '2': // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+          this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1);          
+          buffer = this.buffer_B;
+          key = 'X';
+          break;
+        case '3': // Display data as keyed in. Store data in general-purpose Buffer B
+          this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1);
+          buffer = this.buffer_B;
+          break;
+        }
+        this.display.insertText(buffer, key);
+      }
       break;
     default:
       break;
@@ -1024,7 +1051,39 @@ class ATM {
       this.amount_buffer = this.amount_buffer.substr(1) + button;
       this.display.insertText(this.amount_buffer);
       break;
+    case 'H':
+      {
+        let display_param = this.current_state.get('buffer_and_display_params')[2];
+        if( display_param === '0' || display_param === '1'){  
+          if(this.buffer_C.length < 32){
+            this.buffer_C += button;
+
+            if(display_param === '0'){
+              // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+              this.display.insertText(this.buffer_C, 'X');
+            } else if(display_param === '1'){
+              // 1 - Display data as keyed in. Store data in general-purpose Buffer C
+              this.display.insertText(this.buffer_C);
+            }
+          }
+        } else if(  display_param === '2' || display_param === '3'){
+          if(this.buffer_B.length < 32){
+            this.buffer_B += button;
+
+            if(  display_param === '2'){
+              // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+              this.display.insertText(this.buffer_B, 'X');
+            } else if(display_param === '3'){
+              // 3 - Display data as keyed in. Store data in general-purpose Buffer B
+              this.display.insertText(this.buffer_B);
+            }
+          }
+        } else
+          this.log.error('Unsupported Display parameter value: ' + display_param);
+      }
+      break;
     default:
+      this.log.error('No keyboard entry allowed for state type ' + this.current_state.get('type'));
       break;
     }
   }
@@ -1047,78 +1106,6 @@ class ATM {
       break;
     default:
       this.processNumericButtonPressed(button);
-    }
-
-    //log.info('Button ' + button + ' pressed');
-    if(this.current_state.get('type') === 'H'){
-      let display_param = this.current_state.get('buffer_and_display_params')[2];
-      
-      if( display_param === '0' || display_param === '1'){
-        switch(button){
-        case 'backspace':
-          this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
-          if(display_param === '0'){
-            // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-            this.display.insertText(this.buffer_C, 'X');
-          } else if(display_param === '1'){
-            // 1 - Display data as keyed in. Store data in general-purpose Buffer C
-            this.display.insertText(this.buffer_C);
-          }
-          break;
-
-        case 'esc':
-          // TODO: clear buffer
-          break;
-
-        default:
-          if(this.buffer_C.length < 32){
-            this.buffer_C += button;
-
-            if(display_param === '0'){
-              // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-              this.display.insertText(this.buffer_C, 'X');
-            } else if(display_param === '1'){
-              // 1 - Display data as keyed in. Store data in general-purpose Buffer C
-              this.display.insertText(this.buffer_C);
-            }
-          }
-          break;
-        }
-      } else if(  display_param === '2' || display_param === '3'){
-        switch(button){
-        case 'backspace':
-          this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1);
-          if(  display_param === '2'){
-            // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
-            this.display.insertText(this.buffer_B, 'X');
-          } else if(display_param === '3'){
-            // 3 - Display data as keyed in. Store data in general-purpose Buffer B
-            this.display.insertText(this.buffer_B);
-          }
-          break;
-
-        case 'esc':
-          // TODO: clear buffer
-          break;
-
-        default:
-          if(this.buffer_B.length < 32){
-            this.buffer_B += button;
-
-            if(  display_param === '2'){
-              // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
-              this.display.insertText(this.buffer_B, 'X');
-            } else if(display_param === '3'){
-              // 3 - Display data as keyed in. Store data in general-purpose Buffer B
-              this.display.insertText(this.buffer_B);
-            }
-          }
-          break;
-        }
-      } else
-        this.log.error('Unsupported Display parameter value: ' + display_param);
-    } else {
-      this.log.error('No keyboard entry allowed for state type ' + this.current_state.get('type'));
     }
   }
 

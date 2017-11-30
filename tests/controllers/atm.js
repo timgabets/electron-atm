@@ -371,6 +371,96 @@ test('should set buffer C properly', t => {
 });
 
 /**
+ * processStateY()
+ */
+test('should process state Y without extension state', t => {
+  const atm = new ATM(settings, log);
+  atm.display.setScreenByNumber = sinon.spy();
+  let state = new Map(); 
+
+  state.set('number', '190');
+  state.set('type', 'Y');
+  state.set('screen_number', '141');
+  state.set('timeout_next_state', '002');
+  state.set('FDK_active_mask', '015');
+
+  t.deepEqual(atm.activeFDKs, []);
+  atm.processStateY(state);
+  t.deepEqual(atm.activeFDKs, ['A', 'B', 'C', 'D']);
+  t.true(atm.display.setScreenByNumber.calledWith('141'));
+});
+
+test('should show error while processing state Y with extension state', t => {
+  const atm = new ATM(settings, log);
+  atm.log.error = sinon.spy();
+  let state = new Map(); 
+
+  state.set('number', '190');
+  state.set('type', 'Y');
+  state.set('screen_number', '141');
+  state.set('FDK_active_mask', '015');
+
+  let extension_state = new Map(); 
+
+  state.set('number', '191');
+  state.set('type', 'Z');
+
+  atm.processStateY(state, extension_state);
+  t.true(atm.log.error.calledWith('Extension state on state Y is not yet supported'));
+});
+
+test('should process state Y with active button pressed', t => {
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+
+  state.set('number', '190');
+  state.set('type', 'Y');
+  state.set('screen_number', '141');
+  state.set('timeout_next_state', '002');
+  state.set('FDK_active_mask', '003');
+  state.set('FDK_next_state', '777');
+
+  t.deepEqual(atm.activeFDKs, []);
+  atm.buttons_pressed = ['A'];
+  t.is(atm.processStateY(state), '777');
+  t.deepEqual(atm.activeFDKs, ['A', 'B']);
+});
+
+test('should put the pressed button value to the oprcode buffer while processing state Y', t => {
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+
+  state.set('number', '190');
+  state.set('type', 'Y');
+  state.set('screen_number', '141');
+  state.set('FDK_active_mask', '003');
+  state.set('FDK_next_state', '899');
+  state.set('buffer_positions', '2');
+
+  t.is(atm.opcode.buffer, '        ');
+  atm.buttons_pressed = ['A'];
+  t.is(atm.processStateY(state), '899');
+  t.is(atm.opcode.buffer, '  A     ');
+});
+
+test('should not process state Y when inactive button pressed', t => {
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+
+  state.set('number', '190');
+  state.set('type', 'Y');
+  state.set('screen_number', '141');
+  state.set('timeout_next_state', '002');
+  state.set('FDK_active_mask', '003');
+  state.set('FDK_next_state', '777');
+
+  t.deepEqual(atm.activeFDKs, []);
+  atm.buttons_pressed = ['C'];
+  t.is(atm.processStateY(state), undefined);
+  t.deepEqual(atm.activeFDKs, ['A', 'B']);
+});
+
+/**
  * processFourFDKSelectionState()
  */
 test('should set active FDK', t => {

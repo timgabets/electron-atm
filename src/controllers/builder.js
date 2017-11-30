@@ -14,13 +14,9 @@ class Builder{
     switch(object.terminal_command){
     case 'Send Configuration Information':
       message += 'F\x1C1';
-      message += object.config_id + '\x1C';
-      message += object.hardware_fitness + '\x1C';
-      message += object.hardware_configuration + '\x1C';
-      message += object.supplies_status + '\x1C';
-      message += object.sensor_status + '\x1C';
-      message += object.release_number + '\x1C';
-      message += object.ndc_software_id;
+      ['config_id', 'hardware_fitness', 'hardware_configuration', 'supplies_status', 'sensor_status', 'release_number', 'ndc_software_id'].forEach( i => {
+        message += object[i] + '\x1C';
+      });
       break;
 
     case 'Send Configuration ID':
@@ -29,16 +25,9 @@ class Builder{
 
     case 'Send Supply Counters':
       message += 'F\x1C2';
-      message += object.tsn;
-      message += object.transaction_count;
-      message += object.notes_in_cassettes;
-      message += object.notes_rejected;
-      message += object.notes_dispensed;
-      message += object.last_trxn_notes_dispensed;
-      message += object.card_captured;
-      message += object.envelopes_deposited;
-      message += object.camera_film_remaining;
-      message += object.last_envelope_serial;
+      ['tsn', 'transaction_count', 'notes_in_cassettes', 'notes_rejected', 'notes_dispensed', 'last_trxn_notes_dispensed', 'card_captured', 'envelopes_deposited', 'camera_film_remaining', 'last_envelope_serial'].forEach( i => {
+        message += object[i];
+      });
       break;
 
     default:
@@ -98,32 +87,14 @@ class Builder{
   buildUnsolicited(object){
     let message = '';
     if(object.message_subclass === 'Transaction Request'){
-      message += '1';
-      message += '\x1C';
-      message += this.luno;
-      message += '\x1C';
-      message += '\x1C';
+      message += '1\x1C' +  this.luno + '\x1C\x1C';
       object.time_variant_number ? message += object.time_variant_number : message += '';
-      message += '\x1C';
-      message += object.top_of_receipt;
-      message += object.message_coordination_number;
-      message += '\x1C';
-      object.track2 ? message += object.track2 : message += '';
-      message += '\x1C';
-      object.track3 ? message += object.track3 : message += '';
-      message += '\x1C';
-      object.opcode_buffer ? message += object.opcode_buffer : message += '';
-      message += '\x1C';
-      object.amount_buffer ? message += object.amount_buffer : message += '';
-      message += '\x1C';
-      object.PIN_buffer ? message += object.PIN_buffer : message += '';
-      message += '\x1C';
-      object.buffer_B ? message += object.buffer_B : message += '';
-      message += '\x1C';
-      object.buffer_C ? message += object.buffer_C : message += '';
-      message += '\x1C';
-      object.track1 ? message += object.track1 : message += '';
-      message += '\x1C';
+      message += '\x1C' + object.top_of_receipt + object.message_coordination_number + '\x1C';
+
+      ['track2', 'track3', 'opcode_buffer', 'amount_buffer', 'PIN_buffer', 'buffer_B', 'buffer_C', 'track1'].forEach( i => {
+        object[i] ? message += object[i] : message += '';
+        message += '\x1C';
+      });
     }
     return message;
   }

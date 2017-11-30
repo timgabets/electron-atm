@@ -543,4 +543,22 @@ test('should log error when no keyboard entry allowed', t => {
  
   atm.processPinpadButtonPressed('2');
   t.true(atm.log.error.calledWith('No keyboard entry allowed for state type I'));
+});
+
+test('should log error when unsupported buffer parameter passed', t => {
+  let state = new Map();
+  state.set('number', '700');
+  state.set('type', 'H');
+  state.set('FDK_A_next_state', '001');
+  state.set('FDK_B_next_state', '002');
+  state.set('FDK_C_next_state', '003');
+  state.set('FDK_D_next_state', '004');
+  state.set('buffer_and_display_params', '009');
+  atm.current_state = state;
+  atm.log.error = sinon.spy();
+  atm.initBuffers();
+ 
+  atm.processPinpadButtonPressed('1');
+  t.true(atm.log.error.calledWith('Unsupported Display parameter value: 9'));
 }); 
+

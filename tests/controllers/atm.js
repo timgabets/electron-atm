@@ -553,6 +553,21 @@ test('should leave opcode buffer unchanged if buffer location value is invalid',
 });
 
 /**
+ * processStateBeginICCInit()
+ */
+test('should pass through ICC state +', t => {
+  const atm = new ATM(settings, log);
+  let state = new Map(); 
+ 
+  state.set('number', '998');
+  state.set('type', '+');
+  state.set('icc_init_not_started_next_state', '400');
+
+  t.is(atm.processStateBeginICCInit(state), '400');
+});
+
+
+/**
  * getMessageCoordinationNumber()
  */
 test('should return proper message coordination number', t => {

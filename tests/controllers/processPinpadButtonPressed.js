@@ -287,22 +287,7 @@ test('should not overflow amount buffer', t => {
 });
 
 /**
- * describe("processPinpadButtonPressed() for state H', t => {
-    beforeEach(t =>  {
-      atm.current_state = { 
-        number: '700', 
-        type: 'H',
-        FDK_A_next_state: '001',
-        FDK_B_next_state: '002',
-        FDK_C_next_state: '003',
-        FDK_D_next_state: '004',
-        buffer_and_display_params: '000', // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-      };
-
-      spyOn(atm, 'processState');
-
-      atm.initBuffers();
-});
+ * "processPinpadButtonPressed() for state H
 */
 test('should put the entered numbers into buffer C', t => {
   let state = new Map();
@@ -548,3 +533,14 @@ test('should not overflow buffer B (32 bytes max)', t => {
   t.is(atm.buffer_B, '12345678901234567890123456789012');
 });
 
+
+test('should log error when no keyboard entry allowed', t => {
+  let state = new Map();
+  state.set('number', '300');
+  state.set('type', 'I');
+  atm.current_state = state;
+  atm.log.error = sinon.spy();
+ 
+  atm.processPinpadButtonPressed('2');
+  t.true(atm.log.error.calledWith('No keyboard entry allowed for state type I'));
+}); 

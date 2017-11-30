@@ -55,6 +55,15 @@ $(function () {
     })
   });
 
+  replaceOnScreenText = function(){
+    var screen_text = atm.display.getHTML();
+    if(screen_text){
+      screen_rows.forEach( (element) => {
+        $( '#' + element + '-screen-row').html(screen_text[element]);
+      });
+     }
+  };
+  
   /**
    *  ATM
    */
@@ -92,14 +101,8 @@ $(function () {
           $( '#' + element + '-screen-row').html('');
         });
       }
-
-      // Replacing on screen text
-      var screen_text = atm.display.getHTML();
-      if(screen_text){
-        screen_rows.forEach( (element) => {
-          $( '#' + element + '-screen-row').html(screen_text[element]);
-        });
-      }
+      
+      replaceOnScreenText();
 
       // Changing image
       $('#screen').attr("src", image_path + '/' + image);
@@ -107,13 +110,7 @@ $(function () {
   })
 
   setInterval(function() {
-    // Replacing on screen text
-    var screen_text = atm.display.getHTML();
-    if(screen_text){
-      screen_rows.forEach( (element) => {
-        $( '#' + element + '-screen-row').html(screen_text[element]);
-      });
-    }
+    replaceOnScreenText();
   }, 200);
 
   // FDKs shortcuts

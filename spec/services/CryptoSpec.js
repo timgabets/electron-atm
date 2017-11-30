@@ -21,49 +21,6 @@ describe("CryptoService", function() {
     s = new CryptoService(settings, log);
   });
 
-  describe('setCommsKey()', function(){
-    beforeEach(function() {
-      s.setMasterKey('B6D55EABAD23BC4FD558F8D619A21C34');
-      s.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
-    });
-
-    it('should change terminal PIN key', function(){
-      var data = {
-        message_class: 'Data Command',
-        LUNO: 000,
-        message_sequence_number: '000',
-        message_subclass: 'Extended Encryption Key Information',
-        modifier: 'Decipher new comms key with current master key',
-        new_key_length: '030',
-        new_key_data: '040198145193087203201076202216192211251240251237',
-      };
-      /*
-        new_key_data: '040198145193087203201076202216192211251240251237' is decimal representation of 28C691C157CBC94CCAD8C0D3FBF0FBED
-        28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
-       */
-      expect(s.getTerminalKey()).toEqual(['DEADBEEFDEADBEEFDEADBEEFDEADBEEF', '2AE358']);
-      expect(s.setCommsKey(data.new_key_data, data.new_key_length)).toBeTruthy()
-      expect(s.getTerminalKey()).toEqual(['7B278B03B439DDCACF8B3333AC591BCA', '41DD5C']);
-    })
-
-    it('should raise if master key is empty', function(){
-      var data = {
-        message_class: 'Data Command',
-        LUNO: 000,
-        message_sequence_number: '000',
-        message_subclass: 'Extended Encryption Key Information',
-        modifier: 'Decipher new comms key with current master key',
-        new_key_length: '030',
-        new_key_data: '040198145193087203201076202216192211251240251237',
-      };
-      /*
-        new_key_data: '040198145193087203201076202216192211251240251237' is decimal representation of 28C691C157CBC94CCAD8C0D3FBF0FBED
-        28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
-       */
-      s.setMasterKey(null) ;
-      expect(s.setCommsKey(data.new_key_data, data.new_key_length)).toBeFalsy()
-    })
-  });
 
   describe('getEncryptedPIN()', function(){
     beforeEach(function() {

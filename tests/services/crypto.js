@@ -72,4 +72,48 @@ test('should convert decimal string to hex string', t => {
   t.is(s.dec2hex('000001002003004005006007008009010011012013014015'), '000102030405060708090A0B0C0D0E0F');
 });
 
+/**
+ * setCommsKey()
+ */
+
+test('should change terminal PIN key', t => {
+  s.setMasterKey('B6D55EABAD23BC4FD558F8D619A21C34');
+  s.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+  let data = {
+    message_class: 'Data Command',
+    LUNO: '000',
+    message_sequence_number: '000',
+    message_subclass: 'Extended Encryption Key Information',
+    modifier: 'Decipher new comms key with current master key',
+    new_key_length: '030',
+    new_key_data: '040198145193087203201076202216192211251240251237',
+  };
+  /*
+    new_key_data: '040198145193087203201076202216192211251240251237' is decimal representation of 28C691C157CBC94CCAD8C0D3FBF0FBED
+    28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
+   */
+  t.deepEqual(s.getTerminalKey(), ['DEADBEEFDEADBEEFDEADBEEFDEADBEEF', '2AE358']);
+  t.true(s.setCommsKey(data.new_key_data, data.new_key_length));
+  t.deepEqual(s.getTerminalKey(), ['7B278B03B439DDCACF8B3333AC591BCA', '41DD5C']);
+});
+
+test('should raise if master key is empty', t => {
+  s.setMasterKey('B6D55EABAD23BC4FD558F8D619A21C34');
+  s.setTerminalKey('DEADBEEFDEADBEEFDEADBEEFDEADBEEF');
+  let data = {
+    message_class: 'Data Command',
+    LUNO: '000',
+    message_sequence_number: '000',
+    message_subclass: 'Extended Encryption Key Information',
+    modifier: 'Decipher new comms key with current master key',
+    new_key_length: '030',
+    new_key_data: '040198145193087203201076202216192211251240251237',
+  };
+  /*
+    new_key_data: '040198145193087203201076202216192211251240251237' is decimal representation of 28C691C157CBC94CCAD8C0D3FBF0FBED
+    28C691C157CBC94CCAD8C0D3FBF0FBED is 7B278B03B439DDCACF8B3333AC591BCA encrypted under B6D55EABAD23BC4FD558F8D619A21C34.
+   */
+  s.setMasterKey(null);
+  t.false(s.setCommsKey(data.new_key_data, data.new_key_length));
+});
 

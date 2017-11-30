@@ -1,8 +1,8 @@
 import test from 'ava';
 import Log from 'atm-logging';
 import ATM from '../../src/controllers/atm.js';
-import { JSDOM } from 'jsdom';
 import sinon from 'sinon';
+import { JSDOM } from 'jsdom';
 
 const jsdom = new JSDOM('<!doctype html><html><body><pre id="log-output" class="log-output" type="text"></pre></body></html>');
 const { window } = jsdom;

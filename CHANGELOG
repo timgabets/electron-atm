@@ -1,4 +1,5 @@
 Novemeber 2017
+  1.3.2 Fixed Issue#6 - builder.build() cognitive complexity refactored
   1.3.1 Fixed states page jumping through states
   1.3.0 using ES6 in atm.js
   1.2.9 using atm-trace v.0.3.2 to trace Map() instances properly

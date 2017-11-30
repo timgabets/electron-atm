@@ -183,7 +183,7 @@ test('should build \'Send Configuration Information\' terminal state solicited s
     release_number: '030300',
     ndc_software_id: 'G531‐0283'        
   };
-  t.is(b.build(object), '22\x1C777\x1C\x1CF\x1C10789\x1C0000000000000000000000\x1C157F000901020483000001B1000000010202047F7F00\x1C00011111001000011130011\x1C000000000000\x1C030300\x1CG531‐0283');
+  t.is(b.build(object), '22\x1C777\x1C\x1CF\x1C10789\x1C0000000000000000000000\x1C157F000901020483000001B1000000010202047F7F00\x1C00011111001000011130011\x1C000000000000\x1C030300\x1CG531‐0283\x1C');
 });
 
 test('should build \'Send Configuration ID\' terminal state solicited status', t => {

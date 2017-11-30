@@ -969,126 +969,148 @@ class ATM {
     }
   }
 
+  processBackspaceButtonPressed(){
+    switch(this.current_state.get('type')){
+    case 'B':
+      this.PIN_buffer = this.PIN_buffer.slice(0, -1);
+      this.display.insertText(this.PIN_buffer, '*');
+      break;
+    case 'F':
+      this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1);
+      this.display.insertText(this.amount_buffer);
+      break;
+    case 'H':
+      {
+        let buffer;
+        let key;
+
+        switch(this.current_state.get('buffer_and_display_params')[2]){
+        case '0': // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+          this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
+          key = 'X';
+          buffer = this.buffer_C;
+          break;
+        case '1': // Display data as keyed in. Store data in general-purpose Buffer C
+          this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
+          buffer = this.buffer_C;
+          break;
+        case '2': // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+          this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1);          
+          buffer = this.buffer_B;
+          key = 'X';
+          break;
+        case '3': // Display data as keyed in. Store data in general-purpose Buffer B
+          this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1);
+          buffer = this.buffer_B;
+          break;
+        }
+        this.display.insertText(buffer, key);
+      }
+      break;
+    default:
+      break;
+    }
+  }
+
+  processEnterButtonPressed(){
+    switch(this.current_state.get('type')){
+    case 'B':
+      if(this.PIN_buffer.length >= 4)
+        this.processState(this.current_state.get('number'));
+      this.display.insertText(this.PIN_buffer, '*');
+      break;
+    case 'F':
+      // If the cardholder presses the Enter key, it has the same effect as pressing FDK ‘A’
+      this.buttons_pressed.push('A');
+      this.processState(this.current_state.get('number'));
+      break;
+    default:
+      break;
+    }
+  }
+
+  processEscButtonPressed(){
+    switch(this.current_state.get('type')){
+    case 'B':
+      this.PIN_buffer = '';
+      break;
+    default:
+      break;
+    }
+  }
+
+  processNumericButtonPressed(button){
+    switch(this.current_state.get('type')){
+    case 'B':
+      this.PIN_buffer += button;
+      if(this.PIN_buffer.length === this.max_pin_length)
+        this.processState(this.current_state.get('number'));
+      this.display.insertText(this.PIN_buffer, '*');
+      break;
+    case 'F':
+      this.amount_buffer = this.amount_buffer.substr(1) + button;
+      this.display.insertText(this.amount_buffer);
+      break;
+    case 'H':
+      {
+        let key;
+        let buffer;
+        let display_param = this.current_state.get('buffer_and_display_params')[2];
+        switch(display_param){
+        case '0': // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
+        case '1': // Display data as keyed in. Store data in general-purpose Buffer C
+          if(this.buffer_C.length < 32){
+            this.buffer_C += button;
+
+            buffer = this.buffer_C;
+            if(display_param === '0'){
+              key = 'X';
+            }
+          }
+          break;
+        case '2': // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
+        case '3': // Display data as keyed in. Store data in general-purpose Buffer B
+          if(this.buffer_B.length < 32){
+            this.buffer_B += button;
+
+            buffer = this.buffer_B;
+            if(  display_param === '2'){
+              key = 'X';
+            }
+          }
+          break;
+        default:
+          this.log.error('Unsupported Display parameter value: ' + display_param);
+        }
+        
+        if(buffer)
+          this.display.insertText(this.buffer_C, key);
+      }
+      break;
+    default:
+      this.log.error('No keyboard entry allowed for state type ' + this.current_state.get('type'));
+      break;
+    }
+  }
+
   /**
    * [processPinpadButtonPressed description]
    * @param  {[type]} button [description]
    * @return {[type]}        [description]
    */
   processPinpadButtonPressed(button){
-    //log.info('Button ' + button + ' pressed');
-    switch(this.current_state.get('type')){
-    case 'B':
-      switch(button){
-      case 'backspace':
-        this.PIN_buffer = this.PIN_buffer.slice(0, -1);
-        break;
-      case 'enter':
-        if(this.PIN_buffer.length >= 4)
-          this.processState(this.current_state.get('number'));
-        break;
-      case 'esc':
-        this.PIN_buffer = '';
-        break;
-      default:
-        this.PIN_buffer += button;
-        if(this.PIN_buffer.length === this.max_pin_length)
-          this.processState(this.current_state.get('number'));
-      }
-      this.display.insertText(this.PIN_buffer, '*');
+    switch(button){
+    case 'backspace':
+      this.processBackspaceButtonPressed();
       break;
-
-    case 'F':
-      switch(button){
-      case 'enter':
-        // If the cardholder presses the Enter key, it has the same effect as pressing FDK ‘A’
-        this.buttons_pressed.push('A');
-        this.processState(this.current_state.get('number'));
-        break;
-      case 'backspace':
-        this.amount_buffer = '0' + this.amount_buffer.substr(0, this.amount_buffer.length - 1);
-        this.display.insertText(this.amount_buffer);
-        break;
-      case 'esc':
-        // TODO: clear buffer
-        break;
-      default:
-        this.amount_buffer = this.amount_buffer.substr(1) + button;
-        this.display.insertText(this.amount_buffer);
-        break;
-      }
+    case 'enter':
+      this.processEnterButtonPressed();
       break;
-
-    case 'H':
-      if( this.current_state.get('buffer_and_display_params')[2] === '0' || this.current_state.get('buffer_and_display_params')[2] === '1'){
-        switch(button){
-        case 'backspace':
-          this.buffer_C = this.buffer_C.substr(0, this.buffer_C.length - 1);
-          if(this.current_state.get('buffer_and_display_params')[2] === '0'){
-            // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-            this.display.insertText(this.buffer_C, 'X');
-          } else if(this.current_state.get('buffer_and_display_params')[2] === '1'){
-            // 1 - Display data as keyed in. Store data in general-purpose Buffer C
-            this.display.insertText(this.buffer_C);
-          }
-          break;
-
-        case 'esc':
-          // TODO: clear buffer
-          break;
-
-        default:
-          if(this.buffer_C.length < 32){
-            this.buffer_C += button;
-
-            if(this.current_state.get('buffer_and_display_params')[2] === '0'){
-              // 0 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
-              this.display.insertText(this.buffer_C, 'X');
-            } else if(this.current_state.get('buffer_and_display_params')[2] === '1'){
-              // 1 - Display data as keyed in. Store data in general-purpose Buffer C
-              this.display.insertText(this.buffer_C);
-            }
-          }
-          break;
-        }
-      } else if(  this.current_state.get('buffer_and_display_params')[2] === '2' || this.current_state.get('buffer_and_display_params')[2] === '3'){
-        switch(button){
-        case 'backspace':
-          this.buffer_B = this.buffer_B.substr(0, this.buffer_B.length - 1);
-          if(  this.current_state.get('buffer_and_display_params')[2] === '2'){
-            // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
-            this.display.insertText(this.buffer_B, 'X');
-          } else if(this.current_state.get('buffer_and_display_params')[2] === '3'){
-            // 3 - Display data as keyed in. Store data in general-purpose Buffer B
-            this.display.insertText(this.buffer_B);
-          }
-          break;
-
-        case 'esc':
-          // TODO: clear buffer
-          break;
-
-        default:
-          if(this.buffer_B.length < 32){
-            this.buffer_B += button;
-
-            if(  this.current_state.get('buffer_and_display_params')[2] === '2'){
-              // 2 - Display 'X' for each numeric key pressed. Store data in general-purpose Buffer B
-              this.display.insertText(this.buffer_B, 'X');
-            } else if(this.current_state.get('buffer_and_display_params')[2] === '3'){
-              // 3 - Display data as keyed in. Store data in general-purpose Buffer B
-              this.display.insertText(this.buffer_B);
-            }
-          }
-          break;
-        }
-      } else
-        this.log.error('Unsupported Display parameter value: ' + this.current_state.get('buffer_and_display_params')[2]);
-
+    case 'esc':
+      this.processEscButtonPressed();
       break;
-
     default:
-      this.log.error('No keyboard entry allowed for state type ' + this.current_state.get('type'));
-      break;
+      this.processNumericButtonPressed(button);
     }
   }
 

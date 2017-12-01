@@ -1043,7 +1043,7 @@ class ATM {
     switch(this.current_state.get('type')){
     case 'B':
       this.PIN_buffer += button;
-      if(this.PIN_buffer.length === this.max_pin_length)
+      if(this.PIN_buffer.length === this.FITs.getMaxPINLength(this.card.number) || this.PIN_buffer.length === 6 )
         this.processState(this.current_state.get('number'));
       this.display.insertText(this.PIN_buffer, '*');
       break;

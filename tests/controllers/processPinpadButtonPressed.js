@@ -32,6 +32,7 @@ test('should put the entered numbers into PIN buffer', t => {
   state.set('number', '230');
   state.set('type', 'B');
   atm.current_state = state;
+  atm.card = {number: '8888999900001111'};
 
   atm.max_pin_length = 6;
   atm.initBuffers();

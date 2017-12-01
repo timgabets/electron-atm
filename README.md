@@ -23,7 +23,9 @@ Cards management tab:
 
 ## To Use
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js version 8.x](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From the command line:
+Windows and MacOS nightly build installers may be downloaded from [atmtools.org](http://atmtools.org/dist/).
+
+You may also build the app from sources. To do this, you'll need [Git](https://git-scm.com) and [Node.js version 8.x](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From the command line:
 
 ```bash
 # Clone this repository

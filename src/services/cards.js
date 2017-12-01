@@ -1,8 +1,13 @@
-function CardsService(settings, log){
-  this.cards = {};
-  this.cards = settings.get('cards');
-  if(!this.cards)
+class CardsService {
+  constructor(settings, log){
+    this.settings = settings;
+    this.log = log;
+
     this.cards = {};
+    this.cards = settings.get('cards');
+    if(!this.cards)
+      this.cards = {};
+  }
   
   /**
    * [getPaymentScheme get payment scheme identifire, base on card number. 
@@ -12,71 +17,71 @@ function CardsService(settings, log){
    * @param  {[type]} cardnumber [description]
    * @return {[type]}            [description]
    */
-  this.getPaymentScheme = function(cardnumber){
+  getPaymentScheme(cardnumber){
     if(cardnumber[0] === '4')
       return 'VISA';
 
     switch(cardnumber.substr(0, 2)){
-      case '34':
-        return 'AMEX';
+    case '34':
+      return 'AMEX';
 
-      case '35':
-        // 3528-3589
-        if( cardnumber.substr(2, 2) >= '28' && cardnumber.substr(2, 2) <= '89')
-          return 'JCB';
-        break;
+    case '35':
+      // 3528-3589
+      if( cardnumber.substr(2, 2) >= '28' && cardnumber.substr(2, 2) <= '89')
+        return 'JCB';
+      break;
 
-      case '37':
-        return 'AMEX';
+    case '37':
+      return 'AMEX';
 
-      case '50':
-        return 'Maestro';
+    case '50':
+      return 'Maestro';
 
-      case '51':
-      case '52':
-      case '53':
-      case '54':
-      case '55':
-        return 'Mastercard';
+    case '51':
+    case '52':
+    case '53':
+    case '54':
+    case '55':
+      return 'Mastercard';
 
-      case '56':
-      case '57':
-      case '58':
-        return 'Maestro';
+    case '56':
+    case '57':
+    case '58':
+      return 'Maestro';
 
-      case '62':
-        return 'CUP';
+    case '62':
+      return 'CUP';
       
-      case '64':
-      case '65':
-        return 'Discover';
+    case '64':
+    case '65':
+      return 'Discover';
     }
-  };
+  }
 
   /**
    * [add description]
    * @param {[type]} card [description]
    */
-  this.add = function(card){
+  add(card){
     card.number = card.number.split(' ').join('');
     card.name = this.decorateCardNumber(card.number);
 
-    var scheme = this.getPaymentScheme(card.number);
+    let scheme = this.getPaymentScheme(card.number);
     if(scheme)
       card.scheme = scheme;
 
     this.cards[card.number] = card;
-    settings.set('cards', this.cards);
+    this.settings.set('cards', this.cards);
 
     return true;
-  };
+  }
 
   /**
    * [remove description]
    * @param  {[type]} name [description]
    * @return {[type]}      [description]
    */
-  this.remove = function(name){
+  remove(name){
     this.cards[name] = undefined;
   }
 
@@ -85,42 +90,42 @@ function CardsService(settings, log){
    * @param  {[type]} name [description]
    * @return {[type]}      [description]
    */
-  this.get = function(name){
+  get(name){
     name = name.split(' ').join('');
 
     return this.cards[name];
-  };
+  }
 
   /**
    * [getNames description]
    * @return {[type]} [description]
    */
-  this.getNames = function(){
-    var names = [];
+  getNames(){
+    let names = [];
 
-    for (var card in this.cards)
+    for (let card in this.cards)
       if (this.cards.hasOwnProperty(card) && this.cards[card])
         names.push(card);
 
-      return names;
-  };
+    return names;
+  }
 
   /**
    * [getTrack2 description]
    * @param  {[type]} card [description]
    * @return {[type]}      [description]
    */
-  this.getTrack2 = function(card){
+  getTrack2(card){
     if(!card)
       return;
 
-    var track2 = card.expiry_date + card.service_code + card.pvki + card.pvv + card.cvv;
+    let track2 = card.expiry_date + card.service_code + card.pvki + card.pvv + card.cvv;
 
     if(card.discretionary_data)
       track2 += card.discretionary_data;
 
     return track2;
-  };
+  }
 
 
   /**
@@ -128,16 +133,16 @@ function CardsService(settings, log){
    * @param  {[type]} cardnumber [description]
    * @return {[type]}            [description]
    */
-  this.decorateCardNumber = function(cardnumber){
-    var cardnumber = cardnumber.split(' ').join('');
-    var decorated = '';
+  decorateCardNumber(cardnumber){
+    let parsed = cardnumber.split(' ').join('');
+    let decorated = '';
 
-    for(var i = 0; i < cardnumber.length; i++){
-      if(i % 4 === 0 && i !== 0 && cardnumber[i] !== ' '){
+    for(let i = 0; i < parsed.length; i++){
+      if(i % 4 === 0 && i !== 0 && parsed[i] !== ' '){
         decorated += ' ';
       }
 
-      decorated += cardnumber[i];
+      decorated += parsed[i];
     }
 
     return decorated;

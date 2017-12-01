@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "test": "eslint tests/** src/services/** src/controllers/*.js && nyc --reporter=html --reporter=lcov ava",
+    "test": "eslint tests/** src/services/** src/controllers/** && nyc --reporter=html --reporter=lcov ava",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "win32": "electron-builder --win",

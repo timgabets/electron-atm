@@ -1,5 +1,6 @@
 import test from 'ava';
 import Network from '../../src/controllers/network.js';
+import Log from 'atm-logging';
 import { JSDOM } from 'jsdom';
 import sinon from 'sinon';
 
@@ -9,11 +10,16 @@ const { window } = jsdom;
 global.window = window;
 global.document = window.document;
 
-const n = new Network();
+const log = new Log();
+const n = new Network(undefined, log);
 n.client = {
   write: function(data){
     return true;
-  } 
+  },
+  end: function(data){
+    return true;
+  },
+  
 };
  
 test('should return true', t => {
@@ -52,4 +58,20 @@ test('should send and trace the data', t => {
 
   t.true(n.client.write.calledOnce);
   t.true(n.trace.trace.calledOnce);
+});
+
+test('toggleConnect(): should disconnect if already connected', t => {
+  n.client.end = sinon.spy();
+  
+  n.isConnected = true;
+  n.toggleConnect();
+  t.true(n.client.end.calledOnce);
+});
+
+test('toggleConnect(): should try to connect if not yet connected', t => {
+  n.client.end = sinon.spy();
+  
+  n.isConnected = false;
+  n.toggleConnect('127.0.0.1', '0');
+  //t.true(n.client.end.calledOnce);
 });

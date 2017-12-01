@@ -1082,9 +1082,10 @@ class ATM {
         default:
           this.log.error('Unsupported Display parameter value: ' + display_param);
         }
-        
+       
+        // console.log(buffer);
         if(buffer)
-          this.display.insertText(this.buffer_C, key);
+          this.display.insertText(buffer, key);
       }
       break;
     default:

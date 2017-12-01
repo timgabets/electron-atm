@@ -300,14 +300,19 @@ test('should put the entered numbers into buffer C', t => {
   state.set('buffer_and_display_params', '000'); // Display 'X' for each numeric key pressed. Store data in general-purpose Buffer C
   atm.current_state = state;
   atm.processState = sinon.spy();
+  atm.display.insertText = sinon.spy();
   atm.initBuffers();
  
   t.is(atm.buffer_C, '');
 
   atm.processPinpadButtonPressed('1');
+  t.true(atm.display.insertText.calledWith('1', 'X'));
   atm.processPinpadButtonPressed('9');
+  t.true(atm.display.insertText.calledWith('19', 'X'));
   atm.processPinpadButtonPressed('8');
+  t.true(atm.display.insertText.calledWith('198', 'X'));
   atm.processPinpadButtonPressed('5');
+  t.true(atm.display.insertText.calledWith('1985', 'X'));
 
   t.is(atm.buffer_C, '1985');
 });
@@ -352,15 +357,21 @@ test('should put the entered numbers into buffer C when buffer_and_display_param
   state.set('buffer_and_display_params', '001');
   atm.current_state = state;
   atm.processState = sinon.spy();
+  atm.display.insertText = sinon.spy();
   atm.initBuffers();
   
   t.is(atm.buffer_C, '');
 
   atm.processPinpadButtonPressed('7');
+  t.true(atm.display.insertText.calledWith('7'));
   atm.processPinpadButtonPressed('9');
+  t.true(atm.display.insertText.calledWith('79'));
   atm.processPinpadButtonPressed('8');
+  t.true(atm.display.insertText.calledWith('798'));
   atm.processPinpadButtonPressed('backspace');
+  t.true(atm.display.insertText.calledWith('79'));
   atm.processPinpadButtonPressed('4');
+  t.true(atm.display.insertText.calledWith('794'));
 
   t.is(atm.buffer_C, '794');
 });
@@ -376,14 +387,19 @@ test('should put the entered numbers into buffer B when buffer_and_display_param
   state.set('buffer_and_display_params', '002');
   atm.current_state = state;
   atm.processState = sinon.spy();
+  atm.display.insertText = sinon.spy();
   atm.initBuffers();
  
   t.is(atm.buffer_B, '');
 
   atm.processPinpadButtonPressed('7');
+  t.true(atm.display.insertText.calledWith('7', 'X'));
   atm.processPinpadButtonPressed('9');
+  t.true(atm.display.insertText.calledWith('79', 'X'));
   atm.processPinpadButtonPressed('8');
+  t.true(atm.display.insertText.calledWith('798', 'X'));
   atm.processPinpadButtonPressed('4');
+  t.true(atm.display.insertText.calledWith('7984', 'X'));
 
   t.is(atm.buffer_B, '7984');
 });
@@ -399,17 +415,25 @@ test('should put the entered numbers into buffer B when buffer_and_display_param
   state.set('buffer_and_display_params', '003');
   atm.current_state = state;
   atm.processState = sinon.spy();
+  atm.display.insertText = sinon.spy();
   atm.initBuffers();
   
   t.is(atm.buffer_B, '');
 
   atm.processPinpadButtonPressed('7');
+  t.true(atm.display.insertText.calledWith('7'));
   atm.processPinpadButtonPressed('backspace');
+  t.true(atm.display.insertText.calledWith(''));
   atm.processPinpadButtonPressed('9');
+  t.true(atm.display.insertText.calledWith('9'));
   atm.processPinpadButtonPressed('8');
+  t.true(atm.display.insertText.calledWith('98'));
   atm.processPinpadButtonPressed('4');
+  t.true(atm.display.insertText.calledWith('984'));
   atm.processPinpadButtonPressed('4');
+  t.true(atm.display.insertText.calledWith('9844'));
   atm.processPinpadButtonPressed('0');
+  t.true(atm.display.insertText.calledWith('98440'));
 
   t.is(atm.buffer_B, '98440');
 });

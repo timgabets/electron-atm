@@ -1,12 +1,16 @@
-function CardValidationService(settings, log){
+class CardValidationService {
+  constructor(settings, log){
+    this.settings = settings;
+    this.log = log;
+  }
 
   /**
    * [validateMonth description]
    * @param  {[type]} month [description]
    * @return {[type]}       [description]
    */
-  this.validateMonth = function(month){
-    var int_month = parseInt(month);
+  validateMonth(month){
+    let int_month = parseInt(month, 10);
     if(isNaN(int_month))
       return false;
 
@@ -21,18 +25,18 @@ function CardValidationService(settings, log){
    * @param  {[type]} date [description]
    * @return {[type]}      [description]
    */
-  this.validateYYMM = function(date){
+  validateYYMM(date){
     if(date.length !== 4)
       return false;
 
-    var yy = date.substr(0,2);
-    var mm = date.substr(2,2);
+    let yy = date.substr(0,2);
+    let mm = date.substr(2,2);
 
     if(isNaN(yy) || isNaN(mm))
       return false;
 
     return this.validateMonth(mm);
-  };
+  }
 }
 
 module.exports = CardValidationService;

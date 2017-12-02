@@ -8,7 +8,7 @@ from subprocess import call
 from pprint import pprint
 
 app_name = 'electron-atm'
-base = '/tmp/' + app_name
+base = '/tmp/'
 git_path = 'https://github.com/timgabets/' + app_name
 dest_path = '/var/www/atmtools.org/html/dist/' + app_name + '/'
 

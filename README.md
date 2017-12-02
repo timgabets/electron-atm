@@ -4,7 +4,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/bd413733bed6663896cc/maintainability)](https://codeclimate.com/github/timgabets/electron-atm/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bd413733bed6663896cc/test_coverage)](https://codeclimate.com/github/timgabets/electron-atm/test_coverage)
 
-A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) ATM emulator, written from scratch using JavaScript, [visjs](http://visjs.org/), jQuery and [Electron](https://electron.atom.io/) framework.
+A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) ATM emulator, written from scratch using ES6 JavaScript, [visjs](http://visjs.org/), jQuery and [Electron](https://electron.atom.io/) framework.
 
 Profile selection on application start:
 ![profile selection](img/profile-selection.png)
@@ -90,10 +90,6 @@ Yes, I know and I'm really sorry. I'm not a frontend developer (I'm not even a w
 ### jQuery? Why not [React](https://facebook.github.io/react/)?
 
 To me, [React](https://facebook.github.io/react/) is good for building user-interface-specific applications, while this application is considered as backend-centric (i.e. having tons of the protocol-specific code in the backend). As always, it started as a simple Electron app with "just a little jQuery", but now it's a [whole mess](https://github.com/timgabets/electron-atm/blob/master/src/listeners/window.js) of event-handlers and SetInterval functions, that already need to be rewritten. So, if you're brave enough to redesign it all using React, please send me a pull request! ;)
-
-
-### Why not ES6? 
-I thought of ES6 in the very beginning, but Electron does not support ES6 out of the box, and transpiling with [Babel](https://babeljs.io/) looked as a complete overdesign to me. Again, if you would like to have ES6 in this application, just send me a pull request.
 
 
 ### I would like to use the application, but it seems that the feature X that I really need is not yet implemented.

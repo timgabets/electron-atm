@@ -1,13 +1,14 @@
 #!/usr/bin/python
 
 import os
+import sys
 import json
 import glob
 from subprocess import call
 from pprint import pprint
 
-base = '/home/tim/tmp/'
 app_name = 'electron-atm'
+base = '/tmp/' + app_name
 git_path = 'https://github.com/timgabets/' + app_name
 dest_path = '/var/www/atmtools.org/html/dist/' + app_name + '/'
 
@@ -72,6 +73,11 @@ os.chdir(base)
 checkout()
 install_dependencies()
 app_version = get_app_version(base + app_name + '/' + 'package.json')
+
+if os.path.exists(dest_path + app_version):
+  print('App version ' + app_version + ' is already built. Quit')
+  sys.exit()
+
 build()
 deploy(app_version)
 make_symlink(app_version)

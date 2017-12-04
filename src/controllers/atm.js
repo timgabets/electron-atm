@@ -920,6 +920,9 @@ class ATM {
     case 'Transaction Reply Command':
       return this.processTransactionReply(data);
             
+    case 'EMV Configuration':
+      return this.replySolicitedStatus('Ready');
+
     default:
       this.log.info('ATM.processHostMessage(): unknown message class: ' + data.message_class);
       break;

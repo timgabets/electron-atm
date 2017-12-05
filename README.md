@@ -104,6 +104,26 @@ Please feel free to submit [issues](https://github.com/timgabets/electron-atm/is
 
 Contributions are welcome, I would appreciate any help in application testing and development ;)
 
+## Modules
+
+Here is the list of npm modules that originally were the part of the application, but later were moved to the separate packages:
+
+ * [ndc-parser](https://github.com/timgabets/ndc-parser) - the parser of the messages sent from host to the ATM
+ * [atm-cursor](https://github.com/timgabets/atm-cursor) - a library that handles current cursor position on the ATM screen
+ * [atm-fits](https://github.com/timgabets/atm-fits) - a service for manipulating Financial Institutions Table records (FITs)
+ * [atm-hardware](https://github.com/timgabets/atm-hardware)  - provides the emulation for the different ATM hardware (cassettes, readers, printers etc) + generates hardware fitness, statuses etc.
+ * [atm-logging](https://github.com/timgabets/atm-logging) - a library for displaying trace records in the Log area
+ * [atm-opcode-buffer](https://github.com/timgabets/atm-opcode-buffer) - Operation Code Buffer access library 
+ * [atm-screens](https://github.com/timgabets/atm-screens) - ATM Screens service (parsing, binding images etc.)
+ * [atm-screentext](https://github.com/timgabets/atm-screentext) - library for updating on-screen text 
+ * [atm-state-levels](https://github.com/timgabets/atm-state-levels) - a helper service to work with ATM state logical levels used by the States Graph, rendered by visjs on a States page
+ * [atm-states](https://github.com/timgabets/atm-states) - ATM states service - provides the message parsing, runtime states data storage etc.
+ * [atm-timestamp](https://github.com/timgabets/atm-timestamp) - a simple helper service for retrieving current timestamp. Used by the Log service
+ * [atm-trace](https://github.com/timgabets/atm-trace) - a library for parsing binary data coming from host / to host + displaying objects like states/screens/FITs etc
+ * [ndc-parser](https://github.com/timgabets/ndc-parser) - a library for parsing messages coming from host in NDC format
+ * [pinblock](https://github.com/timgabets/pinblock) - a library for creating PIN Blocks and converting them to the ATM format
+
+
 ## License
 [LGPLv2](LICENSE.md)
 

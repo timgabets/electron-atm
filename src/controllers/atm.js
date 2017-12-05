@@ -376,7 +376,6 @@ class ATM {
      */
     this.display.setScreenByNumber(state.get('screen_number'));
     this.setFDKsActiveMask('001'); // Enabling button 'A' only
-    this.max_pin_length = this.FITs.getMaxPINLength(this.card.number);
 
     if(this.PIN_buffer.length > 3){
       // TODO: PIN encryption
@@ -1046,7 +1045,7 @@ class ATM {
     switch(this.current_state.get('type')){
     case 'B':
       this.PIN_buffer += button;
-      if(this.PIN_buffer.length === this.FITs.getMaxPINLength(this.card.number) || this.PIN_buffer.length === 6 )
+      if(this.PIN_buffer.length >= this.FITs.getMaxPINLength(this.card.number) || this.PIN_buffer.length >= 6 )
         this.processState(this.current_state.get('number'));
       this.display.insertText(this.PIN_buffer, '*');
       break;

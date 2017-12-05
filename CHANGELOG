@@ -1,5 +1,5 @@
 December 2017
-  1.3.6 Using atm-states v.0.6.3 (states_to is now Set, not Array)
+  1.3.6 Using atm-states v.0.6.5 (states_to is now Set, not Array)
   1.3.5 processing EMV Configuration Commands
   1.3.4 processNumericButtonPressed() now checks the PMXPN fit record to get the PIN length
   1.3.3 Fixed bug with undisplayed numeric data stored in buffer B on state H 

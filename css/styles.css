@@ -54,8 +54,8 @@ html, body, .container-fluid {
 }
 
 .mynetwork {
-  width: 940px;
-  height: 570px;
+  width: 930px;
+  height: 550px;
   border: 1px solid lightgrey;
   border-radius: 5px;
   margin-left: 15px;
@@ -75,7 +75,7 @@ html, body, .container-fluid {
 
 .state-details {
   margin-top:10px;
-  height: 285px;
+  height: 255px;
   color: #575B5E;
   font-size: 10px;
   font-family: monospace;

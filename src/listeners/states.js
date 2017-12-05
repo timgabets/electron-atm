@@ -3,6 +3,7 @@ const ScreensService = nodeRequire('atm-screens');
 const settings = nodeRequire('electron-settings');
 const Trace = nodeRequire('atm-trace');
 const ATM = nodeRequire('./src/controllers/atm.js');
+const StatesHistory = nodeRequire('./src/services/history.js');
 
 //let log = new Log();
 let trace = new Trace();
@@ -67,12 +68,12 @@ var graph = new vis.Network(container, data, options);
 
 $(function(){
   const mousetrap = nodeRequire('mousetrap');
+  let history = new StatesHistory(15);
 
   function updateState(state){
     if(!state)
       state = states.get('000');
     
-    console.log(state);
     graph.focus(
       state.get('number'), 
       {
@@ -84,7 +85,8 @@ $(function(){
 
     updateScreen(screens.get(state.get('screen_number')));
     updateStateDetails(state, states.getExtensionState(state));
-    // updateOpcodeBuffer(state);
+    history.add(state.get('number'));
+    redrawStateHistory();
   };
 
   /**
@@ -99,6 +101,28 @@ $(function(){
           $('#states-screen').attr('src', '/home/tim/share/screens/' + element.display_image);
       });
     }
+  };
+
+  function redrawStateHistory(){
+    $('#states-history').html('');
+    history.get().forEach(state_number => {
+      let state_type = states.get(state_number).get('type')
+      $('#states-history').append('<button class="btn btn-sm state-button" id="state-history-' + state_number + '">' + state_number + ' ' + state_type + ' </button>');
+      
+      $('#state-history-' + state_number).on('click', _ => {
+        graph.focus(
+        state_number, 
+        {
+          scale: 0.3,
+          offset: {}
+        }
+        );  // Center
+        graph.selectNodes([state_number,]);   // Select node
+        let state = states.get(state_number);
+        updateScreen(screens.get(state.get('screen_number')));
+        updateStateDetails(state, states.getExtensionState(state));
+      });
+    });      
   };
 
   /**
@@ -205,8 +229,8 @@ $(function(){
     });
   });
 
-  ipc.on('ui-change-current-state-on-states-page', (event, state) => {
-    updateState(state);
+  ipc.on('ui-change-current-state-on-states-page', (event) => {
+    updateState(atm.getCurrentState());
   });
 
   // Set to 000 initially

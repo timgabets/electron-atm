@@ -1209,7 +1209,7 @@ test('should return proper state entry while processing state K', t => {
   let state = new Map(); 
  
   state.set('type', 'K');
-  state.set('states_to', ['001', '002', '003', '004', '005', '006', '007', '008']);
+  state.set('state_exits', ['001', '002', '003', '004', '005', '006', '007', '008']);
 
   // FIT record with Institution ID 07 
   t.true(atm.FITs.addFIT('029000065136037255255007000132000015000144000000000000000000000000000000000000000000000000000000000'));

@@ -568,7 +568,7 @@ class ATM {
    */
   processStateK(state){
     let institution_id = this.FITs.getInstitutionByCardnumber(this.card.number);
-    log.info('Card ' + this.card.number + ' matches with institution_id ' + institution_id);
+    this.log.info('Card ' + this.card.number + ' matches with institution_id ' + institution_id);
     if(institution_id)
       return state.get('state_exits')[parseInt(institution_id, 10)];
     else

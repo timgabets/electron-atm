@@ -4,6 +4,7 @@ import os
 import sys
 import json
 import glob
+import getopt
 from subprocess import call
 
 
@@ -65,10 +66,30 @@ def deploy(src_dir, dest_dir, app_version):
   call(['chown', 'www-data:www-data', dest_dir, '-R'])
 
 if __name__ == '__main__':
-  user = 'timgabets'
-  repo = 'electron-atm'
-  tmp_dir = '/tmp/'
-  dest_dir = '/var/www/atmtools.org/html/dist/' + repo + '/'
+  user = None
+  repo = None
+  tmp_dir = None
+  dest_dir = None
+  #dest_dir = '/var/www/atmtools.org/html/dist/' + repo + '/'
+
+  try:
+    optlist, args = getopt.getopt(sys.argv[1:], 'u:r:d:t:', ['user=', 'repo=', 'dest=', 'tmp='])
+    for opt, arg in optlist:
+      if opt in ('-u', '--user'):
+        user = arg
+
+      elif opt in ('-r', '--repo'):
+        repo = arg
+
+      elif opt in ('-d', '--dest'):
+        dest_dir = arg + '/'
+
+      elif opt in ('-t', '--tmp'):
+        tmp_dir = arg + '/'
+  
+  except getopt.GetoptError:
+    print('getopt error')
+    sys.exit()
 
   os.chdir(tmp_dir)
 

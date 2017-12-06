@@ -62,6 +62,7 @@ def deploy(src_dir, dest_dir, app_version):
   except IndexError:
     pass
 
+  call(['chown', 'www-data:www-data', dest_dir, '-R'])
 
 if __name__ == '__main__':
   user = 'timgabets'

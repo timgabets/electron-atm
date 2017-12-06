@@ -12,7 +12,7 @@ const atm = new ATM(settings, log);
 const states = new StatesService(settings, log, trace);
 let screens = new ScreensService(settings, log);
 
-var options = {
+const options = {
   edges: {
     smooth: {
       type: 'cubicBezier',
@@ -22,49 +22,47 @@ var options = {
   },
   layout: {
     hierarchical: {
-        direction: 'LR',
-        levelSeparation: 160,
-        nodeSpacing: 160
+      direction: 'LR',
+      levelSeparation: 160,
+      nodeSpacing: 160
     }
   },
   physics: false,
 };
 
-nodes = states.getNodes();
-
+let nodes = states.getNodes();
 nodes.forEach(node => {
   node['size'] = 160;
 
   switch(node.label[4]){
-    case 'J':
-      node['color'] = 'lightcoral';
-      break;
+  case 'J':
+    node['color'] = 'lightcoral';
+    break;
 
-    case 'I':
-      node['color'] = 'palegreen';
-      break;
+  case 'I':
+    node['color'] = 'palegreen';
+    break;
 
-    default:
-      node['color'] = 'silver';
+  default:
+    node['color'] = 'silver';
   }
 
   node['shape'] = 'box';
   node['font'] = {'size': '32', 'face': 'monospace', 'align': 'center'};
   node['heightConstraint'] = { minimum: 100 };
   node['widthConstraint'] = { minimum: 100 };
-})
+});
 
-edges = states.getEdges()
-
+let edges = states.getEdges();
 edges.forEach( edge => {
   edge['arrows'] = 'to';
   edge['physics'] = false;
   edge['smooth'] = {'type': 'cubicBezier'};
 });
 
-var container = document.getElementById('mynetwork');
-var data = {'nodes': nodes, 'edges': edges}
-var graph = new vis.Network(container, data, options);
+let container = document.getElementById('mynetwork');
+let data = {'nodes': nodes, 'edges': edges};
+let graph = new vis.Network(container, data, options);
 
 $(function(){
   const mousetrap = nodeRequire('mousetrap');
@@ -87,7 +85,7 @@ $(function(){
     updateStateDetails(state, states.getExtensionState(state));
     history.add(state.get('number'));
     redrawStateHistory();
-  };
+  }
 
   /**
    * [updateScreen description]
@@ -101,21 +99,21 @@ $(function(){
           $('#states-screen').attr('src', '/home/tim/share/screens/' + element.display_image);
       });
     }
-  };
+  }
 
   function redrawStateHistory(){
     $('#states-history').html('');
     history.get().forEach(state_number => {
-      let state_type = states.get(state_number).get('type')
+      let state_type = states.get(state_number).get('type');
       $('#states-history').append('<button class="btn btn-sm state-button" id="state-history-' + state_number + '">' + state_number + ' ' + state_type + ' </button>');
       
       $('#state-history-' + state_number).on('click', _ => {
         graph.focus(
-        state_number, 
-        {
-          scale: 0.3,
-          offset: {}
-        }
+          state_number, 
+          {
+            scale: 0.3,
+            offset: {}
+          }
         );  // Center
         graph.selectNodes([state_number,]);   // Select node
         let state = states.get(state_number);
@@ -123,7 +121,7 @@ $(function(){
         updateStateDetails(state, states.getExtensionState(state));
       });
     });      
-  };
+  }
 
   /**
    * [updateStateDetails description]
@@ -138,14 +136,14 @@ $(function(){
     $('#states-to').html('');
     if(state.get('states_to')){
       state.get('states_to').forEach(state_to => {
-        var state = states.get(state_to);
+        let state = states.get(state_to);
         $('#states-to').append('<button class="btn btn-sm state-button" id="state-to-' + state.get('number') + '">' + state.get('number') + ' ' + state.get('type') + ' </button>');
         $('#state-to-' + state_to).on('click', _ => {
           updateState(states.get(state_to));
-        })
+        });
       });      
     }
-  };
+  }
 
   /**
    * [updateOpcodeBuffer description]
@@ -160,30 +158,28 @@ $(function(){
     }else{
       $('#opcode-buffer').attr('disabled', true);
     }
-  };
+  }
 
-  $("#search-state-form").submit(function(e) {
+  $('#search-state-form').submit(function(e) {
     e.preventDefault();
-    var state_number = $('#search-state-input').val();
+    let state_number = $('#search-state-input').val();
 
-    if(state_number.length == 2){
+    if(state_number.length === 2){
       state_number = '0' + state_number;
-      $('#search-state-input').val(state_number)
-    }
-    else if (state_number.length === 1){
+      $('#search-state-input').val(state_number);
+    } else if (state_number.length === 1){
       state_number = '00' + state_number;
-      $('#search-state-input').val(state_number)
+      $('#search-state-input').val(state_number);
     }
   
     updateState(states.get(state_number));
-    $("#search-state-input").blur();
+    $('#search-state-input').blur();
   });
 
-  graph.on("click", function (params) {
-    var node_id = this.getNodeAt(params.pointer.DOM);
-
+  graph.on('click', function (params) {
+    let node_id = this.getNodeAt(params.pointer.DOM);
     if(node_id){
-      var state = states.get(node_id);
+      let state = states.get(node_id);
 
       updateScreen(screens.get(state.get('screen_number')));
       updateStateDetails(state, states.getExtensionState(state));
@@ -194,28 +190,28 @@ $(function(){
   });
 
   // cursor keys
-  var cursorButtons = ['left', 'right', 'up', 'down'];
+  let cursorButtons = ['left', 'right', 'up', 'down'];
   cursorButtons.forEach( (element) => {
     mousetrap.bind(element, function() { 
-      var move_x = 0;
-      var move_y = 0;
+      let move_x = 0;
+      let move_y = 0;
 
       switch(element){
-        case 'left':
-          move_x = -700;
-          break;
-        case 'right':
-          move_x = 700;
-          break;
-        case 'up':
-          move_y = -700;
-          break;
-        case 'down':
-          move_y = 700;
-          break;
+      case 'left':
+        move_x = -700;
+        break;
+      case 'right':
+        move_x = 700;
+        break;
+      case 'up':
+        move_y = -700;
+        break;
+      case 'down':
+        move_y = 700;
+        break;
       }
 
-      var current_position = graph.getViewPosition();
+      let current_position = graph.getViewPosition();
       graph.moveTo({
         position: {
           'x': current_position.x + move_x,

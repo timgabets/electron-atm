@@ -45,7 +45,7 @@
   },
   "license": "LGPL-2.1",
   "devDependencies": {
-    "ava": "^0.22.0",
+    "ava": "^0.24.0",
     "electron": "~1.7.9",
     "electron-builder": "^19.47.1",
     "eslint": "^4.12.0",

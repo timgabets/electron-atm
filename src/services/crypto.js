@@ -68,6 +68,17 @@ class CryptoService {
     return [this.keys.master_key.key, this.getKeyCheckValue(this.keys.master_key.key)] ;
   }
 
+  getKey(type){
+    switch(type){
+    case 'master':
+      return this.getMasterKey();
+
+    case 'comms':
+    case 'pin':
+      return this.getTerminalKey();
+    }
+  }
+  
   /**
    * [dec2hex convert decimal string to hex string, e.g. 040198145193087203201076202216192211251240251237 to 28C691C157CBC94CCAD8C0D3FBF0FBED]
    * @param  {[type]} dec_string [decimal string ]

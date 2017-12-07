@@ -188,27 +188,18 @@ $(function () {
     }, 200);
   });
 
-  // Terminal key update
-  var pin_key = '';
-  setInterval(function() {
-    if(crypto.getTerminalKey()[0] != pin_key){
-      // TODO: move to another service
-      pin_key = cards.decorateCardNumber(crypto.getTerminalKey()[0]);
-      $('#pin-key').val(pin_key);
-      $('#pin-key-cv').val(crypto.getTerminalKey()[1]);
-    }
-  }, 500);
 
-  // Master key update
-  var master_key = '';
-  setInterval(function() {
-    if(crypto.getMasterKey()[0] != master_key){
-      // TODO: move to another service
-      master_key = cards.decorateCardNumber(crypto.getMasterKey()[0]);
-      $('#master-key').val(master_key);
-      $('#master-key-cv').val(crypto.getMasterKey()[1]);
-    }
-  }, 500);
+  let keys = {};
+  ['master', 'pin'].forEach((type) => {
+    keys[type] = '';
+    setInterval(function() {
+      if(crypto.getKey(type)[0] != keys[type]){
+        keys[type] = cards.decorateCardNumber(crypto.getKey(type)[0]);
+        $('#' + type + '-key').val(keys[type]);
+        $('#' + type + '-key-cv').val(crypto.getKey(type)[1]);
+      }
+    }, 500);
+  });
 
   // Status button update
   var status = '';

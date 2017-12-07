@@ -205,17 +205,20 @@ $(function () {
   var status = '';
   
   setInterval(function() {
-    function clearButtonClasses(){
-      $('#atm-status-button').removeClass('btn-success');
-      $('#atm-status-button').removeClass('btn-warning');
-      $('#atm-status-button').removeClass('btn-danger');
+    let objects = {
+      // 'class': ['array', 'of', 'classes', 'to', 'remove']
+      'button': ['btn-success', 'btn-warning', 'btn-danger'],
+      'icon': ['glyphicon-link', 'glyphicon-wrench', 'glyphicon-remove-circle']
     };
 
-    function clearIconClasses(){
-      $('#atm-status-icon').removeClass('glyphicon-link');
-      $('#atm-status-icon').removeClass('glyphicon-wrench');
-      $('#atm-status-icon').removeClass('glyphicon-remove-circle');
-    };
+    function clear(){
+      for(let obj in objects)
+      {
+        objects[obj].forEach( (item) => {
+          $('#atm-status-' + obj).removeClass(item);
+        });
+      }
+    }
 
     function disableCardReader(status){
       $('#atm-page-cards-list').prop('disabled', true);
@@ -234,27 +237,23 @@ $(function () {
 
     if(atm.status != status){
       status = atm.status;
+      
+      clear();
 
       $('#atm-status-button').attr('title', 'ATM is ' + atm.status);
       switch(status){
         case 'Offline':
-          clearButtonClasses();
-          clearIconClasses();
           //disableCardReader(status);
           $('#atm-status-icon').addClass('glyphicon-remove-circle');
           $('#atm-status-button').addClass('btn-danger');
           break;
 
         case 'Connected':
-          clearButtonClasses();
-          clearIconClasses();
           //disableCardReader(status);
           $('#atm-status-icon').addClass('glyphicon-link');
           break;
 
         case 'In-Service':
-          clearButtonClasses();
-          clearIconClasses();
           //enableCardReader();
           $('#atm-status-button').addClass('btn-success')
           $('#atm-status-icon').addClass('glyphicon-link');
@@ -262,16 +261,11 @@ $(function () {
 
         case 'Processing Card':
           //disableCardReader();      
-
-          clearButtonClasses();
-          clearIconClasses();
           //$('#atm-status-button').addClass('btn-success')
           $('#atm-status-icon').addClass('glyphicon glyphicon-credit-card');
           break;
 
         case 'Out-Of-Service':
-          clearButtonClasses();        
-          clearIconClasses();
           //disableCardReader(status);
           $('#atm-status-button').addClass('btn-warning')
           $('#atm-status-icon').addClass('glyphicon-wrench');

@@ -1,4 +1,5 @@
 December 2017
+  1.4.1 clearButtonClasses() and clearIconClasses() refactored
   1.4.0 Removed duplicated code from src/listeners/settings.js
   1.3.9 Fixed bug with checking PIN length on state B
   1.3.8 States History

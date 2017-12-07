@@ -39,6 +39,16 @@ test('should get master key', t => {
   t.deepEqual(s.getMasterKey(), ['B6D55EABAD23BC4FD558F8D619A21C34', '55531F']);
 });
 
+test('should get terminal key by type', t => {
+  t.deepEqual(s.getKey('pin'), ['DEADBEEFDEADBEEFDEADBEEFDEADBEEF', '2AE358']);
+  t.deepEqual(s.getKey('comms'), ['DEADBEEFDEADBEEFDEADBEEFDEADBEEF', '2AE358']);
+});
+
+test('should get master key by type', t => {
+  t.deepEqual(s.getKey('master'), ['B6D55EABAD23BC4FD558F8D619A21C34', '55531F']);
+});
+
+
 test('should set and store the terminal key', t => {
   settings.set = sinon.spy();
 

@@ -32,6 +32,21 @@ class ATM {
     this.transaction_request = null;
   }
 
+  getBuffer(type){
+    switch(type){
+    case 'pin':
+      return this.PIN_buffer;
+    case 'B':
+      return this.buffer_B;
+    case 'C':
+      return this.buffer_C;
+    case 'opcode':
+      return this.opcode.getBuffer();
+    case 'amount':
+      return this.amount_buffer;
+    }
+  }
+
   /**
    * [isFDKButtonActive check whether the FDKs is active or not]
    * @param  {[type]}  button [FDK button to be checked, e.g. 'A', 'G' (case does not matter - 'a', 'g' works as well) ]

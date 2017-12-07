@@ -176,50 +176,17 @@ $(function () {
     }
   }, 200);
 
-  // PIN buffer update
-  var PIN_buffer = '';
-  setInterval(function() {
-    if(atm.PIN_buffer != PIN_buffer){
-      PIN_buffer = atm.PIN_buffer;
-      $('#pin-buffer').val(PIN_buffer);
-    }
-  }, 200);
+  let buffers = {};
+  ['pin', 'B', 'C', 'opcode', 'amount'].forEach( (type) => {
+    buffers[type] = '';
 
-  // Buffer B update
-  var buffer_B = '';
-  setInterval(function() {
-    if(atm.buffer_B != buffer_B){
-      buffer_B = atm.buffer_B;
-      $('#buffer-b').val(buffer_B);
-    }
-  }, 200);
-
-  // Buffer C update
-  var buffer_C = '';
-  setInterval(function() {
-    if(atm.buffer_C != buffer_C){
-      buffer_C = atm.buffer_C;
-      $('#buffer-c').val(buffer_C);
-    }
-  }, 200);
-
-  // Opcode buffer update
-  var opcode_buffer = '';
-  setInterval(function() {
-    if(atm.opcode.getBuffer() != opcode_buffer){
-      opcode_buffer = atm.opcode.getBuffer();
-      $('#opcode-buffer').val(opcode_buffer.split(' ').join('_'));
-    }
-  }, 200);
-
-  // Amount buffer update
-  var amount_buffer = '';
-  setInterval(function() {
-    if(atm.amount_buffer != amount_buffer){
-      amount_buffer = atm.amount_buffer;
-      $('#amount-buffer').val(amount_buffer);
-    }
-  }, 200);
+    setInterval(function() {
+      if(atm.getBuffer(type) !== buffers[type]){
+        buffers[type] = atm.getBuffer(type);
+        $('#' + type + '-buffer').val(buffers[type]);
+      }
+    }, 200);
+  });
 
   // Terminal key update
   var pin_key = '';

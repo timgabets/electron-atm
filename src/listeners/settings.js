@@ -11,7 +11,6 @@ $(function(){
 
   let keys = {};
   ['master', 'pin'].forEach( (type) => {
-    console.log(type);
     keys[type] = settings.get(type + '_key');
     if(keys[type]){
       $('#settings-' + type + '-key').val(keys[type]);
@@ -31,7 +30,6 @@ $(function(){
      }
    }, 300);
   });
-
 
   $('#profile-name').val(settings.get('profile'))
 
@@ -79,7 +77,6 @@ $(function(){
       luno: $('#settings-luno').val()
     };
     settings.set('host', host);
-
 
     // Saving keys
     ['master', 'pin'].forEach( (type) => {

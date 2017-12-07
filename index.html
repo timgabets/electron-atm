@@ -127,13 +127,13 @@
             </div>
 
             <div class="form-group col-md-9">
-              <label for="settings-comms-key">Communications Key (Terminal PIN Key)</label>
-              <input type="text" class="form-control" name="settings-comms-key" id="settings-comms-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters) required" minlength="32" maxlength="32" required>
+              <label for="settings-pin-key">Communications Key (Terminal PIN Key)</label>
+              <input type="text" class="form-control" name="settings-pin-key" id="settings-pin-key" placeholder="0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F 0A0F" title="3DES Double Length Key (32 hex characters) required" minlength="32" maxlength="32" required>
             </div>
 
             <div class="form-group col-md-3">
               <label for="port">Check Value</label>
-              <input type="text" class="form-control" name="settings-comms-key-cv" id="settings-comms-key-cv" placeholder="" disabled="">
+              <input type="text" class="form-control" name="settings-pin-key-cv" id="settings-pin-key-cv" placeholder="" disabled="">
             </div>
           </fieldset>
 
@@ -633,8 +633,8 @@ Number) on card">PANDX</th>
               <div class="form-group">
                 <input type="text" class="form-control buffer-32" id="master-key" value="" placeholder="Master Key" title="Master Key Clear Value" disabled></input>
                 <input type="text" class="form-control buffer-6" id="master-key-cv" value="" placeholder="KCV" title="Master Key Check Value" disabled></input>
-                <input type="text" class="form-control buffer-32" id="comms-key" value="" placeholder="Communications Key Clear Value" title="Communications Key" disabled></input>
-                <input type="text" class="form-control buffer-6" id="comms-key-cv" value="" placeholder="KCV" title="Communications Key Check Value" disabled></input>
+                <input type="text" class="form-control buffer-32" id="pin-key" value="" placeholder="Communications Key Clear Value" title="Communications Key" disabled></input>
+                <input type="text" class="form-control buffer-6" id="pin-key-cv" value="" placeholder="KCV" title="Communications Key Check Value" disabled></input>
               </div>
             </form>
 

@@ -9,43 +9,29 @@ $(function(){
     $('#settings-luno').val(host.luno);
   }
 
-  var master_key = settings.get('master_key');
-  if(master_key){
-    $('#settings-master-key').val(master_key);
-    $('#settings-master-key-cv').val(crypto.getKeyCheckValue(master_key));
-  }
-
-  setInterval(function(){
-    if(master_key !== $('#settings-master-key').val()){
-      master_key = $('#settings-master-key').val();
-
-      if(master_key.length === 32){
-        $('#settings-master-key-cv').val(crypto.getKeyCheckValue(master_key));
-        $('#settings-master-key').val(master_key.toUpperCase());
-      } else {
-        $('#settings-master-key-cv').val('');
-      }
+  let keys = {};
+  ['master', 'pin'].forEach( (type) => {
+    console.log(type);
+    keys[type] = settings.get(type + '_key');
+    if(keys[type]){
+      $('#settings-' + type + '-key').val(keys[type]);
+      $('#settings-' + type + '-key-cv').val(crypto.getKeyCheckValue(keys[type]));
     }
-  }, 300);
 
-  var comms_key = settings.get('pin_key');
-  if(comms_key){
-    $('#settings-comms-key').val(comms_key);
-    $('#settings-comms-key-cv').val(crypto.getKeyCheckValue(comms_key));
-  }
+    setInterval(function(){
+     if(keys[type] !== $('#settings-' + type + '-key').val()){
+       keys[type] = $('#settings-' + type + '-key').val();
+  
+       if(keys[type].length === 32){
+         $('#settings-' + type + '-key-cv').val(crypto.getKeyCheckValue(keys[type]));
+         $('#settings-' + type + '-key').val(keys[type].toUpperCase());
+       } else {
+         $('#settings-' + type + '-key-cv').val('');
+       }
+     }
+   }, 300);
+  });
 
-  setInterval(function(){
-    if(comms_key !== $('#settings-comms-key').val()){
-      comms_key = $('#settings-comms-key').val();
-
-      if(comms_key.length === 32){
-        $('#settings-comms-key-cv').val(crypto.getKeyCheckValue(comms_key));
-        $('#settings-comms-key').val(comms_key.toUpperCase());
-      } else {
-        $('#settings-comms-key-cv').val('');
-      }
-    }
-  }, 300);
 
   $('#profile-name').val(settings.get('profile'))
 
@@ -96,8 +82,9 @@ $(function(){
 
 
     // Saving keys
-    settings.set('master_key', $('#settings-master-key').val());
-    settings.set('pin_key', $('#settings-comms-key').val());
+    ['master', 'pin'].forEach( (type) => {
+      settings.set(type + '_key', $('#settings-' + type + '-key').val());
+    });
 
     // Saving profile name
     settings.set('profile', $('#profile-name').val());

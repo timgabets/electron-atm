@@ -227,8 +227,8 @@ $(function () {
     if(crypto.getTerminalKey()[0] != pin_key){
       // TODO: move to another service
       pin_key = cards.decorateCardNumber(crypto.getTerminalKey()[0]);
-      $('#comms-key').val(pin_key);
-      $('#comms-key-cv').val(crypto.getTerminalKey()[1]);
+      $('#pin-key').val(pin_key);
+      $('#pin-key-cv').val(crypto.getTerminalKey()[1]);
     }
   }, 500);
 

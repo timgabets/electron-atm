@@ -1357,8 +1357,49 @@ test('should continue with default state processing', t => {
   t.true(atm.processState.calledWith('202'));
 });
 
+/**
+ * getBuffer()
+ */
+test('getBuffer(): should get PIN buffer', t => {
+  const atm = new ATM(settings, log);
+  let PIN = '12346';
+  atm.PIN_buffer = PIN;
+
+  t.is(atm.getBuffer('pin'), PIN);
+});
 
 
+test('getBuffer(): should get buffer B', t => {
+  const atm = new ATM(settings, log);
+  let buf = 'CBA';
+  atm.buffer_B = buf;
+
+  t.is(atm.getBuffer('B'), buf);
+});
+
+test('getBuffer(): should get buffer C', t => {
+  const atm = new ATM(settings, log);
+  let buf = 'DDDDD';
+  atm.buffer_C = buf;
+
+  t.is(atm.getBuffer('C'), buf);
+});
+
+test('getBuffer(): should get opcode buffer', t => {
+  const atm = new ATM(settings, log);
+  let buf = 'C  A  BD';
+  atm.opcode.buffer = buf;
+
+  t.is(atm.getBuffer('opcode'), buf);
+});
+
+test('getBuffer(): should get amount buffer', t => {
+  const atm = new ATM(settings, log);
+  let amount = '1300';
+  atm.amount_buffer = amount;
+
+  t.is(atm.getBuffer('amount'), amount);
+});
 
 
 

@@ -487,6 +487,19 @@ class ATM {
   }
 
 
+  processInteractiveTransaction(request){
+    this.interactive_transaction = false;
+
+    // Keyboard data entered after receiving an Interactive Transaction Response is stored in General Purpose Buffer B
+    let button = this.buttons_pressed.shift();
+    if(this.isFDKButtonActive(button)){
+      this.buffer_B = button;
+      request.buffer_B = button;
+    }
+    return request;
+  }
+
+
   /**
    * [processTransactionRequestState description]
    * @param  {[type]} state [description]
@@ -550,16 +563,8 @@ class ATM {
         break;
       }
     } else {
-      this.interactive_transaction = false;
-
-      // Keyboard data entered after receiving an Interactive Transaction Response is stored in General Purpose Buffer B
-      let button = this.buttons_pressed.shift();
-      if(this.isFDKButtonActive(button)){
-        this.buffer_B = button;
-        request.buffer_B = button;
-      }
+      request = this.processInteractiveTransaction(request);
     }
-
     this.transaction_request = request; // further processing is performed by the atm listener
   }
 

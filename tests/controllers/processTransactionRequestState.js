@@ -194,3 +194,21 @@ test('should create Unsolicited Transaction Request message object', t => {
   t.is(atm.transaction_request.message_subclass, 'Transaction Request');
 });
 
+/**
+ * Interactive Transaction processing
+ */
+test('should process interactive transaction and store pressed button in buffer B', t => {
+  let state = new Map();
+  state.set('number', '027');
+  state.set('type', 'I');
+
+  atm.interactive_transaction = true;
+  atm.buttons_pressed = ['F'];
+  atm.activeFDKs = ['F'];
+  atm.processTransactionRequestState(state);
+
+  t.is(atm.transaction_request.message_class, 'Unsolicited');
+  t.is(atm.transaction_request.message_subclass, 'Transaction Request');
+  t.false(atm.interactive_transaction);
+  t.is(atm.buffer_B, 'F');
+});

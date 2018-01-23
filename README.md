@@ -40,6 +40,8 @@ npm test
 npm start
 ```
 
+The applications uses electron-settings to store the ATM configuration. If something went wrong, and just can't just 
+
 ## Reasons of why this application was developed
 
 Some reasons for the appearance of this application are described [here](http://gabets.ru/electron-atm).
@@ -93,7 +95,12 @@ To me, [React](https://facebook.github.io/react/) is good for building user-inte
 
 
 ### I would like to use the application, but it seems that the feature X that I really need is not yet implemented.
+
 As I said, only the features that I needed were implemented. For example, all the ATM configurations that I've been working with don't have V-type states (Language select from a card), therefore, these states are not supported by the application. So, if there is a feature that you would like to have implemented, you may create an [issue](https://github.com/timgabets/electron-atm/issues), or just drop me an [email](mailto:tim@gabets.ru). 
+
+### Something went wrong with the ATM configuration, and I would like to start from scratch
+
+The application uses [electron-settings](https://www.npmjs.com/package/electron-settings) package to store the ATM configuration (all the data is stored is a single json file). Please refer to the [package' FAQ](https://github.com/nathanbuchar/electron-settings/wiki/FAQs#where-is-the-settings-file-saved) to know where the settings file is stored.
 
 
 ## Issues

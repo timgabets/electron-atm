@@ -20,10 +20,12 @@ $(function(){
     setInterval(function(){
      if(keys[type] !== $('#settings-' + type + '-key').val()){
        keys[type] = $('#settings-' + type + '-key').val();
-  
+
+       keys[type] = keys[type].replace(/[^a-fA-F0-9]/g,'');
+       $('#settings-' + type + '-key').val(keys[type].toUpperCase());
+
        if(keys[type].length === 32){
          $('#settings-' + type + '-key-cv').val(crypto.getKeyCheckValue(keys[type]));
-         $('#settings-' + type + '-key').val(keys[type].toUpperCase());
        } else {
          $('#settings-' + type + '-key-cv').val('');
        }

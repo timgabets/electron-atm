@@ -42,8 +42,6 @@ npm test
 npm start
 ```
 
-The applications uses electron-settings to store the ATM configuration. If something went wrong, and just can't just 
-
 ## Reasons of why this application was developed
 
 Some reasons for the appearance of this application are described [here](http://gabets.ru/electron-atm).

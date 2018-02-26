@@ -6,6 +6,8 @@
 
 A simple free open-source [APTRA™ Advance NDC](https://www.ncr.com/financial-services/banking-atm-software/aptra-advance-ndc) ATM emulator, written from scratch using ES6 JavaScript, [visjs](http://visjs.org/), jQuery and [Electron](https://electron.atom.io/) framework.
 
+The project is *not maintained* since the Febrary of 2018 as I'm not working with the ATM acquiring systems anymore and not using the app in my day-to-day job since then. I'm not going to fix the bugs and/or implement new features. However, any pull requests are still welcome. Also, if anybody would like to pick up the project and become its maintainer, just drop me an [email](mailto:tim@gabets.ru) to discuss the ownership transfer. 
+
 Profile selection on application start:
 ![profile selection](img/profile-selection.png)
 
@@ -23,7 +25,7 @@ Cards management tab:
 
 ## To Use
 
-Windows and MacOS nightly build installers may be downloaded from [atmtools.org](http://atmtools.org/dist/).
+Windows and MacOS build installers may be downloaded from [Releases page](https://github.com/timgabets/electron-atm/releases).
 
 You may also build the app from sources. To do this, you'll need [Git](https://git-scm.com) and [Node.js version 8.x](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From the command line:
 
@@ -39,8 +41,6 @@ npm test
 # Run the app
 npm start
 ```
-
-The applications uses electron-settings to store the ATM configuration. If something went wrong, and just can't just 
 
 ## Reasons of why this application was developed
 

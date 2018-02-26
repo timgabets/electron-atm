@@ -93,24 +93,29 @@
         <div class="container">
     <div class="row">
 
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-7 col-md-offset-3">
         <form role="form" id="settings-form" method="POST" action="#">
           <fieldset>
             <legend>ATM Connection Details</legend>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="settings-atm-host">ATM Host address</label>
               <input type="text" class="form-control" name="settings-atm-host" id="settings-atm-host" placeholder="atm.example.com" title="Valid IP or hostname required" required>
             </div>
 
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
               <label for="settings-atm-port">TCP Port</label>
               <input type="text" class="form-control" name="settings-atm-port" id="settings-atm-port" title="TCP Port" placeholder="12345" maxlength="5" required>
             </div>
 
             <div class="form-group col-md-3">
               <label for="settings-luno">LUNO</label>
-              <input type="text" class="form-control" name="settings-luno" id="settings-luno" placeholder="000" title="3 or 7 numeric characters" minlength="3" maxlength="7" required>
+              <input type="text" class="form-control" name="settings-luno" id="settings-luno" placeholder="000" title="3 or 9 numeric characters" minlength="3" maxlength="9" required>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="settings-header">Header</label>
+              <input type="text" class="form-control" name="settings-header" id="settings-header" placeholder="" title="Protocol-dependent header. Leave empty when in doubt">
             </div>
           </fieldset>
 

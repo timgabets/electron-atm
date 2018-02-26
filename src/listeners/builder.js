@@ -10,7 +10,12 @@ if(host && host.luno)
 else
   luno = '000';
 
-let builder = new Builder(luno);
+if(host && host.header)
+  header = host.header;
+else
+  header = '';
+
+let builder = new Builder(luno, header);
 
 ipc.on('build-message-to-host', (event, message) => {
   var built = builder.build(message);

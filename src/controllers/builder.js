@@ -1,6 +1,7 @@
 class Builder{
-  constructor(luno = '000'){
+  constructor(luno = '000', header = ''){
     this.luno = luno;
+    this.header = header;
   }
 
   /**
@@ -105,7 +106,7 @@ class Builder{
    * @return {[type]}        [description]
    */
   build(object){
-    let message = '';
+    let message = this.header;
 
     if(!object)
       return null;

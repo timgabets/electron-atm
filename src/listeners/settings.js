@@ -7,6 +7,7 @@ $(function(){
     $('#settings-atm-host').val(host.ip);
     $('#settings-atm-port').val(host.port);
     $('#settings-luno').val(host.luno);
+    $('#settings-header').val(host.header);
   }
 
   let keys = {};
@@ -76,7 +77,8 @@ $(function(){
     var host = {
       ip: $('#settings-atm-host').val(),
       port: $('#settings-atm-port').val(),
-      luno: $('#settings-luno').val()
+      luno: $('#settings-luno').val(),
+      header: $('#settings-header').val()
     };
     settings.set('host', host);
 

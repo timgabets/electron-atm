@@ -44,7 +44,7 @@ npm start
 
 ## Reasons of why this application was developed
 
-Some reasons for the appearance of this application are described [here](http://gabets.ru/electron-atm).
+Some reasons for the appearance of this application are described [here](http://gabets.ru/electron-atm.html).
 
 ## Features 
 
